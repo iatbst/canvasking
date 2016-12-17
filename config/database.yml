@@ -1,0 +1,35 @@
+# Production databases
+###############################################################################
+
+production:
+  adapter: postgresql
+
+  host: db-cousteau-00.ep.prod.agari.com
+  database: cousteau
+  user: app_cousteau
+
+# Development databases
+###############################################################################
+
+development:
+  adapter: postgresql
+
+  host: localhost
+  database: canvasking_develop
+
+  schema_order: public
+
+# Testing databases
+#
+# WARNING: These databases defined will be erased and re-generated from your
+# development database when you run 'rake'.  Do not set these DBs to the same
+# as development or production.
+###############################################################################
+
+test:
+  adapter: postgresql
+
+  host: localhost
+  database: canvasking_test
+
+  schema_order: public
