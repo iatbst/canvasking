@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'site_manage/list_users'
+
+  devise_for :users
   get 'welcome/index'
 
   # The priority is based upon order of creation: first created -> highest priority.

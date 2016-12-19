@@ -1,0 +1,14 @@
+<h1>Here is all users, who love canvas printing :)</h1>
+
+<%= link_to "HOME", welcome_index_path %>
+
+<table class="table">
+	<thead>
+		<th>Email</th>
+	</thead>
+	<tbody>
+		<% @users.each do |user| %>
+			<tr><td> <%= user.email %> </td></tr>
+		<% end %>
+	</tbody>
+</table>
