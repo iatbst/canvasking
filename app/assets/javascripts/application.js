@@ -14,16 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //
-// home template 
-//= require home_template/bootstrap.min
-//= require home_template/jquery.parallax
-//= require home_template/smoothscroll
-//= require home_template/nivo-lightbox.min
-//= require home_template/wow.min
-//= require home_template/custom
 //
-// signup template
-//= require signup_template/js/scripts
-//= require signup_template/js/classie
-//
+//= require bootstrap-sprockets
 //= require_tree .
