@@ -1,6 +1,6 @@
 /* signup section */
-#signup {
-  background: url('/theme1/images/home-bg.jpg') 50% 0 repeat-y fixed;
+#signin {
+  background: url('/home_template/images/home-bg.jpg') 50% 0 repeat-y fixed;
   -webkit-background-size: cover;
   background-size: cover;
   background-position: center;
@@ -16,13 +16,13 @@
   height: 100vh;
   text-align: center;
 }
-#signup h1 {
+#signin h1 {
   font-size: 20px;
   letter-spacing: 8px;
   font-style: normal;
   padding-top: 10px;
 }
-#signup .btn {
+#signin .btn {
   background: transparent;
   border-radius: 0;
   border: 3px solid #ffffff;
@@ -33,7 +33,7 @@
   margin-top: 40px;
   transition: all 0.4s ease-in-out;
 }
-#signup .btn:hover {
+#signin .btn:hover {
   background: #ffffff;
   color: #202020;
 }
