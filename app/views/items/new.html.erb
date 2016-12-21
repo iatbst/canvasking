@@ -1,63 +1,86 @@
 <%= render "layouts/navbar" %>
 
+<style>
+	<!
+	-- Replace radio with Image -- > label > input {/* HIDE RADIO */
+		visibility: hidden; /* Makes input not-clickable */
+		position: absolute; /* Remove input from document flow */
+	}
+	label > input + img {/* IMAGE STYLES */
+		cursor: pointer;
+		border: 2px solid transparent;
+	}
+	label > input:checked + img {/* (RADIO CHECKED) IMAGE STYLES */
+		border: 4px solid #f00;
+	}
+
+</style>
 
 <div class="container" style="margin-top:100px">
 	<div class="row">
 		<div class="col-md-8">
-  			<div class="row" style="height:100px; background-color:#EDEDED; ">
-   				<!-- 1 Upload Photo -->
-   				
-   				<%= form_for @item do |f| %>
+			<div class="row" style="height:150px; background-color:#EDEDED; ">
+				<h4> Select your image</h4>
+				<div style="margin: auto; margin-left: 50px">
+					<!-- 1 Upload Photo -->
+					<%= form_for @item do |f| %>
 
-  					<div class="field">
-    						<%= f.label :image %><br>
-    						<%= f.file_field :image %>
-  					</div>
-  					<div class="actions">
-    						<%= f.submit %>
-  					</div>
-				<% end %>
-				
+					<div class="field" style="margin-top: 20px">
+						<%= f.file_field :image, class: "btn btn-default btn-file" %>
+					</div>
+					<div class="actions" style="margin-top: 10px">
+						<%= f.submit  %>
+					</div>
+					<% end %>
+				</div>
 
-  			</div>
-    
-  			<div class="row" style="height:500px; background-color:#EDEDED; margin-top:50px">
-				2 Size It
-  			</div>
+			</div>
 
-  			<div class="row" style="height:500px; background-color:#EDEDED; margin-top:50px">
-				3 Filter It
-  			</div>		
+			<div class="row" style="height:300px; background-color:#EDEDED; margin-top:50px">
+				<h4>Select product</h4>
+				<div class="container">
+					<div class="row">
+
+						<div class="col-md-4">
+
+							<label>
+								<h7>
+									Canvas Print
+								</h7>
+								<input type="radio" name="fb" value="small" style="visibility: hidden;" />
+								<%= image_tag '/product-canvas.jpeg' %> </label>
+						</div>
+						<div class="col-md-4">
+							<label>
+								<h7>
+									Framed Paper Print
+								</h7>
+								<input type="radio" name="fb" value="small" style="visibility: hidden;"/>
+								<%= image_tag '/product-frame.jpeg' %> </label>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="row" style="height:500px; background-color:#EDEDED; margin-top:50px">
+				<h4>Select product</h4>
+			</div>
 		</div>
 		
+		<!-- Image outlook on right side -->
 		<div class="col-md-4" >
-  			<div class="row" style="height:500px; width: 400px; background-color:#EDEDED; margin-left:20px; position:fixed">
-   				<% unless @item.image.file.nil? %>
-   					<%= image_tag @item.image.url %>
-   				<% end %>
-  			</div>		
-		</div>		
+			<div class="row" style="height:600px; width:500px; margin: auto;border-style: solid; border-width: 3px;border-color:#EDEDED; margin-left:10px; position:fixed">
+				<div style="margin-top: 40px; margin-left: 50px">
+					<% unless @item.image.file.nil? %>
+					<%= image_tag @item.image.thumb.url %>
+					<% else %>
+					<%= image_tag '/canvas_placeholder.png' %>
+					<% end %>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
-<!-- Image Modal -->
-<!-- Modal -->
-<% unless @item.image.file.nil? %>
-<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">My Image</h4>
-      </div>
-      <div class="modal-body">
-        <%= image_tag @item.image.url %>
-      </div>
-      
-      <div class="modal-footer">
-      	<%= link_to "Reload another image", new_item_path %>
-        <button type="button" class="btn btn-primary">Use it!</button>
-      </div>
-    </div>
-  </div>
-</div>
-<% end %>

@@ -42,8 +42,10 @@ gem 'devise'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 
-# Carrierwave
+# Carrierwave and dependancies
 gem 'carrierwave'
+gem 'mini_magick'
+gem 'rmagick'
 
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console

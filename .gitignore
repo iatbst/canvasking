@@ -25,5 +25,8 @@
 # Ignore eclipse items
 .project
 
+# Ignore Dynamic Lib
+**.dylib
+
 # Ignore uploaded images
 /public/uploads/*
