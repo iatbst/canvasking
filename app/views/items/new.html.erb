@@ -4,8 +4,21 @@
 <div class="container" style="margin-top:100px">
 	<div class="row">
 		<div class="col-md-8">
-  			<div class="row" style="height:500px; background-color:#EDEDED; ">
-   				1 Upload Photo
+  			<div class="row" style="height:100px; background-color:#EDEDED; ">
+   				<!-- 1 Upload Photo -->
+   				
+   				<%= form_for @item do |f| %>
+
+  					<div class="field">
+    						<%= f.label :image %><br>
+    						<%= f.file_field :image %>
+  					</div>
+  					<div class="actions">
+    						<%= f.submit %>
+  					</div>
+				<% end %>
+				
+
   			</div>
     
   			<div class="row" style="height:500px; background-color:#EDEDED; margin-top:50px">
@@ -19,8 +32,32 @@
 		
 		<div class="col-md-4" >
   			<div class="row" style="height:500px; width: 400px; background-color:#EDEDED; margin-left:20px; position:fixed">
-   				The photo is very beautiful
+   				<% unless @item.image.file.nil? %>
+   					<%= image_tag @item.image.url %>
+   				<% end %>
   			</div>		
 		</div>		
 	</div>
 </div>
+
+<!-- Image Modal -->
+<!-- Modal -->
+<% unless @item.image.file.nil? %>
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">My Image</h4>
+      </div>
+      <div class="modal-body">
+        <%= image_tag @item.image.url %>
+      </div>
+      
+      <div class="modal-footer">
+      	<%= link_to "Reload another image", new_item_path %>
+        <button type="button" class="btn btn-primary">Use it!</button>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

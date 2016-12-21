@@ -22,3 +22,8 @@
 # vim artifacts
 **.swp
 
+# Ignore eclipse items
+.project
+
+# Ignore uploaded images
+/public/uploads/*
