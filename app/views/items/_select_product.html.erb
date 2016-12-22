@@ -10,7 +10,7 @@
 								<h7>
 									Canvas Print
 								</h7>
-								<input type="radio" name="product" value="canvas" style="visibility: hidden;" />
+								<%= f.radio_button :product_id, "3", style: "visibility: hidden;" %>
 								<%= image_tag '/product-canvas.jpeg' %> </label>
 						</div>
 						<div class="col-md-4">
@@ -18,7 +18,7 @@
 								<h7>
 									Framed Paper Print
 								</h7>
-								<input type="radio" name="product" value="frame" style="visibility: hidden;"/>
+								<%= f.radio_button :product_id, "4", style: "visibility: hidden;" %>
 								<%= image_tag '/product-frame.jpeg' %> </label>
 
 						</div>

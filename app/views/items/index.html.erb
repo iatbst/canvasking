@@ -1,0 +1,27 @@
+
+<table class="table table-bordered">
+	<thead>
+		<th>ID</th>
+		<th>width</th>
+		<th>height</th>
+		<th>depth</th>
+		<th>border</th>
+		<th>price</th>
+		<th>product</th>
+		<th>image</th>
+	</thead>
+	<tbody>
+		<% @items.each do |item| %>
+		<tr>
+			<td><%= item.id %></td>
+			<td><%= item.width %></td>
+			<td><%= item.height %></td>
+			<td><%= item.depth %></td>
+			<td><%= item.border %></td>
+			<td><%= item.price %></td>
+			<td><%= item.product.name %></td>
+			<td><%= image_tag item.image.thumb.url %></td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>

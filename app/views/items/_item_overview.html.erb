@@ -1,7 +1,7 @@
 			<div class="row" style="height:600px; width:450px; margin: auto;border-style: solid; border-width: 3px;border-color:#EDEDED; margin-left:10px; position:fixed">
 				<div class="row" style="height:400px; margin-top: 40px; margin-left: 50px">
 					<% unless @item.image.file.nil? %>
-					<%= image_tag @item.image.thumb.url %>
+					<%= image_tag @item.image.overview.url %>
 					<% else %>
 					<%= image_tag '/canvas_placeholder.png' %>
 					<% end %>
@@ -9,8 +9,11 @@
 				<div class="row" style="height:100px" >
 				
 				</div>
+				
 				<div class="row" style="height:100px; margin-left: 180px" >
-					<%= link_to 'Add To Cart', items_path(:add_to_cart=> true, :item=> {:id=> @item.id, :width=> 1, :height=> 1, :price=> 1, :depth=> 1, :border=> "photo", :product=> 3, :image=> !@item.image.file.nil?} ), class: "btn btn-primary", :method => :post%>
+					<%= hidden_field_tag :add_to_cart, true %>
+					<%= f.submit 'Add To Cart', class: "btn btn-primary" %>
+					<!-- <%= link_to 'Add To Cart', items_path(:add_to_cart=> true, :item=> {:id=> @item.id, :width=> 1, :height=> 1, :price=> 1, :depth=> 1, :border=> "photo", :product=> 3, :image=> !@item.image.file.nil?} ), class: "btn btn-primary", :method => :post%> -->
 				</div>
 				
 			</div>

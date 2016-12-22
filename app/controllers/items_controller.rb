@@ -1,10 +1,14 @@
 class ItemsController < ApplicationController
   
-  
-  def new
-    @item = Item.new
+  def index
+    @items = Item.all
   end
   
+  def new
+    @item = Item.create
+  end
+  
+  # Ugly, need to refactor !!!
   def create
     if params[:add_to_cart]
       if ready_to_cart
@@ -39,19 +43,40 @@ class ItemsController < ApplicationController
   
   def update
     @item = Item.find(params[:id])
- 
-    if @item.update(item_params)
+    
+    # Image upload to current item, so stay in previous page, new/edit page
+    if params[:image_upload]
+      @item.update(item_params)
       render 'new'
-    else
-      redirect_to new_item_path
+    # First time item added to cart
+    elsif params[:add_to_cart]
+      parse_width_height_price_from_width_or_height
+      @item.update(item_params)
+      redirect_to items_path
     end
+      
   end
   
   
   
   private
     def item_params
-      params.require(:item).permit(:width, :height, :price, :quantity, :image, {image: []})
+      params.require(:item).permit(:width, :height, :price, :quantity, :image, :depth, :border, :product_id)
+    end
+    
+    # An ugly way to process passed in width value for 3 fields: width/height/price
+    def parse_width_height_price_from_width_or_height
+      if !params[:item][:height].empty?
+        combination = params[:item][:height]
+        params[:item][:width] = combination.split(",")[0]
+        params[:item][:height] = combination.split(",")[1]
+        params[:item][:price] = combination.split(",")[2]      
+      else
+        combination = params[:item][:width]
+        params[:item][:width] = combination.split(",")[0]
+        params[:item][:height] = combination.split(",")[1]
+        params[:item][:price] = combination.split(",")[2]        
+      end
     end
     
     def ready_to_cart

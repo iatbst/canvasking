@@ -23,19 +23,22 @@ label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
 			<!-- Select Image -->
 			<%= render 'select_image' %>
 
-			<!-- Select Product -->
-			<%= render 'select_product' %>
+			<%= form_for :item, url: item_path(@item), method: :patch do |f| %>
+				<!-- Select Product -->
+				<%= render partial: 'select_product', locals:{f: f} %>
+	
+				<!-- Select Size -->
+				<%= render partial: 'select_size', locals:{f: f} %>
 			
-			<!-- Select Size -->
-			<%= render 'select_size' %>
-			
-			<!-- Select Depth and Border -->
-			<%= render 'select_depth_and_border'%>
+				<!-- Select Depth and Border -->
+				<%= render partial: 'select_depth_and_border', locals:{f: f}%>
+
 		</div>
 		<div class="col-md-4" >
 			<!-- Image overview on right side -->
-			<%= render 'item_overview' %>
+			<%= render partial: 'item_overview', locals: {f: f}%>
 		</div>
+			<% end %>
 	</div>
 </div>
 

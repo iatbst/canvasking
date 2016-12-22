@@ -4,12 +4,13 @@
 				<h4> Select your image</h4>
 				<div style="margin: auto; margin-left: 50px">
 					<!-- 1 Upload Photo -->
-					<%= form_for @item do |f| %>
+					<%= form_for :item, url: item_path(@item), method: :patch do |f| %>
 
 					<div class="field" style="margin-top: 20px">
 						<%= f.file_field :image, type: "file" %>
 					</div>
 					<div class="actions" style="margin-top: 10px">
+						<%= hidden_field_tag :image_upload, true %>
 						<%= f.submit  %>
 					</div>
 					<% end %>
