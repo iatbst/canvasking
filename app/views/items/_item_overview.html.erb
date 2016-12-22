@@ -1,0 +1,9 @@
+			<div class="row" style="height:600px; width:450px; margin: auto;border-style: solid; border-width: 3px;border-color:#EDEDED; margin-left:10px; position:fixed">
+				<div style="margin-top: 40px; margin-left: 50px">
+					<% unless @item.image.file.nil? %>
+					<%= image_tag @item.image.thumb.url %>
+					<% else %>
+					<%= image_tag '/canvas_placeholder.png' %>
+					<% end %>
+				</div>
+			</div>

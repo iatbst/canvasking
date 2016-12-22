@@ -1,0 +1,18 @@
+
+
+			<div class="row" style="height:150px; background-color:#EDEDED; ">
+				<h4> Select your image</h4>
+				<div style="margin: auto; margin-left: 50px">
+					<!-- 1 Upload Photo -->
+					<%= form_for @item do |f| %>
+
+					<div class="field" style="margin-top: 20px">
+						<%= f.file_field :image, type: "file" %>
+					</div>
+					<div class="actions" style="margin-top: 10px">
+						<%= f.submit  %>
+					</div>
+					<% end %>
+				</div>
+
+			</div>
