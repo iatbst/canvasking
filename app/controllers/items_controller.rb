@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
   
   def index
-    @items = Item.all
+    @cart = get_current_cart
+    @items = @cart.items
   end
   
   def new
@@ -52,6 +53,9 @@ class ItemsController < ApplicationController
     elsif params[:add_to_cart]
       parse_width_height_price_from_width_or_height
       @item.update(item_params)
+      # Add this item to cart
+      cart = get_current_cart
+      cart.items.push(@item)
       redirect_to items_path
     end
       
@@ -60,6 +64,16 @@ class ItemsController < ApplicationController
   
   
   private
+    def get_current_cart
+      begin
+        cart = Cart.find(session[:cart_id])
+      rescue ActiveRecord::RecordNotFound
+        cart = Cart.create
+        session[:cart_id] = cart.id
+      end
+      return cart
+    end
+    
     def item_params
       params.require(:item).permit(:width, :height, :price, :quantity, :image, :depth, :border, :product_id)
     end
