@@ -22,7 +22,9 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="#home" class="smoothScroll">START</a></li>
 				<li><a href="#gallery" class="smoothScroll">DISCOVERY</a></li>
-				<li><a href="#menu" class="smoothScroll">CART</a></li>
+				<li>
+					<%= link_to 'CART', cart_path, class:"smoothScroll" %>
+				</li>
 				<% unless user_signed_in? %>
 					<li><a href="/users/sign_up" class="smoothScroll">SIGN UP</a></li>
 					<li><a href="/users/sign_in" class="smoothScroll">LOGIN</a></li>

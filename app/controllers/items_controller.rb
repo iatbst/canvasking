@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  include CartsHelper
   
   def index
     @cart = get_current_cart
@@ -42,6 +43,11 @@ class ItemsController < ApplicationController
     
   end
   
+  def edit
+    @item = Item.find(params[:id])
+    render 'edit'
+  end
+  
   def update
     @item = Item.find(params[:id])
     
@@ -49,30 +55,29 @@ class ItemsController < ApplicationController
     if params[:image_upload]
       @item.update(item_params)
       render 'new'
+      
     # First time item added to cart
     elsif params[:add_to_cart]
       parse_width_height_price_from_width_or_height
+      @item.quantity = 1
       @item.update(item_params)
+      
       # Add this item to cart
       cart = get_current_cart
       cart.items.push(@item)
-      redirect_to items_path
+      redirect_to cart_path
     end
       
   end
   
-  
+  def destroy
+    @item = Item.find(params[:id])
+    @item.destroy
+    
+    redirect_to cart_path
+  end
   
   private
-    def get_current_cart
-      begin
-        cart = Cart.find(session[:cart_id])
-      rescue ActiveRecord::RecordNotFound
-        cart = Cart.create
-        session[:cart_id] = cart.id
-      end
-      return cart
-    end
     
     def item_params
       params.require(:item).permit(:width, :height, :price, :quantity, :image, :depth, :border, :product_id)

@@ -12,8 +12,12 @@
 				
 				<div class="row" style="height:100px; margin-left: 180px" >
 					<%= hidden_field_tag :add_to_cart, true %>
-					<%= f.submit 'Add To Cart', class: "btn btn-primary" %>
-					<!-- <%= link_to 'Add To Cart', items_path(:add_to_cart=> true, :item=> {:id=> @item.id, :width=> 1, :height=> 1, :price=> 1, :depth=> 1, :border=> "photo", :product=> 3, :image=> !@item.image.file.nil?} ), class: "btn btn-primary", :method => :post%> -->
+					<% if action_name == 'edit'%>
+						<%= f.submit 'Save Changes', class: "btn btn-primary btn-lg"%>
+					<% else %>
+						<%= f.submit 'Add To Cart', class: "btn btn-primary btn-lg"%>
+					<% end %>
+	
 				</div>
 				
 			</div>
