@@ -1,10 +1,6 @@
 class ItemsController < ApplicationController
   include CartsHelper
   
-  def index
-    @cart = get_current_cart
-    @items = @cart.items
-  end
   
   def new
     @item = Item.create

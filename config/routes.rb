@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'site_manage/list_users'
 
-  devise_for :users
+  devise_for :users, :controllers => { :sessions => "custom_sessions" }
   get 'welcome/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -58,4 +58,6 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  
+
 end
