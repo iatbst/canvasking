@@ -1,0 +1,32 @@
+
+			<h3>Shipping Address</h3>
+			<div class="row" style="height:480px; background-color:#EDEDED; ">
+				<div class="form-group" style="margin-top: 10px">
+    					<%= f.text_field :shipping_full_name, class:"form-control", placeholder:"Full Name", style:"width:70%" %>
+				</div>
+				<div class="form-group">
+    					<%= f.text_field :shipping_address_1, class:"form-control", placeholder:"Address 1", style:"width:70%"%>
+				</div>	
+				<div class="form-group">
+    					<%= f.text_field :shipping_address_2, class:"form-control", placeholder:"Address 2", style:"width:70%"%>
+				</div>
+				<div class="form-group">
+    					<%= f.text_field :shipping_city, class:"form-control", placeholder:"City", style:"width:70%" %>
+				</div>
+				<div class="form-group">
+					<label>Country</label>
+					<%= f.select :shipping_country, ['United States', 'Canada'],{} ,{ class:"form-control", style:"width: 70%"} %>
+				</div>
+				<div class="form-group">
+					<label>State</label>
+					<%= f.select :shipping_state, ['California', 'Washington', 'New York', 'Texas', 'Nevada', 'Utah'],{} ,{ class:"form-control", style:"width: 70%"} %>
+				</div>
+				<div class="form-group">
+    					<%= f.text_field :shipping_zip, class:"form-control", placeholder:"Zip or Post Code", style:"width:70%" %>
+				</div>
+				<div class="form-group">
+					<em>(Optional. In case we need to contact you about the order)</em>
+    					<%= f.text_field :shipping_phone, class:"form-control", placeholder:"Phone", style:"width:70%" %>
+				</div>
+				
+			</div>

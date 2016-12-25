@@ -66,9 +66,8 @@
 				<h4 style="margin-left: 30%">3 items: $342</h3>
 				<div class="row" style="height:200px; margin-left: 50px" >
 
-					<button type="button" class="btn btn-primary btn-lg" style="width: 80%">
-						Checkout
-					</button>
+					
+					<%= button_to 'Checkout', new_order_path, method: :get, class:"btn btn-primary btn-lg", style:"width: 80%" %>
 					<br />
 					<br />
 					<%= button_to 'Continue Shopping', new_item_path, method: :get, class:"btn btn-secondary btn-lg", style:"width: 80%" %>

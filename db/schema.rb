@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161224035213) do
+ActiveRecord::Schema.define(version: 20161225024000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,10 +36,28 @@ ActiveRecord::Schema.define(version: 20161224035213) do
     t.decimal  "depth"
     t.string   "border"
     t.integer  "cart_id"
+    t.integer  "order_id"
   end
 
   add_index "items", ["cart_id"], name: "index_items_on_cart_id", using: :btree
+  add_index "items", ["order_id"], name: "index_items_on_order_id", using: :btree
   add_index "items", ["product_id"], name: "index_items_on_product_id", using: :btree
+
+  create_table "orders", force: :cascade do |t|
+    t.string   "shipping_full_name"
+    t.string   "shipping_address_1"
+    t.string   "shipping_address_2"
+    t.string   "shipping_city"
+    t.string   "shipping_country"
+    t.string   "shipping_state"
+    t.string   "shipping_zip"
+    t.string   "shipping_phone"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "user_id"
+  end
+
+  add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
   create_table "products", force: :cascade do |t|
     t.string   "name"
@@ -67,5 +85,7 @@ ActiveRecord::Schema.define(version: 20161224035213) do
 
   add_foreign_key "carts", "users"
   add_foreign_key "items", "carts"
+  add_foreign_key "items", "orders"
   add_foreign_key "items", "products"
+  add_foreign_key "orders", "users"
 end
