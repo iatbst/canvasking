@@ -1,21 +1,21 @@
-			<div class="row" style="height:600px; width:450px; margin: auto;border-style: solid; border-width: 3px;border-color:#EDEDED; margin-left:10px; position:fixed">
-				<div class="row" style="height:400px; margin-top: 40px; margin-left: 50px">
+			<div class="row" align="center" style="height:550px; width:450px; margin: auto;border-style: solid; border-width: 3px;border-color:#EDEDED; margin-left:10px; position:fixed">
+				<div class="row" style="height:400px; margin-top: 20px;">
 					<% unless @item.image.file.nil? %>
 					<%= image_tag @item.image.overview.url %>
 					<% else %>
 					<%= image_tag '/canvas_placeholder.png' %>
 					<% end %>
 				</div>
-				<div class="row" style="height:100px" >
+				<div class="row" style="height:60px" >
 				
 				</div>
 				
-				<div class="row" style="height:100px; margin-left: 180px" >
+				<div class="row" style="height:30px;" >
 					<%= hidden_field_tag :add_to_cart, true %>
 					<% if action_name == 'edit'%>
 						<%= f.submit 'Save Changes', class: "btn btn-primary btn-lg"%>
 					<% else %>
-						<%= f.submit 'Add To Cart', class: "btn btn-primary btn-lg"%>
+						<%= f.submit 'Add To Cart', class: "btn btn-primary btn-lg", style:"width: 50%"%>
 					<% end %>
 	
 				</div>

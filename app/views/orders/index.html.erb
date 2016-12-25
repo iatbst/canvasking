@@ -2,45 +2,86 @@
 
 <div class="container" style="margin-top: 50px" >
 	<h3>My Orders</h3>
-	<div class="row">
-		<table class="table">
-			<% @orders.each do |order| %>
-			<tr>
-				<td>
-				<table class="table">
+
+	<% @orders.each do |order| %>
+	<div class="row" style="margin-top: 20px">
+		<div class="panel panel-default">
+			<!-- Default panel contents -->
+			<div class="panel-heading">
+				<div class="container" >
+					<div class="row">
+						<div class="col-md-2">
+							<h5> Order Placed </h5> <%= order.created_at.strftime("%b.%d %Y") %>
+						</div>
+						<div class="col-md-2">
+							<h5>TOTAL:</h5>$99.99
+						</div>
+						<div class="col-md-2">
+							<h5>SHIP TO:</h5>
+							<%= order.shipping_full_name %>
+						</div>
+						<div class="col-md-5" align="right">
+							<h5>Order # A123456789</h5>
+							<%= link_to 'Order Detail', order_path(order) %>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Table -->
+			<table class="table">
+				<tbody>
 					<% order.items.each do |item| %>
 					<tr>
-						<td> <%= image_tag item.image.thumb.url %> </td>
+						<td>
+						<div class="container">
+							<div class="row">
+								<div class="col-md-3">
+									<br />
+									<%= image_tag item.image.thumb.url %>
+								</div>
+								<div class="col-md-7">
+									<br />
+									<ul class="fa-ul">
+										<li>
+											<b>product:</b> <%= item.product.name %>
+										</li>
+										<li>
+											<b>size:</b> <%= item.width %>"x<%= item.height %>"
+										</li>
+										<li>
+											<b>depth:</b> <%= item.depth %>"
+										</li>
+										<li>
+											<b>border:</b> <%= item.border %>
+										</li>
+										<li>
+											<b>price:</b> <%= item.price %>
+										</li>
+										<br />
+										<li>
+											<%= button_to 'Buy It Again', '#', method: :get, class:"btn btn-primary btn-xs" %>
+										</li>
+									</ul>
+
+								</div>
+								<div class="col-md-2">
+									<br />
+									<%= button_to 'Track Package', '#', method: :get, class:"btn btn-primary", style:"width: 90%" %>
+									<br />
+									<%= button_to 'Return or Replace', '#', method: :get, class:"btn btn-secondary", type:"button", style:"width: 90%" %>
+									<br />
+									<%= button_to 'Feadbacks', '#', method: :get, class:"btn btn-secondary", style:"width: 90%" %>
+								</div>
+							</div>
+						</div></td>
 					</tr>
 					<% end %>
-				</table></td>
-				<td>
-				<ul class="list-group">
-					<li class="list-group-item">
-						<%= order.shipping_full_name %>
-					</li>
-					<li class="list-group-item">
-						<%= order.shipping_address_1 %>
-						<%= order.shipping_address_2 %>
-					</li>
-					<li class="list-group-item">
-						<%= order.shipping_city %>
-					</li>
-					<li class="list-group-item">
-						<%= order.shipping_state %>
-					</li>
-					<li class="list-group-item">
-						<%= order.shipping_country %>
-					</li>
-					<li class="list-group-item">
-						<%= order.shipping_zip %>
-					</li>
-					<li class="list-group-item">
-						<%= order.shipping_phone %>
-					</li>
-				</ul></td>
-			</tr>
-			<% end %>
-		</table>
+				</tbody>
+			</table>
+		</div>
+
 	</div>
+
+	<% end %>
 </div>
