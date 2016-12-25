@@ -61,6 +61,7 @@ class ItemsController < ApplicationController
       # Add this item to cart
       cart = get_current_cart
       cart.items.push(@item)
+
       redirect_to cart_path
     end
       

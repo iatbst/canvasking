@@ -35,6 +35,7 @@ module CartsHelper
       if user_signed_in?
         session_cart = get_session_cart
         user_cart = get_current_cart
+        user_cart.price += session_cart.price
         user_cart.items.push(*session_cart.items)  # This step will update item cart_id from session cart to user cart
       end
     end

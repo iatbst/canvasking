@@ -1,61 +1,84 @@
 <%= render "layouts/navbar" %>
 
-
-<div class="container" style="margin-top: 50px" >
+<div class="container" style="margin-top: 50px; margin-bottom: 20px" >
 	<h3>Order Details</h3>
-	<div class="row">
-		<h4>Shipping Info</h4>
-		<ul class="list-group">
-			<li class="list-group-item">
-				<%= @order.shipping_full_name %>
-			</li>
-			<li class="list-group-item">
-				<%= @order.shipping_address_1 %>
-				<%= @order.shipping_address_2 %>
-			</li>
-			<li class="list-group-item">
-				<%= @order.shipping_city %>
-			</li>
-			<li class="list-group-item">
-				<%= @order.shipping_state %>
-			</li>
-			<li class="list-group-item">
-				<%= @order.shipping_country %>
-			</li>
-			<li class="list-group-item">
-				<%= @order.shipping_zip %>
-			</li>
-			<li class="list-group-item">
-				<%= @order.shipping_phone %>
-			</li>
-		</ul>
-	</div>
-	<div class="row">
-		<h4>What I ordered</h4>
-		<table class="table">
-			<% @order.items.each do |item| %>
-			<tr>
-				<td> <%= image_tag item.image.thumb.url %> </td>
-				<td>
-				<ul class="fa-ul">
-					<li>
-						<b>product:</b> <%= item.product.name %>
-					</li>
-					<li>
-						<b>size:</b> <%= item.width %>"x<%= item.height %>"
-					</li>
-					<li>
-						<b>depth:</b> <%= item.depth %>"
-					</li>
-					<li>
-						<b>border:</b> <%= item.border %>
-					</li>
-					<li>
-						<b>price:</b> <%= item.price %>
-					</li>
-				</ul></td>
-			</tr>
+	<div class="row" style="border-style: solid; border-width: 3px; border-color:#EDEDED;">
+		<div class="col-md-3">
+			<br />
+			<h5><b>Shipping Address</b></h5>
+			<%= @order.shipping_full_name %>
+			<br />
+			<%= @order.shipping_address_1 %>
+			<br />
+			<% if !@order.shipping_address_2.empty? %>
+			<%= @order.shipping_address_2 %>
+			<br />
 			<% end %>
-		</table>
+			<%= @order.shipping_city %>,&nbsp;<%= @order.shipping_state %>&nbsp;<%= @order.shipping_zip %>
+			<br />
+			<%= @order.shipping_country %>
+			<br />
+		</div>
+		<div class="col-md-6">
+			<br />
+			<h5>Payment Method</h5>
+			VISA &nbsp;**** &nbsp;4369
+		</div>
+		<div class="col-md-3">
+			<br />
+			<h5>Order Summary</h5>
+			Item(s) Subtotal: <%= @order.before_price %>
+			<br />
+			Shipping & Handling: <%= @order.shipping_price %>
+			<br />
+			Total before tax: <%= @order.before_price + @order.shipping_price %>
+			<br />
+			Tax collected: <%= @order.tax_price %>
+			<br />
+			<br />
+			<b>Grand Total: <%= @order.total_price %></b>
+			<br />
+		</div>
+	</div>
+	<div class="row" style="margin-top: 20px; border-style: solid; border-width: 3px; border-color:#EDEDED;">
+
+		<% @order.items.each_with_index do |item, ix| %>
+		<div class="row">
+
+			<div class="container">
+				<div class="row">
+					<div class="col-md-9">
+						<br />
+						<%= image_tag item.image.overview.url %>
+					</div>
+
+					<div class="col-md-3" >
+						<br />
+						
+						<h5>Product Summary</h5>
+						Type: <%= item.product.name %>
+						<br />
+						Size: <%= item.width %>"x<%= item.height %>"
+						<br />
+						Depth: <%= item.depth %>
+						<br />
+						Border: <%= item.border %>
+						
+
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-md-9"></div>
+					<div class="col-md-3"><b>Price: <%= item.price %></b></div>
+				</div>
+				<% if ix != @order.items.count - 1 %>
+					<hr style="width: 100%; border-color:#EDEDED;"/>
+				<% else %>
+					<br />
+				<% end %>
+			</div>
+		</div>
+		<% end %>
 	</div>
 </div>

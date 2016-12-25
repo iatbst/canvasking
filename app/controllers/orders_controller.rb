@@ -3,7 +3,11 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
   
   def new
+    @cart = get_current_cart
+    @shipping_cost = 0
     
+    # TODO: Need to collect tax depend on state law
+    @tax = 0
   end
   
   def index
@@ -19,6 +23,13 @@ class OrdersController < ApplicationController
     # hook up order with all the items in the cart
     cart = get_current_cart
     @order.items.push(*cart.items)
+    
+    # Calculate all kind of prices
+    @order.before_price = cart.price
+    @order.shipping_price = 0
+    # TODO: Need to collect tax depend on state law
+    @order.tax_price = 0
+    @order.total_price = @order.before_price + @order.shipping_price + @order.tax_price
     @order.save!
     
     # Empty Cart !

@@ -11,15 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161225024000) do
+ActiveRecord::Schema.define(version: 20161225191129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "carts", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.integer  "user_id"
+    t.decimal  "price",      default: 0.0
   end
 
   add_index "carts", ["user_id"], name: "index_carts_on_user_id", using: :btree
@@ -55,6 +56,10 @@ ActiveRecord::Schema.define(version: 20161225024000) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.integer  "user_id"
+    t.decimal  "before_price"
+    t.decimal  "shipping_price"
+    t.decimal  "tax_price"
+    t.decimal  "total_price"
   end
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree

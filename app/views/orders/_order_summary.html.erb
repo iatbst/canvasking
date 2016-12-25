@@ -5,11 +5,18 @@
 				</div>
 
 				<div class="row" align="center" style="height:100px; " >
-					<h4 >3 items: $342</h3>
-					<h4 >Shipping: Free</h3>
+					<h4 ><%= @cart.items.count %> items: $<%= @cart.price %></h3>
+					<h4 >Shipping: 
+						<% if @shipping_cost == 0 %>
+							FREE
+						<% else %>
+							<%= @shipping_cost %>
+						<% end %>
+					</h4>
+					<h4 >Estimated tax: <%= @tax %></h4>
 				</div>
 				<hr style="width: 50%"/>
 				<div class="row" align="center" style="height:50px;" >
-					<h3 >Total: $342</h3>
+					<h3 >Total: $<%= @cart.price + @shipping_cost + @tax %></h3>
 				</div>
 			</div>

@@ -14,7 +14,7 @@
 							<h5> Order Placed </h5> <%= order.created_at.strftime("%b.%d %Y") %>
 						</div>
 						<div class="col-md-2">
-							<h5>TOTAL:</h5>$99.99
+							<h5>TOTAL:</h5>$<%= order.total_price %>
 						</div>
 						<div class="col-md-2">
 							<h5>SHIP TO:</h5>
@@ -34,12 +34,13 @@
 					<% order.items.each do |item| %>
 					<tr>
 						<td>
-						<div class="container">
+						
 							<div class="row">
 								<div class="col-md-3">
 									<br />
 									<%= image_tag item.image.thumb.url %>
 								</div>
+								
 								<div class="col-md-7">
 									<br />
 									<ul class="fa-ul">
@@ -65,6 +66,7 @@
 									</ul>
 
 								</div>
+								
 								<div class="col-md-2">
 									<br />
 									<%= button_to 'Track Package', '#', method: :get, class:"btn btn-primary", style:"width: 90%" %>
@@ -73,12 +75,15 @@
 									<br />
 									<%= button_to 'Feadbacks', '#', method: :get, class:"btn btn-secondary", style:"width: 90%" %>
 								</div>
+								
 							</div>
-						</div></td>
+						
+						</td>
 					</tr>
 					<% end %>
 				</tbody>
 			</table>
+			
 		</div>
 
 	</div>
