@@ -5,7 +5,7 @@
 				</div>
 
 				<div class="row" align="center" style="height:100px; " >
-					<h4 ><%= @cart.items.count %> items: $<%= @cart.price %></h3>
+					<h4 ><%= @cart.quantity %> items: $<%= @cart.price %></h3>
 					<h4 >Shipping: 
 						<% if @shipping_cost == 0 %>
 							FREE

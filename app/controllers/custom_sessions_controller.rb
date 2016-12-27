@@ -8,5 +8,7 @@ class CustomSessionsController < Devise::SessionsController
 
   def after_login
     merge_items_from_session_cart_to_user_cart
+    update_total_price_in_cart
+    update_total_quantity_in_cart
   end
 end

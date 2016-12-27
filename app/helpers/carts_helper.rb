@@ -2,13 +2,24 @@ module CartsHelper
     
     # IMPORTANT: Anytime items changed in current cart, this function should be invoked
     # eg, items add,remove, edit quantity etc
-    def update_total_price_in_cart(cart)
+    def update_total_price_in_cart
+      cart = get_current_cart
       price = 0
       cart.items.each do |item|
         price += item.price*item.quantity
       end
       cart.price = price
       cart.save!
+    end
+    
+    def update_total_quantity_in_cart
+      cart = get_current_cart
+      quantity = 0
+      cart.items.each do |item|
+        quantity += item.quantity
+      end
+      cart.quantity = quantity
+      cart.save!     
     end
     
     def get_current_cart

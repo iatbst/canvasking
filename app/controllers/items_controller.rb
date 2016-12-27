@@ -51,7 +51,10 @@ class ItemsController < ApplicationController
       # Add this item to cart
       cart = get_current_cart
       cart.items.push(@item)
-
+      cart.quantity += 1    # Update quantity
+      cart.save!        
+      update_total_price_in_cart    # Update price
+      
       redirect_to cart_path
       
     # Image cropped, return to item new page
@@ -61,23 +64,32 @@ class ItemsController < ApplicationController
       render 'new'
     
     elsif params[:update_quantity]
+      cart = get_current_cart
       if params[:plus]
         @item.quantity += 1
+        cart.quantity += 1
       elsif params[:minus] && @item.quantity > 1
         @item.quantity -= 1
+        cart.quantity -= 1
       end
       @item.save!
+      cart.save!
+      
       # update cart price
+      update_total_price_in_cart
       cart = get_current_cart
-      update_total_price_in_cart(cart)
-      render json: {quantity: @item.quantity, price: cart.price}
+      render json: {quantity: @item.quantity, price: cart.price, cart_quantity: cart.quantity}
     end
       
   end
   
   def destroy
+    # Update cart quantity
+    cart = get_current_cart
     @item = Item.find(params[:id])
+    cart.quantity -= @item.quantity
     @item.destroy
+    cart.save!
     
     redirect_to cart_path
   end
