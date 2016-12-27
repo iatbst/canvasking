@@ -55,7 +55,7 @@
 					<div class="col-md-3" >
 						<br />
 						
-						<h5>Product Summary</h5>
+						<h5>Summary</h5>
 						Type: <%= item.product.name %>
 						<br />
 						Size: <%= item.size %>
@@ -70,7 +70,10 @@
 				</div>
 				<div class="row">
 					<div class="col-md-9"></div>
-					<div class="col-md-3"><b>Price: $<%= item.price %></b></div>
+					<div class="col-md-3">
+						Quantity: <b><%= item.quantity %></b><br />
+						Subtotal: $<b><%= item.price*item.quantity %></b>					
+					</div>
 				</div>
 				<% if ix != @order.items.count - 1 %>
 					<hr style="width: 100%; border-color:#EDEDED;"/>

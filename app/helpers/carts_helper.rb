@@ -1,5 +1,16 @@
 module CartsHelper
-
+    
+    # IMPORTANT: Anytime items changed in current cart, this function should be invoked
+    # eg, items add,remove, edit quantity etc
+    def update_total_price_in_cart(cart)
+      price = 0
+      cart.items.each do |item|
+        price += item.price*item.quantity
+      end
+      cart.price = price
+      cart.save!
+    end
+    
     def get_current_cart
       if user_signed_in?
         # If user signed in, get the user cart

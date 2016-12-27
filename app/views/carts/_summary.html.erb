@@ -4,7 +4,7 @@
 				<h2>Your Cart</h2>
 			</div>
 
-			<h4 style="margin-left: 30%"><%= cart.items.count %> items: $<%= cart.price %></h3>
+			<h4 style="margin-left: 30%"><%= cart.items.count %> items: $<b id="cart_price"><%= cart.price %></b></h4>
 			<div class="row" style="height:200px; margin-left: 50px" >
 
 				<%= button_to 'Checkout', new_order_path, method: :get, class:"btn btn-primary btn-lg", style:"width: 80%" %>

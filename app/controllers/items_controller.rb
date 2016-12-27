@@ -59,6 +59,18 @@ class ItemsController < ApplicationController
       scale_scrop_cords(3000, 300)
       @item.update(item_params)  
       render 'new'
+    
+    elsif params[:update_quantity]
+      if params[:plus]
+        @item.quantity += 1
+      elsif params[:minus] && @item.quantity > 1
+        @item.quantity -= 1
+      end
+      @item.save!
+      # update cart price
+      cart = get_current_cart
+      update_total_price_in_cart(cart)
+      render json: {quantity: @item.quantity, price: cart.price}
     end
       
   end
