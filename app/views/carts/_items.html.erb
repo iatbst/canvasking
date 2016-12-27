@@ -18,7 +18,7 @@
 								<h5>Product Summary</h5>
 								Type: <%= item.product.name %>
 								<br />
-								Size: <%= item.width %>"x<%= item.height %>"
+								Size: <%= item.size %>
 								<br />
 								Depth: <%= item.depth %>
 								<br />
@@ -31,7 +31,7 @@
 						<div class="row">
 							<div class="col-md-6"></div>
 							<div class="col-md-3">
-								<b>Price: <%= item.price %></b>
+								<b>Price: $<%= item.price %></b>
 							</div>
 							<br />
 						</div>
@@ -46,15 +46,15 @@
 								</div>
 								<!-- TODO Need to implement JS to update quantity -->
 								<div class="col-sm-1">
-									<button type="button" class="btn btn-default" aria-label="Left Align">
+									
 										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-									</button>
+										
 								</div>
 								<div class="col-sm-1"></div>
 								<div class="col-sm-1">
-									<button type="button" class="btn btn-default" aria-label="Left Align">
+									
 										<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-									</button>
+									
 								</div>
 								<div class="col-sm-1"></div>
 

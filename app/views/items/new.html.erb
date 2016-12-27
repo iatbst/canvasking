@@ -45,3 +45,48 @@ label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
 <% if !@file_upload.nil? && @file_upload %>
 	<%= render 'crop' %>
 <% end %>
+
+<script>
+
+	$("#product_canvas").click(function() {
+  		$('#product_choice').text('Type: canvas')
+		});
+	$("#product_frame").click(function() {
+  		$('#product_choice').text('Type: frame')
+		});
+
+ 	$("#item_size").change(function () {
+        $('#size_choice').text('Size: ' + this.value)
+    		});
+
+ 	$("#item_size").change(function () {
+        $('#price_choice').text('Subtotal: ' + $("#item_size option:selected").text().split(' ')[2])
+    		});
+    		
+ 	$("#depth_0").click(function () {
+        $('#depth_choice').text('Depth: 0"')
+    		});
+
+ 	$("#depth_0_75").click(function () {
+        $('#depth_choice').text('Depth: 0.75"')
+    		});
+    		
+ 	$("#depth_1_5").click(function () {
+        $('#depth_choice').text('Depth: 1.5"')
+    		});
+    		
+ 	$("#depth_2_5").click(function () {
+        $('#depth_choice').text('Depth: 2.5"')
+    		});
+ 	$("#border_photo").click(function () {
+        $('#border_choice').text('Border: photo')
+    		});
+    		
+ 	$("#border_black").click(function () {
+        $('#border_choice').text('Border: black')
+    		});
+    		
+ 	$("#border_white").click(function () {
+        $('#border_choice').text('Border: white')
+    		});
+</script>

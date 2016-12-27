@@ -1,23 +1,50 @@
-			<div class="row" align="center" style="height:550px; width:450px; margin: auto;border-style: solid; border-width: 3px;border-color:#EDEDED; margin-left:10px; position:fixed">
-				<div class="row" style="height:400px; margin-top: 20px;">
-					<% unless @item.image.file.nil? %>
-					<%= image_tag @item.image.overview.url %>
-					<% else %>
-					<%= image_tag '/canvas_placeholder.png' %>
-					<% end %>
-				</div>
-				<div class="row" style="height:60px" >
-				
-				</div>
-				
-				<div class="row" style="height:30px;" >
-					<%= hidden_field_tag :add_to_cart, true %>
-					<% if item_in_cart?(@item) %>
-						<%= f.submit 'Save Changes', class: "btn btn-primary btn-lg"%>
-					<% else %>
-						<%= f.submit 'Add To Cart', class: "btn btn-primary btn-lg", style:"width: 50%"%>
-					<% end %>
-	
-				</div>
-				
-			</div>
+<div class="row" align="center" style="height:550px; width:350px; margin: auto;border-style: solid; border-width: 3px;border-color:#EDEDED; margin-left:10px; position:fixed">
+	<div class="row" style="height:300px; margin-top: 10px;">
+		<% unless @item.image.file.nil? %>
+		<%= image_tag @item.image.overview.url %>
+		<% else %>
+		<%= image_tag '/canvas_placeholder.png' %>
+		<% end %>
+	</div>
+	<div class="row" style="height:150px" >
+		<div class="col-md-1"></div>
+		<div class="col-md-5" style= "margin-left: 0px" align="left">
+			<br />
+			<b id="product_choice"> <% if !@item.product.nil? %>
+			<%= "Type: #{@item.product.name}" %>
+			<% end %> </b>
+			<br />
+			<b id="size_choice"> <% if !@item.size.nil? %>
+			<%= "Size: #{@item.size}" %>
+			<% end %> </b>
+			<br />
+			<b id="depth_choice"> <% if !@item.depth.nil? %>
+			<%= "Depth: #{@item.depth}\"" %>
+			<% end %> </b>
+			<br />
+			<b id="border_choice"> <% if !@item.border.nil? %>
+			<%= "Border: #{@item.border}" %>
+			<% end %> </b>
+		</div>
+	</div>
+
+	<div class="row" style="height:30px" >
+		<div class="col-md-1"></div>
+		<div class="col-md-5" style= "margin-left: 0px" align="left">
+			<b id="price_choice"> <% if !@item.price.nil? %>
+			<%= "Subtotal: $#{@item.price}" %>
+			<% end %> </b>
+		</div>
+	</div>
+
+	<div class="row" style="height:30px;" >
+		<%= hidden_field_tag :go_to_cart, true %>
+		<% if item_in_cart?(@item) %>
+		<%= f.submit 'Save Changes', class: "btn btn-primary btn-lg", style:"width: 80%"%>
+		<% else %>
+		<%= f.submit 'Add To Cart', class: "btn btn-primary btn-lg", style:"width: 80%"%>
+		<% end %>
+
+	</div>
+
+</div>

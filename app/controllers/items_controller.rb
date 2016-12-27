@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
   # TODO: need to refactor, otherwise every new page will create a item in DB, NO GOOD !!!
   def new
     @item = Item.create
+    @size_price = read_size_price_table
   end
   
   # NOT USED, because item is automatically created when user enter new page.
@@ -17,11 +18,13 @@ class ItemsController < ApplicationController
   
   def show
     @item = Item.find(params[:id])
+    @size_price = read_size_price_table
     render 'new'
   end
   
   def edit
     @item = Item.find(params[:id])
+    @size_price = read_size_price_table
     render 'new'
   end
   
@@ -32,6 +35,7 @@ class ItemsController < ApplicationController
   #  - Add to cart/Save changes button ~> cart page
   def update
     @item = Item.find(params[:id])
+    @size_price = read_size_price_table
     
     # Image upload to current item, render to crop page
     if params[:image_upload]
@@ -39,10 +43,9 @@ class ItemsController < ApplicationController
       @file_upload = true
       render 'new'
             
-    # Item added to cart
-    elsif params[:add_to_cart]
-      parse_width_height_price_from_width_or_height
-      @item.quantity = 1
+    # Item added to cart or edit items in cart
+    elsif params[:go_to_cart]
+      @item.price = calculate_price
       @item.update(item_params)
       
       # Add this item to cart
@@ -53,7 +56,7 @@ class ItemsController < ApplicationController
       
     # Image cropped, return to item new page
     elsif params[:image_cropped]
-      scale_scrop_cords(3000, 400)
+      scale_scrop_cords(3000, 300)
       @item.update(item_params)  
       render 'new'
     end
@@ -68,6 +71,15 @@ class ItemsController < ApplicationController
   end
   
   private
+  
+    def read_size_price_table
+      YAML.load(File.read(Rails.root.join('business','size_price.yml')))
+    end
+    
+    def calculate_price
+      size_price = YAML.load(File.read(Rails.root.join('business','size_price.yml')))
+      return size_price[params[:item][:size]]
+    end
     # The x,y,w,z crops coordination passed from Jcrop are based from overview size
     # but carrierwave-jcrop gem crop process them based on origin_size (Not origin image, image after uploaded)
     # need to scale x,y,w,z according
@@ -79,23 +91,10 @@ class ItemsController < ApplicationController
     end
     
     def item_params
-      params.require(:item).permit(:image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h, :width, :height, :price, :quantity, :image, :depth, :border, :product_id)
+      params.require(:item).permit(:image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h, :size, :price, :quantity, :image, :depth, :border, :product_id)
     end
     
-    # An ugly way to process passed in width value for 3 fields: width/height/price
-    def parse_width_height_price_from_width_or_height
-      if !params[:item][:height].empty?
-        combination = params[:item][:height]
-        params[:item][:width] = combination.split(",")[0]
-        params[:item][:height] = combination.split(",")[1]
-        params[:item][:price] = combination.split(",")[2]      
-      else
-        combination = params[:item][:width]
-        params[:item][:width] = combination.split(",")[0]
-        params[:item][:height] = combination.split(",")[1]
-        params[:item][:price] = combination.split(",")[2]        
-      end
-    end
+    
     
     
 end
