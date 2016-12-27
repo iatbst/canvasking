@@ -42,3 +42,6 @@ label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
 	</div>
 </div>
 
+<% if !@file_upload.nil? && @file_upload %>
+	<%= render 'crop' %>
+<% end %>

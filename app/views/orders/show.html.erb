@@ -27,16 +27,16 @@
 		<div class="col-md-3">
 			<br />
 			<h5>Order Summary</h5>
-			Item(s) Subtotal: <%= @order.before_price %>
+			Item(s) Subtotal: $<%= @order.before_price %>
 			<br />
-			Shipping & Handling: <%= @order.shipping_price %>
+			Shipping & Handling: $<%= @order.shipping_price %>
 			<br />
-			Total before tax: <%= @order.before_price + @order.shipping_price %>
+			Total before tax: $<%= @order.before_price + @order.shipping_price %>
 			<br />
-			Tax collected: <%= @order.tax_price %>
+			Tax collected: $<%= @order.tax_price %>
 			<br />
 			<br />
-			<b>Grand Total: <%= @order.total_price %></b>
+			<b>Grand Total: $<%= @order.total_price %></b>
 			<br />
 		</div>
 	</div>
@@ -70,7 +70,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-9"></div>
-					<div class="col-md-3"><b>Price: <%= item.price %></b></div>
+					<div class="col-md-3"><b>Price: $<%= item.price %></b></div>
 				</div>
 				<% if ix != @order.items.count - 1 %>
 					<hr style="width: 100%; border-color:#EDEDED;"/>

@@ -12,7 +12,7 @@
 				
 				<div class="row" style="height:30px;" >
 					<%= hidden_field_tag :add_to_cart, true %>
-					<% if action_name == 'edit'%>
+					<% if item_in_cart?(@item) %>
 						<%= f.submit 'Save Changes', class: "btn btn-primary btn-lg"%>
 					<% else %>
 						<%= f.submit 'Add To Cart', class: "btn btn-primary btn-lg", style:"width: 50%"%>

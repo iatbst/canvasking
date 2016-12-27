@@ -40,4 +40,7 @@ module CartsHelper
       end
     end
 
+    def item_in_cart?(item)
+      return get_current_cart.items.include?(item)    
+    end
 end

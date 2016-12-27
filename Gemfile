@@ -46,11 +46,12 @@ gem 'autoprefixer-rails'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'rmagick'
-
-# Shopping cart gem
+gem 'carrierwave-crop' # for image cropping
 
 # Debugging
 gem 'pry'
+
+
 
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console

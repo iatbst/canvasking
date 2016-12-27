@@ -1,0 +1,55 @@
+<style>
+	.modal-backdrop {
+		opacity: 0.85 !important;
+	}
+
+</style>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Crop My Image</h4>
+			</div>
+			<div class="modal-body">
+
+				<div class="row" align="center">
+					<%= form_for @item do |f| %>
+					<%= f.cropbox :image, version: :overview %>
+					<br />
+					<%= hidden_field_tag :image_cropped, true %>
+					<%= f.submit 'Save', id: "crop_submit_button", class: "btn btn-secondary btn-lg", style:"display: none"%>
+					<% end %>
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					Skip Crop
+				</button>
+				<button type="button" onclick="crop();" class="btn btn-primary">
+					Crop
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Stop onclick action on Jcrop selection area -->
+<script type="text/javascript">
+
+	// Trigger modal when page loaded an
+	$(window).load(function() {
+		$('#myModal').modal('show');
+		$('div.jcrop-selection').attr('onclick', 'return false;');
+	});
+	
+	// Use footer button to trigger form submit button
+	function crop(){
+		$('#crop_submit_button').click()
+	}
+</script>
