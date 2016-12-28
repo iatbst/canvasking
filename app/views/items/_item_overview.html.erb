@@ -6,6 +6,7 @@
 		<%= image_tag '/canvas_placeholder.png' %>
 		<% end %>
 	</div>
+	
 	<div class="row" style="height:150px" >
 		<div class="col-md-1"></div>
 		<div class="col-md-5" style= "margin-left: 0px" align="left">
@@ -40,9 +41,9 @@
 	<div class="row" style="height:30px;" >
 		<%= hidden_field_tag :go_to_cart, true %>
 		<% if item_in_cart?(@item) %>
-		<%= f.submit 'Save Changes', class: "btn btn-primary btn-lg", style:"width: 80%"%>
+			<%= f.submit 'Save Changes', class: "btn btn-primary btn-lg", style:"width: 80%"%>
 		<% else %>
-		<%= f.submit 'Add To Cart', class: "btn btn-primary btn-lg", style:"width: 80%"%>
+			<%= f.submit 'Add To Cart', class: "btn btn-primary btn-lg", style:"width: 80%"%>
 		<% end %>
 
 	</div>

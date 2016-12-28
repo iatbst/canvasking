@@ -9,13 +9,16 @@
 						<div class="row">
 							<div class="col-md-6">
 								<br />
-								<%= image_tag item.image.overview.url %>
+								<a data-method="get" style="color: black" href="/items/<%= item.id %>/edit">
+									<%= image_tag item.image.overview.url %>
+								</a>
 							</div>
 
 							<div class="col-md-3" >
 								<br />
-
-								<h5>Product Summary</h5>
+								<br />
+								<br />
+					
 								Type: <%= item.product.name %>
 								<br />
 								Size: <%= item.size %>
@@ -31,40 +34,30 @@
 						<div class="row">
 							<div class="col-md-6"></div>
 							<div class="col-md-3">
-								<b>Price: $<%= item.price %></b>
+								<b> $<%= item.price %></b><br />
+								Quantity:&nbsp;&nbsp;<b id="quantity_<%= item.id %>"><%= item.quantity %></b>
+								
 							</div>
 							<br />
 						</div>
 
-						<br />
+				
 
 						<div class="row">
-							<div class="col-md-3"></div>
-							<div class="col-md-6">
-								<div class="col-sm-2">
-									quantity:<b id="quantity_<%= item.id %>"><%= item.quantity %></b>
-								</div>
-								<!-- TODO Need to implement JS to update quantity -->
-								<div class="col-sm-1">
-									
-									<span style="cursor:pointer;" class="glyphicon glyphicon-plus" aria-hidden="true" name="<%= item.id %>" ></span>
-										
-								</div>
-								<div class="col-sm-1"></div>
-								<div class="col-sm-1">
-									
-										<span style="cursor:pointer;"  class="glyphicon glyphicon-minus" aria-hidden="true" name="<%= item.id %>"></span>
-									
-								</div>
-								<div class="col-sm-1"></div>
-
-								<div class="col-sm-1">
-									<%= button_to 'Modify', edit_item_path(item), method: :get, class: "btn btn-sm"%>
-								</div>
-								<div class="col-sm-1"></div>
-								<div class="col-sm-1">
-									<%= button_to 'Remove', item_path(item), method: :delete, class: "btn btn-sm"%>
-								</div>
+							<div class="col-md-6" align="left">
+							
+							</div>
+							<div class="col-md-3" >
+								
+								
+									<span style="cursor:pointer;" class="glyphicon glyphicon-plus" aria-hidden="true" name="<%= item.id %>" ></span>		
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<span style="cursor:pointer;"  class="glyphicon glyphicon-minus" aria-hidden="true" name="<%= item.id %>"></span>	
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<a data-method="get" style="color: black" href="/items/<%= item.id %>/edit"><span class="glyphicon glyphicon-cog"></span></a>								
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<a data-method="delete" style="color: black" href="/items/<%= item.id %>"><span class="glyphicon glyphicon-trash"></span></a>
+						
 							</div>
 						</div>
 						
