@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require Jcrop
+//= require file_upload_template/js/fileinput.min
 //= require bootstrap-sprockets
 //= require_tree .

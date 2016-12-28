@@ -19,7 +19,7 @@
 
 				<div class="row" align="center">
 					<%= form_for @item do |f| %>
-					<%= f.cropbox :image, version: :overview %>
+					<%= f.cropbox :image, version: :crop_version %>
 					<br />
 					<%= hidden_field_tag :image_cropped, true %>
 					<%= f.submit 'Save', id: "crop_submit_button", class: "btn btn-secondary btn-lg", style:"display: none"%>
@@ -29,10 +29,10 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">
-					Skip Crop
+					Skip
 				</button>
 				<button type="button" onclick="crop();" class="btn btn-primary">
-					Crop
+					Done
 				</button>
 			</div>
 		</div>

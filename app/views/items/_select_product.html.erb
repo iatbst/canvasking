@@ -1,23 +1,24 @@
 
-<div class="row" style="height:300px; background-color:#EDEDED; margin-top:50px">
-				<h4>Select product</h4>
-				<div class="container">
+<div class="row" style="border-style: solid; border-width: 1px;border-color:#e2e2e2; margin-top: 50px">
+				<h4 style="margin-left: 20px">Select product</h4>
+				<div class="container" style="margin-bottom: 20px">
 					<div class="row">
 
 						<div class="col-md-4">
 
 							<label>
-								<h6>
+								<h5 style="margin-left: 15px">
 									Canvas Print
-								</h6>
+								</h5>
 								<%= f.radio_button :product_id, "3", style: "visibility: hidden;", id:"product_canvas"%>
-								<%= image_tag '/product-canvas.jpeg' %> </label>
+								<%= image_tag '/product-canvas.jpeg' %> 
+							</label>
 						</div>
 						<div class="col-md-4">
 							<label>
-								<h6>
+								<h5 style="margin-left: 15px">
 									Framed Paper Print
-								</h6>
+								</h5>
 								<%= f.radio_button :product_id, "4", style: "visibility: hidden;", id:"product_frame"%>
 								<%= image_tag '/product-frame.jpeg' %> </label>
 

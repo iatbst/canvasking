@@ -59,7 +59,7 @@ class ItemsController < ApplicationController
       
     # Image cropped, return to item new page
     elsif params[:image_cropped]
-      scale_scrop_cords(3000, 300)
+      scale_scrop_cords(3000, 450)
       @item.update(item_params)  
       render 'new'
     

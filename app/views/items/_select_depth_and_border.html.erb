@@ -1,25 +1,25 @@
 
-<div class="row" style="height:500px; background-color:#EDEDED; margin-top:50px">
+<div class="row" style="border-style: solid; border-width: 1px;border-color:#e2e2e2; margin-top: 50px">
 				
-				<div class="container">
+				<div class="container" style="margin-bottom: 20px">
 					<h4>Select depth</h4>
 					<div class="row">
 
 						<div class="col-sm-2">
 
 							<label>
-								<h6>
+								<h5 style="margin-left: 15px">
 									Rolled, No Frame
-								</h6>
+								</h5>
 								<%= f.radio_button :depth, "0",  style:"visibility: hidden;", id: "depth_0" %>
 
 								<%= image_tag '/canvas_depth_0.jpeg' %> </label>
 						</div>
 						<div class="col-sm-2">
 							<label>
-								<h6>
+								<h5 style="margin-left: 15px">
 									0.75" Deep
-								</h6>
+								</h5>
 								<%= f.radio_button :depth, "0.75", style:"visibility: hidden;", id: "depth_0_75" %>
 								
 								<%= image_tag '/canvas_depth_0.75.jpeg' %> </label>
@@ -27,9 +27,9 @@
 						</div>
 						<div class="col-sm-2">
 							<label>
-								<h6>
+								<h5 style="margin-left: 15px">
 									1.5" Deep
-								</h6>
+								</h5>
 								<%= f.radio_button :depth, "1.5",  style:"visibility: hidden;", id: "depth_1_5"%>
 								
 								<%= image_tag '/canvas_depth_1.5.jpeg' %> </label>
@@ -37,9 +37,9 @@
 						</div>
 						<div class="col-sm-2">
 							<label>
-								<h6>
+								<h5 style="margin-left: 15px">
 									2.5" Deep
-								</h6>
+								</h5>
 								<%= f.radio_button :depth, "2.5",  style:"visibility: hidden;", id: "depth_2_5"%>
 								
 								<%= image_tag '/canvas_depth_2.5.jpeg' %> </label>
@@ -53,9 +53,9 @@
 						<div class="col-sm-2">
 
 							<label>
-								<h6>
+								<h5 style="margin-left: 15px">
 									Photo Wrap
-								</h6>
+								</h5>
 								<%= f.radio_button :border, "photo",  style:"visibility: hidden;", id: "border_photo"%>
 								
 								<%= image_tag '/canvas_border_photo.jpeg' %> </label>
@@ -63,9 +63,9 @@
 						<div class="col-sm-2">
 
 							<label>
-								<h6>
+								<h5 style="margin-left: 15px">
 									Black Border
-								</h6>
+								</h5>
 								<%= f.radio_button :border, "black",  style:"visibility: hidden;", id: "border_black"%>
 								
 								<%= image_tag '/canvas_border_black.jpeg' %> </label>
@@ -73,9 +73,9 @@
 						<div class="col-sm-2">
 
 							<label>
-								<h6>
+								<h5 style="margin-left: 15px">
 									White Border
-								</h6>
+								</h5>
 								<%= f.radio_button :border, "white", style:"visibility: hidden;", id: "border_white"%>
 								
 								<%= image_tag '/canvas_border_white.jpeg' %> </label>
