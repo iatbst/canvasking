@@ -1,0 +1,14 @@
+/* all the grey 2px solid boxes, eg, image overview, cart summary, etc */
+.box {
+	border-style: solid; 
+	border-width: 1px;
+	border-color:#e2e2e2;
+}
+
+h4.no_bold { 
+	font-weight:	normal;
+}
+
+h3.no_bold {
+	font-weight: normal;
+}

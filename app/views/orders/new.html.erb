@@ -3,7 +3,7 @@
 <div class="container">
 	<div class="row" style="margin-top: 100px">
 		<%= form_for :order, url: orders_path do |f| %>
-			<div class="col-md-8" style="margin-bottom: 20px">
+			<div class="col-md-8" style="margin-bottom: 20px" align="left">
 				<%= render partial:'shipping', locals:{f: f} %>
 				<%= render partial:'payment', locals:{f: f} %>
 				<br />

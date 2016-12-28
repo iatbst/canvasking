@@ -20,10 +20,17 @@
 		</div>
 		<div class="collapse navbar-collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#home" class="smoothScroll">START</a></li>
+				<li>
+					<%= link_to 'START', new_item_path, method:"get", class:"smoothScroll" %>
+				</li>
 				<li><a href="#gallery" class="smoothScroll">DISCOVERY</a></li>
 				<li>
-					<%= link_to 'CART', cart_path, class:"smoothScroll" %>
+					<% cart = get_current_cart %>
+					<% if cart.quantity != 0 %>
+						<%= link_to "CART(#{cart.quantity})", cart_path, class:"smoothScroll", id:"nav_bar_cart"%>
+					<% else  %>
+						<%= link_to 'CART', cart_path, class:"smoothScroll", id:"nav_bar_cart"%>
+					<% end %>
 				</li>
 				<% unless user_signed_in? %>
 					<li><a href="/users/sign_up" class="smoothScroll">SIGN UP</a></li>

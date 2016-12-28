@@ -1,6 +1,19 @@
 
 			<h3>Shipping Address</h3>
-			<div class="row" style="height:480px; background-color:#EDEDED; ">
+			<hr style="width: 550px; margin-left: 1px; border-width: 1px; border-color:#E2E2E2;"/>
+			
+			<div class="row">
+				<div class="col-md-1">
+					<%= image_tag '/dhl_logo_sm.png' %>
+				</div>
+				<div class="col-md-8" style="margin-left: 10px">
+					<em style="color: grey">
+						Most shipments will be sent out via DHL. If you are outside the U.S. or Canada, please contact us for a shipping quote.
+					</em>
+				</div>
+			</div>
+			
+			<div class="row" style="height:480px; margin-left: 3px">
 				<div class="form-group" style="margin-top: 10px">
     					<%= f.text_field :shipping_full_name, class:"form-control", placeholder:"Full Name", style:"width:70%" %>
 				</div>
