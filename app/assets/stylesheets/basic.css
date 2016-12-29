@@ -10,5 +10,9 @@ h4.no_bold {
 }
 
 h3.no_bold {
-	font-weight: normal;
+	font-weight:	normal;
+}
+
+b.no_bold {
+	font-weight:	normal;
 }

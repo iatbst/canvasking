@@ -5,8 +5,8 @@
 			<hr style="width: 80% ; border-width: 1px; border-color:#E2E2E2;"/>
 			
 			<h4 >
-				<b id="cart_quantity"><%= cart.quantity %></b>
-				<b id="item_single_or_plural"> 
+				<b id="cart_quantity" class="no_bold"><%= cart.quantity %></b>
+				<b id="item_single_or_plural" class="no_bold"> 
 				<% if cart.quantity > 1 %>
 					<%= "item".pluralize %>
 				<% else %>

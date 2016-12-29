@@ -2,14 +2,16 @@
 
 <div class="container">
 	<div class="row" style="margin-top: 100px">
-		<%= form_for :order, url: orders_path do |f| %>
-			<div class="col-md-8" style="margin-bottom: 20px" align="left">
+		
+		<div class="col-md-8" style="margin-bottom: 20px" align="left">
+			<%= form_for :order, url: orders_path, :html=> {:id=> "payment-form"} do |f| %>
 				<%= render partial:'shipping', locals:{f: f} %>
 				<%= render partial:'payment', locals:{f: f} %>
 				<br />
 				<%= f.submit 'Place Order', class: "btn btn-primary btn-lg"%>
-			</div>
-		<% end %>
+			<% end %>
+		</div>
+		
 		<div class="col-md-2">
 			<%= render 'order_summary' %>
 		</div>
