@@ -1,9 +1,10 @@
 class OrdersController < ApplicationController
   include CartsHelper
   before_action :authenticate_user!
-  
   def new
     @cart = get_current_cart
+   
+    # TODO: shipping cost 0 ??
     @shipping_cost = 0
 
     # TODO: Need to collect tax depend on state law
@@ -15,36 +16,52 @@ class OrdersController < ApplicationController
   end
 
   def create
-    cart = get_current_cart
-    # Warn: Stripe process money amount as cents
-    charge_result = charge_money_by_stripe((cart.price*100).to_i)
+    # First check if shipping form is valid
+    # Second check if charging is valid
+    # If any failed, return to order new page
+    # If both success, return to order show page
 
-    if charge_result[0] == false
-      render 'new'   
-    else
-      @order = Order.create(order_params)
+    # Validate shipping address
+    @order = Order.create(order_params)
 
-      # hook up order with current user
-      @order.user_id = current_user.id
-
-      # hook up order with all the items in the cart
+    # Shipping form validation success, try to charge
+    if @order.valid?
       cart = get_current_cart
-      @order.items.push(*cart.items)
+      charge_amount = (cart.price*100).to_i # Reminder: Stripe process money amount as cents
+      charge_result = charge_money_by_stripe(charge_amount)
 
-      # Calculate all kind of prices
-      @order.before_price = cart.price
-      @order.shipping_price = 0
-      # TODO: Need to collect tax depend on state law
-      @order.tax_price = 0
-      @order.total_price = @order.before_price + @order.shipping_price + @order.tax_price
-      @order.save!
+      # Charge failed, return back to order new page
+      if charge_result[0] == false
+        #@order.destroy
+        @charge_error = charge_result[1]
+        render 'new'
+      # Both success, Order created !!!
+      else
+        # hook up order with current user
+        @order.user_id = current_user.id
 
-      # Empty Cart !
-      cart.items.clear
+        # hook up order with all the items in the cart
+        cart = get_current_cart
+        @order.items.push(*cart.items)
 
-      render 'show'
+        # Calculate all kind of prices
+        @order.before_price = cart.price
+        # TODO: Need to collect tax depend on state law and shipping cost
+        @order.shipping_price = 0
+        @order.tax_price = 0
+        @order.total_price = @order.before_price + @order.shipping_price + @order.tax_price
+        @order.save!
+
+        # Empty Cart !
+        clear_cart
+
+        render 'show'
+      end
+
+    # Shipping form validation failed, return back to order new page
+    else
+      render 'new'
     end
-
   end
 
   def show
@@ -57,11 +74,13 @@ class OrdersController < ApplicationController
     params.require(:order).permit(:shipping_full_name, :shipping_address_1, :shipping_address_2, :shipping_city, :shipping_country, :shipping_state, :shipping_zip, :shipping_phone)
   end
 
+
+    
   # Stripe way to charge the card
   def charge_money_by_stripe(amount)
     # Set your secret key: remember to change this to your live secret key in production
     # See your keys here: https://dashboard.stripe.com/account/apikeys
-    Stripe.api_key = "sk_test_En5i3qV5z1Rm7JU0z1r3ppoR"
+    Stripe.api_key = Canvasking::STRIPE_SECRET_KEY_TEST
 
     # Get the credit card details submitted by the form
     token = params[:stripeToken]
@@ -76,9 +95,9 @@ class OrdersController < ApplicationController
       )
     rescue Stripe::CardError => e
     # The card has been declined
-      return false, e
+      return false, e.message
     end
     return true, nil
   end
-  
+
 end

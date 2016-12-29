@@ -23,4 +23,13 @@ module Canvasking
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
   end
+  
+  ###################
+  #  The Constants  #
+  ###################
+  
+  # Stripe
+  STRIPE_PUBLISH_KEY_TEST = 'pk_test_86PXfTHcS3DHW58QnF6kGP5Q'
+  STRIPE_SECRET_KEY_TEST = 'sk_test_En5i3qV5z1Rm7JU0z1r3ppoR'
+  
 end

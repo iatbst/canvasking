@@ -22,6 +22,14 @@ module CartsHelper
       cart.save!     
     end
     
+    def clear_cart
+       cart = get_current_cart
+       cart.items.clear
+       cart.quantity = 0
+       cart.price = 0
+       cart.save!
+    end
+    
     def get_current_cart
       if user_signed_in?
         # If user signed in, get the user cart
