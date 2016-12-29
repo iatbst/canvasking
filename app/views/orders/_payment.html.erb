@@ -1,30 +1,39 @@
-<h3>Payment Info</h3>
-<hr style="width: 550px; margin-left: 1px; border-width: 1px; border-color:#E2E2E2;"/>
+<h3>Payment Method</h3>
 
-<div class="row" style="height:400px; margin-top:20px ">
+
+<div class="row box" style="height:280px; width: 450px; margin-top:20px;margin-left: 3px; margin-bottom:20px; border-radius: 10px;" >
 
 	<!-- Stripe for Payment -->
-	<span class="payment-errors"></span>
+	<span class="payment-errors" style="color: red"></span>
 
-	<div class="row">
-		<div class="form-group col-lg-6">
-			<label> <span>Card Number</span></label>
-			<input type="text" size="20" data-stripe="number" class="form-control input-lg">
+	<div class="row" style="margin-left: 10px; margin-top: 20px">
+		<div class="form-group col-lg-7 has-feedback has-feedback-left" style="width: 95%">
+			<label> <span>Card Number</span></label>	
+			<input type="text" size="20" data-stripe="number" class="form-control input-lg" placeholder="1234 5678 9012 3456">
 		</div>
 	</div>
 
-	<label><span>Expiration 	(MM/YY)</span></label>
-	<label style="margin-left: 150px"> <span>CVC</span> </label>
-	<div class="row">
-		<div class="form-group col-xs-2">
-			<input type="text" data-stripe="exp_month" class="form-control input-lg">
+	<div class="row" style="margin-left: 25px; margin-top: 10px">
+		<label><span>Expiration Date</span></label><br />
+	</div>
+	
+	<div class="row" style="margin-left: 10px">
+		<div class="form-group col-xs-3">
+			<span>Month</span>
+			<input type="text" data-stripe="exp_month" class="form-control input-lg" placeholder="01">
 		</div>
-		<div class="form-group col-xs-2">
-			<input type="text" size="2" data-stripe="exp_year" class="form-control input-lg">
+		<div class="form-group col-xs-3">
+			<span>Year</span>
+			<input type="text" size="2" data-stripe="exp_year" class="form-control input-lg" placeholder="19">
 		</div>
-		<div class="form-group col-xs-2">
-			<input type="text" size="4" data-stripe="cvc" class="form-control input-lg">
+		
+		<div class="form-group col-xs-3" style="margin-left: 40px">
+			<span>CVC Code</span>
+			<input type="text" size="4" data-stripe="cvc" class="form-control input-lg" placeholder="666">
 		</div>
+	</div>
+	<div class="row" align="center">
+		<%= image_tag "/credit_cards_stripe.png"%>
 	</div>
 
 </div>

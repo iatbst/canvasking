@@ -2,13 +2,11 @@ class OrdersController < ApplicationController
   include CartsHelper
   before_action :authenticate_user!
   def new
+    @order = Order.new
+    
     @cart = get_current_cart
-   
-    # TODO: shipping cost 0 ??
-    @shipping_cost = 0
-
-    # TODO: Need to collect tax depend on state law
-    @tax = 0
+    @shipping_cost = prepare_shipping_cost
+    @tax = prepare_tax
   end
 
   def index
@@ -60,6 +58,9 @@ class OrdersController < ApplicationController
 
     # Shipping form validation failed, return back to order new page
     else
+      @cart = get_current_cart
+      @shipping_cost = prepare_shipping_cost
+      @tax = prepare_tax
       render 'new'
     end
   end
@@ -74,8 +75,16 @@ class OrdersController < ApplicationController
     params.require(:order).permit(:shipping_full_name, :shipping_address_1, :shipping_address_2, :shipping_city, :shipping_country, :shipping_state, :shipping_zip, :shipping_phone)
   end
 
-
-    
+  # TODO
+  def prepare_shipping_cost
+    return 0
+  end 
+  
+  # TODO
+  def prepare_tax
+    return 0
+  end
+  
   # Stripe way to charge the card
   def charge_money_by_stripe(amount)
     # Set your secret key: remember to change this to your live secret key in production

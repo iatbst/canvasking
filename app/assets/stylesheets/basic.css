@@ -16,3 +16,9 @@ h3.no_bold {
 b.no_bold {
 	font-weight:	normal;
 }
+
+span.form_error {
+	font-weight:	normal;
+	color: red;
+}
+
