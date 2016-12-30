@@ -3,14 +3,12 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
   def new
     @order = Order.new
-    
-    @cart = get_current_cart
-    @shipping_cost = prepare_shipping_cost
-    @tax = prepare_tax
+    prepare_data_for_order_new_page
+
   end
 
   def index
-    @orders = current_user.orders
+    @orders = current_user.orders.sort_by { |obj| obj.created_at }.reverse
   end
 
   def create
@@ -30,9 +28,11 @@ class OrdersController < ApplicationController
 
       # Charge failed, return back to order new page
       if charge_result[0] == false
-        #@order.destroy
+        @order.destroy
         @charge_error = charge_result[1]
+        prepare_data_for_order_new_page
         render 'new'
+      
       # Both success, Order created !!!
       else
         # hook up order with current user
@@ -52,15 +52,13 @@ class OrdersController < ApplicationController
 
         # Empty Cart !
         clear_cart
-
+      
         render 'show'
       end
 
     # Shipping form validation failed, return back to order new page
     else
-      @cart = get_current_cart
-      @shipping_cost = prepare_shipping_cost
-      @tax = prepare_tax
+      prepare_data_for_order_new_page
       render 'new'
     end
   end
@@ -71,10 +69,30 @@ class OrdersController < ApplicationController
 
   private
 
+
   def order_params
-    params.require(:order).permit(:shipping_full_name, :shipping_address_1, :shipping_address_2, :shipping_city, :shipping_country, :shipping_state, :shipping_zip, :shipping_phone)
+    params.require(:order).permit(:shipping_full_name, :shipping_address_1, :shipping_address_2, :shipping_city, :country_id, :state_id, :shipping_zip, :shipping_phone)
   end
 
+  def prepare_data_for_order_new_page
+    @cart = get_current_cart
+    @shipping_cost = prepare_shipping_cost
+    @tax = prepare_tax
+    
+    # Prepare data for state/country select lists
+    @countries = {}
+    @country_select_list = []
+    Country.all.each do |country|
+      # prepare for country select list
+      @country_select_list.push([country.name, country.id])
+      
+      @countries[country.name] = []
+      country.states.each do |state|
+        @countries[country.name].push([state.name, state.id])
+      end
+    end
+  end
+  
   # TODO
   def prepare_shipping_cost
     return 0

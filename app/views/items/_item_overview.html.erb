@@ -1,5 +1,5 @@
 <div class="row box" align="center" style="height:550px; width:350px; margin-left:10px; position:fixed">
-	<div class="row" style="height:300px; margin-top: 10px;">
+	<div class="row" style="height:300px; margin-top: 30px;">
 		<% unless @item.image.file.nil? %>
 		<%= image_tag @item.image.overview.url %>
 		<% else %>
@@ -7,23 +7,23 @@
 		<% end %>
 	</div>
 	
-	<div class="row" style="height:150px" >
+	<div class="row" style="height:120px" >
 		<div class="col-md-1"></div>
 		<div class="col-md-5" style= "margin-left: 0px" align="left">
 			<br />
-			<b id="product_choice"> <% if !@item.product.nil? %>
+			<b class="no_bold" id="product_choice"> <% if !@item.product.nil? %>
 			<%= "Type: #{@item.product.name}" %>
 			<% end %> </b>
 			<br />
-			<b id="size_choice"> <% if !@item.size.nil? %>
+			<b class="no_bold" id="size_choice"> <% if !@item.size.nil? %>
 			<%= "Size: #{@item.size}" %>
 			<% end %> </b>
 			<br />
-			<b id="depth_choice"> <% if !@item.depth.nil? %>
+			<b class="no_bold" id="depth_choice"> <% if !@item.depth.nil? %>
 			<%= "Depth: #{@item.depth}\"" %>
 			<% end %> </b>
 			<br />
-			<b id="border_choice"> <% if !@item.border.nil? %>
+			<b class="no_bold" id="border_choice"> <% if !@item.border.nil? %>
 			<%= "Border: #{@item.border}" %>
 			<% end %> </b>
 		</div>
@@ -32,8 +32,8 @@
 	<div class="row" style="height:30px" >
 		<div class="col-md-1"></div>
 		<div class="col-md-5" style= "margin-left: 0px" align="left">
-			<b id="price_choice"> <% if !@item.price.nil? %>
-			<%= "Subtotal: $#{@item.price}" %>
+			<b class="no_bold" id="price_choice"> <% if !@item.price.nil? %>
+			<%= "Price: $#{@item.price}" %>
 			<% end %> </b>
 		</div>
 	</div>

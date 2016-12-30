@@ -22,4 +22,28 @@
 	</div>
 </div>
 
+<!-- Select states by country: trick functions, need to refactor !! -->
+<script>
+	$('#select_country').change(function(){
+		var new_country = $( "#select_country option:selected" ).text();
+		var countries = {};
+		<% @countries.each do |country, states| %>
+			countries['<%= country %>'] = [];
+			<% states.each do |state| %>
+				var state = [];
+				state.push('<%= state[0] %>');
+				state.push('<%= state[1] %>');
+				countries['<%= country %>'].push(state);
+			<% end %>
+		<% end %>
+		$('#select_state').empty();
+		$('#select_state').append($('<option></option>').text('--select state--'));
+		for(i = 0; i < countries[new_country].length; i++){
+			var option = $('<option></option>').attr("value", countries[new_country][i][1]).text(countries[new_country][i][0]);
+			$('#select_state').append(option);
+		}
+	
+	});
+</script>
+
 <%= render 'stripe_client_js' %>

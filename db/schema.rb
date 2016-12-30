@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161227213605) do
+ActiveRecord::Schema.define(version: 20161230052031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,12 @@ ActiveRecord::Schema.define(version: 20161227213605) do
   end
 
   add_index "carts", ["user_id"], name: "index_carts_on_user_id", using: :btree
+
+  create_table "countries", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "items", force: :cascade do |t|
     t.integer  "product_id"
@@ -51,8 +57,6 @@ ActiveRecord::Schema.define(version: 20161227213605) do
     t.string   "shipping_address_1"
     t.string   "shipping_address_2"
     t.string   "shipping_city"
-    t.string   "shipping_country"
-    t.string   "shipping_state"
     t.string   "shipping_zip"
     t.string   "shipping_phone"
     t.datetime "created_at",         null: false
@@ -62,12 +66,40 @@ ActiveRecord::Schema.define(version: 20161227213605) do
     t.decimal  "shipping_price"
     t.decimal  "tax_price"
     t.decimal  "total_price"
+    t.integer  "state_id"
+    t.integer  "country_id"
   end
 
+  add_index "orders", ["country_id"], name: "index_orders_on_country_id", using: :btree
+  add_index "orders", ["state_id"], name: "index_orders_on_state_id", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
   create_table "products", force: :cascade do |t|
     t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "shipping_addresses", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "city"
+    t.integer  "state_id"
+    t.integer  "country_id"
+    t.string   "zip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "shipping_addresses", ["country_id"], name: "index_shipping_addresses_on_country_id", using: :btree
+  add_index "shipping_addresses", ["state_id"], name: "index_shipping_addresses_on_state_id", using: :btree
+  add_index "shipping_addresses", ["user_id"], name: "index_shipping_addresses_on_user_id", using: :btree
+
+  create_table "states", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "country_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -94,5 +126,10 @@ ActiveRecord::Schema.define(version: 20161227213605) do
   add_foreign_key "items", "carts"
   add_foreign_key "items", "orders"
   add_foreign_key "items", "products"
+  add_foreign_key "orders", "countries"
+  add_foreign_key "orders", "states"
   add_foreign_key "orders", "users"
+  add_foreign_key "shipping_addresses", "countries"
+  add_foreign_key "shipping_addresses", "states"
+  add_foreign_key "shipping_addresses", "users"
 end
