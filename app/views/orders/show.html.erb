@@ -2,7 +2,7 @@
 
 <div class="container" style="margin-top: 50px; margin-bottom: 20px" >
 	<h3>Order Details</h3>
-	<div class="row" style="border-style: solid; border-width: 3px; border-color:#EDEDED;">
+	<div class="row box">
 		<div class="col-md-3">
 			<br />
 			<h5><b>Shipping Address</b></h5>
@@ -40,7 +40,7 @@
 			<br />
 		</div>
 	</div>
-	<div class="row" style="margin-top: 20px; border-style: solid; border-width: 3px; border-color:#EDEDED;">
+	<div class="row box" style="margin-top: 20px;">
 
 		<% @order.items.each_with_index do |item, ix| %>
 		<div class="row">

@@ -48,6 +48,7 @@ class OrdersController < ApplicationController
         @order.shipping_price = 0
         @order.tax_price = 0
         @order.total_price = @order.before_price + @order.shipping_price + @order.tax_price
+        @order.number = generate_unique_order_number
         @order.save!
 
         # Empty Cart !
@@ -69,6 +70,16 @@ class OrdersController < ApplicationController
 
   private
 
+  def generate_unique_order_number
+    # Find a unique one
+    while true
+      number = "A#{(0...8).map { rand(10).to_s }.join}"
+      if Order.find_by_number(number).nil?
+        return number
+      end
+    end
+      
+  end
 
   def order_params
     params.require(:order).permit(:shipping_full_name, :shipping_address_1, :shipping_address_2, :shipping_city, :country_id, :state_id, :shipping_zip, :shipping_phone)
