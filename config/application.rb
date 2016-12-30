@@ -32,4 +32,8 @@ module Canvasking
   STRIPE_PUBLISH_KEY_TEST = 'pk_test_86PXfTHcS3DHW58QnF6kGP5Q'
   STRIPE_SECRET_KEY_TEST = 'sk_test_En5i3qV5z1Rm7JU0z1r3ppoR'
   
+  # EMail
+  GMAIL_TEST_USER = 'agarienforcement@gmail.com'
+  GAMIL_TEST_USER_PW = 'agarienforce'
+  
 end

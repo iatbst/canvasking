@@ -8,6 +8,7 @@ class CartsController < ApplicationController
     update_total_price_in_cart
     update_total_quantity_in_cart
     @cart = get_current_cart
+    
   end
 
       
