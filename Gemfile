@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -53,6 +53,9 @@ gem 'pry'
 
 # Payment: Stripe
 gem 'stripe'
+
+# Process outgoing email: embed the styles
+gem 'premailer-rails'
 
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console

@@ -1,5 +1,27 @@
+<!DOCTYPE html>
 <html>
-  <body>
-    <%= yield %>
-  </body>
+<head>
+  <title>Canvasking</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  
+  <!--From home template -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+  
+  <!--From signup template -->
+  <!--Google Fonts-->
+  <link href='https://fonts.googleapis.com/css?family=Playfair+Display' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+  <%= javascript_include_tag 'Jcrop' %>
+</head>
+<body>
+
+<%= yield %>
+
+</body>
 </html>
