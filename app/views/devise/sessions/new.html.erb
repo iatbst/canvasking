@@ -1,70 +1,60 @@
 <!-- CSS  -->
-<link rel="stylesheet" href="/signin_template/css/signin.css">
 
 <!-- navigation section -->
 <%= render 'layouts/navbar' %>
 
+<div class="container" style="margin-top: 100px">
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4 box" style="height: 480px;">
+			<div align="center" style="margin-top: 50px; margin-bottom: 50px">
+				<h3>Welcome</h3>
+			</div>
 
-<section id="signin" class="parallax-section">
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="pr-wrap">
-                <div class="pass-reset">
-                    <label>
-                        Enter the email you signed up with</label>
-                    <input type="email" placeholder="Email" />
-                    <input type="submit" value="Submit" class="pass-reset-submit btn btn-success btn-sm" />
-                </div>
-            </div>
-            <div class="wrap">
-                <p class="form-title">
-                    Welcome</p>
-        
-                
-                <%= form_for(resource, as: resource_name, html: {class: "login"}, url: session_path(resource_name)) do |f| %>
-                
-                <%= f.email_field :email, autofocus: true, type: "text", placeholder: "Username" %>
-                <%= f.password_field :password, autocomplete: "off", type: "password", placeholder: "Password"%>
-    				
-    				<%= f.submit "Login Now", type: "submit", class: "btn btn-success btn-sm" %>
-                
-                
-                <div class="remember-forgot">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="checkbox">
-                                <label>
-                                    <%= f.check_box :remember_me, type: "checkbox" %>
-                                    Remember Me
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 forgot-pass-content">
-                        		<%= link_to "Forgot password?", new_password_path(resource_name) %><br />
-                            
-                        </div>
-                    </div>
-                </div>
-                
-                <% end %>
-                
-            </div>
-        </div>
-    </div>
-    
+			<!-- Error Messages -->
+			<div>
+				<%- flash.each do |name, msg| -%>
+				<%= content_tag :div, msg, id: "flash_#{name}", style:"color: red; margin-left:20px;margin-bottom:10px" %>
+				<%- end -%>
+			</div>
+			
+			<%= form_for(resource, as: resource_name, html: {class: "login"}, url: session_path(resource_name)) do |f| %>
+			<div class="form-group" align="center">
+				<%= f.email_field :email, autofocus: true, type: "text", placeholder: "Username", class:"form-control input-lg", style:"width: 90%" %>
+			</div>
+			<div class="form-group" align="center">
+				<%= f.password_field :password, autocomplete: "off", type: "password", placeholder: "Password", class:"form-control input-lg", style:"width: 90%"%>
+			</div>
+			<div class="form-group">
+				<div class="checkbox" style="margin-left: 20px">
+					<label> <%= f.check_box :remember_me, type: "checkbox" %>
+						Remember Me </label>
+				</div>
+			</div>
+			<div align="center">
+				<%= f.submit "Login Now", type: "submit", class: "btn btn-primary btn-lg", style:"width: 80%"  %>
+			</div>
+			<div class="row" style="margin-top: 20px; margin-left: 20px">
+
+				<h5 style="font-weight: normal"><%= link_to "Forgot your password?", new_password_path(resource_name) %></h5>
+			</div>
+			<div align="center" style="margin-top: 40px">
+				<h4 style="font-weight: normal"><u><%= link_to "Join us today !", new_user_registration_path %></u></h4>
+			</div>
+			<% end %>
+
+		</div>
+
+	</div>
 </div>
-</section>
-
 
 <script>
- $(document).ready(function () {
-    $('.forgot-pass').click(function(event) {
-      $(".pr-wrap").toggleClass("show-pass-reset");
-    }); 
-    
-    $('.pass-reset-submit').click(function(event) {
-      $(".pr-wrap").removeClass("show-pass-reset");
-    }); 
-});
+	$(document).ready(function() {
+		$('.forgot-pass').click(function(event) {
+			$(".pr-wrap").toggleClass("show-pass-reset");
+		});
+
+		$('.pass-reset-submit').click(function(event) {
+			$(".pr-wrap").removeClass("show-pass-reset");
+		});
+	}); 
 </script>
