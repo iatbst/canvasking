@@ -1,5 +1,3 @@
-<!-- CSS  -->
-
 <!-- navigation section -->
 <%= render 'layouts/navbar' %>
 
@@ -10,14 +8,20 @@
 				<h3>Welcome</h3>
 			</div>
 
-			<!-- Error Messages -->
+			<!-- Error Messages： devise_error_messages! not working for login -->
 			<div>
+				<ul>
 				<%- flash.each do |name, msg| -%>
-				<%= content_tag :div, msg, id: "flash_#{name}", style:"color: red; margin-left:20px;margin-bottom:10px" %>
+					<li style="color: red">
+						<%= msg %>
+					</li>
 				<%- end -%>
+				</ul>
 			</div>
 			
 			<%= form_for(resource, as: resource_name, html: {class: "login"}, url: session_path(resource_name)) do |f| %>
+			
+			
 			<div class="form-group" align="center">
 				<%= f.email_field :email, autofocus: true, type: "text", placeholder: "Username", class:"form-control input-lg", style:"width: 90%" %>
 			</div>
