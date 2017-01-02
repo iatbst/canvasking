@@ -22,14 +22,46 @@
 				<hr>
 			</div>
 		</div>
-		
-		<div class="row">
-			<div id="photo_art_transform" class="col-md-6 col-md-offset-3 twentytwenty-container">			
-				<%= image_tag '/golden_bridge_process.jpg'%>
-				<%= image_tag '/golden_bridge_original.jpg'%>
+
+		<!-- Image Slider -->
+		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+			<!-- Indicators -->
+<ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active" style="pointer-events: none"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1" style="pointer-events: none"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="2" style="pointer-events: none"></li>
+  </ol>
+			<!-- Wrapper for slides -->
+			<div class="carousel-inner" role="listbox">
+				<div class="item active">
+					<div class="row">
+						<div class="twentytwenty-container col-md-6 col-md-offset-3">
+							<%= image_tag '/golden_bridge_process.jpg', id:"image_1", class:"before_image" %>
+							<%= image_tag '/golden_bridge_original.jpg'%>
+						</div>
+					</div>
+				</div>
+
+				<div class="item">
+					<div class="row">
+						<div class="twentytwenty-container col-md-6 col-md-offset-3">
+							<%= image_tag '/golden_bridge_process.jpg', id:"image_2", class:"before_image" %>
+							<%= image_tag '/golden_bridge_original.jpg'%>
+						</div>
+					</div>
+				</div>
+
+				<div class="item">
+					<div class="row">
+						<div class="twentytwenty-container col-md-6 col-md-offset-3">
+							<%= image_tag '/golden_bridge_process.jpg', id:"image_3", class:"before_image"%>
+							<%= image_tag '/golden_bridge_original.jpg'%>
+						</div>
+					</div>
+				</div>
 			</div>
+
 		</div>
-		<div id="scroll-to-once"></div>
 	</div>
 </section>
 
@@ -210,33 +242,38 @@
 
 <!-- Twentytwenty -->
 <script>
-	$(window).load(function() {
-		$("#photo_art_transform").twentytwenty({
-			default_offset_pct : 0
-		});
-
-		$('.twentytwenty-handle').remove();
-		$('.twentytwenty-overlay').remove();
+	$(window).ready(function() {
+		$('.carousel').carousel({interval : 10000});
+		$('.carousel').carousel('cycle');
+		init_twentytwenty();
+		twentytwenty_auto_move('image_1');
+		
 	});
 
-	var transformed = false;
-	$(window).scroll(function() {
-		var hT = $('#scroll-to-once').offset().top, hH = $('#scroll-to-once').outerHeight(), wH = $(window).height(), wS = $(this).scrollTop();
-		if (wS > (hT + hH - wH) && transformed == false) {
-			twentytwenty_auto_move();
-			transformed = true;
-		}
+	$('.carousel').on('slid.bs.carousel', function(ev) {
+		init_twentytwenty();
+		var image_id = $(this).find('.active').find('.before_image').attr('id');
+		twentytwenty_auto_move(image_id);
+
 	});
 	
-	function twentytwenty_auto_move() {
+	function init_twentytwenty() {
+		$(".twentytwenty-container").twentytwenty({
+			default_offset_pct : 0
+		});
+		$('.twentytwenty-handle').hide();
+		$('.twentytwenty-overlay').hide();
+	}
+
+	function twentytwenty_auto_move(image_id) {
 		var offset = 0;
 		var id = setInterval(frame, 10);
 		function frame() {
-			if (offset == 2000) {
+			if (offset == 1000) {
 				clearInterval(id);
 			} else {
 				offset++;
-				$('.twentytwenty-before').css('clip', 'rect(0px ' + offset + 'px 882px 0px');
+				$('#' + image_id).css('clip', 'rect(0px ' + offset + 'px 882px 0px');
 			}
 		}
 
