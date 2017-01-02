@@ -46,7 +46,7 @@ hr {
 }
 
 .parallax-section {
-  background-attachment: fixed !important;
+  background-attachment: !important;
   background-size: cover !important;
 }
 
@@ -122,7 +122,7 @@ hr {
 
 /* home section */
 #home {
-  background: url('../images/home-bg.jpg') 50% 0 repeat-y fixed;
+  background: url('/images/home_template/home-bg.jpg') 50% 0 repeat-y;
   -webkit-background-size: cover;
   background-size: cover;
   background-position: center;
@@ -250,7 +250,7 @@ hr {
 
 /* footer section */
 footer {
-  background: url('../images/footer-bg.jpg') 50% 0 repeat-y fixed;
+  background: url('/images/home_template/footer-bg.jpg') 50% 0 repeat-y;
   -webkit-background-size: cover;
   background-size: cover;
   background-position: center;

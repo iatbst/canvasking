@@ -15,5 +15,7 @@
 //= require turbolinks
 //= require Jcrop
 //= require file_upload_template/js/fileinput.min
+//= require twentytwenty_template/jquery.event.move
+//= require twentytwenty_template/jquery.twentytwenty
 //= require bootstrap-sprockets
 //= require_tree .
