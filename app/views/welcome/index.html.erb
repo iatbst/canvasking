@@ -15,53 +15,59 @@
 
 <!-- gallery section -->
 <section id="gallery" class="parallax-section">
-	<div class="container">
+	<div class="container" style="height: 700px">
 		<div class="row">
 			<div class="col-md-offset-2 col-md-8 col-sm-12 text-center">
 				<h1 class="heading">We transform your photos into ARTs</h1>
-				<hr>
+				<br />
 			</div>
 		</div>
 
 		<!-- Image Slider -->
-		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-			<!-- Indicators -->
-<ol class="carousel-indicators">
-    <li data-target="#carousel-example-generic" data-slide-to="0" class="active" style="pointer-events: none"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="1" style="pointer-events: none"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="2" style="pointer-events: none"></li>
-  </ol>
-			<!-- Wrapper for slides -->
-			<div class="carousel-inner" role="listbox">
-				<div class="item active">
-					<div class="row">
-						<div class="twentytwenty-container col-md-6 col-md-offset-3">
-							<%= image_tag '/golden_bridge_process.jpg', id:"image_1", class:"before_image" %>
-							<%= image_tag '/golden_bridge_original.jpg'%>
-						</div>
-					</div>
-				</div>
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div id="carousel-example-generic" class="carousel slide" data-interval="false">
+					<!-- Indicators -->
+					<ol class="carousel-indicators">
+						<li data-target="#carousel-example-generic" data-slide-to="0" class="active" style="pointer-events: none"></li>
+						<li data-target="#carousel-example-generic" data-slide-to="1" style="pointer-events: none"></li>
+						<li data-target="#carousel-example-generic" data-slide-to="2" style="pointer-events: none"></li>
+					</ol>
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner" role="listbox">
+						<div class="item active">
 
-				<div class="item">
-					<div class="row">
-						<div class="twentytwenty-container col-md-6 col-md-offset-3">
-							<%= image_tag '/golden_bridge_process.jpg', id:"image_2", class:"before_image" %>
-							<%= image_tag '/golden_bridge_original.jpg'%>
-						</div>
-					</div>
-				</div>
+							<div class="twentytwenty-container">
+								<%= image_tag '/golden_bridge_process.jpg', id:"image_1", class:"before_image" %>
+								<%= image_tag '/golden_bridge_original.jpg', class:"after_image"%>
+							</div>
 
-				<div class="item">
-					<div class="row">
-						<div class="twentytwenty-container col-md-6 col-md-offset-3">
-							<%= image_tag '/golden_bridge_process.jpg', id:"image_3", class:"before_image"%>
-							<%= image_tag '/golden_bridge_original.jpg'%>
+						</div>
+
+						<div class="item">
+
+							<div class="twentytwenty-container">
+								<%= image_tag '/stanford_after.jpg', id:"image_2", class:"before_image" %>
+								<%= image_tag '/stanford_before.jpg', class:"after_image"%>
+							</div>
+
+						</div>
+
+						<div class="item">
+
+							<div class="twentytwenty-container">
+								<%= image_tag '/statue_of_liberty_after.jpg', id:"image_3", class:"before_image"%>
+								<%= image_tag '/statue_of_liberty_before.jpg', class:"after_image"%>
+							</div>
+
 						</div>
 					</div>
+
 				</div>
 			</div>
 
 		</div>
+
 	</div>
 </section>
 
@@ -241,13 +247,10 @@
 </section>
 
 <!-- Twentytwenty -->
-<script>
-	$(window).ready(function() {
-		$('.carousel').carousel({interval : 10000});
-		$('.carousel').carousel('cycle');
+<script type="text/javascript">
+	$(document).ready(function() {
 		init_twentytwenty();
 		twentytwenty_auto_move('image_1');
-		
 	});
 
 	$('.carousel').on('slid.bs.carousel', function(ev) {
@@ -256,13 +259,17 @@
 		twentytwenty_auto_move(image_id);
 
 	});
-	
+
 	function init_twentytwenty() {
+		//clear old wrapper, otherwise wrapper will growing creazy
+		$('.twentytwenty-wrapper').contents().unwrap();
+		
 		$(".twentytwenty-container").twentytwenty({
 			default_offset_pct : 0
 		});
 		$('.twentytwenty-handle').hide();
 		$('.twentytwenty-overlay').hide();
+		$('.after_image').show();
 	}
 
 	function twentytwenty_auto_move(image_id) {
@@ -271,6 +278,8 @@
 		function frame() {
 			if (offset == 1000) {
 				clearInterval(id);
+				$('.after_image').hide();
+				$('.carousel').carousel('next');
 			} else {
 				offset++;
 				$('#' + image_id).css('clip', 'rect(0px ' + offset + 'px 882px 0px');
