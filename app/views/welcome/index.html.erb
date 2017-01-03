@@ -15,10 +15,10 @@
 
 <!-- gallery section -->
 <section id="gallery" class="parallax-section">
-	<div class="container" style="height: 700px">
+	<div class="container" style="height: 600px">
 		<div class="row">
 			<div class="col-md-offset-2 col-md-8 col-sm-12 text-center">
-				<h1 class="heading">We transform your photos into ARTs</h1>
+				<h1 class="heading"></h1>
 				<br />
 			</div>
 		</div>
@@ -32,35 +32,38 @@
 						<li data-target="#carousel-example-generic" data-slide-to="0" class="active" style="pointer-events: none"></li>
 						<li data-target="#carousel-example-generic" data-slide-to="1" style="pointer-events: none"></li>
 						<li data-target="#carousel-example-generic" data-slide-to="2" style="pointer-events: none"></li>
+						<li data-target="#carousel-example-generic" data-slide-to="3" style="pointer-events: none"></li>
 					</ol>
 					<!-- Wrapper for slides -->
 					<div class="carousel-inner" role="listbox">
 						<div class="item active">
-
 							<div class="twentytwenty-container">
-								<%= image_tag '/golden_bridge_process.jpg', id:"image_1", class:"before_image" %>
-								<%= image_tag '/golden_bridge_original.jpg', class:"after_image"%>
+								<%= image_tag '/welcome/golden_bridge_after.jpg', id:"image_1", class:"before_image" %>
+								<%= image_tag '/welcome/golden_bridge_before.jpg', class:"after_image"%>
 							</div>
-
 						</div>
 
 						<div class="item">
-
 							<div class="twentytwenty-container">
-								<%= image_tag '/stanford_after.jpg', id:"image_2", class:"before_image" %>
-								<%= image_tag '/stanford_before.jpg', class:"after_image"%>
+								<%= image_tag '/welcome/sunflower_after.jpg', id:"image_2", class:"before_image" %>
+								<%= image_tag '/welcome/sunflower_before.jpg', class:"after_image"%>
 							</div>
-
 						</div>
 
 						<div class="item">
-
 							<div class="twentytwenty-container">
-								<%= image_tag '/statue_of_liberty_after.jpg', id:"image_3", class:"before_image"%>
-								<%= image_tag '/statue_of_liberty_before.jpg', class:"after_image"%>
+								<%= image_tag '/welcome/statue_of_liberty_after.jpg', id:"image_3", class:"before_image"%>
+								<%= image_tag '/welcome/statue_of_liberty_before.jpg', class:"after_image"%>
 							</div>
-
 						</div>
+
+						<div class="item">
+							<div class="twentytwenty-container">
+								<%= image_tag '/welcome/dogs_after.jpg', id:"image_4", class:"before_image"%>
+								<%= image_tag '/welcome/dogs_before.jpg', class:"after_image"%>
+							</div>
+						</div>
+
 					</div>
 
 				</div>
@@ -68,6 +71,7 @@
 
 		</div>
 
+	
 	</div>
 </section>
 
@@ -248,7 +252,7 @@
 
 <!-- Twentytwenty -->
 <script type="text/javascript">
-	$(document).ready(function() {
+	$(window).load(function() {
 		init_twentytwenty();
 		twentytwenty_auto_move('image_1');
 	});
@@ -263,20 +267,30 @@
 	function init_twentytwenty() {
 		//clear old wrapper, otherwise wrapper will growing creazy
 		$('.twentytwenty-wrapper').contents().unwrap();
-		
+		$('.before_image').hide();
+
 		$(".twentytwenty-container").twentytwenty({
 			default_offset_pct : 0
 		});
 		$('.twentytwenty-handle').hide();
 		$('.twentytwenty-overlay').hide();
 		$('.after_image').show();
+		$('.before_image').show();
 	}
 
 	function twentytwenty_auto_move(image_id) {
+		/*
+		for (offset = 0; offset < 1000; offset++) {
+			$('#' + image_id).css('clip', 'rect(0px ' + offset + 'px 882px 0px');
+			setTimeout(function() {
+				var test = 0;}, 1000);
+			//alert($('#' + image_id).css('clip'));
+		}
+		*/
 		var offset = 0;
-		var id = setInterval(frame, 10);
+		var id = setInterval(frame, 20);
 		function frame() {
-			if (offset == 1000) {
+			if (offset == 800) {
 				clearInterval(id);
 				$('.after_image').hide();
 				$('.carousel').carousel('next');
@@ -285,6 +299,6 @@
 				$('#' + image_id).css('clip', 'rect(0px ' + offset + 'px 882px 0px');
 			}
 		}
-
+	
 	}
 </script>

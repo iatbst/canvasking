@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+// require turbolinks
 //= require Jcrop
 //= require file_upload_template/js/fileinput.min
 //= require twentytwenty_template/jquery.event.move
