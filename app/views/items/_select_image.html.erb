@@ -1,7 +1,12 @@
 
 
 			<div class="row box">
-				<h4 style="margin-left: 20px"> Select your image</h4>
+				<h4 style="margin-left: 20px"> 
+					Select your image
+				</h4>
+				<% if @item.errors[:image] %>
+					<h6 style="color: red; margin-left: 20px"><%= @item.errors[:image][0] %></h6>
+				<% end %>
 				<div style="margin: auto; margin-left: 50px">
 					
 					<!-- 1 Upload Photo -->

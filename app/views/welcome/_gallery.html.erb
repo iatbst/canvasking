@@ -1,0 +1,89 @@
+<style>
+
+.carousel-indicators {
+  bottom:-60px;
+  color: black;
+}
+
+.carousel-indicators li {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 10px;
+    text-indent: 0;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    background-color: white;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+}
+.carousel-indicators .active {
+    width: 10px;
+    height: 10px;
+    margin: 10px;
+    background-color: black;
+}
+</style>
+
+<section id="gallery" class="parallax-section">
+	<div class="container" style="height: 600px">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8 col-sm-12 text-center">
+				<h1 class="heading"></h1>
+				<br />
+			</div>
+		</div>
+
+		<!-- Image Slider -->
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div id="carousel-example-generic" class="carousel slide" data-interval="false">
+					<!-- Indicators -->
+					<ol class="carousel-indicators">
+						<li data-target="#carousel-example-generic" data-slide-to="0" class="active" style="pointer-events: none"></li>
+						<li data-target="#carousel-example-generic" data-slide-to="1" style="pointer-events: none"></li>
+						<li data-target="#carousel-example-generic" data-slide-to="2" style="pointer-events: none"></li>
+						<li data-target="#carousel-example-generic" data-slide-to="3" style="pointer-events: none"></li>
+					</ol>
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner" role="listbox">
+						<div class="item active">
+							<div class="twentytwenty-container">
+								<%= image_tag '/welcome/golden_bridge_after.jpg', id:"image_1", class:"before_image" %>
+								<%= image_tag '/welcome/golden_bridge_before.jpg', class:"after_image"%>
+							</div>
+						</div>
+
+						<div class="item">
+							<div class="twentytwenty-container">
+								<%= image_tag '/welcome/sunflower_after.jpg', id:"image_2", class:"before_image" %>
+								<%= image_tag '/welcome/sunflower_before.jpg', class:"after_image"%>
+							</div>
+						</div>
+
+						<div class="item">
+							<div class="twentytwenty-container">
+								<%= image_tag '/welcome/statue_of_liberty_after.jpg', id:"image_3", class:"before_image"%>
+								<%= image_tag '/welcome/statue_of_liberty_before.jpg', class:"after_image"%>
+							</div>
+						</div>
+
+						<div class="item">
+							<div class="twentytwenty-container">
+								<%= image_tag '/welcome/dogs_after.jpg', id:"image_4", class:"before_image"%>
+								<%= image_tag '/welcome/dogs_before.jpg', class:"after_image"%>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+	
+	</div>
+</section>

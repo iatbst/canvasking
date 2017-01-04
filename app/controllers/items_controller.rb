@@ -4,7 +4,8 @@ class ItemsController < ApplicationController
   
   # TODO: need to refactor, otherwise every new page will create a item in DB, NO GOOD !!!
   def new
-    @item = Item.create
+    @item = Item.new
+    @item.save(validate: false)
     @size_price = read_size_price_table
   end
   
@@ -39,30 +40,41 @@ class ItemsController < ApplicationController
     
     # Image upload to current item, render to crop page
     if params[:image_upload]
-      @item.update(item_params)
-      @file_upload = true
+      @item.attributes = item_params
+      @item.save(validate: false) # skip validation for image upload
+      @crop_image = true
       render 'new'
             
     # Item added to cart or edit items in cart
     elsif params[:go_to_cart]
-      @item.price = calculate_price
-      @item.update(item_params)
+      if @item.update(item_params)
+        # Calculate price
+        @item.update_attribute(:price, calculate_price)
+        # Add this item to cart
+        cart = get_current_cart
+        cart.items.push(@item)
+        cart.quantity += 1    # Update quantity
+        cart.save!        
+        update_total_price_in_cart    # Update price
       
-      # Add this item to cart
-      cart = get_current_cart
-      cart.items.push(@item)
-      cart.quantity += 1    # Update quantity
-      cart.save!        
-      update_total_price_in_cart    # Update price
-      
-      redirect_to cart_path
+        redirect_to cart_path
+      else
+        # Even it failed, save the correct fields
+        @item.attributes = item_params
+        @item.save(validate: false)
+        render 'new' # save failed, back to item new page, may caused by missing fields
+      end
       
     # Image cropped, return to item new page
     elsif params[:image_cropped]
-      scale_scrop_cords(3000, 450)
-      @item.update(item_params)  
+      org_image_size = Canvasking::IMAGE_ORIGINAL_SIZE_LIMIT
+      crop_image_size = Canvasking::IMAGE_CROP_SIZE
+      scale_scrop_cords(org_image_size, crop_image_size)
+      @item.attributes = item_params
+      @item.save(validate: false) # skip validation for image upload 
       render 'new'
-    
+      
+    # Ajex call for +/- image quantity in cart page
     elsif params[:update_quantity]
       cart = get_current_cart
       if params[:plus]
@@ -77,7 +89,6 @@ class ItemsController < ApplicationController
       
       # update cart price
       update_total_price_in_cart
-      cart = get_current_cart
       render json: {quantity: @item.quantity, price: cart.price, cart_quantity: cart.quantity}
     end
       
@@ -115,7 +126,11 @@ class ItemsController < ApplicationController
     end
     
     def item_params
-      params.require(:item).permit(:image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h, :size, :price, :quantity, :image, :depth, :border, :product_id)
+      if params[:item]
+        params.require(:item).permit(:image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h, :size, :price, :quantity, :image, :depth, :border, :product_id)
+      else
+        {}
+      end
     end
     
     

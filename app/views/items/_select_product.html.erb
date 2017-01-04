@@ -1,6 +1,9 @@
 
 <div class="row box" style="margin-top: 50px">
 				<h4 style="margin-left: 20px">Select product</h4>
+				<% if @item.errors[:product_id] %>
+					<h6 style="color: red; margin-left: 20px"><%= @item.errors[:product_id][0] %></h6>
+				<% end %>
 				<div class="container" style="margin-bottom: 20px">
 					<div class="row">
 

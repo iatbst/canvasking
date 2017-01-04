@@ -1,79 +1,12 @@
 <!-- navigation section -->
 <%= render 'layouts/navbar' %>
 
-<!-- home section -->
-<section id="home" class="parallax-section">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12 col-sm-12">
-				<h2>Infuse Art Into Your Life</h2>
-				<%= link_to 'GET STARTED', new_item_path, method:"get", class:"btn btn-default smoothScroll" %>
-			</div>
-		</div>
-	</div>
-</section>
+
+<!-- big picture section -->
+<%= render 'big_pic' %>
 
 <!-- gallery section -->
-<section id="gallery" class="parallax-section">
-	<div class="container" style="height: 600px">
-		<div class="row">
-			<div class="col-md-offset-2 col-md-8 col-sm-12 text-center">
-				<h1 class="heading"></h1>
-				<br />
-			</div>
-		</div>
-
-		<!-- Image Slider -->
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				<div id="carousel-example-generic" class="carousel slide" data-interval="false">
-					<!-- Indicators -->
-					<ol class="carousel-indicators">
-						<li data-target="#carousel-example-generic" data-slide-to="0" class="active" style="pointer-events: none"></li>
-						<li data-target="#carousel-example-generic" data-slide-to="1" style="pointer-events: none"></li>
-						<li data-target="#carousel-example-generic" data-slide-to="2" style="pointer-events: none"></li>
-						<li data-target="#carousel-example-generic" data-slide-to="3" style="pointer-events: none"></li>
-					</ol>
-					<!-- Wrapper for slides -->
-					<div class="carousel-inner" role="listbox">
-						<div class="item active">
-							<div class="twentytwenty-container">
-								<%= image_tag '/welcome/golden_bridge_after.jpg', id:"image_1", class:"before_image" %>
-								<%= image_tag '/welcome/golden_bridge_before.jpg', class:"after_image"%>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="twentytwenty-container">
-								<%= image_tag '/welcome/sunflower_after.jpg', id:"image_2", class:"before_image" %>
-								<%= image_tag '/welcome/sunflower_before.jpg', class:"after_image"%>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="twentytwenty-container">
-								<%= image_tag '/welcome/statue_of_liberty_after.jpg', id:"image_3", class:"before_image"%>
-								<%= image_tag '/welcome/statue_of_liberty_before.jpg', class:"after_image"%>
-							</div>
-						</div>
-
-						<div class="item">
-							<div class="twentytwenty-container">
-								<%= image_tag '/welcome/dogs_after.jpg', id:"image_4", class:"before_image"%>
-								<%= image_tag '/welcome/dogs_before.jpg', class:"after_image"%>
-							</div>
-						</div>
-
-					</div>
-
-				</div>
-			</div>
-
-		</div>
-
-	
-	</div>
-</section>
+<%= render 'gallery' %>
 
 <!-- menu section -->
 <section id="menu" class="parallax-section">
@@ -82,38 +15,6 @@
 			<div class="col-md-offset-2 col-md-8 col-sm-12 text-center">
 				<h1 class="heading">How It Works</h1>
 				<hr>
-			</div>
-			<div class="col-md-6 col-sm-6">
-				<h4>Lemon-Rosemary Vegetable ................ <span>$20.50</span></h4>
-				<h5>Chicken / Rosemary / Lemon</h5>
-			</div>
-			<div class="col-md-6 col-sm-6">
-				<h4>Lemon-Rosemary Meat ........................... <span>$30.50</span></h4>
-				<h5>Meat / Rosemary / Lemon</h5>
-			</div>
-			<div class="col-md-6 col-sm-6">
-				<h4>Lemon-Rosemary Pork ........................ <span>$40.75</span></h4>
-				<h5>Pork / Tooplate / Lemon</h5>
-			</div>
-			<div class="col-md-6 col-sm-6">
-				<h4>Orange-Rosemary Salad .......................... <span>$55.00</span></h4>
-				<h5>Salad / Rosemary / Orange</h5>
-			</div>
-			<div class="col-md-6 col-sm-6">
-				<h4>Lemon-Rosemary Squid ...................... <span>$65.00</span></h4>
-				<h5>Squid / Rosemary / Lemon</h5>
-			</div>
-			<div class="col-md-6 col-sm-6">
-				<h4>Orange-Rosemary Shrimp ........................ <span>$70.50</span></h4>
-				<h5>Shrimp / Rosemary / Orange</h5>
-			</div>
-			<div class="col-md-6 col-sm-6">
-				<h4>Lemon-Rosemary Prawn ................... <span>$110.75</span></h4>
-				<h5>Chicken / Rosemary / Lemon</h5>
-			</div>
-			<div class="col-md-6 col-sm-6">
-				<h4>Lemon-Rosemary Seafood ..................... <span>$220.50</span></h4>
-				<h5>Seafood / Rosemary / Lemon</h5>
 			</div>
 		</div>
 	</div>

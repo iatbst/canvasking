@@ -22,11 +22,20 @@ module Canvasking
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+    
+    # No fields_with_errors div added 
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| 
+      html_tag
+    }
+    
   end
   
   ###################
   #  The Constants  #
   ###################
+  # Crop 
+  IMAGE_ORIGINAL_SIZE_LIMIT = 3000
+  IMAGE_CROP_SIZE = 450
   
   # Stripe
   STRIPE_PUBLISH_KEY_TEST = 'pk_test_86PXfTHcS3DHW58QnF6kGP5Q'
