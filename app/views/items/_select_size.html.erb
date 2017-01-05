@@ -1,57 +1,41 @@
-
-
-
 <div class="row box" style="margin-top: 50px">
-				<h4 style="margin-left: 20px">Select size</h4>
-				<% if @item.errors[:size] %>
-					<h6 style="color: red; margin-left: 20px"><%= @item.errors[:size][0] %></h6>
-				<% end %>				
-				<!-- 
-				<div class="row" style="margin-left: 20px">
-					<div class="col-sm-4">
-						<label class="radio-inline">
-							<%= f.radio_button  :size, '8"x12"' %>						
-							<h4>Small</h4>
-							<h6>
-								8"x12" - $19.99
-							</h6> </label>
-					</div>
-					<div class="col-sm-4">
-						<label class="radio-inline">
-							<%= f.radio_button  :size, '16"x20"' %>
-							
-							<h4>Medium</h4>
-							<h6>
-								16"x20" - $29.99
-							</h6> </label>
-					</div>
-					<div class="col-sm-4">
-						<label class="radio-inline">
-							<%= f.radio_button  :size, "24\"x30\"" %>
-							
-							
-								<h4>Large</h4>
-							<h6>
-								24"x30" - $39.99
-							</h6> 
-							
-						</label>
-					</div>
-				</div>
-				-->
-				
-				<div class="row" style="margin-left: 20px; margin-bottom: 20px">
-					
-					<div class="col-md-4">
-					<select class="form-control" name="item[size]" id="item_size">
-						<% if @item.size.nil? %>
-							<option value="" selected disabled>Select Size</option>
-						<% end %>
-						<%= @size_price.each do |key, val| %>
-							<option value="<%= key %>" <% if @item.size && @item.size == key %> selected <% end %>><%= key %> - $<%= val %></option>
-						<% end %>
-					</select>
-										
-					</div>
-				</div>
-			</div>
+	<h4 style="margin-left: 20px">Select size</h4>
+	<% if @item.errors[:size] %>
+	<h6 id="size_error" style="color: red; margin-left: 20px"><%= @item.errors[:size][0] %></h6>
+	<% end %>
+
+	<div class="row" style="margin-left: 20px; margin-bottom: 20px">
+
+		<div class="col-md-4">
+			
+			<select class="form-control" name="item[size]" id="item_size">
+				<% if @item.size.nil? %>
+				<option value="" selected disabled>Select Size</option>
+				<% end %>
+				<%= @size_price.each do |key, val| %>
+				<option value="<%= key %>" <% if @item.size && @item.size == key %> selected <% end %>><%= key %> - $<%= val %></option>
+				<% end %>
+			</select>
+		
+		</div>
+	</div>
+</div>
+
+<script>
+
+$("#item_size").change(function() {
+  
+  if ( $('#size_error').length ){
+  	$('#size_error').remove();
+  	var error_num = parseInt($('#error_number').text());
+  	error_num--;
+  	if (error_num == 0){
+  		$('#error_explanation').remove();
+  	} else {
+  		var issue = 'issue';
+  		if (error_num > 1){issue = 'issues'}
+  		$('#error_number').text(error_num + ' ' + issue );
+  	}
+  }
+});
+</script>

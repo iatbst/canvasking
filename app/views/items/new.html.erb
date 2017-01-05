@@ -23,7 +23,7 @@
 			<!-- Validation -->
 			<% if @item.errors.any? %>
 			<div id="error_explanation">
-				<h4 class="no_bold" style="color: red"> Please fix following <%= pluralize(@item.errors.count, "issue") %> ( in red ) before continue.</h2>
+				<h4 class="no_bold" style="color: red"> Please fix these <b id="error_number" ><%= pluralize(@item.errors.count, "issue") %></b> before continue.</h2>
 			</div>
 			<% end %>
 

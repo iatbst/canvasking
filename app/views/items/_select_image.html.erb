@@ -5,7 +5,7 @@
 					Select your image
 				</h4>
 				<% if @item.errors[:image] %>
-					<h6 style="color: red; margin-left: 20px"><%= @item.errors[:image][0] %></h6>
+					<h6 id="image_error" style="color: red; margin-left: 20px"><%= @item.errors[:image][0] %></h6>
 				<% end %>
 				<div style="margin: auto; margin-left: 50px">
 					
