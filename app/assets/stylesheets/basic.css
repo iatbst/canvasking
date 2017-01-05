@@ -5,6 +5,12 @@
 	border-color:#e2e2e2;
 }
 
+.four_box {
+	background-color: white;
+	height: 300px;
+	border-radius: 5px;
+}
+
 h4.no_bold { 
 	font-weight:	normal;
 }
