@@ -16,12 +16,15 @@
 				</li>
 				<li><a href="#gallery" class="smoothScroll">DISCOVERY</a></li>
 				<li>
+					<a href="/cart" class="smoothScroll">
+						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
 					<% cart = get_current_cart %>
 					<% if cart.quantity != 0 %>
-						<%= link_to "CART(#{cart.quantity})", cart_path, class:"smoothScroll", id:"nav_bar_cart"%>
+						<%= "CART(#{cart.quantity})"%>
 					<% else  %>
-						<%= link_to 'CART', cart_path, class:"smoothScroll", id:"nav_bar_cart"%>
+						CART
 					<% end %>
+					</a>
 				</li>
 				<% unless user_signed_in? %>
 					<li><a href="/users/sign_up" class="smoothScroll">SIGN UP</a></li>
