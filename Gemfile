@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -48,6 +48,10 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'rmagick'
 gem 'carrierwave-crop' # for image cropping
+
+# S3
+gem "fog"
+gem "fog-aws"
 
 # Debugging
 gem 'pry'
