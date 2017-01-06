@@ -11,6 +11,9 @@
 	border-radius: 5px;
 }
 
+.clickable {
+	cursor: pointer;
+}
 h4.no_bold { 
 	font-weight:	normal;
 }
@@ -27,4 +30,5 @@ span.form_error {
 	font-weight:	normal;
 	color: red;
 }
+
 

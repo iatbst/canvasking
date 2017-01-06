@@ -37,6 +37,9 @@ class ImageUploader < CarrierWave::Uploader::Base
   version :crop_version do
     resize_to_fit(450, 450)
   end
+  version :filter_version do
+    resize_to_fit(600, 800)
+  end
   version :overview do
     resize_to_fit(300, 300)
   end

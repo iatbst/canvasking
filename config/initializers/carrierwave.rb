@@ -14,5 +14,5 @@ CarrierWave.configure do |config|
   }
   config.fog_directory  = 'canvasking-user-upload-images'            # required, bucket name
   config.fog_public     = true                                       # optional, defaults to true
-  config.fog_attributes = { } # optional, defaults to {}: Warn, DO NOT SET cache, otherwise cropped image won't updated
+  config.fog_attributes = {} # optional, defaults to {}: Warn, DO NOT SET cache, otherwise cropped image won't updated
 end

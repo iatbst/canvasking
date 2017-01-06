@@ -1,0 +1,70 @@
+<style>
+#filter_input {
+    height: auto; 
+    width: auto; 
+    max-width: 600px; 
+    max-height: 800px;
+}	
+</style>
+
+
+<div class="container">
+	<div class="row" style="margin-top: 100px">
+		<div class="col-md-6" style="height: 800px" align="center">
+			<div class="row">
+				<%= image_tag @item.image.filter_version.url, id:"filter_input"%>
+			</div>
+
+		
+
+			<div class="row" style="margin-top: 40px; margin-bottom: 50px">
+				<%= button_to 'USE THIS STYLE', class:"btn btn-primary btn-lg"%>
+			</div>
+		</div>
+		<div class="col-md-6 box" style="height: 800px">
+			<div class=row>
+				<h3 class="no_bold" style="margin-left: 10px">Choose Your Art Style</h3>
+				<hr style="width: 95%" />
+			</div>
+
+			<div class="row" style="margin-top: 20px">
+				<div class="col-md-4">
+					<%= image_tag '/items/mosaic-thumb.jpg', size: "170x113", class: "style_option clickable", id: "vEzXdPnj" %>
+				</div>
+				<div class="col-md-4">
+					<%= image_tag '/items/abstract-thumb.jpg', size: "170x113", class: "style_option clickable", id: "LnL71DkK" %>
+				</div>
+				<div class="col-md-4">
+					<%= image_tag '/items/expressionist-thumb.jpg', size: "170x113", class: "style_option clickable", id: "2kRl49ZW" %>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<script>
+	$('.style_option').click(function() {
+		var style_id = $(this).attr('id');
+		var url = '<%= @somatic_realtime_api %>?id=' + style_id + 
+				  '&api_key=' + '<%= @somatic_api_key %>' + 
+				  '&--input=' + '<%= @item.image.filter_version.url %>';
+		$('#filter_input').attr('src', url);		  
+		/*
+		$.ajax({
+			type : "POST",
+			url : url,
+			dataType : "image/jpg",
+			header : {"Access-Control-Allow-Origin": "*"},
+			success: function (response, status, xhr) {
+				response.addHeader("Access-Control-Allow-Origin", "*");
+				if (status == "success") {
+					$('#filter_output').attr('src', response);
+				} else {
+					alert('Sorry, Art filter failed working, trying again or try later !');
+				}
+			}
+		});
+		*/
+	}); 
+</script>

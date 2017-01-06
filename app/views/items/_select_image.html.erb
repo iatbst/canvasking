@@ -1,31 +1,29 @@
+<div class="row box">
+	<h4 style="margin-left: 20px"> Select your image </h4>
+	<% if @item.errors[:image] %>
+	<h6 id="image_error" style="color: red; margin-left: 20px"><%= @item.errors[:image][0] %></h6>
+	<% end %>
+	<div style="margin: auto; margin-left: 50px">
 
+		<!-- 1 Upload Photo -->
+		<%= form_for @item do |f| %>
 
-			<div class="row box">
-				<h4 style="margin-left: 20px"> 
-					Select your image
-				</h4>
-				<% if @item.errors[:image] %>
-					<h6 id="image_error" style="color: red; margin-left: 20px"><%= @item.errors[:image][0] %></h6>
-				<% end %>
-				<div style="margin: auto; margin-left: 50px">
-					
-					<!-- 1 Upload Photo -->
-					<%= form_for @item do |f| %>
+		<div class="field" style="margin-top: 20px">
+			<%= f.file_field :image, id:"item_image", type:"file", class:"file-loading"%>
+		</div>
+		<div class="actions" style="margin-top: 10px">
+			<%= hidden_field_tag :image_upload, true %>
 
-					<div class="field" style="margin-top: 20px">
-						<%= f.file_field :image, id:"item_image", type:"file", class:"file-loading"%>
-					</div>
-					<div class="actions" style="margin-top: 10px">
-						<%= hidden_field_tag :image_upload, true %>
-						
-					</div>
-					<% end %>
-				</div>
+		</div>
+		<% end %>
+	</div>
 
-			</div>
-			
+</div>
+
 <script>
-$(document).on('ready', function() {
-    $("#item_image").fileinput({showCaption: false});
-});
+	$(document).on('ready', function() {
+		$("#item_image").fileinput({
+			showCaption : false
+		});
+	}); 
 </script>
