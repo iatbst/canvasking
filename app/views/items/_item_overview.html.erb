@@ -1,9 +1,9 @@
 <div class="row box" align="center" style="height:550px; width:350px; margin-left:10px; position:fixed">
 	<div class="row" style="height:300px; margin-top: 30px;">
 		<% unless @item.image.file.nil? %>
-		<%= image_tag @item.image.overview.url %>
+			<%= image_tag get_image_url(@item, "overview"), class: "overview_image" %>
 		<% else %>
-		<%= image_tag '/canvas_placeholder.png' %>
+			<%= image_tag '/canvas_placeholder.png', class: "overview_image" %>
 		<% end %>
 	</div>
 	

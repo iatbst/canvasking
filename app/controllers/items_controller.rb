@@ -47,6 +47,7 @@ class ItemsController < ApplicationController
     # Image upload to current item, render to crop page
     if params[:image_upload]
       @item.attributes = item_params
+      @item.art_filter = false
       @item.save(validate: false) # skip validation for image upload
       @crop_image = true
       render 'new'
@@ -69,6 +70,14 @@ class ItemsController < ApplicationController
         @item.save(validate: false)
         render 'new' # save failed, back to item new page, may caused by missing fields
       end
+    
+    # Image processed by art filter
+    elsif params[:art_filterred]
+      @item.attributes = item_params
+      @item.art_filter = true
+      @item.remote_art_image_url = @item.somatic_url
+      @item.save(validate: false)
+      render 'new'
       
     # Image cropped, return to item new page
     elsif params[:image_cropped]
@@ -129,7 +138,9 @@ class ItemsController < ApplicationController
     
     def item_params
       if params[:item]
-        params.require(:item).permit(:image_crop_x, :image_crop_y, :image_crop_w, :image_crop_h, :size, :price, :quantity, :image, :depth, :border, :product_id)
+        params.require(:item).permit(:image_crop_x, :image_crop_y, :image_crop_w, \
+                                     :image_crop_h, :size, :price, :quantity, :image, \
+                                     :depth, :border, :product_id, :art_filter, :somatic_url)
       else
         {}
       end

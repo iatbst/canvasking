@@ -1,8 +1,8 @@
 <div class="col-md-8">
 
 			<div class="row box" style="margin-bottom: 20px">
-
-				<% @cart.items.each_with_index do |item, ix| %>
+				
+				<% @cart.items.sort_by { |obj| obj.created_at }.reverse.each_with_index do |item, ix| %>
 				
 
 					<div class="container">
@@ -10,7 +10,7 @@
 							<div class="col-md-6">
 								<br />
 								<a data-method="get" style="color: black" href="/items/<%= item.id %>/edit">
-									<%= image_tag item.image.crop_version.url %>
+									<%= image_tag get_image_url(item, "crop"), class: "crop_image" %>
 								</a>
 							</div>
 

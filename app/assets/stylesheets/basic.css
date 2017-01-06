@@ -31,4 +31,29 @@ span.form_error {
 	color: red;
 }
 
+.thumb_image {
+    height: auto; 
+    width: auto; 
+    max-width: 200px; 
+    max-height: 200px;	
+}
+.crop_image {
+    height: auto; 
+    width: auto; 
+    max-width: 450px; 
+    max-height: 450px;
+}
 
+.overview_image {
+    height: auto; 
+    width: auto; 
+    max-width: 300px; 
+    max-height: 300px;
+}	
+
+.filter_image {
+    height: auto; 
+    width: auto; 
+    max-width: 600px; 
+    max-height: 800px;
+}	

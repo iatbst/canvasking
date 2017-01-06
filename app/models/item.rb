@@ -3,6 +3,7 @@ class Item < ActiveRecord::Base
   belongs_to :cart
   belongs_to :order
   mount_uploader :image, ImageUploader
+  mount_uploader :art_image, ImageUploader
   crop_uploaded :image
   
   # Validations
