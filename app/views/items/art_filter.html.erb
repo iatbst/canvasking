@@ -24,7 +24,11 @@
 		
 
 			<div class="row" style="margin-top: 40px; margin-bottom: 50px">
-				<button type="button" onclick="submit();" class="btn btn-primary btn-lg">USE THIS STYLE</button>
+					<button type="button" id="use_this_style" disabled="disabled" onclick="submit();" class="btn btn-primary btn-lg">USE THIS STYLE</button>
+			</div>
+			
+			<div class="row" align="left">
+				<h4 class="no_bold" style="margin-left: 100px; font-color: grey"><%= link_to '<- Skip Art Filter', edit_item_path(@item) %></h4>
 			</div>
 		</div>
 		<div class="col-md-6" style="height: 800px;">
@@ -39,8 +43,8 @@
 			<div class="row" style="margin-top: 20px">
 				<div class="col-md-4">
 					<label>
-						<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_vEzXdPnj" %>
-						<%= image_tag '/items/mosaic-thumb.jpg', size: "170x113", class: "style_option clickable", id: "vEzXdPnj" %>
+						<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;"%>
+						<%= image_tag '/items/no_effects.jpg', size: "170x113", class: "clickable", id: "no_effects" %>
 					</label>
 				</div>
 				<div class="col-md-4">
@@ -95,7 +99,7 @@
 				</div>
 				<div class="col-md-4">
 					<label>
-						<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_2kRl49ZW" %>
+						<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_zZP0RvZ0" %>
 						<%= image_tag '/items/candy_thumb_web.jpg', size: "170x113", class: "style_option clickable", id: "zZP0RvZ0" %>
 					</label>
 				</div>
@@ -122,6 +126,16 @@
 					</label>
 				</div>
 			</div>
+
+			<!-- 5 row -->
+			<div class="row" style="margin-top: 20px">
+				<div class="col-md-4">
+					<label>
+						<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_vEzXdPnj" %>
+						<%= image_tag '/items/mosaic-thumb.jpg', size: "170x113", class: "style_option clickable", id: "vEzXdPnj" %>
+					</label>
+				</div>
+			</div>
 			<%= hidden_field_tag :art_filterred, true %>
 			<%= f.submit id: "art_style_options", style: "display: none" %>
 			<% end %>
@@ -137,9 +151,14 @@
 				  '&api_key=' + '<%= @somatic_api_key %>' + 
 				  '&--input=' + '<%= @item.image.filter_version.url %>';
 		$('#filter_input').attr('src', url);	
-		$('#radio_' + style_id).attr('value', url);	  
+		$('#radio_' + style_id).attr('value', url);	
+		$('#use_this_style').removeAttr('disabled');
 	}); 
 	
+	$('#no_effects').click(function(){
+		$('#filter_input').attr('src', '<%= @item.image.filter_version.url %>');
+		$('#use_this_style').attr('disabled', 'disabled');
+	});
 	function submit(){
 		$('#art_style_options').click();
 	}

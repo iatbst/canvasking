@@ -26,6 +26,9 @@ b.no_bold {
 	font-weight:	normal;
 }
 
+label.no_bold{
+	font-weight:normal;
+}
 span.form_error {
 	font-weight:	normal;
 	color: red;

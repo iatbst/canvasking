@@ -29,11 +29,12 @@
 
 			<!-- Select Image -->
 			<%= render 'select_image' %>
-			
-			<!-- Select Filter -->
-			<%= render 'select_filter' %>
 
 			<%= form_for :item, url: item_path(@item), method: :patch do |f| %>
+			
+			<!-- Select Filter -->
+			<%= render partial: 'select_filter',  locals:{f: f} %>
+
 			<!-- Select Product -->
 			<%= render partial: 'select_product', locals:{f: f} %>
 
@@ -58,6 +59,16 @@
 <% end %>
 
 <script>
+	$("#art_filter_checkbox").change(function() {
+		if (this.checked) {
+			//use original image
+			$('#the_image').attr('src', '<%= @item.image.overview.url %>');
+		} else {
+			//use art filter
+			$('#the_image').attr('src', '<%= @item.art_image.url %>');
+		}
+	});
+	
 	$("#product_canvas").click(function() {
 		$('#product_choice').text('Type: canvas')
 	});
@@ -98,5 +109,6 @@
 
 	$("#border_white").click(function() {
 		$('#border_choice').text('Border: white')
-	}); 
+	});
+
 </script>
