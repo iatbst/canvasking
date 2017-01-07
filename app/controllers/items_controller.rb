@@ -31,8 +31,8 @@ class ItemsController < ApplicationController
   
   def art_filter
     @item = Item.find(params[:id])
-    @somatic_realtime_api = "http://convert.somatic.io/api/v1.2/cdn-query"
-    @somatic_api_key = "Hmzd6opl1lw0ifnwubrbz3iky8c62K"
+    @somatic_realtime_api = Rails.configuration.somatic["api_url"]
+    @somatic_api_key = Rails.configuration.somatic["api_key"]
   end
   
   # TODO: May need to refactor in future, current logic as follow
@@ -47,7 +47,9 @@ class ItemsController < ApplicationController
     # Image upload to current item, render to crop page
     if params[:image_upload]
       @item.attributes = item_params
+      # When new image uploaded, remove previous art images
       @item.art_filter = false
+      @item.remove_art_image!
       @item.save(validate: false) # skip validation for image upload
       @crop_image = true
       render 'new'

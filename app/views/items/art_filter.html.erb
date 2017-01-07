@@ -9,14 +9,18 @@
 		border: 2px solid transparent;
 	}
 	label > input:checked + img {/* (RADIO CHECKED) IMAGE STYLES */
-		border: 3px solid #f00;
+		border: 2px solid #f00;
+		padding: 10px;
 	}
 
+	.loading {
+		margin-top: 200px;
+	}
 </style>
 
 <div class="container-fluid">
-	<div class="row" style="margin-top: 100px">
-		<div class="col-md-6" style="height: 800px" align="center">
+	<div class="row" style="margin-top: 50px">
+		<div class="col-md-6" style="margin-top:50px; height: 800px" align="center">
 			<div class="row">
 				<%= image_tag @item.image.filter_version.url, id:"filter_input", class: "filter_image"%>
 			</div>
@@ -146,13 +150,27 @@
 
 <script>
 	$('.style_option').click(function() {
+		$('#use_this_style').hide();
+		
 		var style_id = $(this).attr('id');
 		var url = '<%= @somatic_realtime_api %>?id=' + style_id + 
 				  '&api_key=' + '<%= @somatic_api_key %>' + 
 				  '&--input=' + '<%= @item.image.filter_version.url %>';
-		$('#filter_input').attr('src', url);	
+
+		var newImage = new Image();
+		var loadingSrc = '/loading.gif';
+		$('#filter_input').attr('src', loadingSrc);
+		$('#filter_input').addClass("loading");
+		newImage.onload = function() {
+    			$('#filter_input').attr('src', newImage.src);
+    			$('#filter_input').removeClass("loading");
+    			$('#use_this_style').show();
+    			$('#use_this_style').removeAttr('disabled');
+		};
+		newImage.src = url;
+		
 		$('#radio_' + style_id).attr('value', url);	
-		$('#use_this_style').removeAttr('disabled');
+		//$('#use_this_style').removeAttr('disabled');
 	}); 
 	
 	$('#no_effects').click(function(){
