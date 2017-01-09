@@ -62,6 +62,10 @@ gem 'stripe'
 # Process outgoing email: embed the styles
 gem 'premailer-rails'
 
+group :production do
+  gem 'rails_12factor'
+end
+
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
   gem 'debugger'

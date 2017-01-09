@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
   include CartsHelper
+  include ItemsHelper
+  
   before_action :authenticate_user!
   def new
     @order = Order.new
