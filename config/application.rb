@@ -45,4 +45,6 @@ module Canvasking
   GMAIL_TEST_USER = 'agarienforcement@gmail.com'
   GAMIL_TEST_USER_PW = 'agarienforce'
   
+  # Heroku
+  HEROKU_HOST_URL = 'https://arcane-sands-61757.herokuapp.com/'
 end
