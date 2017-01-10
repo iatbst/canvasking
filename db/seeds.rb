@@ -7,12 +7,12 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Populate Products
-Product.create(name: "canvas")
-Product.create(name: "frame")
+product_canvas = Product.create(name: "canvas")
+product_frame = Product.create(name: "frame")
 
 # Populate Countrys
-Country.create(name: "United States")
-Country.create(name: "Canada")
+country_us = Country.create(name: "United States")
+country_canada = Country.create(name: "Canada")
 
 # Populate States
 us_state_list = %w(
@@ -67,7 +67,7 @@ West\ Virginia
 Wisconsin
 Wyoming)
 us_state_list.each do |state|
-  State.create(name: state, country_id: 1)
+  State.create(name: state, country_id: country_us.id)
 end
 
 canada_province_list = %w(
@@ -86,5 +86,5 @@ Saskatchewan
 Yukon
 )
 canada_province_list.each do |province|
-  State.create(name: province, country_id: 2)
+  State.create(name: province, country_id: country_canada)
 end
