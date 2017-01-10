@@ -31,5 +31,5 @@
 # Ignore uploaded images
 /public/uploads/*
 
-# Ignore AWS credentials
-#config/aws.yml
+# Ignore credentials, like aws or somatic etc
+config/*.yml
