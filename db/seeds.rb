@@ -86,5 +86,5 @@ Saskatchewan
 Yukon
 )
 canada_province_list.each do |province|
-  State.create(name: province, country_id: country_canada)
+  State.create(name: province, country_id: country_canada.id)
 end
