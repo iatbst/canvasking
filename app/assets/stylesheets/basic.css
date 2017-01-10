@@ -60,3 +60,18 @@ span.form_error {
     max-width: 600px; 
     max-height: 800px;
 }	
+
+/* Welcome Page */
+.how_it_works_image{
+    height: auto; 
+    width: auto; 
+    max-width: 170px; 
+    max-height: 170px;	
+}
+
+.how_it_works_num{
+    height: auto; 
+    width: auto; 
+    max-width: 30px; 
+    max-height: 30px;	
+}
