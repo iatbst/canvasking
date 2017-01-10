@@ -7,12 +7,12 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Populate Products
-#Product.create(name: "canvas")
-#Product.create(name: "frame")
+Product.create(name: "canvas")
+Product.create(name: "frame")
 
 # Populate Countrys
-#Country.create(name: "United States")
-#Country.create(name: "Canada")
+Country.create(name: "United States")
+Country.create(name: "Canada")
 
 # Populate States
 us_state_list = %w(
