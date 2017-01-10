@@ -4,9 +4,10 @@
 production:
   adapter: postgresql
 
-  host: db-cousteau-00.ep.prod.agari.com
-  database: cousteau
-  user: app_cousteau
+  host: localhost
+  database: canvasking_production
+  
+  schema_order: public
 
 # Development databases
 ###############################################################################
