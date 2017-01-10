@@ -32,4 +32,4 @@
 /public/uploads/*
 
 # Ignore credentials, like aws or somatic etc
-config/*.yml
+# config/*.yml
