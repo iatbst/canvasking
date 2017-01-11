@@ -14,7 +14,6 @@
 				<li>
 					<%= link_to 'START', new_item_path, method:"get", class:"smoothScroll" %>
 				</li>
-				<li><a href="#gallery" class="smoothScroll">DISCOVERY</a></li>
 				<li>
 					<a href="/cart" class="smoothScroll">
 						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
@@ -32,15 +31,10 @@
 				<% end %>
 				<% if user_signed_in? %>
 					<li>
-						<a class="smoothScroll">
-							<%= current_user.email %>
-						</a>
-					</li>
-					<li>
 						<%= link_to "MY ORDERS", orders_path %>
 					</li>
 					<li>
-						<%= link_to "SIGN OUT", destroy_user_session_path, :method => :delete %>
+						<%= link_to "SETTINGS", edit_user_registration_path %>
 					</li>
 				<% end %>
 			</ul>

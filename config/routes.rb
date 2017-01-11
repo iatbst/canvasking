@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'site_manage/list_users'
 
-  devise_for :users, :controllers => { :sessions => "custom_sessions" }
+  devise_for :users, :controllers => { :sessions => "custom_sessions", :registrations => 'registrations' }
   get 'welcome/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   # get 'art_filter' => 'art_filter#filter'
   get '/items/art_filter/:id(.:format)' => 'items#art_filter', as: 'art_filter_item'
   # get '/orders/new(.:format)' => 'orders#new', as: 'new_order'
+  get '/accounts/my_account' => 'accounts#my_account', as: 'manage_my_account'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
