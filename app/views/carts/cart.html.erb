@@ -1,16 +1,15 @@
 <%= render "layouts/navbar" %>
 
 <div class="container">
-	<div class="row" style="margin-top: 100px">
+	<div class="row" style="margin-top: 100px" align="center">
 
 		<% if @cart.items.count == 0 %>
-		<div class="col-md-9">
-			<h3>Woops, Your Cart is still empty. Let's build it !</h3>
-			<%= button_to 'Get Building', new_item_path, method: :get, class:"btn btn-primary btn-lg" %>
-		</div>
+				<%= image_tag '/cart/empty_cart.png' %>
+				<h3>Oops...Your Cart is still empty. Let's fill it :)</h3><br />
+				<%= button_to 'Get Started', new_item_path, method: :get, class:"btn btn-primary btn-lg" %>
 		<% else %>
-		<%= render partial:'items', locals:{cart: @cart } %>
-		<%= render partial:'summary', locals:{cart: @cart } %>
+			<%= render partial:'items', locals:{cart: @cart } %>
+			<%= render partial:'summary', locals:{cart: @cart } %>
 		<% end %>
 
 	</div>
