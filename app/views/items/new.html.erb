@@ -24,6 +24,43 @@
   		// display modal
   		$('#facebook_images').modal('show');
   		
+  		// get photos of you
+  		FB.api('/me/photos?fields=picture,album,images', function(photos) {
+
+				$('#albums').append('<button class="btn btn-default btn-lg" \
+		    						data-toggle="collapse"	\
+		    						data-target="#collapse_photos_of_you"	\
+		    						style="width: 100%">Photos Of You ( ' + photos.data.length + ' ) ' + '</button>'); 
+		    						 			
+ 				$('#albums').append('<div class="collapse" id="collapse_photos_of_you"><div id="photos_of_you" class="container"></div></div>');
+		    	  
+		    	  	// Build the grid system for images
+		    	  if (photos && photos.data && photos.data.length){
+		    	  	for (var j=0; j<photos.data.length; j++){
+		    	  		var photo = photos.data[j];
+		    	  		var row_num = parseInt(j/5);
+		    	  		var row_id = "photos_of_you_" + row_num;
+		    	  		if (j%5 == 0) {
+		    	  			$('#photos_of_you').append('<div class="row" id="' + row_id + '"></div>');
+		    	  		}
+		    	  		$('#' + row_id).append('<div class="col-md-2 box facebook_image_grid" align="center" id="' + photo.id + '"></div>');
+		    	  
+		    	  	}
+		    	  }
+		    	  
+		      if (photos && photos.data && photos.data.length){
+		        for (var j=0; j<photos.data.length; j++){
+		          var photo = photos.data[j];
+		          photo.images.sort(function(a, b) { return b.width - a.width;})
+		          var large_image_url = photo.images[0].source
+		          // photo.picture contain the link to picture          
+		          $('#' + photo.id).append('<img src="' + photo.picture + '" \
+		          								 class="facebook_image" id="' + large_image_url + '"></img>');
+		        }
+		      }
+		       		
+  		});
+  		
   		// get all albums
 		FB.api('/me/albums?fields=id,name,count', function(response) {
 		  
@@ -40,7 +77,6 @@
 			
 		    FB.api('/'+album.id+'/photos?fields=picture,album,images', function(photos){
 		    	 
-		    	  //var row_num = photos.data.length/4;
 		    	  // Build the grid system for images
 		    	  if (photos && photos.data && photos.data.length){
 		    	  	for (var j=0; j<photos.data.length; j++){
@@ -74,7 +110,7 @@
 		});
   			
   			
-  		}, {scope: 'user_photos'});
+  		}, {scope: ['user_photos']});
   		
   		$('#facebook_upload_button').attr('onclick', 'open_facebook_modal()');
 	}
@@ -94,6 +130,8 @@
 	function open_facebook_modal() {
 		$('#facebook_images').modal('show');
 	}
+	
+
 
 </script>
 
