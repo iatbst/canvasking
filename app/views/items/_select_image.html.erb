@@ -3,7 +3,8 @@
 	<% if @item.errors[:image] %>
 	<h6 id="image_error" style="color: red; margin-left: 20px"><%= @item.errors[:image][0] %></h6>
 	<% end %>
-	<div style="margin: auto; margin-left: 50px">
+	<div  class="row" style="margin: auto; margin-left: 50px">
+		<div class="col-md-4">
 
 		<!-- 1 Upload Photo -->
 		<%= form_for @item do |f| %>
@@ -16,6 +17,12 @@
 
 		</div>
 		<% end %>
+		
+		</div>
+		
+		<div class="col-md-4">
+			<button onclick="myFacebookLogin()">Upload From Facebook</button>
+		</div>
 	</div>
 
 </div>

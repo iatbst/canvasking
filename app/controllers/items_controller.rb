@@ -46,7 +46,11 @@ class ItemsController < ApplicationController
     
     # Image upload to current item, render to crop page
     if params[:image_upload]
-      @item.attributes = item_params
+      if params[:upload_from_facebook]
+        @item.remote_image_url = params[:facebook_image_url]
+      else
+        @item.attributes = item_params
+      end
       # When new image uploaded, remove previous art images
       @item.art_filter = false
       @item.remove_art_image!

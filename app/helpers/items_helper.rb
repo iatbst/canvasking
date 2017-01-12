@@ -15,6 +15,8 @@ module ItemsHelper
         return item.image.crop_version.url
       elsif version == "thumb"
         return item.image.thumb.url
+      else
+        return item.image.url
       end
     end
   end
