@@ -6,7 +6,7 @@
 </style>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="crop_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -44,12 +44,14 @@
 
 	// Trigger modal when page loaded an
 	$(window).load(function() {
-		$('#myModal').modal('show');
+		$('#crop_modal').modal('show');
 		$('div.jcrop-selection').attr('onclick', 'return false;');
 	});
 	
 	// Use footer button to trigger form submit button
 	function crop(){
-		$('#crop_submit_button').click()
+		$('#crop_submit_button').click();
+		$('#crop_modal').modal('hide');
+		$("div#divLoading").addClass('show');
 	}
 </script>

@@ -5,6 +5,18 @@
 	border-color:#e2e2e2;
 }
 
+.facebook_image_grid {
+	width: 160px;
+	height: 160px;
+}
+
+.facebook_image {
+	top: 50%;
+	position: relative;
+	transform: 			translateY(-50%);
+	cursor: pointer;
+}
+
 .four_box {
 	background-color: white;
 	height: 300px;
@@ -59,7 +71,14 @@ span.form_error {
     width: auto; 
     max-width: 600px; 
     max-height: 800px;
-}	
+}
+
+.facebook_icon {
+    height: auto; 
+    width: auto; 
+    max-width: 20px; 
+    max-height: 20px;
+}		
 
 /* Welcome Page */
 .how_it_works_image{
@@ -74,4 +93,36 @@ span.form_error {
     width: auto; 
     max-width: 30px; 
     max-height: 30px;	
+}
+
+/* Loading Image */
+#divLoading
+{
+	display : none;
+}
+#divLoading.show
+{
+	display : block;
+	position : fixed;
+	z-index: 100;
+	background-image : url('http://loadinggif.com/images/image-selection/3.gif');
+	background-color:#666;
+	opacity : 0.4;
+	background-repeat : no-repeat;
+	background-position : center;
+	left : 0;
+	bottom : 0;
+	right : 0;
+	top : 0;
+}
+#loadinggif.show
+{
+	left : 50%;
+	top : 50%;
+	position : absolute;
+	z-index : 101;
+	width : 32px;
+	height : 32px;
+	margin-left : -16px;
+	margin-top : -16px;
 }
