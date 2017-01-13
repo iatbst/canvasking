@@ -46,6 +46,13 @@ span.form_error {
 	color: red;
 }
 
+.product_image {
+    height: auto; 
+    width: auto; 
+    max-width: 150px; 
+    max-height: 150px;	
+}
+
 .thumb_image {
     height: auto; 
     width: auto; 

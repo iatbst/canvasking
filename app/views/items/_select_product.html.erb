@@ -1,26 +1,55 @@
 <div class="row box" style="margin-top: 50px">
-	<h4 style="margin-left: 20px">Select product</h4>
+	<div class="row">
+		<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px"> 
+			
+			Available Products
+			</h4>
+		
+	</div>
+	
 	<% if @item.errors[:product_id] %>
 	<h6 id="product_error" style="color: red; margin-left: 20px"><%= @item.errors[:product_id][0] %></h6>
 	<% end %>
-	<div class="container" style="margin-bottom: 20px">
+	
+	
 		<div class="row">
 
-			<div class="col-md-4">
+			<div class="col-md-3" align="center">
 
 				<label id="product_canvas"> 
-					<h5 style="margin-left: 15px"> Canvas Print </h5> 
 					<%= f.radio_button :product_id, Product.find_by_name('canvas').id, style: "visibility: hidden;", id:"product_canvas"%>
-					<%= image_tag '/product-canvas.jpeg' %> 
+					<%= image_tag '/items/product_canvas.jpg', class: "product_image"%> 
+					<h6 class="no_bold" style="margin-left: 15px"> Canvas Art</h5>
 				</label>
 			</div>
-			<div class="col-md-4">
-				<label id="product_frame"> <h5 style="margin-left: 15px"> Framed Paper Print </h5> <%= f.radio_button :product_id, Product.find_by_name('frame').id, style: "visibility: hidden;", id:"product_frame"%>
-					<%= image_tag '/product-frame.jpeg' %> </label>
+			
+			<div class="col-md-3" align="center">
+				<label id="product_frame"> 
+					<%= f.radio_button :product_id, Product.find_by_name('frame').id, style: "visibility: hidden;", id:"product_frame"%>
+					<%= image_tag '/items/product_frame.jpg', class: "product_image"%> 
+					<h6 class="no_bold" style="margin-left: 15px"> Framed Art</h6>	
+				</label>
 
 			</div>
 
-		</div>
+			<div class="col-md-3" align="center">
+				<label id="product_frame">
+					<%= f.radio_button :product_id, Product.find_by_name('frame').id, style: "visibility: hidden;", id:"product_frame"%>
+					<%= image_tag '/items/product_iphone_case.jpg',class: "product_image"%> 
+					<h6 class="no_bold" style="margin-left: 15px">Iphone case</h6>
+				</label>
+
+			</div>
+			
+			<div class="col-md-3" align="center">
+				<label id="product_frame">
+					<%= f.radio_button :product_id, Product.find_by_name('frame').id, style: "visibility: hidden;", id:"product_frame"%>
+					<%= image_tag '/items/product_mug.jpg', class: "product_image"%> 
+					<h6 class="no_bold" style="margin-left: 15px">Mug</h6>
+				</label>
+
+			</div>
+
 	</div>
 </div>
 
