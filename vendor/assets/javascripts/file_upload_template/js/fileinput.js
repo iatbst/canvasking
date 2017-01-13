@@ -3319,10 +3319,10 @@
     $.fn.fileinputLocales.en = {
         fileSingle: 'file',
         filePlural: 'files',
-        browseLabel: 'Browse &hellip;',
-        removeLabel: 'Remove',
+        browseLabel: 'Upload From Computer',
+        removeLabel: 'Remove!',
         removeTitle: 'Clear selected files',
-        cancelLabel: 'Cancel',
+        cancelLabel: 'Cancel!',
         cancelTitle: 'Abort ongoing upload',
         uploadLabel: 'Upload',
         uploadTitle: 'Upload selected files',

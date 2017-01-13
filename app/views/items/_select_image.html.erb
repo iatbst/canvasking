@@ -1,12 +1,17 @@
 <div class="row box">
-	<h4 style="margin-left: 20px"> Select your image </h4>
+	<div class="row">
+		<h4 class="no_bold" style="margin-left: 40px; margin-top: 10px"> Select your image </h4>
+		<hr style="width: 90%"/>	
+	</div>
+
 	<% if @item.errors[:image] %>
 	<h6 id="image_error" style="color: red; margin-left: 20px"><%= @item.errors[:image][0] %></h6>
 	<% end %>
-	<div  class="row" style="margin: auto; margin-left: 50px">
-		<div class="col-md-6">
+	
+	<div  class="row " style="margin: auto; margin-left: 50px">
+		<div class="col-md-6" align="">
 
-		<!-- 1 Upload Photo -->
+		<!--  Upload Photo From Computer -->
 		<%= form_for @item do |f| %>
 
 			<div class="field" style="margin-top: 20px">
@@ -17,9 +22,19 @@
 
 			</div>
 		<% end %>
-			<button type="button" style="margin-bottom: 20px" class="btn btn-primary" id="facebook_upload_button" onclick="load_images_from_facebook()"><%= image_tag '/items/facebook_icon.png', class: "facebook_icon" %>&nbsp;Upload From Facebook</button>
-		
 		</div>
+		
+		<div class="col-md-2" align="left">
+			<h4 class="no_bold" style="margin-top: 30px">OR</h4>
+		</div>
+		
+		<!--  Upload Photo From Facebook/Instagram -->
+		<div class="col-md-4" align="center">
+			<button type="button" style="margin-bottom: 20px; background-color: white;border-color: blue; color: blue" class="btn btn-primary" id="facebook_upload_button" onclick="load_images_from_facebook()"><%= image_tag '/items/facebook_icon.png', class: "facebook_icon" %>&nbsp;Upload From Facebook</button>
+			<button type="button" style="margin-bottom: 20px; background-color: white;border-color: red; color: red" class="btn btn-primary" id="facebook_upload_button" onclick="load_images_from_facebook()"><%= image_tag '/items/instagram_icon.png', class: "facebook_icon" %>&nbsp;Upload From Instagram</button>
+		</div>
+		
+		
 		
 	</div>
 
@@ -31,4 +46,9 @@
 			showCaption : false
 		});
 	}); 
+	
+	$('body').on('click','i.glyphicon-upload', function() {
+		alert('Cool');
+	});
+	
 </script>

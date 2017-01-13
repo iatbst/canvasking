@@ -1,15 +1,53 @@
 <div class="row box" style="margin-top: 50px">
-	<h4 style="margin-left: 20px"> Select art filter </h4>
-	<div style="margin-top: 20px; margin-left: 50px; margin-bottom: 20px">
-		<%= button_tag "Try Art Filter", :type => 'button', :class => "btn btn-primary", :onclick => "location.href = '#{art_filter_item_path(@item)}'" %>
+	<div class="row">
+		<h4 class="no_bold" style="margin-left: 40px; margin-top: 10px"> Select art effect</h4>
+		<hr style="width: 90%"/>	
 	</div>
-	<div class="field" style="margin-left: 20px">
-		<label class="no_bold"> <%= f.label "Skip Art Effects" %>
-		<% if @item.art_image.file.nil? %>
-			<%= f.check_box :art_filter, {id: "art_filter_checkbox", disabled: "disabled"}, false, true %> 
-		<% else %>
-			<%= f.check_box :art_filter, {id: "art_filter_checkbox", }, false, true %>
-		<% end %>
-		</label>
+	
+	<div class="row" style="margin-bottom: 20px">
+		<div class="col-md-5">
+			
+				<p class="no_bold" style="margin-left: 25px; margin-bottom: 50px; margin-top: 30px">
+					We provide 10+ art filters to make your photos look like Van Gogh's or Picaso's paintings. Give it a try, You will be supprised !
+				</p>
+			
+			<div class="row">
+				
+				<%= button_tag "APPLY", :type => 'button', style: 'margin-left: 40px;background-color: white; color: black; width: 250px', :class => "btn btn-primary", :onclick => "location.href = '#{art_filter_item_path(@item)}'" %>
+			
+				
+					<div class="field" style="margin-left: 40px; margin-top: 20px">
+						<label class="no_bold">
+					
+							<% if @item.art_image.file.nil? %>
+								<%= f.check_box :art_filter, {id: "art_filter_checkbox", disabled: "disabled", style: "display: none"}, false, true %> 
+							<% else %>
+								SKIP ART EFFECTS
+								<%= f.check_box :art_filter, {id: "art_filter_checkbox", }, false, true %>
+							<% end %>
+						</label>
+					</div>	
+			
+			</div>
+		</div>
+		
+		<div class="col-md-7">
+			
+			<div class="twentytwenty-container" style="margin-left: 100px; margin-top: 30px">
+				<%= image_tag '/welcome/golden_bridge_after.jpg', id:"image_1", class:"thumb_image " %>
+				<%= image_tag '/welcome/golden_bridge_before.jpg', class:"thumb_image"%>
+			</div>
+		</div>
+	
 	</div>
+	
+
 </div>
+
+<script>
+	
+$(window).load(function() {
+	$(".twentytwenty-container").twentytwenty();
+	$('.twentytwenty-overlay').hide();
+});
+</script>
