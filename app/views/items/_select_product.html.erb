@@ -14,41 +14,33 @@
 	
 		<div class="row">
 
-			<div class="col-md-3" align="center">
+			<div class="col-md-4" align="center">
 
-				<label id="product_canvas"> 
-					<%= f.radio_button :product_id, Product.find_by_name('canvas').id, style: "visibility: hidden;", id:"product_canvas"%>
-					<%= image_tag '/items/product_canvas.jpg', class: "product_image"%> 
-					<h6 class="no_bold" style="margin-left: 15px"> Canvas Art</h5>
+				<label id="product_single_canvas"> 
+					<%= f.radio_button :product_id, Product.find_by_name('single canvas').id, style: "visibility: hidden;"%>
+					<%= image_tag '/items/product_canvas_1.png', class: "product_image"%> 
+					<h6 class="no_bold" style="margin-left: 15px">Single Canvas</h5>
 				</label>
 			</div>
 			
-			<div class="col-md-3" align="center">
-				<label id="product_frame"> 
-					<%= f.radio_button :product_id, Product.find_by_name('frame').id, style: "visibility: hidden;", id:"product_frame"%>
-					<%= image_tag '/items/product_frame.jpg', class: "product_image"%> 
-					<h6 class="no_bold" style="margin-left: 15px"> Framed Art</h6>	
+			<div class="col-md-4" align="center">
+				<label id="product_triptych_canvas"> 
+					<%= f.radio_button :product_id, Product.find_by_name('triptych canvas').id, style: "visibility: hidden;"%>
+					<%= image_tag '/items/product_canvas_3.png', class: "product_image"%> 
+					<h6 class="no_bold" style="margin-left: 15px">Triptych Canvas</h6>	
 				</label>
 
 			</div>
 
-			<div class="col-md-3" align="center">
+			<div class="col-md-4" align="center">
 				<label id="product_frame">
-					<%= f.radio_button :product_id, Product.find_by_name('frame').id, style: "visibility: hidden;", id:"product_frame"%>
-					<%= image_tag '/items/product_iphone_case.jpg',class: "product_image"%> 
-					<h6 class="no_bold" style="margin-left: 15px">Iphone case</h6>
+					<%= f.radio_button :product_id, Product.find_by_name('frame').id, style: "visibility: hidden;"%>
+					<%= image_tag '/items/product_frame_1.png',class: "product_image"%> 
+					<h6 class="no_bold" style="margin-left: 15px">Frame</h6>
 				</label>
 
 			</div>
 			
-			<div class="col-md-3" align="center">
-				<label id="product_frame">
-					<%= f.radio_button :product_id, Product.find_by_name('frame').id, style: "visibility: hidden;", id:"product_frame"%>
-					<%= image_tag '/items/product_mug.jpg', class: "product_image"%> 
-					<h6 class="no_bold" style="margin-left: 15px">Mug</h6>
-				</label>
-
-			</div>
 
 	</div>
 </div>

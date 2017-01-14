@@ -13,7 +13,8 @@
 				<option value="" selected disabled>Select Size</option>
 				<% end %>
 				<%= @size_price.each do |key, val| %>
-				<option value="<%= key %>" <% if @item.size && @item.size == key %> selected <% end %>><%= key %> - $<%= val %></option>
+				<% _key = key.gsub("\\", "") %>
+				<option value="<%= _key %>" <% if @item.size && @item.size == _key %> selected <% end %>><%= _key %> - $<%= val %></option>
 				<% end %>
 			</select>
 		

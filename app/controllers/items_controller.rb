@@ -6,7 +6,7 @@ class ItemsController < ApplicationController
   def new
     @item = Item.new
     @item.save(validate: false)
-    @size_price = read_size_price_table
+    @size_price, @size_price_str = prepare_size_price(@item)
   end
   
   # NOT USED, because item is automatically created when user enter new page.
@@ -19,13 +19,13 @@ class ItemsController < ApplicationController
   
   def show
     @item = Item.find(params[:id])
-    @size_price = read_size_price_table
+    @size_price, @size_price_str = prepare_size_price(@item)
     render 'new'
   end
   
   def edit
     @item = Item.find(params[:id])
-    @size_price = read_size_price_table
+    @size_price, @size_price_str = prepare_size_price(@item)
     render 'new'
   end
   
@@ -42,7 +42,7 @@ class ItemsController < ApplicationController
   #  - Add to cart/Save changes button ~> cart page
   def update
     @item = Item.find(params[:id])
-    @size_price = read_size_price_table
+    @size_price, @size_price_str = prepare_size_price(@item)
     
     # Image upload to current item, render to crop page
     if params[:image_upload]
@@ -62,7 +62,7 @@ class ItemsController < ApplicationController
     elsif params[:go_to_cart]
       if @item.update(item_params)
         # Calculate price
-        @item.update_attribute(:price, calculate_price)
+        @item.update_attribute(:price, calculate_price(@item.product.name))
         # Add this item to cart
         cart = get_current_cart
         cart.items.push(@item)
@@ -123,15 +123,26 @@ class ItemsController < ApplicationController
   end
   
   private
-  
+    def prepare_size_price(item)
+      size_price_obj = read_size_price_table
+      if item.product
+        size_price = size_price_obj[item.product.name]
+      else
+        size_price = {"Please select product first" => ""}
+      end
+      size_price_str = JSON.dump(size_price_obj)
+      return size_price, size_price_str
+    end
+    
     def read_size_price_table
       YAML.load(File.read(Rails.root.join('business','size_price.yml')))
     end
     
-    def calculate_price
-      size_price = YAML.load(File.read(Rails.root.join('business','size_price.yml')))
-      return size_price[params[:item][:size]]
+    def calculate_price(product)
+      size_price = YAML.load(File.read(Rails.root.join('business','size_price.yml')).gsub!("\\", ""))
+      return size_price[product][params[:item][:size]]
     end
+    
     # The x,y,w,z crops coordination passed from Jcrop are based from overview size
     # but carrierwave-jcrop gem crop process them based on origin_size (Not origin image, image after uploaded)
     # need to scale x,y,w,z according

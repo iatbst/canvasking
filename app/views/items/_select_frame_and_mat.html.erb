@@ -1,0 +1,92 @@
+<div class="row box" style="margin-top: 50px">
+
+	<div class="container" style="margin-bottom: 20px">
+		<h4>Select Frame</h4>
+		
+		<% if @item.errors[:frame] %>
+		<h6 id="frame_error" style="color: red" ><%= @item.errors[:frame][0] %></h6>
+		<% end %>
+		
+		<div class="row">
+
+			<div class="col-sm-2">
+
+				<label class="depth_options" > <h5 style="margin-left: 15px"> Black wood frame </h5> <%= f.radio_button :depth, "0",  style:"visibility: hidden;", id: "depth_0" %>
+
+					<%= image_tag '/items/frame_wood_black.jpg', class: "frame_option_image"%> </label>
+			</div>
+			<div class="col-sm-2">
+				<label class="depth_options" > <h5 style="margin-left: 15px"> White wood frame </h5> <%= f.radio_button :depth, "0.75", style:"visibility: hidden;", id: "depth_0_75" %>
+
+					<%= image_tag '/items/frame_wood_white.jpg', class: "frame_option_image"%> </label>
+
+			</div>
+			<div class="col-sm-2">
+				<label class="depth_options" > <h5 style="margin-left: 15px"> Espresso wood frame </h5> <%= f.radio_button :depth, "1.5",  style:"visibility: hidden;", id: "depth_1_5"%>
+
+					<%= image_tag '/items/frame_espresso_wood.jpg', class: "frame_option_image"%> </label>
+
+			</div>
+
+		</div>
+
+		<h4>Select Mat</h4>
+		<% if @item.errors[:border] %>
+		<h6 id="border_error" style="color: red" ><%= @item.errors[:border][0] %></h6>
+		<% end %>
+		<div class="row">
+			<div class="col-sm-2">
+
+				<label class="border_options" > <h5 style="margin-left: 15px"> Photo Wrap </h5> <%= f.radio_button :border, "photo",  style:"visibility: hidden;", id: "border_photo"%>
+
+					<%= image_tag '/canvas_border_photo.jpeg' %> </label>
+			</div>
+			<div class="col-sm-2">
+
+				<label class="border_options" > <h5 style="margin-left: 15px"> Black Border </h5> <%= f.radio_button :border, "black",  style:"visibility: hidden;", id: "border_black"%>
+
+					<%= image_tag '/canvas_border_black.jpeg' %> </label>
+			</div>
+			<div class="col-sm-2">
+
+				<label class="border_options" > <h5 style="margin-left: 15px"> White Border </h5> <%= f.radio_button :border, "white", style:"visibility: hidden;", id: "border_white"%>
+
+					<%= image_tag '/canvas_border_white.jpeg' %> </label>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+$( ".depth_options" ).click(function() {
+  if ( $('#depth_error').length ){
+  	$('#depth_error').remove();
+  	var error_num = parseInt($('#error_number').text());
+  	error_num--;
+  	if (error_num == 0){
+  		$('#error_explanation').remove();
+  	} else {
+  		var issue = 'issue';
+  		if (error_num > 1){issue = 'issues'}
+  		$('#error_number').text(error_num + ' ' + issue );
+  	}
+  }
+});
+
+$( ".border_options" ).click(function() {
+  if ( $('#border_error').length ){
+  	$('#border_error').remove();
+  	var error_num = parseInt($('#error_number').text());
+  	error_num--;
+  	if (error_num == 0){
+  		$('#error_explanation').remove();
+  	} else {
+  		var issue = 'issue';
+  		if (error_num > 1){issue = 'issues'}
+  		$('#error_number').text(error_num + ' ' + issue );
+  	}
+  }
+});
+
+</script>

@@ -216,6 +216,9 @@
 			<!-- Select Depth and Border -->
 			<%= render partial: 'select_depth_and_border', locals:{f: f}%>
 
+			<!-- Select Frame and Mat -->
+			<%= render partial: 'select_frame_and_mat', locals:{f: f}%>
+			
 		</div>
 		<div class="col-md-4" >
 			<!-- Image overview on right side -->
@@ -243,13 +246,51 @@
 		}
 	});
 	
-	$("#product_canvas").click(function() {
-		$('#product_choice').text('Type: canvas')
+	$("#product_single_canvas").click(function() {
+		$('#product_choice').text('Type: Single Canvas')
+		
+		//update price table
+		var size_price_str = '<%= @size_price_str %>'
+		var size_price = JSON.parse(size_price_str.replace(/&quot;/g,'"'));
+		$('#item_size').empty();
+		$('#item_size').append($('<option></option>').text('Select Size'));
+		for(var size in size_price['single canvas']){
+			var option = $('<option></option>').attr("value", size).text(size + ' - $' + size_price['single canvas'][size]);
+			$('#item_size').append(option);			
+		}
+		//update option section
 	});
-	$("#product_frame").click(function() {
-		$('#product_choice').text('Type: frame')
+	
+	$("#product_triptych_canvas").click(function() {
+		$('#product_choice').text('Type: Triptych Canvas');
+
+		//update price table
+		var size_price_str = '<%= @size_price_str %>'
+		var size_price = JSON.parse(size_price_str.replace(/&quot;/g,'"'));
+		$('#item_size').empty();
+		$('#item_size').append($('<option></option>').text('Select Size'));
+		for(var size in size_price['triptych canvas']){
+			var option = $('<option></option>').attr("value", size).text(size + ' - $' + size_price['triptych canvas'][size]);
+			$('#item_size').append(option);			
+		}
+		//update option section
 	});
 
+	$("#product_frame").click(function() {
+		$('#product_choice').text('Type: Frame');
+
+		//update price table
+		var size_price_str = '<%= @size_price_str %>'
+		var size_price = JSON.parse(size_price_str.replace(/&quot;/g,'"'));
+		$('#item_size').empty();
+		$('#item_size').append($('<option></option>').text('Select Size'));
+		for(var size in size_price['frame']){
+			var option = $('<option></option>').attr("value", size).text(size + ' - $' + size_price['frame'][size]);
+			$('#item_size').append(option);			
+		}
+		//update option section
+	});
+	
 	$("#item_size").change(function() {
 		$('#size_choice').text('Size: ' + this.value)
 	});
