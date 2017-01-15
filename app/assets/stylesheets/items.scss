@@ -16,3 +16,52 @@
     max-width: 150px; 
     max-height: 150px;  
 }
+
+.overview_image {
+    height: auto; 
+    width: auto; 
+    max-width: 300px; 
+    max-height: 300px;
+}
+
+
+.image_frame {
+  box-shadow: 5px 5px 5px #888888;
+  border:15px solid transparent;
+  padding: 10px;
+  /* border image */
+  -moz-border-image:url(/items/frame_white.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_white.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_white.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_white.png) 30 30 stretch;
+}
+
+.raw_image {
+  box-shadow: 5px 5px 5px #888888;
+}
+
+.image_black_frame {
+  border:15px solid transparent;
+  /* border image */
+  -moz-border-image:url(/items/frame_black.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_black.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_black.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_black.png) 30 30 stretch; 
+}
+
+.image_white_frame {
+  border:15px solid transparent;
+  /* border image */
+  -moz-border-image:url(/items/frame_white.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_white.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_white.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_white.png) 30 30 stretch; 
+}
+.image_brown_frame {
+  border:15px solid transparent;
+  /* border image */
+  -moz-border-image:url(/items/frame_brown.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_brown.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_brown.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_brown.png) 30 30 stretch; 
+}

@@ -20,4 +20,12 @@ module ItemsHelper
       end
     end
   end
+  
+  def image_is_framed(item)
+    !item.image.file.nil? && !item.product.nil? && item.product.name.include?('frame')
+  end
+  
+  def image_is_framed_with_type(item, type)
+    image_is_framed(item) && Frame.find(item.frame_id).name.include?(type)
+  end
 end
