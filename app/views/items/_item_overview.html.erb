@@ -11,30 +11,47 @@
 		<div class="col-md-1"></div>
 		<div class="col-md-10" style= "margin-left: 0px" align="left">
 			<br />
-			<b class="no_bold" id="product_choice"> <% if !@item.product.nil? %>
-			<%= "Type: #{@item.product.name}" %>
-			<% end %> </b>
+			<b class="no_bold" id="product_choice"> 
+				<% if !@item.product.nil? %>
+					<%= "Type: #{@item.product.name}" %>
+				<% end %> 
+			</b>
 			<br />
-			<b class="no_bold" id="size_choice"> <% if !@item.size.nil? %>
-			<%= "Size: #{@item.size}" %>
-			<% end %> </b>
+			
+			<b class="no_bold" id="attr1_choice"> 
+				<% if !@item.product.nil? && @item.product.name.include?("canvas") && !@item.depth.nil? %>
+					<%= "Depth: #{@item.depth}\"" %>
+				<% elsif !@item.product.nil? && @item.product.name.include?("frame") && !@item.frame_id.nil? %>
+					<%= "Frame: #{Frame.find(@item.frame_id).name}" %>
+				<% end %> 
+			</b>
 			<br />
-			<b class="no_bold" id="depth_choice"> <% if !@item.depth.nil? %>
-			<%= "Depth: #{@item.depth}\"" %>
-			<% end %> </b>
+			<b class="no_bold" id="attr2_choice"> 
+				<% if !@item.product.nil? && @item.product.name.include?("canvas") && !@item.border.nil? %>
+					<%= "Border: #{@item.border}" %>
+				<% elsif !@item.product.nil? && @item.product.name.include?("frame") && !@item.mat.nil? %>
+					<%= "Mat: #{@item.mat}\"".gsub("0.0\"", "No") %>
+				<% end %>  
+			</b>
+			
 			<br />
-			<b class="no_bold" id="border_choice"> <% if !@item.border.nil? %>
-			<%= "Border: #{@item.border}" %>
-			<% end %> </b>
+			<b class="no_bold" id="size_choice"> 
+				<% if !@item.size.nil? && !@item.size.empty? %>
+					<%= "Size: #{@item.size}" %>
+				<% end %> 
+			</b>
+
 		</div>
 	</div>
 
 	<div class="row" style="height:30px" >
 		<div class="col-md-1"></div>
 		<div class="col-md-5" style= "margin-left: 0px" align="left">
-			<b class="no_bold" id="price_choice"> <% if !@item.price.nil? %>
-			<%= "Price: $#{@item.price}" %>
-			<% end %> </b>
+			<b class="no_bold" id="price_choice"> 
+				<% if !@item.price.nil? && !@item.size.nil? && !@item.size.empty? %>
+					<%= "Price: $#{@item.price}" %>
+				<% end %> 
+			</b>
 		</div>
 	</div>
 

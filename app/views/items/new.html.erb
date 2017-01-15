@@ -249,46 +249,134 @@
 	$("#product_single_canvas").click(function() {
 		$('#product_choice').text('Type: Single Canvas')
 		
+		// show canvas options
+		if ($('#depth_0').is(':checked')){
+			$('#attr1_choice').text('Depth: 0"');
+		} else if ($('#depth_0_75').is(':checked')) {
+			$('#attr1_choice').text('Depth: 0.75"');
+		} else if ($('#depth_1_5').is(':checked')) {
+			$('#attr1_choice').text('Depth: 1.5"');
+		} else if ($('#depth_2_5').is(':checked')) {
+			$('#attr1_choice').text('Depth: 2.5"');
+		} else {
+			$('#attr1_choice').text('Depth: ---')
+		}
+		
+		if ($('#border_photo').is(':checked')){
+			$('#attr2_choice').text('Border: photo')
+		} else if ($('#border_black').is(':checked')) {
+			$('#attr2_choice').text('Border: black')
+		} else if ($('#border_white').is(':checked')) {
+			$('#attr2_choice').text('Border: white')
+		} else {
+			$('#attr2_choice').text('Border: ---')
+		}
+		$('#size_choice').text('')
+		$('#price_choice').text('')
+			
+		
+		$('#border_choice').show();
+		$('#depth_choice').show();
+		$('#frame_choice').hide();
+		$('#mat_choice').hide();
+		
 		//update price table
 		var size_price_str = '<%= @size_price_str %>'
 		var size_price = JSON.parse(size_price_str.replace(/&quot;/g,'"'));
 		$('#item_size').empty();
-		$('#item_size').append($('<option></option>').text('Select Size'));
+		$('#item_size').append($('<option value=""></option>').text('Select Size'));
 		for(var size in size_price['single canvas']){
 			var option = $('<option></option>').attr("value", size).text(size + ' - $' + size_price['single canvas'][size]);
 			$('#item_size').append(option);			
 		}
 		//update option section
+		$('#canvas_options').show();
+		$('#frame_options').hide();
+		$('#size_price_options').show();
+		
 	});
 	
 	$("#product_triptych_canvas").click(function() {
 		$('#product_choice').text('Type: Triptych Canvas');
 
+		// show canvas options
+		if ($('#depth_0').is(':checked')){
+			$('#attr1_choice').text('Depth: 0"');
+		} else if ($('#depth_0_75').is(':checked')) {
+			$('#attr1_choice').text('Depth: 0.75"');
+		} else if ($('#depth_1_5').is(':checked')) {
+			$('#attr1_choice').text('Depth: 1.5"');
+		} else if ($('#depth_2_5').is(':checked')) {
+			$('#attr1_choice').text('Depth: 2.5"');
+		} else {
+			$('#attr1_choice').text('Depth: ---')
+		}
+		
+		if ($('#border_photo').is(':checked')){
+			$('#attr2_choice').text('Border: photo')
+		} else if ($('#border_black').is(':checked')) {
+			$('#attr2_choice').text('Border: black')
+		} else if ($('#border_white').is(':checked')) {
+			$('#attr2_choice').text('Border: white')
+		} else {
+			$('#attr2_choice').text('Border: ---')
+		}
+		$('#size_choice').text('')
+		$('#price_choice').text('')
+			
 		//update price table
 		var size_price_str = '<%= @size_price_str %>'
 		var size_price = JSON.parse(size_price_str.replace(/&quot;/g,'"'));
 		$('#item_size').empty();
-		$('#item_size').append($('<option></option>').text('Select Size'));
+		$('#item_size').append($('<option value=""></option>').text('Select Size'));
 		for(var size in size_price['triptych canvas']){
 			var option = $('<option></option>').attr("value", size).text(size + ' - $' + size_price['triptych canvas'][size]);
 			$('#item_size').append(option);			
 		}
+
 		//update option section
+		$('#canvas_options').show();
+		$('#frame_options').hide();
+		$('#size_price_options').show();
 	});
 
 	$("#product_frame").click(function() {
 		$('#product_choice').text('Type: Frame');
 
+		// show canvas options
+		if ($('#frame_black_wood').is(':checked')){
+			$('#attr1_choice').text('Frame: black wood')
+		} else if ($('#frame_white_wood').is(':checked')) {
+			$('#attr1_choice').text('Frame: white wood')
+		} else if ($('#frame_espresso_wood').is(':checked')) {
+			$('#attr1_choice').text('Frame: espresso wood')
+		} else {
+			$('#attr1_choice').text('Frame: ---')
+		}
+		
+		if ($('#mat_0').is(':checked')){
+			$('#attr2_choice').text('Mat: No')
+		} else if ($('#mat_2_5').is(':checked')) {
+			$('#attr2_choice').text('Mat: 2.5"')
+		} else {
+			$('#attr2_choice').text('Mat: ---')
+		}
+		$('#size_choice').text('')
+		$('#price_choice').text('')
+				
 		//update price table
 		var size_price_str = '<%= @size_price_str %>'
 		var size_price = JSON.parse(size_price_str.replace(/&quot;/g,'"'));
 		$('#item_size').empty();
-		$('#item_size').append($('<option></option>').text('Select Size'));
+		$('#item_size').append($('<option value=""></option>').text('Select Size'));
 		for(var size in size_price['frame']){
 			var option = $('<option></option>').attr("value", size).text(size + ' - $' + size_price['frame'][size]);
 			$('#item_size').append(option);			
 		}
 		//update option section
+		$('#canvas_options').hide();
+		$('#frame_options').show();
+		$('#size_price_options').show();
 	});
 	
 	$("#item_size").change(function() {
@@ -300,30 +388,50 @@
 	});
 
 	$("#depth_0").click(function() {
-		$('#depth_choice').text('Depth: 0"')
+		$('#attr1_choice').text('Depth: 0"')
 	});
 
 	$("#depth_0_75").click(function() {
-		$('#depth_choice').text('Depth: 0.75"')
+		$('#attr1_choice').text('Depth: 0.75"')
 	});
 
 	$("#depth_1_5").click(function() {
-		$('#depth_choice').text('Depth: 1.5"')
+		$('#attr1_choice').text('Depth: 1.5"')
 	});
 
 	$("#depth_2_5").click(function() {
-		$('#depth_choice').text('Depth: 2.5"')
+		$('#attr1_choice').text('Depth: 2.5"')
 	});
 	$("#border_photo").click(function() {
-		$('#border_choice').text('Border: photo')
+		$('#attr2_choice').text('Border: photo')
 	});
 
 	$("#border_black").click(function() {
-		$('#border_choice').text('Border: black')
+		$('#attr2_choice').text('Border: black')
 	});
 
 	$("#border_white").click(function() {
-		$('#border_choice').text('Border: white')
+		$('#attr2_choice').text('Border: white')
+	});
+
+	$("#frame_black_wood").click(function() {
+		$('#attr1_choice').text('Frame: black wood')
+	});
+
+	$("#frame_white_wood").click(function() {
+		$('#attr1_choice').text('Frame: white wood')
+	});
+
+	$("#frame_espresso_wood").click(function() {
+		$('#attr1_choice').text('Frame: espresso wood')
+	});
+
+	$("#mat_0").click(function() {
+		$('#attr2_choice').text('Mat: No')
+	});
+
+	$("#mat_2_5").click(function() {
+		$('#attr2_choice').text('Mat: 2.5"')
 	});
 
 </script>

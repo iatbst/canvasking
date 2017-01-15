@@ -23,9 +23,16 @@
 								<br />
 								Size: <%= item.size %>
 								<br />
-								Depth: <%= item.depth %>
-								<br />
-								Border: <%= item.border %>
+								<% if item.product.name.include?('canvas')%>
+									Depth: <%= item.depth %>
+									<br />
+									Border: <%= item.border %>								
+								<% else %>
+									Frame: <%= Frame.find(item.frame_id).name %>
+									<br />
+									Mat: <%= "#{item.mat}\"".gsub("0.0\"", "No") %>								
+								<% end %>
+		
 
 							</div>
 

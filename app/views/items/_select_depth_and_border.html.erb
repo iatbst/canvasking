@@ -1,10 +1,16 @@
-<div class="row box" style="margin-top: 50px">
+<div class="row box" id="canvas_options" style="margin-top: 50px; <% if @item.product.nil? || @item.product.name.include?("frame") %><%= "display: none" %><% end %>">
 
 	<div class="container" style="margin-bottom: 20px">
-		<h4>Select depth</h4>
+		<div class="row">
+			<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px"> 		
+			Select Thickness
+			</h4>
+		</div>
+		
 		<% if @item.errors[:depth] %>
 		<h6 id="depth_error" style="color: red" ><%= @item.errors[:depth][0] %></h6>
 		<% end %>
+		
 		<div class="row">
 
 			<div class="col-sm-2">
@@ -34,7 +40,12 @@
 
 		</div>
 
-		<h4>Select border</h4>
+		<div class="row">
+			<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px"> 		
+			Select Border
+			</h4>
+		</div>
+		
 		<% if @item.errors[:border] %>
 		<h6 id="border_error" style="color: red" ><%= @item.errors[:border][0] %></h6>
 		<% end %>

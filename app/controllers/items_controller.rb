@@ -42,7 +42,6 @@ class ItemsController < ApplicationController
   #  - Add to cart/Save changes button ~> cart page
   def update
     @item = Item.find(params[:id])
-    @size_price, @size_price_str = prepare_size_price(@item)
     
     # Image upload to current item, render to crop page
     if params[:image_upload]
@@ -56,6 +55,7 @@ class ItemsController < ApplicationController
       @item.remove_art_image!
       @item.save(validate: false) # skip validation for image upload
       @crop_image = true
+      @size_price, @size_price_str = prepare_size_price(@item)
       render 'new'
             
     # Item added to cart or edit items in cart
@@ -74,6 +74,7 @@ class ItemsController < ApplicationController
         # Even it failed, save the correct fields
         @item.attributes = item_params
         @item.save(validate: false)
+        @size_price, @size_price_str = prepare_size_price(@item)
         render 'new' # save failed, back to item new page, may caused by missing fields
       end
     
@@ -83,6 +84,7 @@ class ItemsController < ApplicationController
       @item.art_filter = true
       @item.remote_art_image_url = @item.somatic_url
       @item.save(validate: false)
+      @size_price, @size_price_str = prepare_size_price(@item)
       render 'new'
       
     # Image cropped, return to item new page
@@ -92,6 +94,7 @@ class ItemsController < ApplicationController
       scale_scrop_cords(org_image_size, crop_image_size)
       @item.attributes = item_params
       @item.save(validate: false) # skip validation for image upload 
+      @size_price, @size_price_str = prepare_size_price(@item)
       render 'new'
       
     # Ajex call for +/- image quantity in cart page
@@ -157,7 +160,8 @@ class ItemsController < ApplicationController
       if params[:item]
         params.require(:item).permit(:image_crop_x, :image_crop_y, :image_crop_w, \
                                      :image_crop_h, :size, :price, :quantity, :image, \
-                                     :depth, :border, :product_id, :art_filter, :somatic_url)
+                                     :depth, :border, :product_id, :art_filter, :somatic_url, \
+                                     :frame_id, :mat)
       else
         {}
       end

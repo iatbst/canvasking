@@ -1,5 +1,12 @@
-<div class="row box" style="margin-top: 50px">
-	<h4 style="margin-left: 20px">Select size</h4>
+<div class="row box" id="size_price_options" style="margin-top: 50px; <% if @item.image.file.nil? %><%= "display: none" %><% end %>">
+	<div class="row">
+		<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px"> 
+			
+			Sizes & Pricing
+			</h4>
+		
+	</div>
+	
 	<% if @item.errors[:size] %>
 	<h6 id="size_error" style="color: red; margin-left: 20px"><%= @item.errors[:size][0] %></h6>
 	<% end %>
@@ -9,7 +16,7 @@
 		<div class="col-md-4">
 			
 			<select class="form-control" name="item[size]" id="item_size">
-				<% if @item.size.nil? %>
+				<% if @item.size.nil? || @item.errors[:size] %>
 				<option value="" selected disabled>Select Size</option>
 				<% end %>
 				<%= @size_price.each do |key, val| %>

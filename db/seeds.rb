@@ -9,7 +9,12 @@
 # Populate Products
 #product_single_canvas = Product.create(name: "single canvas")
 #product_triptych_canvas = Product.create(name: "triptych canvas")
-product_single_frame = Product.create(name: "frame")
+#product_single_frame = Product.create(name: "frame")
+
+# Populate Frames
+Frame.create(name: "black wood")
+Frame.create(name: "white wood")
+Frame.create(name: "espresso wood")
 
 # # Populate Countrys
 # country_us = Country.create(name: "United States")

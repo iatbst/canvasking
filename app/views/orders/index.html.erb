@@ -45,26 +45,36 @@ d<%= render "layouts/navbar" %>
 									<br />
 									<ul class="fa-ul">
 										<li>
-											product:<b> <%= item.product.name %></b>
+											Product: <%= item.product.name %>
 										</li>
 										<li>
-											size:<b> <%= item.size %></b>
+											Size: <%= item.size %>
 										</li>
-										<li>
-											depth:<b> <%= item.depth %>"</b>
-										</li>
-										<li>
-											border:<b> <%= item.border %></b>
-										</li>
-										<li>
-											price:<b> $<%= item.price %></b>
-										</li>
+										<% if item.product.name.include?('canvas')%>
+											<li>
+												Depth: <%= item.depth %>
+											</li>
+											<li>
+												Border: <%= item.border %>
+											</li>
+														
+										<% else %>
+											<li>
+												Frame: <%= Frame.find(item.frame_id).name %>
+											</li>
+											<li>
+												Mat: <%= "#{item.mat}\"".gsub("0.0\"", "No") %>	
+											</li>							
+										<% end %>							
+			
 										<br />
-										<li>
-											<%= button_to 'Buy It Again', '#', method: :get, class:"btn btn-primary btn-xs" %>
-										</li>
+										
+										
+											Price:<b> $<%= item.price %></b>
+										
+										
 									</ul>
-
+						
 								</div>
 								
 								<div class="col-md-2">
