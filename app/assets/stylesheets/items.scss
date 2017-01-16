@@ -25,17 +25,6 @@
 }
 
 
-.image_frame {
-  box-shadow: 5px 5px 5px #888888;
-  border:15px solid transparent;
-  padding: 10px;
-  /* border image */
-  -moz-border-image:url(/items/frame_white.png) 30 30 stretch; /* Old Firefox */
-  -webkit-border-image:url(/items/frame_white.png) 30 30 stretch;  /* Safari and Chrome */
-  -o-border-image:url(/items/frame_white.png) 30 30 stretch; /* Opera */
-  border-image:url(/items/frame_white.png) 30 30 stretch;
-}
-
 .raw_image {
   box-shadow: 5px 5px 5px #888888;
 }
@@ -64,4 +53,35 @@
   -webkit-border-image:url(/items/frame_brown.png) 30 30 stretch;  /* Safari and Chrome */
   -o-border-image:url(/items/frame_brown.png) 30 30 stretch; /* Opera */
   border-image:url(/items/frame_brown.png) 30 30 stretch; 
+}
+
+
+.triptych_1 {
+    max-width: 100px; 
+    max-height: 300px;
+    background: url() 0 0;
+    background-repeat: no-repeat;
+    box-shadow: 5px 5px 5px #888888;
+    display: none;
+    display:inline-block;
+}
+
+.triptych_2 {
+    max-width: 100px; 
+    max-height: 300px;
+    background: url() -100px 0;
+    background-repeat: no-repeat;
+    box-shadow: 5px 5px 5px #888888;
+    display: none;
+    display:inline-block;
+}
+
+.triptych_3 {
+    max-width: 100px; 
+    max-height: 300px;
+    background: url() -200px 0;
+    background-repeat: no-repeat;
+    box-shadow: 5px 5px 5px #888888;
+    display: none;
+    display:inline-block;
 }

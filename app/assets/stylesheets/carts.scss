@@ -1,3 +1,59 @@
 // Place all the styles related to the carts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.image_black_frame_in_cart {
+  border:20px solid transparent;
+  /* border image */
+  -moz-border-image:url(/items/frame_black.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_black.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_black.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_black.png) 30 30 stretch; 
+}
+
+.image_white_frame_in_cart {
+  border:20px solid transparent;
+  /* border image */
+  -moz-border-image:url(/items/frame_white.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_white.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_white.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_white.png) 30 30 stretch; 
+}
+.image_brown_frame_in_cart {
+  border:20px solid transparent;
+  /* border image */
+  -moz-border-image:url(/items/frame_brown.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_brown.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_brown.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_brown.png) 30 30 stretch; 
+}
+
+.triptych_1_in_cart {
+    max-width: 150px; 
+    max-height: 450px;
+    background: url() 0 0;
+    background-repeat: no-repeat;
+    box-shadow: 5px 5px 5px #888888;
+    display: none;
+    display:inline-block;
+}
+
+.triptych_2_in_cart {
+    max-width: 150px; 
+    max-height: 450px;
+    background: url() -100px 0;
+    background-repeat: no-repeat;
+    box-shadow: 5px 5px 5px #888888;
+    display: none;
+    display:inline-block;
+}
+
+.triptych_3_in_cart {
+    max-width: 150px; 
+    max-height: 450px;
+    background: url() -200px 0;
+    background-repeat: no-repeat;
+    box-shadow: 5px 5px 5px #888888;
+    display: none;
+    display:inline-block;
+}

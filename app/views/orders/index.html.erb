@@ -34,69 +34,124 @@ d<%= render "layouts/navbar" %>
 					<% order.items.each do |item| %>
 					<tr>
 						<td>
-						
-							<div class="row">
-								<div class="col-md-3">
-									<br />
-									<%= image_tag get_image_url(item, "thumb"), class: "thumb_image" %>
+						<div class="row">
+							<div class="col-md-3">
+								<br />
+								<%= image_tag get_image_url(item, "thumb"), class: "thumb_image", id: "item_#{item.id}" %>
+								<div>
+									<div class="triptych_1_in_order_index" id="item_<%= item.id%>_triple_1"></div>
+									<div class="triptych_2_in_order_index"  id="item_<%= item.id%>_triple_2" style="margin-left: 8px; margin-right: 8px"></div>
+									<div class="triptych_3_in_order_index" id="item_<%= item.id%>_triple_3"></div>
 								</div>
-								
-								<div class="col-md-7">
-									<br />
-									<ul class="fa-ul">
-										<li>
-											Product: <%= item.product.name %>
-										</li>
-										<li>
-											Size: <%= item.size %>
-										</li>
-										<% if item.product.name.include?('canvas')%>
-											<li>
-												Depth: <%= item.depth %>
-											</li>
-											<li>
-												Border: <%= item.border %>
-											</li>
-														
-										<% else %>
-											<li>
-												Frame: <%= Frame.find(item.frame_id).name %>
-											</li>
-											<li>
-												Mat: <%= "#{item.mat}\"".gsub("0.0\"", "No") %>	
-											</li>							
-										<% end %>							
-			
-										<br />
-										
-										
-											Price:<b> $<%= item.price %></b>
-										
-										
-									</ul>
-						
-								</div>
-								
-								<div class="col-md-2">
-									<br />
-									<%= button_to 'Track Package', '#', method: :get, class:"btn btn-primary", style:"width: 90%" %>
-									<br />
-									<%= button_to 'Return or Replace', '#', method: :get, class:"btn btn-secondary", type:"button", style:"width: 90%" %>
-									<br />
-									<%= button_to 'Feadbacks', '#', method: :get, class:"btn btn-secondary", style:"width: 90%" %>
-								</div>
-								
 							</div>
-						
-						</td>
+
+							<div class="col-md-7">
+								<br />
+								<ul class="fa-ul">
+									<li>
+										Product: <%= item.product.name %>
+									</li>
+									<li>
+										Size: <%= item.size %>
+									</li>
+									<% if item.product.name.include?('canvas')%>
+									<li>
+										Depth: <%= item.depth %>
+									</li>
+									<li>
+										Border: <%= item.border %>
+									</li>
+
+									<% else %>
+									<li>
+										Frame: <%= Frame.find(item.frame_id).name %>
+									</li>
+									<li>
+										Mat: <%= "#{item.mat}\"".gsub("0.0\"", "No") %>
+									</li>
+									<% end %>
+
+									<br />
+
+									Price:<b> $<%= item.price %></b>
+
+								</ul>
+
+							</div>
+
+							<div class="col-md-2">
+								<br />
+								<%= button_to 'Track Package', '#', method: :get, class:"btn btn-primary", style:"width: 90%" %>
+								<br />
+								<%= button_to 'Return or Replace', '#', method: :get, class:"btn btn-secondary", type:"button", style:"width: 90%" %>
+								<br />
+								<%= button_to 'Feadbacks', '#', method: :get, class:"btn btn-secondary", style:"width: 90%" %>
+							</div>
+
+						</div></td>
 					</tr>
 					<% end %>
 				</tbody>
 			</table>
-			
+
 		</div>
 
 	</div>
 
 	<% end %>
 </div>
+
+<script>
+
+	$( window ).on( "load", function(){
+
+		<% @orders.each do |order| %>
+			<% order.items.each do |item| %>
+			// Add frame effects if necessary
+			if (<%= image_is_framed(item) %>){
+				// Add frame
+				if (<%= image_is_framed_with_type(item, 'black') %>){
+					$('#item_' + <%= item.id %>).addClass('image_black_frame_in_order_index');
+				} else if (<%= image_is_framed_with_type(item, 'white') %>) {
+					$('#item_' + <%= item.id %>).addClass('image_white_frame_in_order_index');
+				} else {
+					$('#item_' + <%= item.id %>).addClass('image_brown_frame_in_order_index');
+				}
+				
+				// Add mat
+				if (<%= item.mat == 2.5 %>){
+					$('#item_' + <%= item.id %>).css('padding', '10px');
+				}
+			} else if (<%= image_is_triptych(item) %>){
+				// Add triptych effects if necessary
+				divide_image_to_3('item_' + <%= item.id %>, 'item_' +<%= item.id %> + '_triple');
+			}
+
+			<% end %>
+		<% end %>
+	});
+
+	function divide_image_to_3(image_id, div_id) {
+		$('#' + image_id).hide();
+		$('#' + div_id + '_1').show();
+		$('#' + div_id + '_2').show();
+		$('#' + div_id + '_3').show();
+
+		var image_url = $('#' + image_id).attr('src');
+		var image_width = $('#' + image_id).width();
+		var image_width_3 = parseInt($('#' + image_id).width() / 3);
+		var image_height = $('#' + image_id).height();
+		$('#' + div_id + '_1').css('background', 'url(' + image_url + ') 0 0');
+		$('#' + div_id + '_1').css('width', image_width_3 + 'px');
+		$('#' + div_id + '_1').css('height', image_height + 'px');
+
+		$('#' + div_id + '_2').css('background', 'url(' + image_url + ') -' + image_width_3 + 'px 0');
+		$('#' + div_id + '_2').css('width', image_width_3 + 'px');
+		$('#' + div_id + '_2').css('height', image_height + 'px');
+
+		$('#' + div_id + '_3').css('background', 'url(' + image_url + ') -' + image_width_3 * 2 + 'px 0');
+		$('#' + div_id + '_3').css('width', image_width_3 + 'px');
+		$('#' + div_id + '_3').css('height', image_height + 'px');
+	}
+
+</script>
