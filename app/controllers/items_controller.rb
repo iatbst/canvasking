@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
   # TODO: need to refactor, otherwise every new page will create a item in DB, NO GOOD !!!
   def new
     @item = Item.new
-    @item.save(validate: false)
+    @item.save
     @size_price, @size_price_str = prepare_size_price(@item)
   end
   
@@ -53,13 +53,14 @@ class ItemsController < ApplicationController
       # When new image uploaded, remove previous art images
       @item.art_filter = false
       @item.remove_art_image!
-      @item.save(validate: false) # skip validation for image upload
+      @item.save
       @crop_image = true
       @size_price, @size_price_str = prepare_size_price(@item)
       render 'new'
             
     # Item added to cart or edit items in cart
     elsif params[:go_to_cart]
+      @item.time_to_save = true
       if @item.update(item_params)
         # Calculate price
         @item.update_attribute(:price, calculate_price(@item.product.name))
@@ -83,7 +84,7 @@ class ItemsController < ApplicationController
       @item.attributes = item_params
       @item.art_filter = true
       @item.remote_art_image_url = @item.somatic_url
-      @item.save(validate: false)
+      @item.save
       @size_price, @size_price_str = prepare_size_price(@item)
       render 'new'
       
@@ -93,7 +94,7 @@ class ItemsController < ApplicationController
       crop_image_size = Canvasking::IMAGE_CROP_SIZE
       scale_scrop_cords(org_image_size, crop_image_size)
       @item.attributes = item_params
-      @item.save(validate: false) # skip validation for image upload 
+      @item.save
       @size_price, @size_price_str = prepare_size_price(@item)
       render 'new'
       

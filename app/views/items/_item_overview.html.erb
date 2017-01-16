@@ -27,18 +27,34 @@
 			<br />
 			
 			<b class="no_bold" id="attr1_choice"> 
-				<% if !@item.product.nil? && @item.product.name.include?("canvas") && !@item.depth.nil? %>
-					<%= "Depth: #{@item.depth}\"" %>
-				<% elsif !@item.product.nil? && @item.product.name.include?("frame") && !@item.frame_id.nil? %>
-					<%= "Frame: #{Frame.find(@item.frame_id).name}" %>
+				<% if !@item.product.nil? && @item.product.name.include?("canvas") %>
+					<% if !@item.depth.nil? %>
+						<%= "Depth: #{@item.depth}\"" %>
+					<% else %>
+						<%= "Depth: ---" %>
+					<% end %>
+				<% elsif !@item.product.nil? && @item.product.name.include?("frame") %>
+					<% if !@item.frame_id.nil? %>
+						<%= "Frame: #{Frame.find(@item.frame_id).name}" %>
+					<% else %>
+						<%= "Frame: ---" %>
+					<% end %>
 				<% end %> 
 			</b>
 			<br />
 			<b class="no_bold" id="attr2_choice"> 
-				<% if !@item.product.nil? && @item.product.name.include?("canvas") && !@item.border.nil? %>
-					<%= "Border: #{@item.border}" %>
-				<% elsif !@item.product.nil? && @item.product.name.include?("frame") && !@item.mat.nil? %>
-					<%= "Mat: #{@item.mat}\"".gsub("0.0\"", "No") %>
+				<% if !@item.product.nil? && @item.product.name.include?("canvas") %>
+					<% if !@item.border.nil? %>
+						<%= "Border: #{@item.border}" %>
+					<% else %>
+						<%= "Border: ---" %>
+					<% end %>
+				<% elsif !@item.product.nil? && @item.product.name.include?("frame") %>
+					<% if !@item.mat.nil? %>
+						<%= "Mat: #{@item.mat}\"".gsub("0.0\"", "No") %>
+					<% else %>
+						<%= "Mat: ---" %>
+					<% end %>
 				<% end %>  
 			</b>
 			
