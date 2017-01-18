@@ -31,6 +31,7 @@ class ItemsController < ApplicationController
   
   def art_filter
     @item = Item.find(params[:id])
+    @item.art_filter = false
     @somatic_realtime_api = Rails.configuration.somatic["api_url"]
     @somatic_api_key = Rails.configuration.somatic["api_key"]
   end
