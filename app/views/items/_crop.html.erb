@@ -22,6 +22,7 @@
 					<%= f.cropbox :image, version: :crop_version %>
 					<br />
 					<%= hidden_field_tag :image_cropped, true %>
+					<%= hidden_field_tag :image_cropped_indeed, false %>
 					<%= f.submit 'Save', id: "crop_submit_button", class: "btn btn-secondary btn-lg", style:"display: none"%>
 					<% end %>
 
@@ -43,13 +44,19 @@
 <script type="text/javascript">
 
 	// Trigger modal when page loaded an
-	$(window).load(function() {
+	$( window ).on("load", function(){
+		$('.jcrop-selection').attr('onclick', 'return false;');
+		$('.jcrop-selection').attr('value', $('.jcrop-selection').attr('style'));	
 		$('#crop_modal').modal('show');
-		$('div.jcrop-selection').attr('onclick', 'return false;');
 	});
-	
+
+			
 	// Use footer button to trigger form submit button
 	function crop(){
+		// Image cropped
+		if ($('.jcrop-selection').attr('style') != $('.jcrop-selection').attr('value')){
+			$('#image_cropped_indeed').attr('value', true);
+		}
 		$('#crop_submit_button').click();
 		$('#crop_modal').modal('hide');
 		$("div#divLoading").addClass('show');

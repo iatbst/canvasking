@@ -45,19 +45,63 @@ class ItemsController < ApplicationController
     
     # Image upload to current item, render to crop page
     if params[:image_upload]
+      # Remove old image
+      @item.remove_image!
+      @item.save
+      @item.art_filter = false
+      @item.remove_art_image!
+            
+      # Different image source: this will create different versions of tmp images
       if params[:upload_from_facebook]
         @item.remote_image_url = params[:facebook_image_url]
       else
         @item.attributes = item_params
       end
-      # When new image uploaded, remove previous art images
-      @item.art_filter = false
-      @item.remove_art_image!
-      @item.save
+      
+      # Override image version url with tmp file path until upload job done
+      prepare_tmp_image_paths(@item, 'image_tmp_paths')
+      @item.image.crop_version.url = @item.image.crop_version.current_path.split('public')[1]
+      
       @crop_image = true
       @size_price, @size_price_str = prepare_size_price(@item)
       render 'new'
-            
+
+    # Image cropped, return to item new page
+    elsif params[:image_cropped]
+      # Check if image cropped
+      if params[:image_cropped_indeed] == "true"
+        # Important: Process order should from high to low
+        process_now_versions = ['origin','filter', 'cart','overview', 'thumb']
+        crop_local_tmp_files(@item, process_now_versions)
+      end
+      
+      # Upload images to S3
+      origin_tmp_file_path = "#{Rails.root}/public#{@item.image_tmp_paths['origin']}"
+      ImageUploadWorker.perform_async(origin_tmp_file_path, @item.id, 'image')
+      TmpImageRemoveWorker.perform_in(10.minutes, origin_tmp_file_path, @item.id, 'image')
+      @size_price, @size_price_str = prepare_size_price(@item)
+      render 'new'
+
+    # Image processed by art filter
+    elsif params[:art_filterred]
+      # remove old art image if necessary
+      @item.remove_art_image!
+      @item.save
+      @item.update_attribute('art_filter', true)
+      @item.attributes = item_params
+ 
+      @item.remote_art_image_url = @item.somatic_url
+      prepare_tmp_image_paths(@item, 'art_image_tmp_paths')
+      update_tmp_file_names(@item)
+      
+      # Upload images to S3
+      origin_tmp_file_path = "#{Rails.root}/public#{@item.art_image_tmp_paths['origin']}"
+      ImageUploadWorker.perform_async(origin_tmp_file_path, @item.id, 'art_image')
+      TmpImageRemoveWorker.perform_in(10.minutes, origin_tmp_file_path, @item.id, 'art_image')
+      
+      @size_price, @size_price_str = prepare_size_price(@item)
+      render 'new'
+                       
     # Item added to cart or edit items in cart
     elsif params[:go_to_cart]
       @item.time_to_save = true
@@ -77,26 +121,7 @@ class ItemsController < ApplicationController
         @item.save(validate: false)
         @size_price, @size_price_str = prepare_size_price(@item)
         render 'new' # save failed, back to item new page, may caused by missing fields
-      end
-    
-    # Image processed by art filter
-    elsif params[:art_filterred]
-      @item.attributes = item_params
-      @item.art_filter = true
-      @item.remote_art_image_url = @item.somatic_url
-      @item.save
-      @size_price, @size_price_str = prepare_size_price(@item)
-      render 'new'
-      
-    # Image cropped, return to item new page
-    elsif params[:image_cropped]
-      org_image_size = Canvasking::IMAGE_ORIGINAL_SIZE_LIMIT
-      crop_image_size = Canvasking::IMAGE_CROP_SIZE
-      scale_scrop_cords(org_image_size, crop_image_size)
-      @item.attributes = item_params
-      @item.save
-      @size_price, @size_price_str = prepare_size_price(@item)
-      render 'new'
+      end   
       
     # Ajex call for +/- image quantity in cart page
     elsif params[:update_quantity]
@@ -150,7 +175,7 @@ class ItemsController < ApplicationController
     # The x,y,w,z crops coordination passed from Jcrop are based from overview size
     # but carrierwave-jcrop gem crop process them based on origin_size (Not origin image, image after uploaded)
     # need to scale x,y,w,z according
-    def scale_scrop_cords(origin_size, overview_size)
+    def scale_crop_cords(origin_size, overview_size)
       params[:item][:image_crop_x] = ((params[:item][:image_crop_x].to_f*(origin_size.to_f/overview_size)).to_i).to_s
       params[:item][:image_crop_y] = ((params[:item][:image_crop_y].to_f*(origin_size.to_f/overview_size)).to_i).to_s
       params[:item][:image_crop_w] = ((params[:item][:image_crop_w].to_f*(origin_size.to_f/overview_size)).to_i).to_s
@@ -168,7 +193,92 @@ class ItemsController < ApplicationController
       end
     end
     
+    def image_is_cropped(params, image_width, image_height)
+      params[:item][:image_crop_w] != "#{image_width}" || \
+      params[:item][:image_crop_h] != "#{image_height}"
+    end
+   
     
+    def prepare_tmp_image_paths(item, col)
+      paths = {}
+      if col == 'image_tmp_paths'
+        paths['origin'] = item.image.current_path.split('public')[1]
+        paths['filter'] = item.image.filter.current_path.split('public')[1]
+        paths['cart'] = item.image.cart.current_path.split('public')[1]
+        paths['overview'] = item.image.overview.current_path.split('public')[1]
+        paths['thumb'] = item.image.thumb.current_path.split('public')[1]
+      elsif col == 'art_image_tmp_paths'
+        paths['origin'] = item.art_image.current_path.split('public')[1]
+        paths['filter'] = item.art_image.filter.current_path.split('public')[1]
+        paths['cart'] = item.art_image.cart.current_path.split('public')[1]
+        paths['overview'] = item.art_image.overview.current_path.split('public')[1]
+        paths['thumb'] = item.art_image.thumb.current_path.split('public')[1]     
+      end
+      item.update_column(col, paths)
+    end
     
+    def wait_until_upload_job_finished(item)
+      counter = 0
+      job_id = item.image_tmp
+      while counter < 30
+        if Sidekiq::Status::complete? job_id
+          puts "Job #{job_id} Done"
+          break
+        end
+        counter += 1
+        sleep(1)
+      end
+    end
     
+    def crop_local_tmp_files(item, versions)
+      origin_file_path = "#{Rails.root}/public#{item.image_tmp_paths['origin']}"
+      crop_x, crop_y, crop_w, crop_h = get_cords_for_origin_version 
+      image = MiniMagick::Image.open(origin_file_path)
+      image.crop("#{crop_w}x#{crop_h}!+#{crop_x}+#{crop_y}")
+      versions.each do |ver|
+          abs_path = "#{Rails.root}/public#{item.image_tmp_paths[ver]}"
+          width, height = get_resize_width_and_height(ver)
+          image.resize("#{width}x#{height}")
+          image.write(abs_path)
+      end
+    end
+    
+    def get_resize_width_and_height(ver)
+      if ver == "cart"
+        return 450, 450
+      elsif ver == "overview"
+        return 300, 300
+      elsif ver == "filter"
+        return 600, 800
+      elsif ver == "thumb"
+        return 200, 200
+      else
+        return 3000, 3000
+      end     
+    end
+    
+    def get_cords_for_origin_version
+      ratio = Canvasking::IMAGE_VER_ORI/Canvasking::IMAGE_VER_CROP.to_f
+      return ((params[:item][:image_crop_x]).to_i*ratio).to_i , \
+             ((params[:item][:image_crop_y]).to_i*ratio).to_i , \
+             ((params[:item][:image_crop_w]).to_i*ratio).to_i , \
+             ((params[:item][:image_crop_h]).to_i*ratio).to_i
+    end
+    
+    # This is a special functions for somatic api, which return image with file extension 'jpg_or_png'
+    # Which is silly and need to change
+    def update_tmp_file_names(item)
+      file_ext = item.art_image_tmp_paths['origin'].split('.')[-1]
+      # update all tmp to .jpg and update item.art_image_tmp_paths field
+      if file_ext == 'jpg_or_png'
+        file_path = "#{Rails.root}/public#{item.art_image_tmp_paths['origin']}"
+        folder_path = File.dirname(File.new(file_path))
+        Dir.glob("#{folder_path}/*.jpg_or_png").each do |f|
+          FileUtils.mv f, "#{File.dirname(f)}/#{File.basename(f,'.*')}.jpg"
+        end  
+        item.art_image_tmp_paths.each do |ver, path|
+          path.gsub!('jpg_or_png', 'jpg')
+        end
+      end
+    end
 end

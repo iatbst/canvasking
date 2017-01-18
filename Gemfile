@@ -62,6 +62,11 @@ gem 'stripe'
 # Process outgoing email: embed the styles
 gem 'premailer-rails'
 
+# Background jobs
+gem 'sidekiq'
+#gem 'carrierwave_backgrounder'
+gem 'sidekiq-status'
+
 group :production do
   gem 'rails_12factor'
 end

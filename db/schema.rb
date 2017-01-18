@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170114235512) do
+ActiveRecord::Schema.define(version: 20170118083151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at",               null: false
@@ -41,10 +42,10 @@ ActiveRecord::Schema.define(version: 20170114235512) do
     t.integer  "height"
     t.integer  "width"
     t.string   "image"
-    t.decimal  "price",        precision: 30, scale: 2
-    t.integer  "quantity",                              default: 1
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
+    t.decimal  "price",               precision: 30, scale: 2
+    t.integer  "quantity",                                     default: 1
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
     t.decimal  "depth"
     t.string   "border"
     t.integer  "cart_id"
@@ -56,6 +57,10 @@ ActiveRecord::Schema.define(version: 20170114235512) do
     t.string   "art_model_id"
     t.integer  "frame_id"
     t.decimal  "mat"
+    t.string   "image_tmp"
+    t.string   "image_overview_tmp"
+    t.hstore   "image_tmp_paths",                              default: {}
+    t.hstore   "art_image_tmp_paths",                          default: {}
   end
 
   add_index "items", ["cart_id"], name: "index_items_on_cart_id", using: :btree

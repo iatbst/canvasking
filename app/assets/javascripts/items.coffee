@@ -11,7 +11,7 @@ class CarrierWaveCropper
     $('#item_image_cropbox').Jcrop
  
       allowSelect: false
-      setSelect: [0, 0, 2000, 2000]
+      setSelect: [0, 0, 450, 450]
       onSelect: @update
       onChange: @update
 

@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :items
   resources :orders
   
+  #mount Sidekiq::Web, at: '/sidekiq'
   # Example resource route with options:
   #   resources :products do
   #     member do

@@ -12,16 +12,20 @@ class Item < ActiveRecord::Base
   validates :size, presence: {message: "Please choose a size"}, if: :product_is_selected?
   validates :depth, presence: {message: "Please choose a depth"}, if: :canvas_is_selected?
   validates :border, presence: {message: "Please choose a border style"}, if: :canvas_is_selected?
-  validates :image, presence: {message: "Please upload a image"}, if: :time_to_save?
+  validates :image, presence: {message: "Please upload a image"}, if: :image_is_not_uploaded?
   validates :frame_id, presence: {message: "Please choose a frame"}, if: :frame_is_selected?
   validates :mat, presence: {message: "Please choose a mat"}, if: :frame_is_selected?
+  
+  def image_is_not_uploaded?
+    time_to_save && image.file.nil? && image_tmp_paths.empty?
+  end
   
   def time_to_save?
    time_to_save 
   end
   
   def image_is_uploaded?
-    time_to_save && !image.file.nil?
+    time_to_save && (!image.file.nil? || !image_tmp_paths.empty?)
   end
   
   def product_is_selected?

@@ -254,8 +254,13 @@
 				// Add triptych effects if necessary
 				divide_image_to_3('overview_image');
 		}
-
 		
+		//$('#item_image_cropbox').attr('src', '<%= @tmp_crop_version_path %>');
+		//$('div.jcrop-selection').attr('onclick', 'return false;');
+		//$('.jcrop-selection').attr('value', $('.jcrop-selection').attr('style'));
+		//$('#item_image_cropbox').css('height', 'auto');
+		//$('#item_image_cropbox').css('max-width', '450px');
+		//$('#item_image_cropbox').css('max-height', '450px');
 		
 	});
 
@@ -267,7 +272,7 @@
 			$('#overview_image').attr('src', '<%= @item.image.overview.url %>');
 		} else {
 			//use art filter
-			$('#overview_image').attr('src', '<%= @item.art_image.url %>');
+			$('#overview_image').attr('src', '<%= get_image_url(@item, 'overview', true) %>');
 		}
 	});
 	
