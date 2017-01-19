@@ -285,6 +285,7 @@ class ItemsController < ApplicationController
         item.art_image_tmp_paths.each do |ver, path|
           path.gsub!('jpg_or_png', 'jpg')
         end
+        item.update_attribute('art_image_tmp_paths', item.art_image_tmp_paths)
       end
     end
 end
