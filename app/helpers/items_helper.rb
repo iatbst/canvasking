@@ -1,22 +1,17 @@
 module ItemsHelper
   def get_image_url(item, version, options = {})
-    if item.art_filter || options['art_effect']
-      if !item.art_image.file.nil? && !item.art_image.url.include?('jpg_or_png')
-        if version == "overview"
-          return item.art_image.overview.url
-        elsif version == "filter"
-          return item.art_image.filter.url
-        elsif version == "cart"
-          return item.art_image.cart.url
-        elsif version == "thumb"
-          return item.art_image.thumb.url
-        else
-          return item.art_image.url
-        end
-      else
-        return item.art_image_tmp_paths[version]
-      end
+    if options['art_effect']
+      return get_art_image_url(item, version)
+    elsif options['no_effect']
+      return get_normal_image_url(item, version)
+    elsif item.art_filter
+      return get_art_image_url(item, version)
     else
+      return get_normal_image_url(item, version)
+    end
+  end
+
+  def get_normal_image_url(item, version)
       # If image not on S3 yet, return local tmp image
       if !item.image.file.nil?
         if version == "filter"
@@ -33,8 +28,24 @@ module ItemsHelper
       else
         return item.image_tmp_paths[version]
       end
-
-    end
+  end
+  
+  def get_art_image_url(item, version)
+      if !item.art_image.file.nil? && !item.art_image.url.include?('jpg_or_png')
+        if version == "overview"
+          return item.art_image.overview.url
+        elsif version == "filter"
+          return item.art_image.filter.url
+        elsif version == "cart"
+          return item.art_image.cart.url
+        elsif version == "thumb"
+          return item.art_image.thumb.url
+        else
+          return item.art_image.url
+        end
+      else
+        return item.art_image_tmp_paths[version]
+      end
   end
   
   def image_is_framed(item)

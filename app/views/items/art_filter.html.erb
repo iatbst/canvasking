@@ -174,7 +174,7 @@
 	}); 
 	
 	$('#no_effects').click(function(){
-		$('#filter_input').attr('src', '<%= get_image_url(@item, 'filter') %>');
+		$('#filter_input').attr('src', '<%= get_image_url(@item, 'filter', {"no_effect" => true}) %>');
 		$('#use_this_style').attr('disabled', 'disabled');
 	});
 	function submit(){

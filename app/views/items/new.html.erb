@@ -269,7 +269,7 @@
 	$("#art_filter_checkbox").change(function() {
 		if (this.checked) {
 			//use original image
-			$('#overview_image').attr('src', '<%= @item.image.overview.url %>');
+			$('#overview_image').attr('src', '<%= get_image_url(@item, "overview", {"no_effect" => true}) %>');
 		} else {
 			//use art filter
 			$('#overview_image').attr('src', '<%= get_image_url(@item, "overview", {"art_effect" => true}) %>');

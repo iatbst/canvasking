@@ -21,11 +21,12 @@
 					<div class="field" style="margin-left: 40px; margin-top: 20px">
 						<label class="no_bold">
 					
-							<% if @item.art_image.file.nil? %>
-								<%= f.check_box :art_filter, {id: "art_filter_checkbox", disabled: "disabled", style: "display: none"}, false, true %> 
-							<% else %>
+							<% if @item.art_filter || !@item.art_image.file.nil? %>
 								SKIP ART EFFECTS
 								<%= f.check_box :art_filter, {id: "art_filter_checkbox", }, false, true %>
+					
+							<% else %>
+								<%= f.check_box :art_filter, {id: "art_filter_checkbox", disabled: "disabled", style: "display: none"}, false, true %>
 							<% end %>
 						</label>
 					</div>	
