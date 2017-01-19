@@ -52,11 +52,7 @@ class ItemsController < ApplicationController
     # Image upload to current item, render to crop page
     if params[:image_upload]
       # Remove old image
-      @item.remove_image!
-      @item.save
-      @item.update_attribute('art_filter', false)
-      @item.update_attribute('art_image_tmp_paths', {})
-      @item.remove_art_image!
+      clear_old_image_data(@item)
             
       # Different image source: this will create different versions of tmp images
       if params[:upload_from_facebook]
@@ -263,6 +259,15 @@ class ItemsController < ApplicationController
         return 3000, 3000
       end     
     end
+    
+    def clear_old_image_data(item)
+      item.remove_image!
+      item.remove_art_image!
+      item.save
+      item.update_attribute('art_filter', false)
+      item.update_attribute('art_image_tmp_paths', {})
+      item.update_attribute('image_tmp_paths', {})
+    end    
     
     def get_cords_for_origin_version
       ratio = Canvasking::IMAGE_VER_ORI/Canvasking::IMAGE_VER_CROP.to_f

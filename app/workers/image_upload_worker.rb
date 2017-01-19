@@ -11,6 +11,7 @@ class ImageUploadWorker
         item.art_image = f
       end
     end
+  
     item.save
   end
   
