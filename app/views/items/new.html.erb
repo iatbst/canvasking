@@ -542,4 +542,11 @@
 		$('#overview_image').css('padding', '15px');
 	});
 
+	// Handle Error Image
+	function imgError(image) {
+    		image.onerror = "";
+    		image.src = "/canvas_placeholder.png";
+    		return true;
+	}
+	
 </script>

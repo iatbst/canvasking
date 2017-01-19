@@ -1,4 +1,5 @@
 module ItemsHelper
+  
   def get_image_url(item, version, options = {})
     if options['art_effect']
       return get_art_image_url(item, version)

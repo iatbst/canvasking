@@ -21,7 +21,7 @@
 					<div class="field" style="margin-left: 40px; margin-top: 20px">
 						<label class="no_bold">
 					
-							<% if @item.art_filter || !@item.art_image.file.nil? || !@item.art_image_tmp_paths.empty? %>
+							<% if !@item.art_image.file.nil? || !@item.art_image_tmp_paths.empty? %>
 								SKIP ART EFFECTS
 								<%= f.check_box :art_filter, {id: "art_filter_checkbox", }, false, true %>
 					

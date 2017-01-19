@@ -35,7 +35,7 @@ class ItemsController < ApplicationController
     @somatic_realtime_api = Rails.configuration.somatic["api_url"]
     @somatic_api_key = Rails.configuration.somatic["api_key"]
     if @item.image.file.nil?
-      @filer_image_url = "#{Canvasking::HEROKU_HOST_URL}#{@item.image_tmp_paths['filter']}"
+      @filer_image_url = "#{Canvasking::WEBSITE_URL}#{@item.image_tmp_paths['filter']}"
     else
       @filer_image_url = @item.image.filter.url
     end
@@ -84,8 +84,8 @@ class ItemsController < ApplicationController
       
       # Upload images to S3
       origin_tmp_file_path = "#{Rails.root}/public#{@item.image_tmp_paths['origin']}"
-      #ImageUploadWorker.perform_async(origin_tmp_file_path, @item.id, 'image')
-      #TmpImageRemoveWorker.perform_in(10.minutes, origin_tmp_file_path, @item.id, 'image')
+      ImageUploadWorker.perform_async(origin_tmp_file_path, @item.id, 'image')
+      TmpImageRemoveWorker.perform_in(10.minutes, origin_tmp_file_path, @item.id, 'image')
       @size_price, @size_price_str = prepare_size_price(@item)
       render 'new'
 
@@ -103,8 +103,8 @@ class ItemsController < ApplicationController
       
       # Upload images to S3
       origin_tmp_file_path = "#{Rails.root}/public#{@item.art_image_tmp_paths['origin']}"
-      #ImageUploadWorker.perform_async(origin_tmp_file_path, @item.id, 'art_image')
-      #TmpImageRemoveWorker.perform_in(10.minutes, origin_tmp_file_path, @item.id, 'art_image')
+      ImageUploadWorker.perform_async(origin_tmp_file_path, @item.id, 'art_image')
+      TmpImageRemoveWorker.perform_in(10.minutes, origin_tmp_file_path, @item.id, 'art_image')
       
       @size_price, @size_price_str = prepare_size_price(@item)
       render 'new'

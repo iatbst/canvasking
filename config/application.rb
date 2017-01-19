@@ -53,4 +53,6 @@ module Canvasking
   
   # Heroku
   HEROKU_HOST_URL = 'https://arcane-sands-61757.herokuapp.com/'
+  # This will be replaced with real web url
+  WEBSITE_URL = 'https://arcane-sands-61757.herokuapp.com/'
 end
