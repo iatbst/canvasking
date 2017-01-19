@@ -54,7 +54,7 @@ class ItemsController < ApplicationController
       # Remove old image
       @item.remove_image!
       @item.save
-      @item.art_filter = false
+      @item.update_attribute('art_filter', false)
       @item.remove_art_image!
             
       # Different image source: this will create different versions of tmp images

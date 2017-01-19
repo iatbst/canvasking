@@ -272,7 +272,7 @@
 			$('#overview_image').attr('src', '<%= @item.image.overview.url %>');
 		} else {
 			//use art filter
-			$('#overview_image').attr('src', '<%= get_image_url(@item, 'overview', {'art_effect': true}) %>');
+			$('#overview_image').attr('src', '<%= get_image_url(@item, "overview", {"art_effect" => true}) %>');
 		}
 	});
 	
