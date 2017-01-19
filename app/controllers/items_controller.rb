@@ -34,6 +34,11 @@ class ItemsController < ApplicationController
     @item.art_filter = false
     @somatic_realtime_api = Rails.configuration.somatic["api_url"]
     @somatic_api_key = Rails.configuration.somatic["api_key"]
+    if @item.image.file.nil?
+      @filer_image_url = "#{Canvasking::HEROKU_HOST_URL}#{@item.image_tmp_paths['filter']}"
+    else
+      @filer_image_url = @item.image.filter.url
+    end
   end
   
   # TODO: May need to refactor in future, current logic as follow

@@ -1,6 +1,6 @@
 module ItemsHelper
-  def get_image_url(item, version, art_effect = false)
-    if item.art_filter || art_effect
+  def get_image_url(item, version, options = {})
+    if item.art_filter || options['art_effect']
       if !item.art_image.file.nil? && !item.art_image.url.include?('jpg_or_png')
         if version == "overview"
           return item.art_image.overview.url

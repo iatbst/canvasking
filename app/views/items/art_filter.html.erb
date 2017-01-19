@@ -155,7 +155,7 @@
 		var style_id = $(this).attr('id');
 		var url = '<%= @somatic_realtime_api %>?id=' + style_id + 
 				  '&api_key=' + '<%= @somatic_api_key %>' + 
-				  '&--input=' + '<%= @item.image.filter.url %>';
+				  '&--input=' + '<%= @filer_image_url %>';
 
 		var newImage = new Image();
 		var loadingSrc = '/loading.gif';
