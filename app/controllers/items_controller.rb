@@ -6,7 +6,7 @@ class ItemsController < ApplicationController
   def new
     @item = Item.new
     @item.save
-    @size_price, @size_price_str = prepare_size_price(@item)
+    #@size_price, @size_price_str = prepare_size_price(@item)
   end
   
   # NOT USED, because item is automatically created when user enter new page.
@@ -77,6 +77,13 @@ class ItemsController < ApplicationController
         # Important: Process order should from high to low
         process_now_versions = ['origin','filter', 'cart','overview', 'thumb']
         crop_local_tmp_files(@item, process_now_versions)
+      end
+      
+      # get image ratio
+      begin
+        h_w_ratio = params[:item][:image_crop_h].to_f/params[:item][:image_crop_w].to_f
+        @item.update_attribute('image_h_w_ratio', h_w_ratio)
+      rescue
       end
       
       # Upload images to S3
@@ -318,8 +325,11 @@ class ItemsController < ApplicationController
     
     # get w/h ratio of uploaded image
     origin_file_path = "#{Rails.root}/public#{item.image_tmp_paths['overview']}"
-    image = MiniMagick::Image.open(origin_file_path)
-    image_h_w_ratio = image.height/image.width.to_f
+    if item.image_h_w_ratio
+      image_h_w_ratio = item.image_h_w_ratio
+    else
+      image_h_w_ratio = 1000 # If image failed to load, no price is available
+    end
     
     new_size_price_obj = {}
     size_price_obj.each do |product, table|

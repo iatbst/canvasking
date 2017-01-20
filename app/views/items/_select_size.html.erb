@@ -19,9 +19,11 @@
 				<% if @item.size.nil? || @item.errors[:size] %>
 				<option value="" selected disabled>Select Size</option>
 				<% end %>
-				<%= @size_price.each do |key, val| %>
-				<% _key = key.gsub("\\", "") %>
-				<option value="<%= _key %>" <% if @item.size && @item.size == _key %> selected <% end %>><%= _key %> - $<%= val %></option>
+				<% if !@size_price.nil? %>
+					<%= @size_price.each do |key, val| %>
+						<% _key = key.gsub("\\", "") %>
+						<option value="<%= _key %>" <% if @item.size && @item.size == _key %> selected <% end %>><%= _key %> - $<%= val %></option>
+					<% end %>
 				<% end %>
 			</select>
 		
