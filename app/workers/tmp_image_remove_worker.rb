@@ -11,8 +11,15 @@ class TmpImageRemoveWorker
        folder.pop()
        folder_path = folder.join('/')
        FileUtils.remove_dir(folder_path)
+       
+       # clear tmp field
+       if (field == 'image')
+          item.update_attribute('image_tmp_paths', {})
+       else
+          item.update_attribute('art_image_tmp_paths', {})
+       end 
     end
-    
+
   end
   
 end

@@ -96,8 +96,8 @@ class ItemsController < ApplicationController
     # Image processed by art filter
     elsif params[:art_filterred]
       # remove old art image if necessary
-      @item.remove_art_image!
-      @item.save
+      #@item.remove_art_image!
+      #@item.save
       @item.update_attribute('art_filter', true)
       @item.attributes = item_params
  
@@ -237,9 +237,9 @@ class ItemsController < ApplicationController
     end
     
     def crop_local_tmp_files(item, versions)
-      origin_file_path = "#{Rails.root}/public#{item.image_tmp_paths['origin']}"
-      crop_x, crop_y, crop_w, crop_h = get_cords_for_origin_version 
+      origin_file_path = "#{Rails.root}/public#{item.image_tmp_paths['origin']}" 
       image = MiniMagick::Image.open(origin_file_path)
+      crop_x, crop_y, crop_w, crop_h = get_cords_for_origin_version(image) 
       image.crop("#{crop_w}x#{crop_h}!+#{crop_x}+#{crop_y}")
       versions.each do |ver|
           abs_path = "#{Rails.root}/public#{item.image_tmp_paths[ver]}"
@@ -264,16 +264,19 @@ class ItemsController < ApplicationController
     end
     
     def clear_old_image_data(item)
-      item.remove_image!
-      item.remove_art_image!
-      item.save
+      # Warn: this function only clear object attribute, DO NOT clear real backend images, which
+      # is time consuming !
       item.update_attribute('art_filter', false)
-      item.update_attribute('art_image_tmp_paths', {})
-      item.update_attribute('image_tmp_paths', {})
+      item.update_attribute('art_image_tmp_paths', {'new_image_uploaded' => true})
     end    
     
-    def get_cords_for_origin_version
-      ratio = Canvasking::IMAGE_VER_ORI/Canvasking::IMAGE_VER_CROP.to_f
+    def get_cords_for_origin_version(image)
+      if image.width > image.height
+        origin_image_dimension = image.width
+      else
+        origin_image_dimension = image.height
+      end 
+      ratio = origin_image_dimension/Canvasking::IMAGE_VER_CROP.to_f
       return ((params[:item][:image_crop_x]).to_i*ratio).to_i , \
              ((params[:item][:image_crop_y]).to_i*ratio).to_i , \
              ((params[:item][:image_crop_w]).to_i*ratio).to_i , \
@@ -324,7 +327,6 @@ class ItemsController < ApplicationController
   def process_size_price_table_by_image_ratio(item, size_price_obj)
     
     # get w/h ratio of uploaded image
-    origin_file_path = "#{Rails.root}/public#{item.image_tmp_paths['overview']}"
     if item.image_h_w_ratio
       image_h_w_ratio = item.image_h_w_ratio
     else
