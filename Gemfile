@@ -46,7 +46,7 @@ gem 'autoprefixer-rails'
 # Carrierwave and dependancies
 gem 'carrierwave'
 gem 'mini_magick'
-gem 'rmagick'
+#gem 'rmagick'
 gem 'carrierwave-crop' # for image cropping
 
 # S3

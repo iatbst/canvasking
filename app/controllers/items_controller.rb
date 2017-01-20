@@ -41,6 +41,7 @@ class ItemsController < ApplicationController
     end
   end
   
+  
   # TODO: May need to refactor in future, current logic as follow
   # There are 3 update item forms in new page
   #  - photo upload form ~> new page ( current page )
@@ -154,24 +155,19 @@ class ItemsController < ApplicationController
     redirect_to cart_path
   end
   
+  
+  
+  
+  # Helpers
   private
-    def prepare_size_price(item)
-      size_price_obj = read_size_price_table
-      if item.product
-        size_price = size_price_obj[item.product.name]
-      else
-        size_price = {"Please select product first" => ""}
-      end
-      size_price_str = JSON.dump(size_price_obj)
-      return size_price, size_price_str
-    end
+
     
     def read_size_price_table
-      YAML.load(File.read(Rails.root.join('business','size_price.yml')))
+      YAML.load(File.read(Rails.root.join('business','pricing.yml')))
     end
     
     def calculate_price(product)
-      size_price = YAML.load(File.read(Rails.root.join('business','size_price.yml')).gsub!("\\", ""))
+      size_price = YAML.load(File.read(Rails.root.join('business','pricing.yml')).gsub!("\\", ""))
       return size_price[product][params[:item][:size]]
     end
     
@@ -294,4 +290,96 @@ class ItemsController < ApplicationController
         item.update_column('art_image_tmp_paths', item.art_image_tmp_paths)
       end
     end
+ 
+     def prepare_size_price(item)
+      size_price_obj = read_size_price_table
+      
+      size_price_obj = process_size_price_table_by_image_ratio(item, size_price_obj)
+      
+      if item.product
+        size_price = size_price_obj[item.product.name]
+      else
+        size_price = {"Please select product first" => ""}
+      end
+      size_price_str = JSON.dump(size_price_obj)
+      return size_price, size_price_str
+    end
+  
+  def available_ratio(ratio, size)
+    _size = size.gsub('\\', '')
+    _size.gsub!('"', '')
+    h = _size.split('x')[0]
+    w = _size.split('x')[1]
+    h_w_ratio = (h.to_f)/(w.to_f)
+    return (1 - ratio/h_w_ratio).abs < 0.04, h, (1 - ratio/h_w_ratio).abs
+  end
+    
+  def process_size_price_table_by_image_ratio(item, size_price_obj)
+    
+    # get w/h ratio of uploaded image
+    origin_file_path = "#{Rails.root}/public#{item.image_tmp_paths['overview']}"
+    image = MiniMagick::Image.open(origin_file_path)
+    image_h_w_ratio = image.height/image.width.to_f
+    
+    new_size_price_obj = {}
+    size_price_obj.each do |product, table|
+      
+      temp_price_list = []
+      table.each do |size, price|
+        available_r, h, diff = available_ratio(image_h_w_ratio, size)
+        if available_r
+          temp_price_list.push({'h'=> h, 's'=> size, 'p'=> price, 'diff'=> diff})
+        end
+      end
+ 
+      if temp_price_list.count > 10
+        temp_price_list.sort_by! {|obj| obj['diff']}
+        temp_price_list = temp_price_list[0..9]
+        temp_price_list.sort_by! {|obj| obj['h']}
+      end  
+      
+      new_size_price_obj[product] = {}
+      temp_price_list.each do |obj|
+        new_size_price_obj[product][obj['s']] = obj['p']
+      end
+       
+    end
+    
+    return new_size_price_obj
+  end
+  
+  # This is a test function to fast make random product/size/price matrix and 
+  # populate to /business/pricing.yml
+  def _make_price_matrix
+    products = ['single canvas', 'triptych canvas', 'frame']
+    
+    table_size = 17
+
+    pricing_obj = {}
+    base_price = 9.9
+    products.each do |product|
+      pricing_obj[product] = {}
+      h = 8
+      w = 8
+      base_price += 10
+      bump_price = 0
+      table_size.times.each do |x|
+        table_size.times.each do |y|
+          size = "#{h}\\\"x#{w}\\\""
+          price = base_price + bump_price
+          bump_price += 1
+          pricing_obj[product][size] = price
+          w += 2
+        end
+        h += 2
+        w = 8
+      end
+    end
+    
+    # write to yml
+    File.open(Rails.root.join('business','pricing.yml'),"w") do |file|
+      file.write pricing_obj.to_yaml
+    end 
+  end
+  
 end
