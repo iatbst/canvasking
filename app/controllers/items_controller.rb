@@ -46,7 +46,6 @@ class ItemsController < ApplicationController
       # Image is ready on S3
       @filter_image_url = @item.image.filter.url
     end
-    binding.pry
   end
   
   
