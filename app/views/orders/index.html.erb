@@ -74,7 +74,10 @@ d<%= render "layouts/navbar" %>
 									<br />
 
 									Price:<b> $<%= item.price %></b>
-
+									<br />
+									<br />
+									
+									<%= button_to 'Buy It Again', add_to_cart_path(item), :method=> :get, class:"btn btn-default btn-xs" %>
 								</ul>
 
 							</div>

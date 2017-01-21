@@ -35,10 +35,18 @@ class ItemsController < ApplicationController
     @somatic_realtime_api = Rails.configuration.somatic["api_url"]
     @somatic_api_key = Rails.configuration.somatic["api_key"]
     if @item.image.file.nil?
-      @filer_image_url = "#{Canvasking::WEBSITE_URL}#{@item.image_tmp_paths['filter']}"
+      # Image is not ready on S3
+      @filter_image_url = "#{Canvasking::WEBSITE_URL}#{@item.image_tmp_paths['filter']}"
+    elsif !@item.image_tmp_paths.empty? && @item.image_tmp_paths['origin'].include?('https://')
+      # Special Case: this is dup item which cloned from old item, to avoid recreating image,
+      # dup image save original image urls to it's image_tmp_paths/art_image_tmp_paths fields
+      # This is not a elegant implementation, but save times
+      @filter_image_url = @item.image_tmp_paths['filter']
     else
-      @filer_image_url = @item.image.filter.url
+      # Image is ready on S3
+      @filter_image_url = @item.image.filter.url
     end
+    binding.pry
   end
   
   
@@ -116,9 +124,15 @@ class ItemsController < ApplicationController
     # Item added to cart or edit items in cart
     elsif params[:go_to_cart]
       @item.time_to_save = true
+      # special process for size, if user failed specify the size option,
+      # return error page, not save
+      if params[:item]["size"].nil?
+        @item.update_attribute("size", nil)
+      end
+  
       if @item.update(item_params)
         # Calculate price
-        @item.update_attribute(:price, calculate_price(@item.product.name))
+        @item.update_attribute(:price, calculate_price(@item))
         # Add this item to cart
         cart = get_current_cart
         cart.items.push(@item)
@@ -173,9 +187,10 @@ class ItemsController < ApplicationController
       YAML.load(File.read(Rails.root.join('business','pricing.yml')))
     end
     
-    def calculate_price(product)
+    def calculate_price(item)
+      product = item.product.name
       size_price = YAML.load(File.read(Rails.root.join('business','pricing.yml')).gsub!("\\", ""))
-      return size_price[product][params[:item][:size]]
+      return size_price[product][item.size]
     end
     
     # The x,y,w,z crops coordination passed from Jcrop are based from overview size
@@ -305,11 +320,11 @@ class ItemsController < ApplicationController
       size_price_obj = read_size_price_table
       
       size_price_obj = process_size_price_table_by_image_ratio(item, size_price_obj)
-      
+   
       if item.product
         size_price = size_price_obj[item.product.name]
       else
-        size_price = {"Please select product first" => ""}
+        size_price = {}
       end
       size_price_str = JSON.dump(size_price_obj)
       return size_price, size_price_str
@@ -344,11 +359,10 @@ class ItemsController < ApplicationController
         end
       end
  
-      if temp_price_list.count > 10
-        temp_price_list.sort_by! {|obj| obj['diff']}
-        temp_price_list = temp_price_list[0..9]
-        temp_price_list.sort_by! {|obj| obj['h']}
-      end  
+      
+      temp_price_list.sort_by! {|obj| obj['diff']}
+      temp_price_list = temp_price_list[0..9]
+      temp_price_list.sort_by! {|obj| obj['h'].to_i}
       
       new_size_price_obj[product] = {}
       temp_price_list.each do |obj|

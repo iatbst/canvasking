@@ -16,7 +16,8 @@ Rails.application.routes.draw do
   get '/items/art_filter/:id(.:format)' => 'items#art_filter', as: 'art_filter_item'
   # get '/orders/new(.:format)' => 'orders#new', as: 'new_order'
   get '/accounts/my_account' => 'accounts#my_account', as: 'manage_my_account'
-
+  get '/orders/items/:id(.:format)' => 'orders#add_to_cart', as: 'add_to_cart'
+  
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 

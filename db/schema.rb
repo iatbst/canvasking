@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170120044726) do
+ActiveRecord::Schema.define(version: 20170121022543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20170120044726) do
     t.hstore   "image_tmp_paths",                              default: {}
     t.hstore   "art_image_tmp_paths",                          default: {}
     t.decimal  "image_h_w_ratio"
+    t.integer  "clone_of"
   end
 
   add_index "items", ["cart_id"], name: "index_items_on_cart_id", using: :btree

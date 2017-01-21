@@ -148,6 +148,9 @@
 
 </div>
 
+<div id="divLoading"> 
+</div>
+
 <script>
 	$('.style_option').click(function() {
 		$('#use_this_style').hide();
@@ -155,7 +158,7 @@
 		var style_id = $(this).attr('id');
 		var url = '<%= @somatic_realtime_api %>?id=' + style_id + 
 				  '&api_key=' + '<%= @somatic_api_key %>' + 
-				  '&--input=' + '<%= @filer_image_url %>';
+				  '&--input=' + '<%= @filter_image_url %>';
 
 		var newImage = new Image();
 		var loadingSrc = '/loading.gif';
@@ -180,4 +183,8 @@
 	function submit(){
 		$('#art_style_options').click();
 	}
+	
+	$('#use_this_style').click(function () {
+    		$("div#divLoading").addClass('show');
+	});
 </script>

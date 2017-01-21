@@ -25,7 +25,7 @@ class OrdersController < ApplicationController
     # Shipping form validation success, try to charge
     if @order.valid?
       cart = get_current_cart
-      charge_amount = (cart.price*100).to_i # Reminder: Stripe process money amount as cents
+      charge_amount = (cart.price*100).to_i # Important: Stripe process money amount as cents
       charge_result = charge_money_by_stripe(charge_amount)
 
       # Charge failed, return back to order new page
@@ -59,6 +59,7 @@ class OrdersController < ApplicationController
         # Send out order confirm email
         OrderMailer.order_confirm(current_user, @order).deliver_later
       
+        @new_order_complete = true
         render 'show'
       end
 
@@ -73,6 +74,46 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
   end
 
+  def add_to_cart
+    item = Item.find(params[:id])
+    new_item = item.dup
+    
+    new_item.quantity = 1
+    new_item.order_id = nil
+    
+    if !item.image.file.nil? && \
+        (item.image_tmp_paths.empty? || !item.image_tmp_paths['origin'].include?('https://'))
+      new_item.image_tmp_paths = {}
+      new_item.image_tmp_paths['origin'] = item.image.url
+      new_item.image_tmp_paths['filter'] = item.image.filter.url
+      new_item.image_tmp_paths['cart'] = item.image.cart.url
+      new_item.image_tmp_paths['overview'] = item.image.overview.url
+      new_item.image_tmp_paths['thumb'] = item.image.thumb.url
+    end
+    
+    if !item.art_image.file.nil? && \
+        (item.art_image_tmp_paths.empty? || 
+          (item.art_image_tmp_paths['origin'] && !item.art_image_tmp_paths['origin'].include?('https://')))
+      new_item.art_image_tmp_paths = {}
+      new_item.art_image_tmp_paths['origin'] = item.art_image.url
+      new_item.art_image_tmp_paths['filter'] = item.art_image.filter.url
+      new_item.art_image_tmp_paths['cart'] = item.art_image.cart.url
+      new_item.art_image_tmp_paths['overview'] = item.art_image.overview.url
+      new_item.art_image_tmp_paths['thumb'] = item.art_image.thumb.url
+    end 
+  
+    if new_item.save
+      cart = get_current_cart
+      cart.items.push(new_item)
+      update_total_price_and_quantity_in_cart
+    
+      redirect_to cart_path
+    else
+      # Failed, stay in orders page
+      redirect_to orders_path
+    end
+  end
+  
   private
 
   def generate_unique_order_number

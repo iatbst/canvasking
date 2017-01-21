@@ -27,7 +27,9 @@
 			$form.find('.payment-errors').text(response.error.message);
 			$form.find('.submit').prop('disabled', false);
 			// Re-enable submission
-
+			
+			// stop loading icon
+			$("div#divLoading").removeClass('show');
 		} else {// Token was created!
 
 			// Get the token ID:

@@ -12,7 +12,7 @@
 			<%= render partial:'shipping', locals:{f: f} %>
 			<%= render partial:'payment', locals:{f: f} %>
 			<br />
-			<%= f.submit 'Place Order', class: "btn btn-primary btn-lg"%>
+			<%= f.submit 'Place Order', class: "btn btn-primary btn-lg", id:"place_order"%>
 			<% end %>
 		</div>
 
@@ -20,6 +20,9 @@
 			<%= render 'order_summary' %>
 		</div>
 	</div>
+</div>
+
+<div id="divLoading"> 
 </div>
 
 <!-- Select states by country: trick functions, need to refactor !! -->
@@ -43,6 +46,10 @@
 			$('#select_state').append(option);
 		}
 	
+	});
+	
+	$('#place_order').click(function () {
+    		$("div#divLoading").addClass('show');
 	});
 </script>
 
