@@ -25,11 +25,16 @@
 }
 
 
-.raw_image {
+
+.image_shadow_in_item {
   box-shadow: 5px 5px 5px #888888;
 }
 
-.image_black_frame {
+.image_frame_mat_in_item {
+  padding: 15px;
+}
+
+.image_black_frame_in_item {
   border:15px solid transparent;
   /* border image */
   -moz-border-image:url(/items/frame_black.png) 30 30 stretch; /* Old Firefox */
@@ -38,7 +43,7 @@
   border-image:url(/items/frame_black.png) 30 30 stretch; 
 }
 
-.image_white_frame {
+.image_white_frame_in_item {
   border:15px solid transparent;
   /* border image */
   -moz-border-image:url(/items/frame_white.png) 30 30 stretch; /* Old Firefox */
@@ -46,7 +51,7 @@
   -o-border-image:url(/items/frame_white.png) 30 30 stretch; /* Opera */
   border-image:url(/items/frame_white.png) 30 30 stretch; 
 }
-.image_brown_frame {
+.image_brown_frame_in_item {
   border:15px solid transparent;
   /* border image */
   -moz-border-image:url(/items/frame_brown.png) 30 30 stretch; /* Old Firefox */

@@ -9,6 +9,14 @@
   box-shadow: 5px 5px 5px #888888;
 }
 
+.image_frame_mat_in_order_index {
+  padding: 10px;
+}
+
+.image_frame_mat_in_order_show {
+  padding: 15px;
+}
+
 .image_black_frame_in_order_index {
   border:10px solid transparent;
   /* border image */
@@ -35,6 +43,31 @@
   border-image:url(/items/frame_brown.png) 30 30 stretch; 
 }
 
+.image_black_frame_in_order_show {
+  border:15px solid transparent;
+  /* border image */
+  -moz-border-image:url(/items/frame_black.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_black.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_black.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_black.png) 30 30 stretch; 
+}
+
+.image_white_frame_in_order_show {
+  border:15px solid transparent;
+  /* border image */
+  -moz-border-image:url(/items/frame_white.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_white.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_white.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_white.png) 30 30 stretch; 
+}
+.image_brown_frame_in_order_show {
+  border:15px solid transparent;
+  /* border image */
+  -moz-border-image:url(/items/frame_brown.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_brown.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_brown.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_brown.png) 30 30 stretch; 
+}
 
 .triptych_1_in_order_index {
     max-width: 66px; 

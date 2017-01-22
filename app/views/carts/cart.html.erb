@@ -24,22 +24,9 @@
 		<% @cart.items.each do |item| %>
 
 		// Add frame effects if necessary
-		if (<%= image_is_framed(item) %>){
-				// Add frame
-				if (<%= image_is_framed_with_type(item, 'black') %>){
-					$('#item_' + <%= item.id %>).addClass('image_black_frame_in_cart');
-				} else if (<%= image_is_framed_with_type(item, 'white') %>) {
-					$('#item_' + <%= item.id %>).addClass('image_white_frame_in_cart');
-				} else {
-					$('#item_' + <%= item.id %>).addClass('image_brown_frame_in_cart');
-				}
-				// Add mat
-				if (<%= item.mat == 2.5 %>){
-					$('#item_' + <%= item.id %>).css('padding', '20px');
-				} 
-		} else if (<%= image_is_triptych(item) %>){
-				// Add triptych effects if necessary
-				divide_image_to_3('item_' + <%= item.id %>, 'item_' + <%= item.id %> + '_triple');
+		if (<%= image_is_triptych(item) %>){
+			// Add triptych effects if necessary
+			divide_image_to_3('item_' + <%= item.id %>, 'item_' + <%= item.id %> + '_triple');
 		}
 				
 		

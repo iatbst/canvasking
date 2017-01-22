@@ -60,9 +60,32 @@ module ItemsHelper
      image_is_framed(item) && !item.frame_id.nil? && Frame.find(item.frame_id).name.include?(type)
   end
   
+  def image_is_matted(item)
+    !(item.mat.nil? || item.mat.to_i == 0)
+  end
+  
   def image_is_triptych(item)
     !item.product.nil? && item.product.name.include?('triptych')
   end
   
+  def add_frame_and_mat_class(item, page)
+    classes = ""
+    if image_is_framed(item)
+      if image_is_framed_with_type(item, "black")
+        classes += "image_black_frame_in_#{page}"
+      elsif image_is_framed_with_type(item, "white")
+        classes += "image_white_frame_in_#{page}"
+      else
+        classes += "image_brown_frame_in_#{page}"
+      end
+      
+      if image_is_matted(item)
+        classes += " image_frame_mat_in_#{page}"
+      end
+    end
+    
+    return classes
+  end
+
   
 end

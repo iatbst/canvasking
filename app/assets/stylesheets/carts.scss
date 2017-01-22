@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.image_shadow {
+.image_shadow_in_cart {
   box-shadow: 8px 8px 5px #888888;
 }
 
@@ -11,6 +11,10 @@
     width: auto; 
     max-width: 450px; 
     max-height: 450px;
+}
+
+.image_frame_mat_in_cart {
+  padding: 20px;
 }
 
 .image_black_frame_in_cart {

@@ -8,14 +8,16 @@
 			<div class="row">
 				<div class="col-md-6">
 					<br />
-					<a data-method="get" style="color: black" href="/items/<%= item.id %>/edit"> 
-						<%= image_tag get_image_url(item, "cart"), class: "cart_image image_shadow", id: "item_#{item.id}" %> 
+					
+					<a data-method="get" style="color: black" href="/items/<%= item.id %>/edit"> 		
+						<%= image_tag get_image_url(item, "cart"), class: "cart_image image_shadow_in_cart #{add_frame_and_mat_class(item, 'cart')}", id: "item_#{item.id}" %>	
 					<div>
 						<div class="triptych_1_in_cart image_shadow" id="item_<%= item.id%>_triple_1"></div>
 						<div class="triptych_2_in_cart image_shadow"  id="item_<%= item.id%>_triple_2" style="margin-left: 12px; margin-right: 12px"></div>
 						<div class="triptych_3_in_cart image_shadow" id="item_<%= item.id%>_triple_3"></div>
 					</div>
 					</a>
+				
 				</div>
 
 				<div class="col-md-3" >

@@ -237,31 +237,10 @@
 
 	$( window ).on( "load", function(){
 		// Add frame effects if necessary
-		if (<%= image_is_framed(@item) %>){
-				// Add frame
-				if (<%= image_is_framed_with_type(@item, 'black') %>){
-					$('#overview_image').addClass('image_black_frame');
-				} else if (<%= image_is_framed_with_type(@item, 'white') %>) {
-					$('#overview_image').addClass('image_white_frame');
-				} else {
-					$('#overview_image').addClass('image_brown_frame');
-				}
-				// Add mat
-				if (<%= @item.mat == 2.5 %>){
-					$('#overview_image').css('padding', '15px');
-				} 
-		} else if (<%= image_is_triptych(@item) %>){
+		if (<%= image_is_triptych(@item) %>){
 				// Add triptych effects if necessary
 				divide_image_to_3('overview_image');
 		}
-		
-		//$('#item_image_cropbox').attr('src', '<%= @tmp_crop_version_path %>');
-		//$('div.jcrop-selection').attr('onclick', 'return false;');
-		//$('.jcrop-selection').attr('value', $('.jcrop-selection').attr('style'));
-		//$('#item_image_cropbox').css('height', 'auto');
-		//$('#item_image_cropbox').css('max-width', '450px');
-		//$('#item_image_cropbox').css('max-height', '450px');
-		
 	});
 
 
@@ -325,9 +304,7 @@
 		$('#size_price_options').show();
 
 		//remove frame and mat
-		$('#overview_image').attr('class',function(i, c){
-              return c.replace(/_frame$/g, '');
-         });	
+		$('#overview_image').attr('class','overview_image image_shadow_in_item');	
 		$('#overview_image').css('padding', '0px');
 
 		//hide triptych and show overview_image
@@ -381,9 +358,7 @@
 		$('#size_price_options').show();
 
 		//remove frame and mat
-		$('#overview_image').attr('class',function(i, c){
-              return c.replace(/_frame$/g, '');
-         });
+		$('#overview_image').attr('class','overview_image image_shadow_in_item');
 		$('#overview_image').css('padding', '0px');
 		
 		//divide image to 3 equal pieces
@@ -452,11 +427,11 @@
 		
 		//update image frame, default is black frame border if none is checked
 		if($('#frame_white_wood').is(':checked')){
-			$('#overview_image').addClass('image_white_frame');
+			$('#overview_image').addClass('image_white_frame_in_item');
 		} else if($('#frame_espresso_wood').is(':checked')){
-			$('#overview_image').addClass('image_brown_frame');
+			$('#overview_image').addClass('image_brown_frame_in_item');
 		} else {
-			$('#overview_image').addClass('image_black_frame');
+			$('#overview_image').addClass('image_black_frame_in_item');
 		}
 		//update mat if necessary
 		if($('#mat_2_5').is(':checked')){
@@ -508,28 +483,22 @@
 	$("#frame_black_wood").click(function() {
 		$('#attr1_choice').text('Frame: black wood');
 		//add frame
-		$('#overview_image').attr('class',function(i, c){
-              return c.replace(/_frame$/g, '');
-         });
-		$('#overview_image').addClass('image_black_frame');
+		$('#overview_image').attr('class','overview_image image_shadow_in_item');
+		$('#overview_image').addClass('image_black_frame_in_item');
 	});
 
 	$("#frame_white_wood").click(function() {
 		$('#attr1_choice').text('Frame: white wood');
 		//add frame
-		$('#overview_image').attr('class',function(i, c){
-              return c.replace(/_frame$/g, '');
-         });
-		$('#overview_image').addClass('image_white_frame');
+		$('#overview_image').attr('class','overview_image image_shadow_in_item');
+		$('#overview_image').addClass('image_white_frame_in_item');
 	});
 
 	$("#frame_espresso_wood").click(function() {
 		$('#attr1_choice').text('Frame: espresso wood');
 		//add frame
-		$('#overview_image').attr('class',function(i, c){
-              return c.replace(/_frame$/g, '');
-         });
-		$('#overview_image').addClass('image_brown_frame');
+		$('#overview_image').attr('class','overview_image image_shadow_in_item');
+		$('#overview_image').addClass('image_brown_frame_in_item');
 	});
 
 	$("#mat_0").click(function() {

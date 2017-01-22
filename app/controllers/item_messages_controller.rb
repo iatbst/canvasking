@@ -5,7 +5,7 @@ class ItemMessagesController < ApplicationController
 
     @message = @item.item_messages.create(message_params)
     @item.update(item_params)
-    flash[:notice] = "Thanks for your feedbacks !"
+    flash[:feedback] = "Thanks for your feedbacks !"
     if !@item.rate.nil?
       if @item.rate > 4
         flash[:rate] = "We feel so great today you like our product :)"

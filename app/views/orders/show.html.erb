@@ -60,7 +60,7 @@
 					<div class="col-md-9">
 						<br />
 					
-						<%= image_tag get_image_url(item, "overview"), class: "overview_image image_shadow_in_order_show", id: "item_#{item.id}" %>
+						<%= image_tag get_image_url(item, "overview"), class: "overview_image image_shadow_in_order_show #{add_frame_and_mat_class(item, 'order_show')}", id: "item_#{item.id}" %>
 								<div>
 									<div class="triptych_1_in_order_show image_shadow_in_order_show" id="item_<%= item.id%>_triple_1"></div>
 									<div class="triptych_2_in_order_show image_shadow_in_order_show"  id="item_<%= item.id%>_triple_2" style="margin-left: 8px; margin-right: 8px"></div>
@@ -114,20 +114,7 @@
 
 			<% @order.items.each do |item| %>
 			// Add frame effects if necessary
-			if (<%= image_is_framed(item) %>){
-				// Add frame
-				if (<%= image_is_framed_with_type(item, 'black') %>){
-					$('#item_' + <%= item.id %>).addClass('image_black_frame');
-				} else if (<%= image_is_framed_with_type(item, 'white') %>) {
-					$('#item_' + <%= item.id %>).addClass('image_white_frame');
-				} else {
-					$('#item_' + <%= item.id %>).addClass('image_brown_frame');
-				}
-				// Add mat
-				if (<%= item.mat == 2.5 %>){
-					$('#item_' + <%= item.id %>).css('padding', '15px');
-				}
-			} else if (<%= image_is_triptych(item) %>){
+			if (<%= image_is_triptych(item) %>){
 				// Add triptych effects if necessary
 				divide_image_to_3('item_' + <%= item.id %>, 'item_' +<%= item.id %> + '_triple');
 			}
