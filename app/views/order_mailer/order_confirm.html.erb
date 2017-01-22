@@ -60,9 +60,9 @@ Thank you for your order from CANVASKING. Once your package ships we will send a
 					<div class="col-md-9">
 						<br />
 						<% if get_image_url(item, "overview").include?('https://') %>
-							<%= image_tag get_image_url(item, "overview"), class:"overview_image" %>
+							<%= image_tag get_image_url(item, "overview"), class:"overview_image image_shadow_in_item #{add_frame_and_mat_class(item, 'email')}" %>
 						<% else %>
-							<%= image_tag Canvasking::WEBSITE_URL + get_image_url(item, "overview"), class:"overview_image" %>
+							<%= image_tag Canvasking::WEBSITE_URL + get_image_url(item, "overview"), class:"overview_image image_shadow_in_item #{add_frame_and_mat_class(item, 'email')}" %>
 						<% end %>
 					</div>
 

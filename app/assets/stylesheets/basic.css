@@ -128,3 +128,34 @@ span.form_error {
 	margin-left : -16px;
 	margin-top : -16px;
 }
+
+
+.image_black_frame_in_email {
+  border:15px solid transparent;
+  /* border image */
+  -moz-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_black.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_black.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_black.png) 30 30 stretch; /* Opera */
+  border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_black.png) 30 30 stretch; 
+}
+
+.image_white_frame_in_email {
+  border:15px solid transparent;
+  /* border image */
+  -moz-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_white.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_white.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_white.png) 30 30 stretch; /* Opera */
+  border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_white.png) 30 30 stretch; 
+}
+.image_brown_frame_in_email {
+  border:15px solid transparent;
+  /* border image */
+  -moz-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_brown.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_brown.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_brown.png) 30 30 stretch; /* Opera */
+  border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_brown.png) 30 30 stretch; 
+}
+
+.image_frame_mat_in_email {
+  padding: 15px;
+}
