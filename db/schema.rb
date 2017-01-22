@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170121022543) do
+ActiveRecord::Schema.define(version: 20170121201211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,15 @@ ActiveRecord::Schema.define(version: 20170121022543) do
     t.string "name"
   end
 
+  create_table "item_messages", force: :cascade do |t|
+    t.text     "message"
+    t.integer  "item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "item_messages", ["item_id"], name: "index_item_messages_on_item_id", using: :btree
+
   create_table "items", force: :cascade do |t|
     t.integer  "product_id"
     t.integer  "height"
@@ -44,8 +53,8 @@ ActiveRecord::Schema.define(version: 20170121022543) do
     t.string   "image"
     t.decimal  "price",               precision: 30, scale: 2
     t.integer  "quantity",                                     default: 1
-    t.datetime "created_at",                                                null: false
-    t.datetime "updated_at",                                                null: false
+    t.datetime "created_at",                                                   null: false
+    t.datetime "updated_at",                                                   null: false
     t.decimal  "depth"
     t.string   "border"
     t.integer  "cart_id"
@@ -63,6 +72,8 @@ ActiveRecord::Schema.define(version: 20170121022543) do
     t.hstore   "art_image_tmp_paths",                          default: {}
     t.decimal  "image_h_w_ratio"
     t.integer  "clone_of"
+    t.boolean  "received",                                     default: false
+    t.integer  "rate"
   end
 
   add_index "items", ["cart_id"], name: "index_items_on_cart_id", using: :btree
@@ -143,6 +154,7 @@ ActiveRecord::Schema.define(version: 20170121022543) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "carts", "users"
+  add_foreign_key "item_messages", "items"
   add_foreign_key "items", "carts"
   add_foreign_key "items", "frames"
   add_foreign_key "items", "orders"

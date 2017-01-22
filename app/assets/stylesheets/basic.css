@@ -107,9 +107,9 @@ span.form_error {
 	display : block;
 	position : fixed;
 	z-index: 100;
-	background-image : url('http://loadinggif.com/images/image-selection/3.gif');
-	background-color:#666;
-	opacity : 0.4;
+	background-image : url('/loading_icon.gif');
+	/*background-color:white;*/
+	opacity : 1;
 	background-repeat : no-repeat;
 	background-position : center;
 	left : 0;

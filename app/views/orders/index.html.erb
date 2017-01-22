@@ -1,7 +1,25 @@
 d<%= render "layouts/navbar" %>
 
 <div class="container" style="margin-top: 50px" >
-	<h3>My Orders</h3>
+	
+	<% if flash[:notice] %>
+		<div class="row box" style="border-color: green" align="center">
+		<% flash.each do |name, msg| -%>
+      		<h4 class="no_bold"><%= msg %></h4>
+    		<% end -%>
+    		</div>
+   	<% end %>
+   	 
+	<div class="row" style="margin-bottom: 50px; <% if @feedback_submitted.nil? %><%= "display: none" %><% end %>">
+		<div class="col-md-1">
+			<img src="/order/order_complete.png" id="order_complete_icon"/>
+		</div>
+		<div class="col-md-11">
+			<h2 class="no_bold">Congratulations ! Your order is confirmed.</h2>
+			<h4 class="no_bold">We are sending you a confirmation email.
+				Thank you for shopping with us.</h4>
+		</div>
+	</div>
 
 	<% @orders.each do |order| %>
 	<div class="row" style="margin-top: 20px">
@@ -84,11 +102,15 @@ d<%= render "layouts/navbar" %>
 
 							<div class="col-md-2">
 								<br />
-								<%= button_to 'Track Package', '#', method: :get, class:"btn btn-primary", style:"width: 90%" %>
+								
 								<br />
-								<%= button_to 'Return or Replace', '#', method: :get, class:"btn btn-secondary", type:"button", style:"width: 90%" %>
+								
+								<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#leave_us_messages_<%= item.id %>" style="width: 90%">
+									Leave Us Messages
+								</button>
+								<%= render partial: 'leave_us_message', locals: {item: item}%>
 								<br />
-								<%= button_to 'Feadbacks', '#', method: :get, class:"btn btn-secondary", style:"width: 90%" %>
+								
 							</div>
 
 						</div></td>
@@ -103,6 +125,8 @@ d<%= render "layouts/navbar" %>
 
 	<% end %>
 </div>
+
+
 
 <script>
 
@@ -156,5 +180,7 @@ d<%= render "layouts/navbar" %>
 		$('#' + div_id + '_3').css('width', image_width_3 + 'px');
 		$('#' + div_id + '_3').css('height', image_height + 'px');
 	}
+	
+
 
 </script>

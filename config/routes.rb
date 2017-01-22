@@ -22,7 +22,9 @@ Rails.application.routes.draw do
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
-  resources :items
+  resources :items do
+    resources :item_messages
+  end
   resources :orders
   
   #mount Sidekiq::Web, at: '/sidekiq'
