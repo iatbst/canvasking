@@ -3,7 +3,7 @@ d<%= render "layouts/navbar" %>
 <div class="container" style="margin-top: 50px" >
 	
 	<% if flash[:notice] %>
-		<div class="row box" style="border-color: green" align="center">
+		<div class="row box" style="border-color: green; border-width: 2px" align="center">
 		<% flash.each do |name, msg| -%>
       		<h4 class="no_bold"><%= msg %></h4>
     		<% end -%>
