@@ -59,7 +59,11 @@ Thank you for your order from CANVASKING. Once your package ships we will send a
 				<div class="row">
 					<div class="col-md-9">
 						<br />
-						<%= image_tag get_image_url(item, "overview"), class:"overview_image" %>
+						<% if get_image_url(item, "overview").include?('https://') %>
+							<%= image_tag get_image_url(item, "overview"), class:"overview_image" %>
+						<% else %>
+							<%= image_tag Canvasking::WEBSITE_URL + get_image_url(item, "overview"), class:"overview_image" %>
+						<% end %>
 					</div>
 
 					<div class="col-md-3" >
