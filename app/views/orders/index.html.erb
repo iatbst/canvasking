@@ -53,7 +53,7 @@ d<%= render "layouts/navbar" %>
 					<tr>
 						<td>
 						<div class="row">
-							<div class="col-md-3">
+							<div class="col-md-3 col-md-offset-1">
 								<br />
 								<%= image_tag get_image_url(item, "thumb"), class: "thumb_image image_shadow_in_order_index #{add_frame_and_mat_class(item, 'order_index')}", id: "item_#{item.id}" %>
 								<div>
@@ -63,7 +63,7 @@ d<%= render "layouts/navbar" %>
 								</div>
 							</div>
 
-							<div class="col-md-7">
+							<div class="col-md-6">
 								<br />
 								<ul class="fa-ul">
 									<li>

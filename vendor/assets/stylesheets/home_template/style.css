@@ -37,11 +37,11 @@ hr {
 	width: 120px;
 }
 
-#menu, #gallery, #team {
+#menu, #gallery, #products {
 	padding-top: 50px;
 	padding-bottom: 100px;
 }
-#menu, #contact {
+#menu, #products{
   background: #f0f0f0;
 }
 
@@ -160,19 +160,19 @@ hr {
   color: #202020;
 }
 
-/* team section */
-#team {
+/* products section */
+#products {
   text-align: center;
 }
-#team h3 {
+#products h3 {
   font-size: 18px;
   line-height: 4px;
 }
-#team h4 {
+#products h4 {
   color: #5C5C5C;
   padding-top: 24px;
 }
-#team .col-md-4 {
+#products .col-md-4 {
  padding-top: 42px;
 }
 
