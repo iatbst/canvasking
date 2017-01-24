@@ -21,7 +21,10 @@ class ItemsController < ApplicationController
   def show
     @item = Item.find(params[:id])
     @size_price, @size_price_str = prepare_size_price(@item)
+    
+    # for wizard guide
     @wizard = true
+    @edit = true
     render 'new'
   end
   

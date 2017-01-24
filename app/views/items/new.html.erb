@@ -205,8 +205,9 @@
 			<div class="row box" id="select_image_collapse_box">
 				<div class="col-md-4" align="left">
 					<h4 class="no_bold" style="margin-left: 40px; margin-top: 10px">
+						<span style="color:green" class="glyphicon glyphicon-ok" id="select_image_done_collapse"></span>&nbsp;&nbsp;
 						Upload Your Image 
-						&nbsp;&nbsp;<span style="color:green" class="glyphicon glyphicon-ok" id="select_image_done_collapse"></span>
+						
 					</h4>
 				</div>
 				<div class="col-md-2 col-md-offset-6">
@@ -222,9 +223,9 @@
 			<div class="row box" style="<% if !@item.art_filter && !@edit %>display:none<% end %>; margin-top: 50px" id="select_filter_collapse_box">
 				<div class="col-md-4" align="left">
 					<h4 class="no_bold" style="margin-left: 40px; margin-top: 10px">
-						Art Effects 
-						&nbsp;&nbsp;<span style="color:green;<% if !@item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ok" id="select_filter_done_collapse"></span>
-						<span style="color:orange;<% if !@edit || @item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ban-circle" id="select_filter_skip_collapse"></span>
+						<span style="color:green;<% if !@item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ok" id="select_filter_done_collapse"></span>
+						<span style="color:orange;<% if @item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ban-circle" id="select_filter_skip_collapse"></span>
+						&nbsp;&nbsp;Art Effects
 					</h4>
 					
 					<div class="field" style="margin-left: 40px; margin-top: 10px">
@@ -290,15 +291,11 @@
 		if (this.checked) {
 			//use original image
 			$('#overview_image').attr('src', '<%= get_image_url(@item, "overview", {"no_effect" => true}) %>');
-			$('#select_filter_done').hide();
-			$('#select_filter_skip').show();
 			$('#select_filter_done_collapse').hide();
 			$('#select_filter_skip_collapse').show();
 		} else {
 			//use art filter
 			$('#overview_image').attr('src', '<%= get_image_url(@item, "overview", {"art_effect" => true}) %>');
-			$('#select_filter_done').show();
-			$('#select_filter_skip').hide();
 			$('#select_filter_skip_collapse').hide();
 			$('#select_filter_done_collapse').show();
 		}
@@ -576,11 +573,12 @@
 			if (!is_product_checked()){
 				$('#select_product_arrow').show();
 			}
-			$('#select_filter_skip').show();
 			$('#select_filter_collapse_box').show();
 			$('#select_filter_skip_collapse').show();
 			$('#select_filter_done_collapse').hide();
 			$('#select_filter_box').hide();
+			$('#art_filter_checkbox').prop('checked', true);
+			$('#overview_image').attr('src', '<%= get_image_url(@item, "overview", {"no_effect" => true}) %>');
 		}
 		
 		$('.product_image').click(function(){
