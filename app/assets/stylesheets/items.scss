@@ -3,12 +3,15 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .blink {
-  animation: blinker 4s linear infinite;
+  animation: blinker 3.5s linear infinite;
 }
+
 
 @keyframes blinker {  
   50% { opacity: 0.0; }
 }
+
+
 
 .product_image {
     height: auto; 

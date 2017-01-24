@@ -84,7 +84,7 @@
 		<% if item_in_cart?(@item) %>
 			<%= f.submit 'Save Changes', class: "btn btn-primary btn-lg", style:"width: 80%"%>
 		<% else %>
-			<%= f.submit 'Add To Cart', class: "btn btn-primary btn-lg", style:"width: 80%"%>
+			<%= f.submit 'Add To Cart', class: "btn btn-primary btn-lg", style:"width: 80%", id: "add_to_cart_button"%>
 		<% end %>
 	</div>
 

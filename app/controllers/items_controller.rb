@@ -21,12 +21,14 @@ class ItemsController < ApplicationController
   def show
     @item = Item.find(params[:id])
     @size_price, @size_price_str = prepare_size_price(@item)
+    @wizard = true
     render 'new'
   end
   
   def edit
     @item = Item.find(params[:id])
     @size_price, @size_price_str = prepare_size_price(@item)
+    @edit = true
     render 'new'
   end
   

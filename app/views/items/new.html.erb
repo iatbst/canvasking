@@ -201,12 +201,52 @@
 
 			<!-- Select Image -->
 			<%= render 'select_image' %>
-
+			<% if image_is_uploaded(@item) %>
+			<div class="row box" id="select_image_collapse_box">
+				<div class="col-md-4" align="left">
+					<h4 class="no_bold" style="margin-left: 40px; margin-top: 10px">
+						Upload Your Image 
+						&nbsp;&nbsp;<span style="color:green" class="glyphicon glyphicon-ok" id="select_image_done_collapse"></span>
+					</h4>
+				</div>
+				<div class="col-md-2 col-md-offset-6">
+					<a id="change_image" style="font: 30px; margin-top: 10px; cursor: pointer"><h4 class="no_bold">change</h4></a>
+				</div>
+			</div>
+			<% end %>
+			
 			<%= form_for :item, url: item_path(@item), method: :patch do |f| %>
 			
 			<!-- Select Filter -->
 			<%= render partial: 'select_filter',  locals:{f: f} %>
-
+			<div class="row box" style="<% if !@item.art_filter && !@edit %>display:none<% end %>; margin-top: 50px" id="select_filter_collapse_box">
+				<div class="col-md-4" align="left">
+					<h4 class="no_bold" style="margin-left: 40px; margin-top: 10px">
+						Art Effects 
+						&nbsp;&nbsp;<span style="color:green;<% if !@item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ok" id="select_filter_done_collapse"></span>
+						<span style="color:orange;<% if !@edit || @item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ban-circle" id="select_filter_skip_collapse"></span>
+					</h4>
+					
+					<div class="field" style="margin-left: 40px; margin-top: 10px">
+						<label class="no_bold">
+					
+							<% if (!@item.art_image.file.nil? || !@item.art_image_tmp_paths.empty?) && @item.art_image_tmp_paths['new_image_uploaded'].nil? %>
+								SKIP ART EFFECTS
+								<%= f.check_box :art_filter, {id: "art_filter_checkbox", }, false, true %>
+					
+							<% else %>
+								<%= f.check_box :art_filter, {id: "art_filter_checkbox", disabled: "disabled", style: "display: none"}, false, true %>
+							<% end %>
+						</label>
+					</div>
+					
+				</div>
+				<div class="col-md-2 col-md-offset-6">
+					<a id="change_filter" style="font: 30px; margin-top: 10px; cursor: pointer"><h4 class="no_bold">change</h4></a>
+				</div>
+			</div>
+			
+			
 			<!-- Select Product -->
 			<%= render partial: 'select_product', locals:{f: f} %>
 
@@ -219,14 +259,7 @@
 			<!-- Select Frame and Mat -->
 			<%= render partial: 'select_frame_and_mat', locals:{f: f}%>
 			
-			<% if @wizard %>
-				<div class="box" style="margin-top: 50px; display: none" id="wizard_done" align="center">
-					<h4 class="no_bold" style="color: green">
-						Great job, your product is ready to add into Cart !
-						<span class="glyphicon glyphicon-arrow-right blink">&nbsp;</span>
-					</h4>
-				</div>
-			<% end %>
+	
 		</div>
 		<div class="col-md-4" >
 			<!-- Image overview on right side -->
@@ -257,9 +290,17 @@
 		if (this.checked) {
 			//use original image
 			$('#overview_image').attr('src', '<%= get_image_url(@item, "overview", {"no_effect" => true}) %>');
+			$('#select_filter_done').hide();
+			$('#select_filter_skip').show();
+			$('#select_filter_done_collapse').hide();
+			$('#select_filter_skip_collapse').show();
 		} else {
 			//use art filter
 			$('#overview_image').attr('src', '<%= get_image_url(@item, "overview", {"art_effect" => true}) %>');
+			$('#select_filter_done').show();
+			$('#select_filter_skip').hide();
+			$('#select_filter_skip_collapse').hide();
+			$('#select_filter_done_collapse').show();
 		}
 	});
 	
@@ -528,11 +569,18 @@
 	
 
 	
-	<% if @wizard %>
+	
 
 		function not_interested_for_art_filter(){
 			$('#select_filter_arrow').hide();
-			$('#select_product_arrow').show();
+			if (!is_product_checked()){
+				$('#select_product_arrow').show();
+			}
+			$('#select_filter_skip').show();
+			$('#select_filter_collapse_box').show();
+			$('#select_filter_skip_collapse').show();
+			$('#select_filter_done_collapse').hide();
+			$('#select_filter_box').hide();
 		}
 		
 		$('.product_image').click(function(){
@@ -542,11 +590,15 @@
 			$('#select_canvas_options_depth_arrow').hide();
 			$('#select_canvas_options_border_arrow').hide();
 			$('#select_size_arrow').show();
-			$('#wizard_done').hide();
+			$('#select_size_done').hide();
+			
+			$('#select_product_done').show();
+			$('#add_to_cart_button').removeClass('button_blink');
 		});
 		
 		$('#item_size').change(function (){
 			$('#select_size_arrow').hide();
+			$('#select_size_done').show();
 			
 			if ($('#product_frame_radio').is(':checked')){
 				if (!is_frame_frame_checked()){
@@ -554,7 +606,7 @@
 				} else if (!is_frame_mat_checked()) {
 					$('#select_frame_options_mat_arrow').show();
 				} else {
-					$('#wizard_done').show();
+					// ready to add to cart
 				}
 
 			} else {
@@ -563,62 +615,62 @@
 				} else if (!is_canvas_border_checked()) {
 					$('#select_canvas_options_border_arrow').show();
 				} else {
-					$('#wizard_done').show();
+					// ready to add to cart
 				}
 			}
 		});
 		
 		$('.depth_options').click(function(){
 			$('#select_canvas_options_depth_arrow').hide();
+			$('#select_depth_done').show();
 			if (!is_canvas_border_checked()){
 				$('#select_canvas_options_border_arrow').show();
 			} else {
 				// wizard process is done
-				$('#wizard_done').show();
+				// ready to add to cart
 			}
 		});
 
 		$('.border_options').click(function(){
 			$('#select_canvas_options_border_arrow').hide();
+			$('#select_border_done').show();
 			if (!is_canvas_depth_checked()){
 				$('#select_canvas_options_depth_arrow').show();
 			} else {
 				// wizard process is done
-				$('#wizard_done').show();
+				// ready to add to cart
 			}
 		});
 
 		$('.frame_options').click(function(){
 			$('#select_frame_options_frame_arrow').hide();
+			$('#select_frame_done').show();
 			if (!is_frame_mat_checked()){
 				$('#select_frame_options_mat_arrow').show();
 			} else {
 				// wizard process is done
-				$('#wizard_done').show();				
+				// ready to add to cart				
 			}
 		});
 
 		$('.mat_options').click(function(){
 			$('#select_frame_options_mat_arrow').hide();
+			$('#select_mat_done').show();
 			if (!is_frame_frame_checked()){
 				$('#select_frame_options_frame_arrow').show();
 			} else {
 				// wizard process is done
-				$('#wizard_done').show();				
+				// ready to add to cart				
 			}
 		});
 	
-	<% else %>
-		$('.product_image').click(function(){
-			$('#select_size_arrow').show();
-		});
-
-		$('#item_size').change(function (){
-			$('#select_size_arrow').hide();
-		});
-	<% end %>
 
 
+	function is_product_checked(){
+		return 	($('#product_single_canvas_radio').is(':checked') 
+				|| $('#product_triptych_canvas_radio').is(':checked') 
+				|| $('#product_frame_radio').is(':checked'));		
+	}
 
 	function is_canvas_depth_checked(){
 		return 	($('#depth_0').is(':checked') 
@@ -644,5 +696,17 @@
 				|| $('#mat_2_5').is(':checked'));
 	}
 	
+	$('#change_image').click(function(){
+		$('#select_image_collapse_box').hide();
+		$('#select_image_box').show();
+	});
+
+	$('#change_filter').click(function(){
+		$('#select_filter_collapse_box').hide();
+		$('#select_filter_box').show();
+		$(".twentytwenty-container").twentytwenty();
+		$('.twentytwenty-overlay').hide();
+		//$('#not_interested_button').hide();
+	});
 	
 </script>
