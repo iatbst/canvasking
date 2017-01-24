@@ -6,7 +6,8 @@ class ItemsController < ApplicationController
   def new
     @item = Item.new
     @item.save
-    #@size_price, @size_price_str = prepare_size_price(@item)
+    @wizard = true
+    @show_image_wizard_arrow = true
   end
   
   # NOT USED, because item is automatically created when user enter new page.
@@ -98,6 +99,9 @@ class ItemsController < ApplicationController
       ImageUploadWorker.perform_async(origin_tmp_file_path, @item.id, 'image')
       TmpImageRemoveWorker.perform_in(10.minutes, origin_tmp_file_path, @item.id, 'image')
       @size_price, @size_price_str = prepare_size_price(@item)
+      
+      @wizard = true
+      @show_filter_wizard_arrow = true
       render 'new'
 
     # Image processed by art filter

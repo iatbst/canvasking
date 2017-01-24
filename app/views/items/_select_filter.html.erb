@@ -1,7 +1,9 @@
 <div class="row box" style="margin-top: 50px">
 	<div class="row">
 		<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px">
-			
+			<% if @show_filter_wizard_arrow %>
+				<span class="glyphicon glyphicon-arrow-right blink" id="select_filter_arrow">&nbsp;</span>
+			<% end %>
 			Art Effects
 		</h4>	
 	</div>
@@ -16,6 +18,9 @@
 			<div class="row">
 				
 				<%= button_tag "APPLY", :type => 'button', style: 'margin-left: 40px;background-color: white; color: black; width: 250px', :class => "btn btn-primary", :onclick => "location.href = '#{art_filter_item_path(@item)}'" %>
+				<br />
+				<br />
+				<%= button_tag "Not Interested", :type => 'button', style: 'margin-left: 40px;background-color: white; color: black; width: 250px', :class => "btn btn-primary", :onclick => "not_interested_for_art_filter();" %>
 			
 				
 					<div class="field" style="margin-left: 40px; margin-top: 20px">

@@ -3,7 +3,10 @@
 	<div class="container" style="margin-bottom: 20px">
 		<div class="row">
 			<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px"> 		
-			Select Thickness
+			<% if @wizard %>
+				<span class="glyphicon glyphicon-arrow-right blink" id="select_canvas_options_depth_arrow" style="display: none">&nbsp;</span>
+			<% end %>
+			Select Depth
 			</h4>
 		</div>
 		
@@ -42,6 +45,9 @@
 
 		<div class="row">
 			<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px"> 		
+			<% if @wizard %>
+				<span class="glyphicon glyphicon-arrow-right blink" id="select_canvas_options_border_arrow" style="display: none">&nbsp;</span>
+			<% end %>
 			Select Border
 			</h4>
 		</div>

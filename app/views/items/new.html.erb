@@ -219,6 +219,14 @@
 			<!-- Select Frame and Mat -->
 			<%= render partial: 'select_frame_and_mat', locals:{f: f}%>
 			
+			<% if @wizard %>
+				<div class="box" style="margin-top: 50px; display: none" id="wizard_done" align="center">
+					<h4 class="no_bold" style="color: green">
+						Great job, your product is ready to add into Cart !
+						<span class="glyphicon glyphicon-arrow-right blink">&nbsp;</span>
+					</h4>
+				</div>
+			<% end %>
 		</div>
 		<div class="col-md-4" >
 			<!-- Image overview on right side -->
@@ -517,5 +525,124 @@
     		image.src = "/canvas_placeholder.png";
     		return true;
 	}
+	
+
+	
+	<% if @wizard %>
+
+		function not_interested_for_art_filter(){
+			$('#select_filter_arrow').hide();
+			$('#select_product_arrow').show();
+		}
+		
+		$('.product_image').click(function(){
+			$('#select_product_arrow').hide();
+			$('#select_frame_options_frame_arrow').hide();
+			$('#select_frame_options_mat_arrow').hide();
+			$('#select_canvas_options_depth_arrow').hide();
+			$('#select_canvas_options_border_arrow').hide();
+			$('#select_size_arrow').show();
+			$('#wizard_done').hide();
+		});
+		
+		$('#item_size').change(function (){
+			$('#select_size_arrow').hide();
+			
+			if ($('#product_frame_radio').is(':checked')){
+				if (!is_frame_frame_checked()){
+					$('#select_frame_options_frame_arrow').show();
+				} else if (!is_frame_mat_checked()) {
+					$('#select_frame_options_mat_arrow').show();
+				} else {
+					$('#wizard_done').show();
+				}
+
+			} else {
+				if (!is_canvas_depth_checked()){
+					$('#select_canvas_options_depth_arrow').show();
+				} else if (!is_canvas_border_checked()) {
+					$('#select_canvas_options_border_arrow').show();
+				} else {
+					$('#wizard_done').show();
+				}
+			}
+		});
+		
+		$('.depth_options').click(function(){
+			$('#select_canvas_options_depth_arrow').hide();
+			if (!is_canvas_border_checked()){
+				$('#select_canvas_options_border_arrow').show();
+			} else {
+				// wizard process is done
+				$('#wizard_done').show();
+			}
+		});
+
+		$('.border_options').click(function(){
+			$('#select_canvas_options_border_arrow').hide();
+			if (!is_canvas_depth_checked()){
+				$('#select_canvas_options_depth_arrow').show();
+			} else {
+				// wizard process is done
+				$('#wizard_done').show();
+			}
+		});
+
+		$('.frame_options').click(function(){
+			$('#select_frame_options_frame_arrow').hide();
+			if (!is_frame_mat_checked()){
+				$('#select_frame_options_mat_arrow').show();
+			} else {
+				// wizard process is done
+				$('#wizard_done').show();				
+			}
+		});
+
+		$('.mat_options').click(function(){
+			$('#select_frame_options_mat_arrow').hide();
+			if (!is_frame_frame_checked()){
+				$('#select_frame_options_frame_arrow').show();
+			} else {
+				// wizard process is done
+				$('#wizard_done').show();				
+			}
+		});
+	
+	<% else %>
+		$('.product_image').click(function(){
+			$('#select_size_arrow').show();
+		});
+
+		$('#item_size').change(function (){
+			$('#select_size_arrow').hide();
+		});
+	<% end %>
+
+
+
+	function is_canvas_depth_checked(){
+		return 	($('#depth_0').is(':checked') 
+				|| $('#depth_0_75').is(':checked') 
+				|| $('#depth_1_5').is(':checked') 
+				|| $('#depth_2_5').is(':checked'));
+	}
+		
+	function is_canvas_border_checked(){
+		return 	($('#border_photo').is(':checked') 
+				|| $('#border_black').is(':checked') 
+				|| $('#border_white').is(':checked'));
+	}
+	
+	function is_frame_frame_checked(){
+		return 	($('#frame_white_wood').is(':checked') 
+				|| $('#frame_black_wood').is(':checked') 
+				|| $('#frame_espresso_wood').is(':checked'));
+	}
+
+	function is_frame_mat_checked(){
+		return 	($('#mat_0').is(':checked') 
+				|| $('#mat_2_5').is(':checked'));
+	}
+	
 	
 </script>
