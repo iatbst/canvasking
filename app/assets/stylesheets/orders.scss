@@ -1,6 +1,25 @@
 // Place all the styles related to the orders controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#place_order {
+  background-color: #ef9223;
+  border-color: #ef9223;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  width: 300px;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.orange_style {
+  background-color: #ef9223;
+  border-color: #ef9223;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
 .image_shadow_in_order_index {
   box-shadow: 4px 4px 5px #888888;
 }

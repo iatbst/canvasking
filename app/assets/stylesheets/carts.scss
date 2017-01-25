@@ -6,6 +6,22 @@
   box-shadow: 8px 8px 5px #888888;
 }
 
+#checkout_button {
+  background-color: #ef9223;
+  border-color: #ef9223;
+  color: white;
+  border-radius: 0px;
+  font-weight: bold;
+}
+
+#continue_button {
+  background-color: #e2e2e2;
+  border-color: #e2e2e2;
+  color: black;
+  border-radius: 0px;
+  font-weight: bold;
+}
+
 .cart_image {
     height: auto; 
     width: auto; 

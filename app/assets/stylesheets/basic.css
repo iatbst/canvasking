@@ -5,6 +5,14 @@
 	border-color: #e2e2e2;
 }
 
+.orange_button {
+  background-color: #ef9223;
+  border-color: #ef9223;
+  color: white;
+  border-radius: 0px;
+  font-weight: bold;
+}
+
 .facebook_image_grid {
 	width: 160px;
 	height: 160px;

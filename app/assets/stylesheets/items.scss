@@ -12,12 +12,31 @@
 }
 
 .ok_color {
-  color: #22ea22;
+  color: #ef9223;
 }
+
 #add_to_cart_button {
-  background-color: white;
+  background-color: #ef9223;
+  border-color: #ef9223;
+  color: white;
+  border-radius: 0px;
+  font-weight: bold;
+}
+
+#not_interested_button {
+
+  background-color: #e2e2e2;
+  border-color: #e2e2e2;
   color: black;
-  border-color: black;
+  border-radius: 0px;
+  font-weight: bold;
+   
+}
+
+#art_filter_apply_button {
+  background-color: #ef9223;
+  border-color: #ef9223;
+  color: white;
   border-radius: 0px;
   font-weight: bold;
 }

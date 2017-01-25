@@ -1,4 +1,25 @@
-d<%= render "layouts/navbar" %>
+<%= render "layouts/navbar" %>
+
+<style>
+
+.orange_style {
+  background-color: #ef9223;
+  border-color: #ef9223;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.blue_style {
+
+  background-color: #709BC5;
+  border-color: #709BC5;
+  color: white;
+  border-radius: 2px;
+  font-weight: bold;
+}
+
+</style>
 
 <div class="container" style="margin-top: 50px" >
 	
@@ -95,7 +116,7 @@ d<%= render "layouts/navbar" %>
 									<br />
 									<br />
 									
-									<%= button_to 'Buy It Again', add_to_cart_path(item), :method=> :get, class:"btn btn-default btn-xs" %>
+									<%= button_to 'Buy It Again', add_to_cart_path(item), :method=> :get, class:"btn btn-default btn-xs blue_style" %>
 								</ul>
 
 							</div>
@@ -105,7 +126,7 @@ d<%= render "layouts/navbar" %>
 								
 								<br />
 								
-								<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#leave_us_messages_<%= item.id %>" style="width: 90%">
+								<button type="button" class="btn btn-default btn-sm orange_style" data-toggle="modal" data-target="#leave_us_messages_<%= item.id %>" style="width: 90%">
 									Leave Us Messages
 								</button>
 								<%= render partial: 'leave_us_message', locals: {item: item}%>

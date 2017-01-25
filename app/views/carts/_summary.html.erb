@@ -1,3 +1,15 @@
+<style>
+
+.blue_style {
+
+  background-color: #709BC5;
+  border-color: #709BC5;
+  color: white;
+  border-radius: 0px;
+  font-weight: bold;
+}
+
+</style>
 <div class="col-md-2">
 		<div class="box" align="center" style="height:400px; width:300px; margin-left:20px; position:fixed">
 
@@ -18,10 +30,10 @@
 			
 	
 			<br />
-			<%= button_to 'CHECKOUT', new_order_path, method: :get, class:"btn btn-primary btn-lg", style:"width: 80%" %>
+			<%= button_to 'CHECKOUT', new_order_path, method: :get, class:"btn btn-primary btn-lg", style:"width: 80%", id: 'checkout_button'%>
 				<br />
 			
-			<%= button_to 'CONTINUE SHOPPING', new_item_path, method: :get, class:"btn btn-secondary btn-lg", style:"width: 80%" %>
+			<%= button_to 'CONTINUE SHOPPING', new_item_path, method: :get, class:"btn btn-secondary btn-lg blue_style", style:"width: 80%"%>
 
 			
 				<br />

@@ -17,10 +17,10 @@
 			
 			<div class="row">
 				
-				<%= button_tag "APPLY", :type => 'button', style: 'margin-left: 40px;background-color: white; color: black; width: 250px', :class => "btn btn-primary", :onclick => "location.href = '#{art_filter_item_path(@item)}'" %>
+				<%= button_tag "APPLY", :type => 'button', id: 'art_filter_apply_button', style: 'margin-left: 40px; width: 250px;', :class => "btn btn-primary", :onclick => "location.href = '#{art_filter_item_path(@item)}'" %>
 				
 					<br /><br />
-				<%= button_tag "SKIP", :type => 'button', style: 'margin-left: 40px;background-color: white; color: black; width: 250px', :class => "btn btn-primary", :onclick => "not_interested_for_art_filter();" , id: "not_interested_button"%>
+				<%= button_tag "SKIP", :type => 'button', style: 'margin-left: 40px; width: 250px; ', :class => "btn btn-primary", :onclick => "not_interested_for_art_filter();" , id: "not_interested_button"%>
 				
 				
 	

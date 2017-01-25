@@ -182,7 +182,8 @@
 		border: 2px solid transparent;
 	}
 	label > input:checked + img {/* (RADIO CHECKED) IMAGE STYLES */
-		border: 2px solid #f00;
+		border: 2px solid #ef9223;
+		border-radius: 5px;
 		padding: 5px;
 	}
 
@@ -202,7 +203,7 @@
 			<!-- Select Image -->
 			<%= render 'select_image' %>
 			<% if image_is_uploaded(@item) %>
-			<div class="row box" id="select_image_collapse_box" style="border-color: black;">
+			<div class="row box" id="select_image_collapse_box" style="">
 				<div class="col-md-4" align="left">
 					<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px">
 						<span class="glyphicon glyphicon-ok ok_color" id="select_image_done_collapse"></span>&nbsp;&nbsp;
@@ -220,11 +221,11 @@
 			
 			<!-- Select Filter -->
 			<%= render partial: 'select_filter',  locals:{f: f} %>
-			<div class="row box" style="border-color: black;<% if !@item.art_filter && !@edit %>display:none<% end %>; margin-top: 50px" id="select_filter_collapse_box">
+			<div class="row box" style="<% if !@item.art_filter && !@edit %>display:none<% end %>; margin-top: 50px" id="select_filter_collapse_box">
 				<div class="col-md-4" align="left">
 					<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px">
 						<span style="<% if !@item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_filter_done_collapse"></span>
-						<span style="color:grey;<% if @item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ban-circle" id="select_filter_skip_collapse"></span>
+						<span style="color:#ef9223;<% if @item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ban-circle" id="select_filter_skip_collapse"></span>
 						&nbsp;&nbsp;Art Effects
 					</h4>
 						<% if art_image_is_uploaded(@item) %>
@@ -590,20 +591,19 @@
 			$('#select_size_done').hide();
 			
 			$('#select_product_done').show();
-			$('#add_to_cart_button').removeClass('button_blink');
 			
-			$('#select_product_box').css("border-color", "black");
-			$('#size_price_options').css("border-color", "#e2e2e2");
+			// $('#select_product_box').css("border-color", "black");
+			// $('#size_price_options').css("border-color", "#e2e2e2");
 
-			$('#add_to_cart_button').css('background-color', 'white');
-			$('#add_to_cart_button').css('color', 'black');
+			// $('#add_to_cart_button').css('background-color', 'white');
+			// $('#add_to_cart_button').css('color', 'black');
 			$('#overview_box').css('border-color', '#e2e2e2');
 		});
 		
 		$('#item_size').change(function (){
 			$('#select_size_arrow').hide();
 			$('#select_size_done').show();
-			$('#size_price_options').css("border-color", "black");
+			// $('#size_price_options').css("border-color", "black");
 
 
 			if ($('#product_frame_radio').is(':checked')){
@@ -617,9 +617,9 @@
 					$('#select_frame_options_mat_arrow').show();
 				} else {
 					// ready to add to cart
-					$('#add_to_cart_button').css('background-color', 'black');
-					$('#add_to_cart_button').css('color', 'white');
-					$('#overview_box').css('border-color', 'black');
+					// $('#add_to_cart_button').css('background-color', 'black');
+					// $('#add_to_cart_button').css('color', 'white');
+					// $('#overview_box').css('border-color', 'black');
 				}
 
 			} else {
@@ -633,9 +633,9 @@
 					$('#select_canvas_options_border_arrow').show();
 				} else {
 					// ready to add to cart
-					$('#add_to_cart_button').css('background-color', 'black');
-					$('#add_to_cart_button').css('color', 'white');
-					$('#overview_box').css('border-color', 'black');
+					// $('#add_to_cart_button').css('background-color', 'black');
+					// $('#add_to_cart_button').css('color', 'white');
+					//$('#overview_box').css('border-color', 'black');
 				}
 			}
 		});
@@ -647,10 +647,10 @@
 				$('#select_canvas_options_border_arrow').show();
 			} else {
 				// wizard process is done
-				$('#canvas_options').css('border-color', 'black');
-				$('#add_to_cart_button').css('background-color', 'black');
-				$('#add_to_cart_button').css('color', 'white');
-				$('#overview_box').css('border-color', 'black');
+				//$('#canvas_options').css('border-color', 'black');
+				// $('#add_to_cart_button').css('background-color', 'black');
+				// $('#add_to_cart_button').css('color', 'white');
+				//$('#overview_box').css('border-color', 'black');
 			}
 		});
 
@@ -660,11 +660,11 @@
 			if (!is_canvas_depth_checked()){
 				$('#select_canvas_options_depth_arrow').show();
 			} else {
-				// wizard process is done
-				$('#canvas_options').css('border-color', 'black');
-				$('#add_to_cart_button').css('background-color', 'black');
-				$('#add_to_cart_button').css('color', 'white');
-				$('#overview_box').css('border-color', 'black');
+				//wizard process is done
+				//$('#canvas_options').css('border-color', 'black');
+				// $('#add_to_cart_button').css('background-color', 'black');
+				// $('#add_to_cart_button').css('color', 'white');
+				//$('#overview_box').css('border-color', 'black');
 			}
 		});
 
@@ -675,10 +675,10 @@
 				$('#select_frame_options_mat_arrow').show();
 			} else {
 				// wizard process is done
-				$('#frame_options').css('border-color', 'black');
-				$('#add_to_cart_button').css('background-color', 'black');
-				$('#add_to_cart_button').css('color', 'white');
-				$('#overview_box').css('border-color', 'black');		
+				//$('#frame_options').css('border-color', 'black');
+				// $('#add_to_cart_button').css('background-color', 'black');
+				// $('#add_to_cart_button').css('color', 'white');
+				//$('#overview_box').css('border-color', 'black');		
 			}
 		});
 
@@ -689,10 +689,10 @@
 				$('#select_frame_options_frame_arrow').show();
 			} else {
 				// wizard process is done
-				$('#frame_options').css('border-color', 'black');
-				$('#add_to_cart_button').css('background-color', 'black');
-				$('#add_to_cart_button').css('color', 'white');
-				$('#overview_box').css('border-color', 'black');
+				//$('#frame_options').css('border-color', 'black');
+				// $('#add_to_cart_button').css('background-color', 'black');
+				// $('#add_to_cart_button').css('color', 'white');
+				//$('#overview_box').css('border-color', 'black');
 			}
 		});
 	
