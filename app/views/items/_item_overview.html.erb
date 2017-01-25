@@ -1,4 +1,4 @@
-<div class="row box" align="center" style="height:550px; width:350px; margin-left:10px; position:fixed">
+<div class="row box" align="center" id="overview_box" style="height:550px; width:350px; margin-left:10px; position:fixed">
 	<div class="row" style="height:300px; margin-top: 30px;">
 		<% if !@item.image.file.nil? || !@item.image_tmp_paths['overview'].nil? %>
 			<%= image_tag get_image_url(@item, "overview"), class: "overview_image image_shadow_in_item #{add_frame_and_mat_class(@item, 'item')}", id: "overview_image", onerror: "imgError(this);"%>

@@ -2,12 +2,12 @@
 
 	<div class="container" style="margin-bottom: 20px">
 		<div class="row">
-			<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px"> 		
+			<h4 class="no_bold" style="margin-left: 60px; margin-top: 20px; margin-bottom: 20px"> 		
 		
-			<span class="glyphicon glyphicon-arrow-right blink" id="select_frame_options_frame_arrow" style="display: none">&nbsp;</span>
+			<span class="glyphicon glyphicon-arrow-right blink" id="select_frame_options_frame_arrow" style="display: none"></span>
+			<span style="<% if @item.frame_id.nil? %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_frame_done"></span>
+			&nbsp;&nbsp;Select Frame
 			
-			Select Frame
-			&nbsp;&nbsp;<span style="color:green; <% if @item.frame_id.nil? %>display: none<% end %>" class="glyphicon glyphicon-ok" id="select_frame_done"></span>
 			</h4>
 		</div>
 		
@@ -46,12 +46,12 @@
 		
 		<div class="row">
 	
-			<h4 class="no_bold" style="margin-left: 40px; margin-bottom: 20px"> 
+			<h4 class="no_bold" style="margin-left: 60px; margin-bottom: 20px"> 
 			
-			<span class="glyphicon glyphicon-arrow-right blink" id="select_frame_options_mat_arrow" style="display: none">&nbsp;</span>
-				
-			Select Mat
-			&nbsp;&nbsp;<span style="color:green; <% if @item.mat.nil? %>display: none<% end %>" class="glyphicon glyphicon-ok" id="select_mat_done"></span>
+			<span class="glyphicon glyphicon-arrow-right blink" id="select_frame_options_mat_arrow" style="display: none"></span>
+			<span style="<% if @item.mat.nil? %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_mat_done"></span>
+			&nbsp;&nbsp;Select Mat
+	
 			</h4>
 		</div>
 		

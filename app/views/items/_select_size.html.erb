@@ -3,7 +3,7 @@
 		<h4 class="no_bold" style="margin-left: 70px; margin-top: 20px; margin-bottom: 20px"> 
 			
 			<span class="glyphicon glyphicon-arrow-right blink" id="select_size_arrow" style="display: none"></span>
-			<span style="color:green; <% if @item.size.nil? %>display: none<% end %>" class="glyphicon glyphicon-ok" id="select_size_done"></span>
+			<span style="<% if @item.size.nil? %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_size_done"></span>
 			&nbsp;&nbsp;Sizes & Pricing
 			</h4>
 		

@@ -55,6 +55,10 @@ module ItemsHelper
   def image_is_uploaded(item)
     !item.image.file.nil? || !item.image_tmp_paths.empty?
   end
+
+  def art_image_is_uploaded(item)
+    !item.art_image.file.nil? || !item.art_image_tmp_paths['origin'].nil?
+  end
   
   def image_is_framed(item)
     !item.product.nil? && item.product.name.include?('frame')

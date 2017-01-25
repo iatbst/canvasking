@@ -202,16 +202,16 @@
 			<!-- Select Image -->
 			<%= render 'select_image' %>
 			<% if image_is_uploaded(@item) %>
-			<div class="row box" id="select_image_collapse_box">
+			<div class="row box" id="select_image_collapse_box" style="border-color: black;">
 				<div class="col-md-4" align="left">
-					<h4 class="no_bold" style="margin-left: 40px; margin-top: 10px">
-						<span style="color:green" class="glyphicon glyphicon-ok" id="select_image_done_collapse"></span>&nbsp;&nbsp;
+					<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px">
+						<span class="glyphicon glyphicon-ok ok_color" id="select_image_done_collapse"></span>&nbsp;&nbsp;
 						Upload Your Image 
 						
 					</h4>
 				</div>
-				<div class="col-md-2 col-md-offset-6">
-					<a id="change_image" style="font: 30px; margin-top: 10px; cursor: pointer"><h4 class="no_bold">change</h4></a>
+				<div class="col-md-2 col-md-offset-6" style="margin-top: 10px">
+					<a id="change_image" style="color:grey;font: 30px; cursor: pointer"><h4 class="no_bold">change</h4></a>
 				</div>
 			</div>
 			<% end %>
@@ -220,30 +220,29 @@
 			
 			<!-- Select Filter -->
 			<%= render partial: 'select_filter',  locals:{f: f} %>
-			<div class="row box" style="<% if !@item.art_filter && !@edit %>display:none<% end %>; margin-top: 50px" id="select_filter_collapse_box">
+			<div class="row box" style="border-color: black;<% if !@item.art_filter && !@edit %>display:none<% end %>; margin-top: 50px" id="select_filter_collapse_box">
 				<div class="col-md-4" align="left">
-					<h4 class="no_bold" style="margin-left: 40px; margin-top: 10px">
-						<span style="color:green;<% if !@item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ok" id="select_filter_done_collapse"></span>
-						<span style="color:orange;<% if @item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ban-circle" id="select_filter_skip_collapse"></span>
+					<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px">
+						<span style="<% if !@item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_filter_done_collapse"></span>
+						<span style="color:grey;<% if @item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ban-circle" id="select_filter_skip_collapse"></span>
 						&nbsp;&nbsp;Art Effects
 					</h4>
-					
-					<div class="field" style="margin-left: 40px; margin-top: 10px">
-						<label class="no_bold">
-					
+						<% if art_image_is_uploaded(@item) %>
+						<label class="no_bold" style="margin-left: 40px;">
 							<% if (!@item.art_image.file.nil? || !@item.art_image_tmp_paths.empty?) && @item.art_image_tmp_paths['new_image_uploaded'].nil? %>
 								SKIP ART EFFECTS
-								<%= f.check_box :art_filter, {id: "art_filter_checkbox", }, false, true %>
-					
+								<%= f.check_box :art_filter, {id: "art_filter_checkbox", }, false, true %>	
 							<% else %>
 								<%= f.check_box :art_filter, {id: "art_filter_checkbox", disabled: "disabled", style: "display: none"}, false, true %>
 							<% end %>
 						</label>
-					</div>
-					
+						<% end %>
 				</div>
-				<div class="col-md-2 col-md-offset-6">
-					<a id="change_filter" style="font: 30px; margin-top: 10px; cursor: pointer"><h4 class="no_bold">change</h4></a>
+				
+				
+					
+				<div class="col-md-2 col-md-offset-6" style="margin-top: 10px">
+					<a id="change_filter" style="color:grey;font: 30px; margin-top: 20px; cursor: pointer"><h4 class="no_bold">change</h4></a>
 				</div>
 			</div>
 			
@@ -345,7 +344,7 @@
 			$('#item_size').append(option);			
 		}
 		//update option section
-		$('#canvas_options').show();
+		$('#canvas_options').hide();
 		$('#frame_options').hide();
 		$('#size_price_options').show();
 
@@ -399,7 +398,7 @@
 		}
 
 		//update option section
-		$('#canvas_options').show();
+		$('#canvas_options').hide();
 		$('#frame_options').hide();
 		$('#size_price_options').show();
 
@@ -468,7 +467,7 @@
 		}
 		//update option section
 		$('#canvas_options').hide();
-		$('#frame_options').show();
+		$('#frame_options').hide();
 		$('#size_price_options').show();
 		
 		//update image frame, default is black frame border if none is checked
@@ -592,28 +591,51 @@
 			
 			$('#select_product_done').show();
 			$('#add_to_cart_button').removeClass('button_blink');
+			
+			$('#select_product_box').css("border-color", "black");
+			$('#size_price_options').css("border-color", "#e2e2e2");
+
+			$('#add_to_cart_button').css('background-color', 'white');
+			$('#add_to_cart_button').css('color', 'black');
+			$('#overview_box').css('border-color', '#e2e2e2');
 		});
 		
 		$('#item_size').change(function (){
 			$('#select_size_arrow').hide();
 			$('#select_size_done').show();
-			
+			$('#size_price_options').css("border-color", "black");
+
+
 			if ($('#product_frame_radio').is(':checked')){
+		
+				$('#canvas_options').hide();
+				$('#frame_options').show();
+				
 				if (!is_frame_frame_checked()){
 					$('#select_frame_options_frame_arrow').show();
 				} else if (!is_frame_mat_checked()) {
 					$('#select_frame_options_mat_arrow').show();
 				} else {
 					// ready to add to cart
+					$('#add_to_cart_button').css('background-color', 'black');
+					$('#add_to_cart_button').css('color', 'white');
+					$('#overview_box').css('border-color', 'black');
 				}
 
 			} else {
+
+				$('#canvas_options').show();
+				$('#frame_options').hide();
+				
 				if (!is_canvas_depth_checked()){
 					$('#select_canvas_options_depth_arrow').show();
 				} else if (!is_canvas_border_checked()) {
 					$('#select_canvas_options_border_arrow').show();
 				} else {
 					// ready to add to cart
+					$('#add_to_cart_button').css('background-color', 'black');
+					$('#add_to_cart_button').css('color', 'white');
+					$('#overview_box').css('border-color', 'black');
 				}
 			}
 		});
@@ -625,7 +647,10 @@
 				$('#select_canvas_options_border_arrow').show();
 			} else {
 				// wizard process is done
-				// ready to add to cart
+				$('#canvas_options').css('border-color', 'black');
+				$('#add_to_cart_button').css('background-color', 'black');
+				$('#add_to_cart_button').css('color', 'white');
+				$('#overview_box').css('border-color', 'black');
 			}
 		});
 
@@ -636,7 +661,10 @@
 				$('#select_canvas_options_depth_arrow').show();
 			} else {
 				// wizard process is done
-				// ready to add to cart
+				$('#canvas_options').css('border-color', 'black');
+				$('#add_to_cart_button').css('background-color', 'black');
+				$('#add_to_cart_button').css('color', 'white');
+				$('#overview_box').css('border-color', 'black');
 			}
 		});
 
@@ -647,7 +675,10 @@
 				$('#select_frame_options_mat_arrow').show();
 			} else {
 				// wizard process is done
-				// ready to add to cart				
+				$('#frame_options').css('border-color', 'black');
+				$('#add_to_cart_button').css('background-color', 'black');
+				$('#add_to_cart_button').css('color', 'white');
+				$('#overview_box').css('border-color', 'black');		
 			}
 		});
 
@@ -658,7 +689,10 @@
 				$('#select_frame_options_frame_arrow').show();
 			} else {
 				// wizard process is done
-				// ready to add to cart				
+				$('#frame_options').css('border-color', 'black');
+				$('#add_to_cart_button').css('background-color', 'black');
+				$('#add_to_cart_button').css('color', 'white');
+				$('#overview_box').css('border-color', 'black');
 			}
 		});
 	

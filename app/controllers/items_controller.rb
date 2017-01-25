@@ -23,7 +23,6 @@ class ItemsController < ApplicationController
     @size_price, @size_price_str = prepare_size_price(@item)
     
     # for wizard guide
-    @wizard = true
     @edit = true
     render 'new'
   end

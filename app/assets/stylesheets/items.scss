@@ -11,7 +11,24 @@
   50% { opacity: 0.0; }
 }
 
+.ok_color {
+  color: #22ea22;
+}
+#add_to_cart_button {
+  background-color: white;
+  color: black;
+  border-color: black;
+  border-radius: 0px;
+  font-weight: bold;
+}
 
+.add_to_cart_button_done {
+  background-color: black;
+  color: white;
+  border-color: black;
+  border-radius: 0px;
+  font-weight: bold;
+}
 
 .product_image {
     height: auto; 
