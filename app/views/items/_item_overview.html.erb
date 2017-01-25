@@ -1,3 +1,16 @@
+<style>
+
+.orange_button {
+  background-color: #ef9223;
+  border-color: #ef9223;
+  color: white;
+  border-radius: 0px;
+  font-weight: bold;
+}
+	
+</style>
+
+
 <div class="row box" align="center" id="overview_box" style="height:550px; width:350px; margin-left:10px; position:fixed">
 	<div class="row" style="height:300px; margin-top: 30px;">
 		<% if !@item.image.file.nil? || !@item.image_tmp_paths['overview'].nil? %>
@@ -82,9 +95,9 @@
 	<div class="row" style="height:30px;" >
 		<%= hidden_field_tag :go_to_cart, true %>
 		<% if item_in_cart?(@item) %>
-			<%= f.submit 'Save Changes', class: "btn btn-primary btn-lg", style:"width: 80%"%>
+			<%= f.submit 'SAVE CHANGES', class: "btn btn-primary btn-lg orange_button", style:"width: 80%"%>
 		<% else %>
-			<%= f.submit 'ADD TO CART', class: "btn btn-primary btn-lg", style:"width: 80%", id: "add_to_cart_button"%>
+			<%= f.submit 'ADD TO CART', class: "btn btn-primary btn-lg orange_button", style:"width: 80%", id: "add_to_cart_button"%>
 		<% end %>
 	</div>
 

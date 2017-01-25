@@ -1,4 +1,4 @@
-<div class="row box" style="margin-top: 50px" id="select_product_box">
+<div class="row box" style="margin-top: 50px;<% if hide_products_section?(@edit, @show, params, @save_fail, @item) %>display: none<% end %>" id="select_product_box">
 	<div class="row">
 		<h4 class="no_bold" style="margin-left: 70px; margin-top: 20px; margin-bottom: 20px"> 
 		

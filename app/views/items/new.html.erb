@@ -187,6 +187,15 @@
 		padding: 5px;
 	}
 
+.blue_style {
+
+  background-color: #709BC5;
+  border-color: #709BC5;
+  color: white;
+  border-radius: 2px;
+  font-weight: bold;
+}
+
 </style>
 
 <div class="container" style="margin-top:100px; margin-bottom: 100px">
@@ -202,50 +211,13 @@
 
 			<!-- Select Image -->
 			<%= render 'select_image' %>
-			<% if image_is_uploaded(@item) %>
-			<div class="row box" id="select_image_collapse_box" style="">
-				<div class="col-md-4" align="left">
-					<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px">
-						<span class="glyphicon glyphicon-ok ok_color" id="select_image_done_collapse"></span>&nbsp;&nbsp;
-						Upload Your Image 
-						
-					</h4>
-				</div>
-				<div class="col-md-2 col-md-offset-6" style="margin-top: 10px">
-					<a id="change_image" style="color:grey;font: 30px; cursor: pointer"><h4 class="no_bold">change</h4></a>
-				</div>
-			</div>
-			<% end %>
+			<%= render 'select_image_done' %>
 			
 			<%= form_for :item, url: item_path(@item), method: :patch do |f| %>
 			
 			<!-- Select Filter -->
 			<%= render partial: 'select_filter',  locals:{f: f} %>
-			<div class="row box" style="<% if !@item.art_filter && !@edit %>display:none<% end %>; margin-top: 50px" id="select_filter_collapse_box">
-				<div class="col-md-4" align="left">
-					<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px">
-						<span style="<% if !@item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_filter_done_collapse"></span>
-						<span style="color:#ef9223;<% if @item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ban-circle" id="select_filter_skip_collapse"></span>
-						&nbsp;&nbsp;Art Effects
-					</h4>
-						<% if art_image_is_uploaded(@item) %>
-						<label class="no_bold" style="margin-left: 40px;">
-							<% if (!@item.art_image.file.nil? || !@item.art_image_tmp_paths.empty?) && @item.art_image_tmp_paths['new_image_uploaded'].nil? %>
-								SKIP ART EFFECTS
-								<%= f.check_box :art_filter, {id: "art_filter_checkbox", }, false, true %>	
-							<% else %>
-								<%= f.check_box :art_filter, {id: "art_filter_checkbox", disabled: "disabled", style: "display: none"}, false, true %>
-							<% end %>
-						</label>
-						<% end %>
-				</div>
-				
-				
-					
-				<div class="col-md-2 col-md-offset-6" style="margin-top: 10px">
-					<a id="change_filter" style="color:grey;font: 30px; margin-top: 20px; cursor: pointer"><h4 class="no_bold">change</h4></a>
-				</div>
-			</div>
+			<%= render partial: 'select_filter_done',  locals:{f: f} %>
 			
 			
 			<!-- Select Product -->
@@ -577,6 +549,7 @@
 			$('#select_filter_skip_collapse').show();
 			$('#select_filter_done_collapse').hide();
 			$('#select_filter_box').hide();
+			$('#select_product_box').show();
 			$('#art_filter_checkbox').prop('checked', true);
 			$('#overview_image').attr('src', '<%= get_image_url(@item, "overview", {"no_effect" => true}) %>');
 		}

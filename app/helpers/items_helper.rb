@@ -94,6 +94,39 @@ module ItemsHelper
     
     return classes
   end
-
   
+  def hide_image_upload_section?(new_action, show, save_fail, item)
+    return !( new_action || \
+              (save_fail && !image_is_uploaded(item)) || \
+              (show && !image_is_uploaded(item)) )  
+  end
+  
+  def hide_filter_section?(params)
+    return !( params[:image_cropped] )
+  end
+  
+  def hide_filter_done_section?(new_action, params)
+    return !hide_filter_section?(params) || new_action
+  end
+  
+  def hide_products_section?(edit, show, params, save_fail, item)
+    return !( edit || \
+              params[:art_filterred] || \
+              save_fail || \
+              (show && image_is_uploaded(item)))
+  end
+
+  def hide_size_section?(edit, show, save_fail, item)
+    return !( edit || \
+              save_fail || \
+              (show && image_is_uploaded(item) && item.product ))
+  end
+  
+  def hide_canvas_options_section?(item)
+    return !(item.product && item.product.name.include?("canvas"))
+  end
+  
+  def hide_frame_options_section?(item)
+    return !(item.product && item.product.name.include?("frame"))
+  end
 end

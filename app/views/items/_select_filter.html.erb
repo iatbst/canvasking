@@ -1,4 +1,4 @@
-<div class="row box" style="margin-top: 50px;<% if @item.art_filter || @edit %>display:none<% end %>" id="select_filter_box">
+<div class="row box" style="margin-top: 50px;<% if hide_filter_section?(params) %>display:none<% end %>" id="select_filter_box">
 	<div class="row">
 		<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px">
 			<% if @show_filter_wizard_arrow %>

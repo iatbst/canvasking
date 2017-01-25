@@ -1,4 +1,4 @@
-<div class="row box" id="canvas_options" style="margin-top: 50px; <% if @item.product.nil? || @item.product.name.include?("frame") %><%= "display: none" %><% end %>">
+<div class="row box" id="canvas_options" style="margin-top: 50px; <% if hide_canvas_options_section?(@item) %>display: none<% end %>">
 
 	<div class="container" style="margin-bottom: 20px">
 		<div class="row">

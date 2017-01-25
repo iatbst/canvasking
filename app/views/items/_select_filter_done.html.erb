@@ -1,0 +1,27 @@
+<div class="row box" style="<% if hide_filter_done_section?(@new, params) %>display:none<% end %>; margin-top: 50px" id="select_filter_collapse_box">
+				<div class="col-md-4" align="left">
+					<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px">
+						<span style="<% if !@item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_filter_done_collapse"></span>
+						<span style="color:#ef9223;<% if @item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ban-circle" id="select_filter_skip_collapse"></span>
+						&nbsp;&nbsp;Art Effects
+					</h4>
+						<% if art_image_is_uploaded(@item) %>
+						<label class="no_bold" style="margin-left: 40px;">
+							<% if (!@item.art_image.file.nil? || !@item.art_image_tmp_paths.empty?) && @item.art_image_tmp_paths['new_image_uploaded'].nil? %>
+								SKIP ART EFFECTS
+								<%= f.check_box :art_filter, {id: "art_filter_checkbox", }, false, true %>	
+							<% else %>
+								<%= f.check_box :art_filter, {id: "art_filter_checkbox", disabled: "disabled", style: "display: none"}, false, true %>
+							<% end %>
+						</label>
+						<% end %>
+				</div>
+				
+				
+					
+				<div class="col-md-2 col-md-offset-6" style="margin-top: 10px">
+					<%= button_tag "CHANGE", :type => 'button', id: 'change_filter', style: 'margin-top: 7px;', :class => "btn btn-default btn-sm blue_style"%>
+				
+				</div>
+			</div>
+			

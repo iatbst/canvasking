@@ -7,6 +7,7 @@ class ItemsController < ApplicationController
     @item = Item.new
     @item.save
     @wizard = true
+    @new = true
     @show_image_wizard_arrow = true
   end
   
@@ -24,6 +25,8 @@ class ItemsController < ApplicationController
     
     # for wizard guide
     @edit = true
+    @show = true
+    
     render 'new'
   end
   
@@ -152,6 +155,8 @@ class ItemsController < ApplicationController
         @item.attributes = item_params
         @item.save(validate: false)
         @size_price, @size_price_str = prepare_size_price(@item)
+        @save_fail = true
+        
         render 'new' # save failed, back to item new page, may caused by missing fields
       end   
       
