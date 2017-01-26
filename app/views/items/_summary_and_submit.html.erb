@@ -1,0 +1,83 @@
+<div class="row box" id="summary_and_submit" style="<% if hide_summary_section?(@edit, @show, @save_fail, params, @item) %> display:none; <% end %>border-color:black; margin-top: 30px; height: 370px">
+	<div class="row" align="center">
+		<h3>
+			SUMMARY
+		</h3>
+	</div>
+	<hr style="width: 70%; border-color: black"/>
+	<div class="row" style="height:120px" >
+
+		<div class="col-md-5 col-md-offset-4">
+			<br />
+			<h4 class="no_bold" id="product_choice"> 
+				<% if !@item.product.nil? %>
+					<%= "#{@item.product.name.capitalize}" %>
+				<% end %> 
+			</h4>
+	
+			<h4 class="no_bold" id="size_choice"> 
+				<% if !@item.size.nil? && !@item.size.empty? %>
+					<%= "#{@item.size.split('x').join(' x ')} ( H x W )" %>
+				<% end %> 
+			</h4>
+		
+			
+			<h4 class="no_bold" id="attr1_choice"> 
+				<% if !@item.product.nil? && @item.product.name.include?("canvas") %>
+					<% if !@item.depth.nil? %>
+						<% if @item.depth.to_i == 0 %>
+							<%= "Rolled. No frame." %>
+						<% else %>
+							<%= "#{@item.depth}\" deep canvas wrap" %>
+						<% end %>
+
+					<% else %>
+						<%= "Depth: ---" %>
+					<% end %>
+				<% elsif !@item.product.nil? && @item.product.name.include?("frame") %>
+					<% if !@item.frame_id.nil? %>
+						<%= "Frame: #{Frame.find(@item.frame_id).name}" %>
+					<% else %>
+						<%= "Frame: ---" %>
+					<% end %>
+				<% end %> 
+			</h4>
+			
+		
+			
+			<h4 class="no_bold" id="attr2_choice"> 
+				<% if !@item.product.nil? && @item.product.name.include?("canvas") %>
+					<% if !@item.border.nil? %>
+						<%= "#{@item.border.capitalize} Border" %>
+					<% else %>
+						<%= "Border: ---" %>
+					<% end %>
+				<% elsif !@item.product.nil? && @item.product.name.include?("frame") %>
+					<% if !@item.mat.nil? %>
+						<%= "Mat: #{@item.mat}\"".gsub("0.0\"", "No") %>
+					<% else %>
+						<%= "Mat: ---" %>
+					<% end %>
+				<% end %>  
+			</h4>
+			<br />
+			<h4 class="no_bold"> 
+				Subtotal: <b id="price_choice"><%= "$#{@item.price}" %></b>
+			</h4>		
+		
+
+		</div>
+	</div>
+
+
+	
+			<div class="row" style="height:30px; margin-top: 50px" align="center" >
+				<%= hidden_field_tag :go_to_cart, true %>
+				<% if item_in_cart?(@item) %>
+					<%= f.submit 'SAVE CHANGES', class: "btn btn-primary btn-lg orange_button", style:"width: 60%"%>
+				<% else %>
+					<%= f.submit 'ADD TO CART', class: "btn btn-primary btn-lg orange_button", style:"width: 60%", id: "add_to_cart_button"%>
+				<% end %>
+			</div>
+
+</div>
