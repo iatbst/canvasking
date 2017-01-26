@@ -41,8 +41,12 @@ class ImageUploader < CarrierWave::Uploader::Base
   version :filter do
     resize_to_fit(600, 800)
   end
-  
-  version :cart, :from_version => :filter do
+
+  version :overview, :from_version => :filter do
+    resize_to_fit(500, 500)
+  end
+   
+  version :cart, :from_version => :overview do
     resize_to_fit(450, 450)
   end
 
@@ -51,11 +55,8 @@ class ImageUploader < CarrierWave::Uploader::Base
     resize_to_fit(450, 450)
   end
    
-  version :overview, :from_version => :cart do
-    resize_to_fit(300, 300)
-  end
   
-  version :thumb, :from_version => :overview do
+  version :thumb, :from_version => :cart do
     resize_to_fit(200, 200)
   end
 

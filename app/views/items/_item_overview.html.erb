@@ -11,9 +11,9 @@
 </style>
 
 
-<div class="row box" align="center" id="overview_box" style="height:550px; width:350px; margin-left:10px; position:fixed">
-	<div class="row" style="height:300px; margin-top: 30px;">
-		<% if !@item.image.file.nil? || !@item.image_tmp_paths['overview'].nil? %>
+<div class="row" align="center" id="overview_box" style="height:550px; width:500px; margin-right:50px; position:fixed">
+	<div class="row" style="height:500px;">
+		<% if image_is_uploaded(@item) %>
 			<%= image_tag get_image_url(@item, "overview"), class: "overview_image image_shadow_in_item #{add_frame_and_mat_class(@item, 'item')}", id: "overview_image", onerror: "imgError(this);"%>
 		<% else %>
 			<%= image_tag '/canvas_placeholder.png', class: "overview_image"%>
@@ -21,13 +21,14 @@
 		<div>
 			<div class="triptych_1" >			
 			</div>
-			<div class="triptych_2"  style="margin-left: 8px; margin-right: 8px">			
+			<div class="triptych_2"  style="margin-left: 15px; margin-right: 15px">			
 			</div>
 			<div class="triptych_3">			
 			</div>
 		</div>
 	</div>
 	
+	<!--
 	<div class="row" style="height:120px" >
 		<div class="col-md-1"></div>
 		<div class="col-md-10" style= "margin-left: 0px" align="left">
@@ -91,14 +92,7 @@
 			</b>
 		</div>
 	</div>
+	-->
 
-	<div class="row" style="height:30px;" >
-		<%= hidden_field_tag :go_to_cart, true %>
-		<% if item_in_cart?(@item) %>
-			<%= f.submit 'SAVE CHANGES', class: "btn btn-primary btn-lg orange_button", style:"width: 80%"%>
-		<% else %>
-			<%= f.submit 'ADD TO CART', class: "btn btn-primary btn-lg orange_button", style:"width: 80%", id: "add_to_cart_button"%>
-		<% end %>
-	</div>
 
 </div>

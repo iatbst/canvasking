@@ -174,7 +174,7 @@
 <script>
 	$('.style_option').click(function() {
 		$('#use_this_style').hide();
-		$('#skip').css('margin-top', '300px');
+		$('#skip').css('margin-top', '100px');
 		var style_id = $(this).attr('id');
 		var url = '<%= @somatic_realtime_api %>?id=' + style_id + 
 				  '&api_key=' + '<%= @somatic_api_key %>' + 

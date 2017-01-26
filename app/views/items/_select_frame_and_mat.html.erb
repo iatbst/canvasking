@@ -1,8 +1,8 @@
-<div class="row box" id="frame_options" style="margin-top: 50px; <% if hide_frame_options_section?(@item) %>display: none<% end %>">
+<div class="row box" id="frame_options" style="margin-top: 30px; <% if hide_frame_options_section?(@item) %>display: none<% end %>">
 
-	<div class="container" style="margin-bottom: 20px">
+
 		<div class="row">
-			<h4 class="no_bold" style="margin-left: 60px; margin-top: 20px; margin-bottom: 20px"> 		
+			<h4 class="no_bold" style="margin-left: 60px; margin-top: 20px;"> 		
 		
 			<span class="glyphicon glyphicon-arrow-right blink" id="select_frame_options_frame_arrow" style="display: none"></span>
 			<span style="<% if @item.frame_id.nil? %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_frame_done"></span>
@@ -15,26 +15,33 @@
 		<h6 id="frame_error" style="color: red" ><%= @item.errors[:frame_id][0] %></h6>
 		<% end %>
 		
-		<div class="row">
+		<div class="row" style="margin-left: 0px">
 
-			<div class="col-md-2" style="margin-left: 20px">
+			<div class="col-md-3" style="margin-left: 20px">
 
-				<label class="frame_options" > <h5 style="margin-left: 15px"> Black wood frame </h5> <%= f.radio_button :frame_id, Frame.find_by_name("black wood").id,  style:"visibility: hidden;", id: "frame_black_wood" %>
-
+				<label class="frame_options" > 
+					<%= f.radio_button :frame_id, Frame.find_by_name("black wood").id,  style:"visibility: hidden;", id: "frame_black_wood" %>
 					<%= image_tag '/items/frame_wood_black.jpg', class: "frame_option_image"%> </label>
+					<h5 style="margin-left: 35px"> Black wood</h5> 
 			</div>
 			
-			<div class="col-md-2">
-				<label class="frame_options" > <h5 style="margin-left: 15px"> White wood frame </h5> <%= f.radio_button :frame_id, Frame.find_by_name("white wood").id, style:"visibility: hidden;", id: "frame_white_wood" %>
-
-					<%= image_tag '/items/frame_wood_white.jpg', class: "frame_option_image"%> </label>
+			<div class="col-md-3" style="margin-left: 40px">
+				<label class="frame_options" > 
+					
+					<%= f.radio_button :frame_id, Frame.find_by_name("white wood").id, style:"visibility: hidden;", id: "frame_white_wood" %>
+					<%= image_tag '/items/frame_wood_white.jpg', class: "frame_option_image"%> 
+					<h5 style="margin-left: 35px"> White wood</h5> 
+					</label>
 
 			</div>
 			
-			<div class="col-md-2">
-				<label class="frame_options" > <h5 style="margin-left: 5px"> Espresso wood frame </h5> <%= f.radio_button :frame_id, Frame.find_by_name("espresso wood").id,  style:"visibility: hidden;", id: "frame_espresso_wood"%>
-
-					<%= image_tag '/items/frame_espresso_wood.jpg', class: "frame_option_image"%> </label>
+			<div class="col-md-3" style="margin-left: 40px">
+				<label class="frame_options" > 
+					
+					<%= f.radio_button :frame_id, Frame.find_by_name("espresso wood").id,  style:"visibility: hidden;", id: "frame_espresso_wood"%>
+					<%= image_tag '/items/frame_espresso_wood.jpg', class: "frame_option_image"%> 
+					<h5 style="margin-left: 35px"> Brown wood</h5> 
+				</label>
 
 			</div>
 			
@@ -42,11 +49,11 @@
 			
 		</div>
 		
-		<hr style="width: 730px; margin-left: 10px"/>
+		<hr style="width: 550px; margin-left: 10px"/>
 		
 		<div class="row">
 	
-			<h4 class="no_bold" style="margin-left: 60px; margin-bottom: 20px"> 
+			<h4 class="no_bold" style="margin-left: 60px;"> 
 			
 			<span class="glyphicon glyphicon-arrow-right blink" id="select_frame_options_mat_arrow" style="display: none"></span>
 			<span style="<% if @item.mat.nil? %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_mat_done"></span>
@@ -60,20 +67,26 @@
 		<% end %>
 		
 		<div class="row">
-			<div class="col-md-2" style="margin-left: 20px">
+			<div class="col-md-3" style="margin-left: 40px; margin-right: 40px">
 
-				<label class="mat_options" > <h5 style="margin-left: 15px"> No Mat </h5> <%= f.radio_button :mat, 0.0,  style:"visibility: hidden;", id: "mat_0"%>
-
-					<%= image_tag '/items/no_mat.jpg', class: "frame_option_image"%> </label>
+				<label class="mat_options" > 
+					
+					<%= f.radio_button :mat, 0.0,  style:"visibility: hidden;", id: "mat_0"%>
+					<%= image_tag '/items/no_mat.jpg', class: "frame_option_image"%> 
+					<h5 style="margin-left: 45px"> No Mat </h5> 
+				</label>
 			</div>
-			<div class="col-md-2">
+			<div class="col-md-3">
 
-				<label class="mat_options" > <h5 style="margin-left: 15px"> 2.5" Mat</h5> <%= f.radio_button :mat, 2.5,  style:"visibility: hidden;", id: "mat_2_5"%>
-
-					<%= image_tag '/items/250_mat.jpg', class: "frame_option_image"%> </label>
+				<label class="mat_options" > 
+					 
+					<%= f.radio_button :mat, 2.5,  style:"visibility: hidden;", id: "mat_2_5"%>
+					<%= image_tag '/items/250_mat.jpg', class: "frame_option_image"%> 
+					<h5 style="margin-left: 45px"> 2.5" Mat</h5>
+				</label>
 			</div>
 		</div>
-	</div>
+
 </div>
 
 <script>

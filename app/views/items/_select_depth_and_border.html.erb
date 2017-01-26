@@ -1,8 +1,8 @@
-<div class="row box" id="canvas_options" style="margin-top: 50px; <% if hide_canvas_options_section?(@item) %>display: none<% end %>">
+<div class="row box" id="canvas_options" style="margin-top: 30px; <% if hide_canvas_options_section?(@item) %>display: none<% end %>">
 
-	<div class="container" style="margin-bottom: 20px">
+
 		<div class="row">
-			<h4 class="no_bold" style="margin-left: 60px; margin-top: 20px; margin-bottom: 20px"> 		
+			<h4 class="no_bold" style="margin-left: 60px; margin-top: 20px; margin-bottom: 0px"> 		
 		
 			<span class="glyphicon glyphicon-arrow-right blink" id="select_canvas_options_depth_arrow" style="display: none"></span>
 			<span style="<% if @item.depth.nil? %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_depth_done"></span>
@@ -15,37 +15,52 @@
 		<h6 id="depth_error" style="color: red" ><%= @item.errors[:depth][0] %></h6>
 		<% end %>
 		
-		<div class="row">
+		<div class="row" style="margin-left: 10px">
 
-			<div class="col-sm-2">
+			<div class="col-md-2" align="center">
 
-				<label class="depth_options" > <h5 style="margin-left: 15px"> Rolled, No Frame </h5> <%= f.radio_button :depth, "0",  style:"visibility: hidden;", id: "depth_0" %>
-
-					<%= image_tag '/canvas_depth_0.jpeg' %> </label>
+				<label class="depth_options" > 
+					
+					<%= f.radio_button :depth, "0",  style:"visibility: hidden;", id: "depth_0" %>
+					<%= image_tag '/canvas_depth_0.jpeg', class: "depth_options_image"%> 
+					<h5 style="margin-left: 30px"> Rolled</h5> 
+				</label>
 			</div>
-			<div class="col-sm-2">
-				<label class="depth_options" > <h5 style="margin-left: 15px"> 0.75" Deep </h5> <%= f.radio_button :depth, "0.75", style:"visibility: hidden;", id: "depth_0_75" %>
-
-					<%= image_tag '/canvas_depth_0.75.jpeg' %> </label>
-
-			</div>
-			<div class="col-sm-2">
-				<label class="depth_options" > <h5 style="margin-left: 15px"> 1.5" Deep </h5> <%= f.radio_button :depth, "1.5",  style:"visibility: hidden;", id: "depth_1_5"%>
-
-					<%= image_tag '/canvas_depth_1.5.jpeg' %> </label>
+			
+			<div class="col-md-2 col-md-offset-1" align="center">
+				<label class="depth_options" > 
+					 
+					<%= f.radio_button :depth, "0.75", style:"visibility: hidden;", id: "depth_0_75" %>
+					<%= image_tag '/canvas_depth_0.75.jpeg', class: "depth_options_image"%>
+					<h5 style="margin-left: 30px"> 0.75" </h5> 
+				</label>
 
 			</div>
-			<div class="col-sm-2">
-				<label class="depth_options" > <h5 style="margin-left: 15px"> 2.5" Deep </h5> <%= f.radio_button :depth, "2.5",  style:"visibility: hidden;", id: "depth_2_5"%>
-
-					<%= image_tag '/canvas_depth_2.5.jpeg' %> </label>
-
+			
+			<div class="col-md-2 col-md-offset-1" align="center">
+				<label class="depth_options" > 
+			
+					<%= f.radio_button :depth, "1.5",  style:"visibility: hidden;", id: "depth_1_5"%>
+					<%= image_tag '/canvas_depth_1.5.jpeg', class: "depth_options_image"%>
+					<h5 style="margin-left: 30px"> 1.5" </h5>	
+				</label>
+			</div>
+			
+			<div class="col-md-2 col-md-offset-1" align="center">
+				<label class="depth_options"> 
+			
+					<%= f.radio_button :depth, "2.5",  style:"visibility: hidden;", id: "depth_2_5"%> 
+					<%= image_tag '/canvas_depth_2.5.jpeg', class: "depth_options_image"%> 
+					<h5 style="margin-left: 30px"> 2.5" </h5>
+				</label>
 			</div>
 
 		</div>
 
+		<hr style="width: 550px; margin-left: 10px"/>
+
 		<div class="row">
-			<h4 class="no_bold" style="margin-left: 60px; margin-top: 20px; margin-bottom: 20px"> 		
+			<h4 class="no_bold" style="margin-left: 60px; margin-top: 0px;"> 		
 		
 			<span class="glyphicon glyphicon-arrow-right blink" id="select_canvas_options_border_arrow" style="display: none"></span>
 			<span style="<% if @item.border.nil? %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_border_done"></span>
@@ -57,27 +72,35 @@
 		<% if @item.errors[:border] %>
 		<h6 id="border_error" style="color: red" ><%= @item.errors[:border][0] %></h6>
 		<% end %>
-		<div class="row">
-			<div class="col-sm-2">
+		
+		<div class="row" style="margin-left: 10px">
+			<div class="col-md-2">
 
-				<label class="border_options" > <h5 style="margin-left: 15px"> Photo Wrap </h5> <%= f.radio_button :border, "photo",  style:"visibility: hidden;", id: "border_photo"%>
-
-					<%= image_tag '/canvas_border_photo.jpeg' %> </label>
+				<label class="border_options" > 
+					
+					<%= f.radio_button :border, "photo",  style:"visibility: hidden;", id: "border_photo"%>
+					<%= image_tag '/canvas_border_photo.jpeg', class: "depth_options_image"%>
+					<h5 style="margin-left: 30px"> Photo</h5>
+				</label>
 			</div>
-			<div class="col-sm-2">
+			<div class="col-md-2 col-md-offset-1">
 
-				<label class="border_options" > <h5 style="margin-left: 15px"> Black Border </h5> <%= f.radio_button :border, "black",  style:"visibility: hidden;", id: "border_black"%>
-
-					<%= image_tag '/canvas_border_black.jpeg' %> </label>
+				<label class="border_options" > 
+					<%= f.radio_button :border, "black",  style:"visibility: hidden;", id: "border_black"%>
+					<%= image_tag '/canvas_border_black.jpeg', class: "depth_options_image"%>
+					<h5 style="margin-left: 30px"> Black </h5> 
+				</label>
 			</div>
-			<div class="col-sm-2">
+			<div class="col-md-2 col-md-offset-1">
 
-				<label class="border_options" > <h5 style="margin-left: 15px"> White Border </h5> <%= f.radio_button :border, "white", style:"visibility: hidden;", id: "border_white"%>
-
-					<%= image_tag '/canvas_border_white.jpeg' %> </label>
+				<label class="border_options" > 
+					<%= f.radio_button :border, "white", style:"visibility: hidden;", id: "border_white"%>
+					<%= image_tag '/canvas_border_white.jpeg', class: "depth_options_image"%>
+					<h5 style="margin-left: 30px"> White </h5> 
+				</label>
 			</div>
 		</div>
-	</div>
+	
 </div>
 
 <script>

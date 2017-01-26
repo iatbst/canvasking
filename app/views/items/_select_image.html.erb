@@ -12,13 +12,13 @@
 	<h6 id="image_error" style="color: red; margin-left: 20px"><%= @item.errors[:image][0] %></h6>
 	<% end %>
 	
-	<div  class="row " style="margin: auto; margin-left: 50px">
-		<div class="col-md-6" align="">
+	<div  class="row " style="margin: auto; margin-left: 50px; margin-bottom: 20px">
+		<div class="col-md-4" align="">
 
 		<!--  Upload Photo From Computer -->
 		<%= form_for @item do |f| %>
 
-			<div class="field" style="margin-top: 20px">
+			<div class="field" style="margin-top: 10px">
 				<%= f.file_field :image, id:"item_image", type:"file", class:"file-loading"%>
 			</div>
 			<div class="actions" style="margin-top: 10px">
@@ -28,14 +28,18 @@
 		<% end %>
 		</div>
 		
-		<div class="col-md-2" align="left">
-			<h4 class="no_bold" style="margin-top: 30px">OR</h4>
+		<div class="col-md-4" align="left" style="margin-top: 0px">
+			<h4 class="no_bold" style="margin-top: 20px">or import from</h4>
 		</div>
 		
 		<!--  Upload Photo From Facebook/Instagram -->
-		<div class="col-md-4" align="center">
-			<button type="button" style="margin-bottom: 20px; background-color: white;border-color: blue; color: blue" class="btn btn-primary" id="facebook_upload_button" onclick="load_images_from_facebook()"><%= image_tag '/items/facebook_icon.png', class: "facebook_icon" %>&nbsp;Upload From Facebook</button>
-			<button type="button" style="margin-bottom: 20px; background-color: white;border-color: red; color: red" class="btn btn-primary" id="facebook_upload_button" onclick="load_images_from_facebook()"><%= image_tag '/items/instagram_icon.png', class: "facebook_icon" %>&nbsp;Upload From Instagram</button>
+		<div class="col-md-2" align="center" style="margin-top: 10px; cursor: pointer">
+			<%= image_tag '/items/facebook_icon.png', class: "facebook_icon", id: "facebook_upload_button", onclick: "load_images_from_facebook()" %>
+			
+		</div>
+		<div class="col-md-1" align="center" style="margin-top: 10px; cursor: pointer">
+			
+			<%= image_tag '/items/instagram_icon.png', class: "facebook_icon", id: "instagram_upload_button" %>
 		</div>
 		
 		

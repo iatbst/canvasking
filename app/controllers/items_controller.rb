@@ -80,7 +80,7 @@ class ItemsController < ApplicationController
       # Override image version url with tmp file path until upload job done
       prepare_tmp_image_paths(@item, 'image_tmp_paths')
       @item.image.crop_version.url = @item.image.crop_version.current_path.split('public')[1]
-      
+        
       @crop_image = true
       @size_price, @size_price_str = prepare_size_price(@item)
       render 'new'
@@ -90,17 +90,17 @@ class ItemsController < ApplicationController
       # Check if image cropped
       if params[:image_cropped_indeed] == "true"
         # Important: Process order should from high to low
-        process_now_versions = ['origin','filter', 'cart','overview', 'thumb']
+        process_now_versions = ['origin','filter', 'overview', 'cart', 'thumb']
         crop_local_tmp_files(@item, process_now_versions)
       end
-      
+
       # get image ratio
       begin
         h_w_ratio = params[:item][:image_crop_h].to_f/params[:item][:image_crop_w].to_f
         @item.update_attribute('image_h_w_ratio', h_w_ratio)
       rescue
       end
-      
+              
       # Upload images to S3
       origin_tmp_file_path = "#{Rails.root}/public#{@item.image_tmp_paths['origin']}"
       ImageUploadWorker.perform_async(origin_tmp_file_path, @item.id, 'image')
@@ -114,8 +114,6 @@ class ItemsController < ApplicationController
     # Image processed by art filter
     elsif params[:art_filterred]
       # remove old art image if necessary
-      #@item.remove_art_image!
-      #@item.save
       @item.update_attribute('art_filter', true)
       @item.attributes = item_params
  
@@ -271,7 +269,10 @@ class ItemsController < ApplicationController
       versions.each do |ver|
           abs_path = "#{Rails.root}/public#{item.image_tmp_paths[ver]}"
           width, height = get_resize_width_and_height(ver)
-          image.resize("#{width}x#{height}")
+          # No resize for origin version
+          if ver != 'origin'
+            image.resize("#{width}x#{height}")
+          end
           image.write(abs_path)
       end
     end
@@ -280,13 +281,13 @@ class ItemsController < ApplicationController
       if ver == "cart"
         return 450, 450
       elsif ver == "overview"
-        return 300, 300
+        return 500, 500
       elsif ver == "filter"
         return 600, 800
       elsif ver == "thumb"
         return 200, 200
       else
-        return 3000, 3000
+        return 300, 300
       end     
     end
     

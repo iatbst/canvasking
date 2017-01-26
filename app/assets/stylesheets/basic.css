@@ -69,12 +69,6 @@ span.form_error {
     max-height: 450px;
 }
 
-.overview_image {
-    height: auto; 
-    width: auto; 
-    max-width: 300px; 
-    max-height: 300px;
-}	
 
 .filter_image {
     height: auto; 
@@ -86,8 +80,8 @@ span.form_error {
 .facebook_icon {
     height: auto; 
     width: auto; 
-    max-width: 20px; 
-    max-height: 20px;
+    max-width: 35px; 
+    max-height: 35px;
 }		
 
 /* Welcome Page */
