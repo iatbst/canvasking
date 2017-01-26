@@ -239,14 +239,8 @@
 			<%= render partial: 'select_frame_and_mat', locals:{f: f}%>
 			
 			<!-- ADD TO CART / SAVE CHANGES -->
-			<div class="row" style="height:30px; margin-top: 50px" align="center" >
-				<%= hidden_field_tag :go_to_cart, true %>
-				<% if item_in_cart?(@item) %>
-					<%= f.submit 'SAVE CHANGES', class: "btn btn-primary btn-lg orange_button", style:"width: 60%"%>
-				<% else %>
-					<%= f.submit 'ADD TO CART', class: "btn btn-primary btn-lg orange_button", style:"width: 60%", id: "add_to_cart_button"%>
-				<% end %>
-			</div>
+			<%= render partial: 'summary_and_submit', locals:{f: f} %>	
+
 			
 		</div>
 		<% end %>
@@ -285,27 +279,27 @@
 	});
 	
 	$("#product_single_canvas").click(function() {
-		$('#product_choice').text('Type: Single Canvas')
+		$('#product_choice').text('Single Canvas')
 		
 		// show canvas options
 		if ($('#depth_0').is(':checked')){
-			$('#attr1_choice').text('Depth: 0"');
+			$('#attr1_choice').text('Rolled. No frame.');
 		} else if ($('#depth_0_75').is(':checked')) {
-			$('#attr1_choice').text('Depth: 0.75"');
+			$('#attr1_choice').text('0.75" deep canvas wrap');
 		} else if ($('#depth_1_5').is(':checked')) {
-			$('#attr1_choice').text('Depth: 1.5"');
+			$('#attr1_choice').text('1.5" deep canvas wrap');
 		} else if ($('#depth_2_5').is(':checked')) {
-			$('#attr1_choice').text('Depth: 2.5"');
+			$('#attr1_choice').text('2.5" deep canvas wrap');
 		} else {
 			$('#attr1_choice').text('Depth: ---')
 		}
 		
 		if ($('#border_photo').is(':checked')){
-			$('#attr2_choice').text('Border: photo')
+			$('#attr2_choice').text('Photo Border')
 		} else if ($('#border_black').is(':checked')) {
-			$('#attr2_choice').text('Border: black')
+			$('#attr2_choice').text('Black Border')
 		} else if ($('#border_white').is(':checked')) {
-			$('#attr2_choice').text('Border: white')
+			$('#attr2_choice').text('White Border')
 		} else {
 			$('#attr2_choice').text('Border: ---')
 		}
@@ -328,7 +322,9 @@
 			$('#item_size').append(option);			
 		}
 		//update option section
-		$('#canvas_options').hide();
+		if (is_canvas_depth_checked() || is_canvas_border_checked()){
+			$('#canvas_options').show();
+		}
 		$('#frame_options').hide();
 		$('#size_price_options').show();
 
@@ -344,27 +340,27 @@
 	});
 	
 	$("#product_triptych_canvas").click(function() {
-		$('#product_choice').text('Type: Triptych Canvas');
+		$('#product_choice').text('Triptych Canvas');
 
 		// show canvas options
 		if ($('#depth_0').is(':checked')){
-			$('#attr1_choice').text('Depth: 0"');
+			$('#attr1_choice').text('Rolled. No frame.');
 		} else if ($('#depth_0_75').is(':checked')) {
-			$('#attr1_choice').text('Depth: 0.75"');
+			$('#attr1_choice').text('0.75" deep canvas wrap');
 		} else if ($('#depth_1_5').is(':checked')) {
-			$('#attr1_choice').text('Depth: 1.5"');
+			$('#attr1_choice').text('1.5" deep canvas wrap');
 		} else if ($('#depth_2_5').is(':checked')) {
-			$('#attr1_choice').text('Depth: 2.5"');
+			$('#attr1_choice').text('2.5" deep canvas wrap');
 		} else {
 			$('#attr1_choice').text('Depth: ---')
 		}
 		
 		if ($('#border_photo').is(':checked')){
-			$('#attr2_choice').text('Border: photo')
+			$('#attr2_choice').text('Photo Border')
 		} else if ($('#border_black').is(':checked')) {
-			$('#attr2_choice').text('Border: black')
+			$('#attr2_choice').text('Black Border')
 		} else if ($('#border_white').is(':checked')) {
-			$('#attr2_choice').text('Border: white')
+			$('#attr2_choice').text('White Border')
 		} else {
 			$('#attr2_choice').text('Border: ---')
 		}
@@ -382,7 +378,9 @@
 		}
 
 		//update option section
-		$('#canvas_options').hide();
+		if (is_canvas_depth_checked() || is_canvas_border_checked()){
+			$('#canvas_options').show();
+		}
 		$('#frame_options').hide();
 		$('#size_price_options').show();
 
@@ -417,7 +415,7 @@
 	}
 	
 	$("#product_frame").click(function() {
-		$('#product_choice').text('Type: Frame');
+		$('#product_choice').text('Frame');
 
 		// show canvas options
 		if ($('#frame_black_wood').is(':checked')){
@@ -451,7 +449,9 @@
 		}
 		//update option section
 		$('#canvas_options').hide();
-		$('#frame_options').hide();
+		if (is_frame_frame_checked() || is_frame_mat_checked()){
+			$('#frame_options').show();
+		}
 		$('#size_price_options').show();
 		
 		//update image frame, default is black frame border if none is checked
@@ -475,38 +475,36 @@
 	});
 	
 	$("#item_size").change(function() {
-		$('#size_choice').text('Size: ' + this.value)
+		$('#size_choice').text('Size: ' + this.value);
+		$('#price_choice').text($("#item_size option:selected").text().split(' ')[2]);
 	});
 
-	$("#item_size").change(function() {
-		$('#price_choice').text('Price: ' + $("#item_size option:selected").text().split(' ')[2])
-	});
 
 	$("#depth_0").click(function() {
-		$('#attr1_choice').text('Depth: 0"')
+		$('#attr1_choice').text('Rolled. No frame.')
 	});
 
 	$("#depth_0_75").click(function() {
-		$('#attr1_choice').text('Depth: 0.75"')
+		$('#attr1_choice').text('0.75" deep canvas wrap')
 	});
 
 	$("#depth_1_5").click(function() {
-		$('#attr1_choice').text('Depth: 1.5"')
+		$('#attr1_choice').text('1.5" deep canvas wrap')
 	});
 
 	$("#depth_2_5").click(function() {
-		$('#attr1_choice').text('Depth: 2.5"')
+		$('#attr1_choice').text('2.5" deep canvas wrap')
 	});
 	$("#border_photo").click(function() {
-		$('#attr2_choice').text('Border: photo')
+		$('#attr2_choice').text('Photo Border')
 	});
 
 	$("#border_black").click(function() {
-		$('#attr2_choice').text('Border: black')
+		$('#attr2_choice').text('Black Border')
 	});
 
 	$("#border_white").click(function() {
-		$('#attr2_choice').text('Border: white')
+		$('#attr2_choice').text('White Border')
 	});
 
 	$("#frame_black_wood").click(function() {
@@ -581,16 +579,9 @@
 			$('#select_canvas_options_depth_arrow').hide();
 			$('#select_canvas_options_border_arrow').hide();
 			$('#select_size_arrow').show();
-			$('#select_size_done').hide();
-			
+			$('#select_size_done').hide();	
 			$('#select_product_done').show();
-			
-			// $('#select_product_box').css("border-color", "black");
-			// $('#size_price_options').css("border-color", "#e2e2e2");
-
-			// $('#add_to_cart_button').css('background-color', 'white');
-			// $('#add_to_cart_button').css('color', 'black');
-			$('#overview_box').css('border-color', '#e2e2e2');
+			$('#summary_and_submit').hide();
 		});
 		
 		$('#item_size').change(function (){
@@ -613,6 +604,7 @@
 					// $('#add_to_cart_button').css('background-color', 'black');
 					// $('#add_to_cart_button').css('color', 'white');
 					// $('#overview_box').css('border-color', 'black');
+					$('#summary_and_submit').show();
 				}
 
 			} else {
@@ -629,6 +621,7 @@
 					// $('#add_to_cart_button').css('background-color', 'black');
 					// $('#add_to_cart_button').css('color', 'white');
 					//$('#overview_box').css('border-color', 'black');
+					$('#summary_and_submit').show();
 				}
 			}
 		});
@@ -644,6 +637,7 @@
 				// $('#add_to_cart_button').css('background-color', 'black');
 				// $('#add_to_cart_button').css('color', 'white');
 				//$('#overview_box').css('border-color', 'black');
+				$('#summary_and_submit').show();
 			}
 		});
 
@@ -658,6 +652,7 @@
 				// $('#add_to_cart_button').css('background-color', 'black');
 				// $('#add_to_cart_button').css('color', 'white');
 				//$('#overview_box').css('border-color', 'black');
+				$('#summary_and_submit').show();
 			}
 		});
 
@@ -671,7 +666,8 @@
 				//$('#frame_options').css('border-color', 'black');
 				// $('#add_to_cart_button').css('background-color', 'black');
 				// $('#add_to_cart_button').css('color', 'white');
-				//$('#overview_box').css('border-color', 'black');		
+				//$('#overview_box').css('border-color', 'black');	
+				$('#summary_and_submit').show();	
 			}
 		});
 
@@ -686,6 +682,7 @@
 				// $('#add_to_cart_button').css('background-color', 'black');
 				// $('#add_to_cart_button').css('color', 'white');
 				//$('#overview_box').css('border-color', 'black');
+				$('#summary_and_submit').show();
 			}
 		});
 	

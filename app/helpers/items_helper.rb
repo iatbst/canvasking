@@ -116,9 +116,10 @@ module ItemsHelper
               (show && image_is_uploaded(item)))
   end
 
-  def hide_size_section?(edit, show, save_fail, item)
+  def hide_size_section?(edit, show, save_fail, params, item)
     return !( edit || \
-              save_fail || \
+              (save_fail && item.product) || \
+              (params[:art_filterred] && item.product) || \
               (show && image_is_uploaded(item) && item.product ))
   end
   
@@ -128,5 +129,13 @@ module ItemsHelper
   
   def hide_frame_options_section?(item)
     return !(item.product && item.product.name.include?("frame"))
+  end
+  
+  def hide_summary_section?(edit, show, save_fail, params, item)
+
+    return !( edit || \
+            (show && item.size) || \
+            (save_fail && item.size) || \
+            (params[:art_filterred] && item.size))
   end
 end

@@ -6,6 +6,7 @@ class ItemsController < ApplicationController
   def new
     @item = Item.new
     @item.save
+    
     @wizard = true
     @new = true
     @show_image_wizard_arrow = true
@@ -24,7 +25,6 @@ class ItemsController < ApplicationController
     @size_price, @size_price_str = prepare_size_price(@item)
     
     # for wizard guide
-    @edit = true
     @show = true
     
     render 'new'
@@ -33,6 +33,7 @@ class ItemsController < ApplicationController
   def edit
     @item = Item.find(params[:id])
     @size_price, @size_price_str = prepare_size_price(@item)
+    
     @edit = true
     render 'new'
   end
@@ -134,7 +135,7 @@ class ItemsController < ApplicationController
       @item.time_to_save = true
       # special process for size, if user failed specify the size option,
       # return error page, not save
-      if params[:item]["size"].nil?
+      if params[:item] && params[:item]["size"].nil?
         @item.update_attribute("size", nil)
       end
   
