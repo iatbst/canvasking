@@ -55,4 +55,9 @@ module Canvasking
   HEROKU_HOST_URL = 'https://arcane-sands-61757.herokuapp.com/'
   # This will be replaced with real web url
   WEBSITE_URL = 'https://arcane-sands-61757.herokuapp.com/'
+  
+  # Facebook/Instagram
+  FACEBOOK_APP_ID = '744629489021986'
+  INSTAGRAM_APP_ID = 'adca74ff860d43d18d264082283df380'
+  INSTAGRAM_RE_URL = 'http://localhost:3000'
 end

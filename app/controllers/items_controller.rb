@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   include CartsHelper
-  
+  layout "application", except: [:empty_page]
   
   # TODO: need to refactor, otherwise every new page will create a item in DB, NO GOOD !!!
   def new
@@ -187,6 +187,10 @@ class ItemsController < ApplicationController
     redirect_to cart_path
   end
   
+  # This is a temp empty page: for instagram images upload purpose
+  def empty_page
+    
+  end
   
   
   

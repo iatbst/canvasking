@@ -19,6 +19,11 @@
 }
 
 .facebook_image {
+    height: auto; 
+    width: auto; 
+    max-width: 150px; 
+    max-height: 150px;
+    
 	top: 50%;
 	position: relative;
 	transform: 			translateY(-50%);
