@@ -13,16 +13,40 @@
   font-weight: bold;
 }
 
-.facebook_image_grid {
+.facebook_image_grid, .instagram_image_grid{
 	width: 160px;
 	height: 160px;
 }
 
-.facebook_image {
-    height: auto; 
+.facebook_image, .instagram_image {
+    height: auto;
     width: auto; 
     max-width: 150px; 
     max-height: 150px;
+
+    
+	top: 50%;
+	position: relative;
+	transform: 			translateY(-50%);
+	cursor: pointer;
+}
+
+
+.facebook_image_width {
+    width: 150px; 
+    max-width: 150px; 
+    max-height: 150px; 
+    
+	top: 50%;
+	position: relative;
+	transform: 			translateY(-50%);
+	cursor: pointer;
+}
+
+.facebook_image_height {
+    height: 140px; 
+    max-width: 150px; 
+    max-height: 150px; 
     
 	top: 50%;
 	position: relative;

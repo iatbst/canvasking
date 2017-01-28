@@ -26,7 +26,7 @@
 
 				<div class="row" align="center">
 					<%= form_for @item do |f| %>
-					<%= f.cropbox :image, version: :crop_version %>
+					<%= f.cropbox :image, version: :cart %>
 					<br />
 					<%= hidden_field_tag :image_cropped, true %>
 					<%= hidden_field_tag :image_cropped_indeed, false %>
@@ -51,9 +51,9 @@
 
 	// Trigger modal when page loaded an
 	$( window ).on("load", function(){
-		$('.jcrop-selection').attr('onclick', 'return false;');
-		$('.jcrop-selection').attr('value', $('.jcrop-selection').attr('style'));	
-		$('#crop_modal').modal('show');
+		//$('.jcrop-selection').attr('onclick', 'return false;');
+		//$('.jcrop-selection').attr('value', $('.jcrop-selection').attr('style'));	
+		//$('#crop_modal').modal('show');
 	});
 
 			

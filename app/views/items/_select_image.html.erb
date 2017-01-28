@@ -1,8 +1,24 @@
+<style>
+	.bar {
+    		height: 18px;
+    		background: green;
+	}
+
+
+.orange_button_round {
+  background-color: #ef9223;
+  border-color: #ef9223;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+}
+	
+</style>
 <div class="row box" id="select_image_box" style="<% if hide_image_upload_section?(@new, @show, @save_fail, @item) %>display:none<% end %>">
 	<div class="row">
-		<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px">
+		<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px" id="image_upload_label">
 			<% if @show_image_wizard_arrow %>
-				<span class="glyphicon glyphicon-arrow-right blink" id="select_image_arrow">&nbsp;</span>
+				<span class="glyphicon glyphicon-play blink" id="select_image_arrow">&nbsp;</span>
 			<% end %>
 			Upload Your Image 
 		</h4>
@@ -13,31 +29,31 @@
 	<% end %>
 	
 	<div  class="row " style="margin: auto; margin-left: 50px; margin-bottom: 20px">
-		<div class="col-md-4" align="">
+		<div class="col-md-6" align="">
 
 		<!--  Upload Photo From Computer -->
-		<%= form_for @item do |f| %>
+		<form method="post">
+			<input type="hidden" name="_method" value="patch" />
+			<%= hidden_field_tag :image_upload, true %>
+			<span class="btn btn-default fileinput-button orange_button_round">
+				<span class="glyphicon glyphicon-plus"></span>
+				<span id="upload_button_label">Upload From Comupter</span>
+				<input id="fileupload" type="file" name="item[image]" data-url="/items/<%= @item.id %>" multiple>
+			</span>
+		</form>
 
-			<div class="field" style="margin-top: 10px">
-				<%= f.file_field :image, id:"item_image", type:"file", class:"file-loading"%>
-			</div>
-			<div class="actions" style="margin-top: 10px">
-				<%= hidden_field_tag :image_upload, true %>
-
-			</div>
-		<% end %>
 		</div>
 		
-		<div class="col-md-4" align="left" style="margin-top: 0px">
-			<h4 class="no_bold" style="margin-top: 20px">or import from</h4>
+		<div class="col-md-3" align="left" style="margin-left: 10px;margin-top: 0px">
+			<h4 class="no_bold" style="margin-top: 10px">Or  From</h4>
 		</div>
 		
 		<!--  Upload Photo From Facebook/Instagram -->
-		<div class="col-md-2" align="center" style="margin-top: 10px; cursor: pointer">
+		<div class="col-md-1" align="center" style="margin-right: 10px; margin-top: 0px; cursor: pointer">
 			<%= image_tag '/items/facebook_icon.png', class: "facebook_icon", id: "facebook_upload_button", onclick: "load_images_from_facebook()" %>
 			
 		</div>
-		<div class="col-md-1" align="center" style="margin-top: 10px; cursor: pointer">
+		<div class="col-md-1" align="center" style="margin-top: 0px; cursor: pointer">
 			
 			<%= image_tag '/items/instagram_icon.png', class: "facebook_icon", id: "instagram_upload_button", onclick: "instagram_login()" %>
 		</div>
@@ -49,11 +65,43 @@
 </div>
 
 <script>
-	$(document).on('ready', function() {
-		$("#item_image").fileinput({
-			showCaption : false
-		});
-	}); 
+$(function () {
+    $('#fileupload').fileupload({
+    	
+        dataType: 'json',
+        
+        done: function (e, data) {     		
+        		// Show Crop Modal
+       		// Init Crop First
+			$('#item_image_cropbox').Jcrop({
+        			setSelect: [0, 0, 450, 450],// you have set proper proper x and y coordinates here
+            		allowSelect: false,
+    			});
+       		
+       		$('#item_image_cropbox').attr('src', data.result.crop_image_url);
+			$('.jcrop-selection').attr('onclick', 'return false;');
+			$('.jcrop-selection').attr('value', $('.jcrop-selection').attr('style'));	
+			$('#crop_modal').modal('show');
+			$("div#divLoading").removeClass('show');
+        },
+
+        add: function (e, data) {
+            $("div#divLoading").addClass('show');
+            data.submit();
+        },
+        
+    		progressall: function (e, data) {
+        		var progress = parseInt(data.loaded / data.total * 100, 10);
+        		$('#progress .bar').css(
+            		'width',
+            		progress + '%'
+        		);
+    		}
+    });
+});
+</script>
+
+<script>
 	
 	$('body').on('click', 'button.fileinput-upload', function () {
     		$("div#divLoading").addClass('show');

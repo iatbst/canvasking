@@ -17,5 +17,8 @@
 //= require file_upload_template/js/fileinput.min
 //= require twentytwenty_template/jquery.event.move
 //= require twentytwenty_template/jquery.twentytwenty
+//= require jquery_fileupload_template/js/vendor/jquery.ui.widget
+//= require jquery_fileupload_template/js/jquery.iframe-transport
+//= require jquery_fileupload_template/js/jquery.fileupload
 //= require bootstrap-sprockets
 //= require_tree .

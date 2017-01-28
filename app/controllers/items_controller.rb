@@ -74,17 +74,21 @@ class ItemsController < ApplicationController
       # Different image source: this will create different versions of tmp images
       if params[:upload_from_facebook]
         @item.remote_image_url = params[:facebook_image_url]
+      elsif params[:upload_from_instagram]
+        @item.remote_image_url = params[:instagram_image_url]
       else
         @item.attributes = item_params
       end
       
       # Override image version url with tmp file path until upload job done
       prepare_tmp_image_paths(@item, 'image_tmp_paths')
-      @item.image.crop_version.url = @item.image.crop_version.current_path.split('public')[1]
+      #@item.image.crop_version.url = @item.image.crop_version.current_path.split('public')[1]
         
-      @crop_image = true
+      #@crop_image = true
       @size_price, @size_price_str = prepare_size_price(@item)
-      render 'new'
+      
+      render json: {'status'=> 'SUCCESS',
+                    'crop_image_url'=> @item.image.cart.current_path.split('public')[1] }
 
     # Image cropped, return to item new page
     elsif params[:image_cropped]

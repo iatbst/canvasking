@@ -34,6 +34,7 @@
 		    						 			
  				$('#albums').append('<div class="collapse" id="collapse_photos_of_you"><div id="photos_of_you" class="container"></div></div>');
 		    	  
+		    	   
 		    	  	// Build the grid system for images
 		    	  if (photos && photos.data && photos.data.length){
 		    	  	for (var j=0; j<photos.data.length; j++){
@@ -53,9 +54,14 @@
 		          var photo = photos.data[j];
 		          photo.images.sort(function(a, b) { return b.width - a.width;})
 		          var large_image_url = photo.images[0].source
+		          if (photo.images[0].width > photo.images[0].height){
+		          	var image_class = "facebook_image_width";
+		          } else {
+		          	var image_class = "facebook_image_height";
+		          }
 		          // photo.picture contain the link to picture          
 		          $('#' + photo.id).append('<img src="' + photo.picture + '" \
-		          								 class="facebook_image" id="' + large_image_url + '"></img>');
+		          								 class="' + image_class + '" id="' + large_image_url + '"></img>');
 		        }
 		      }
 		       		
@@ -96,9 +102,15 @@
 		          var photo = photos.data[j];
 		          photo.images.sort(function(a, b) { return b.width - a.width;})
 		          var large_image_url = photo.images[0].source
+		          // photo.picture contain the link to picture 
+		          if (photo.images[0].width > photo.images[0].height){
+		          	var image_class = "facebook_image_width";
+		          } else {
+		          	var image_class = "facebook_image_height";
+		          }
 		          // photo.picture contain the link to picture          
 		          $('#' + photo.id).append('<img src="' + photo.picture + '" \
-		          								 class="facebook_image" id="' + large_image_url + '"></img>');
+		          								 class="' + image_class + '" id="' + large_image_url + '"></img>');         
 		        }
 		      }
 		    });
@@ -119,16 +131,29 @@
 		$('.collapse').collapse('hide');
 	});
 	
-	$('body').on('click','img.facebook_image', function() {
+	$('body').on('click','img.facebook_image_width, img.facebook_image_height', function() {
 		$('.facebook_image_grid').css('border-color', '');
 		$('.facebook_image_grid').css('border-weight', '');
 		$(this).parent().css('border-color', 'red');
 		$(this).parent().css('border-weight', '3px');
 		
-    		$('#facebook_upload').attr('value', $(this).attr('id'));
-    		$('#upload_my_facebook_image').click();
     		$('#facebook_images').modal('hide');
     		$("div#divLoading").addClass('show');
+    		
+    		// and ajax call to server
+    		$.ajax({
+  				url: "/items/<%= @item.id %>",
+  				data: {'image_upload': true, 'upload_from_facebook': true, 'facebook_image_url': $(this).attr('id')},
+  				dataType: 'json',
+  				type: 'patch',
+			}).done(function(data) {
+        			// Show Crop Modal
+        			$('#item_image_cropbox').attr('src', data.crop_image_url);
+				$('.jcrop-selection').attr('onclick', 'return false;');
+				$('.jcrop-selection').attr('value', $('.jcrop-selection').attr('style'));	
+				$('#crop_modal').modal('show');
+				$("div#divLoading").removeClass('show');
+		});
 	});	
 	
 	function open_facebook_modal() {
@@ -187,8 +212,6 @@
 					 data: {access_token: accessToken},
 					 
 					 success: function(photos){
-					    console.log(photos);
-					    // Successfully get json object of images
 					    
 					    // display modal
   						open_instagram_modal();
@@ -202,7 +225,7 @@
 				    	  			if (j%5 == 0) {
 				    	  				$('#my_instagram_images').append('<div class="row" id="' + row_id + '"></div>');
 				    	  			}
-				    	  			$('#' + row_id).append('<div class="col-md-2 box facebook_image_grid" align="center" id="' + photo.id + '"></div>');
+				    	  			$('#' + row_id).append('<div class="col-md-2 box instagram_image_grid" align="center" id="' + photo.id + '"></div>');
 				    	  
 				    	  		}
 				    	  	}
@@ -214,7 +237,7 @@
 		          				var thumb_image_url = photo.images.thumbnail.url
 		          				// photo.picture contain the link to picture          
 		          				$('#' + photo.id).append('<img src="' + thumb_image_url + '" \
-		          								 class="facebook_image" id="' + large_image_url + '"></img>');
+		          								 class="instagram_image" id="' + large_image_url + '"></img>');
 		        					}
 		      			}
 					 
@@ -241,46 +264,38 @@
 			);
 			return false;
 		}
+		
+	$('body').on('click','img.instagram_image', function() {
+		$('.instagram_image_grid').css('border-color', '');
+		$('.instagram_image_grid').css('border-weight', '');
+		$(this).parent().css('border-color', 'red');
+		$(this).parent().css('border-weight', '3px');
+ 
+    		$('#instagram_images').modal('hide');
+    		$("div#divLoading").addClass('show');
+
+    		// and ajax call to server
+    		$.ajax({
+  				url: "/items/<%= @item.id %>",
+  				data: {'image_upload': true, 'upload_from_instagram': true, 'instagram_image_url': $(this).attr('id')},
+  				dataType: 'json',
+  				type: 'patch',
+			}).done(function(data) {
+        			// Show Crop Modal
+        			// Init Crop First
+        			$('.jcrop-active').remove();
+        			$('#item_image_cropbox_wrapper').appendChild('<img id="item_image_cropbox" src=""></img>');
+        			
+        			$('#item_image_cropbox').attr('src', data.crop_image_url);
+				$('.jcrop-selection').attr('onclick', 'return false;');
+				$('.jcrop-selection').attr('value', $('.jcrop-selection').attr('style'));	
+				$('#crop_modal').modal('show');
+				$("div#divLoading").removeClass('show');
+		});
+	});	
+	
 	</script>
 	
-<!-- <script>
-	
-	function load_images_from_instagram() {
-	
-	var auth_url = "https://api.instagram.com/oauth/authorize/?client_id=<%= Canvasking::INSTAGRAM_APP_ID %>&redirect_uri=<%= Canvasking::INSTAGRAM_RE_URL %>&response_type=token"
-	// // window open
-	// window.open(auth_url);
-	
-	// instagram auth
-	// $.ajax({
-	  	// type: "GET",
-	  	// dataType: "jsonp",
-	  	// cache: false,
-	  	// url: ,
-// 	  
-	  	// success: function(response) {
-	    		// var length = response.data != 'undefined' ? response.data.length : 0;
-	    		// alert(response.data);
-	  	// }
-	// });
-	
-	// get media
-	
-	// display modal
-  	//$('#instagram_images').modal('show');
-	
-	
-	}
-	
-	function get_my_instagram_images(user_id, access_token){
-    		var userFeed = new Instafeed({
-        		get: 'user',
-        		userId: user_id,
-        		accessToken: access_token
-    		});
-    		userFeed.run();
-	}
-</script> -->
 
 <!-- Instagram upload Modal -->
 <div class="modal fade" id="instagram_images" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -300,14 +315,6 @@
       </div>
       <div class="modal-footer">
       			<button type="button" class="btn btn-default" data-dismiss="modal">Skip</button>
-      		
-				<%= form_for @item do |f| %>
-					<%= hidden_field_tag :facebook_image_url, true, id: "facebook_upload" %>
-					<%= hidden_field_tag :image_upload, true %>
-					<%= hidden_field_tag :upload_from_facebook, true %>
-				<%= f.submit 'Upload', class: "btn btn-primary", id: "upload_my_facebook_image", style: "display: none"%>
-				<% end %>     		
- 
       </div>
     </div>
   </div>
@@ -335,14 +342,7 @@
       </div>
       <div class="modal-footer">
       			<button type="button" class="btn btn-default" data-dismiss="modal">Skip</button>
-      		
-				<%= form_for @item do |f| %>
-					<%= hidden_field_tag :facebook_image_url, true, id: "facebook_upload" %>
-					<%= hidden_field_tag :image_upload, true %>
-					<%= hidden_field_tag :upload_from_facebook, true %>
-				<%= f.submit 'Upload', class: "btn btn-primary", id: "upload_my_facebook_image", style: "display: none"%>
-				<% end %>     		
- 
+    
       </div>
     </div>
   </div>
@@ -377,7 +377,7 @@
 
 </style>
 
-<div class="container" style="margin-top:100px; margin-bottom: 100px">
+<div class="container" style="margin-top:50px; margin-bottom: 100px">
 
 	<div class="row">
 
@@ -426,10 +426,12 @@
 	</div>
 </div>
 
-<!-- Pop up Modal for crop -->
+<!-- Pop up Modal for crop 
 <% if !@crop_image.nil? && @crop_image %>
 <%= render 'crop' %>
-<% end %>
+<% end %>-->
+<%= render 'crop' %>
+
 
 <script>
 
@@ -899,6 +901,8 @@
 	
 	$('#change_image').click(function(){
 		$('#select_image_collapse_box').hide();
+		$('#image_upload_label').text('');
+		$('#upload_button_label').text('Upload Another Image');
 		$('#select_image_box').show();
 	});
 

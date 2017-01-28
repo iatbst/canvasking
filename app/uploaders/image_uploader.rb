@@ -50,10 +50,10 @@ class ImageUploader < CarrierWave::Uploader::Base
     resize_to_fit(450, 450)
   end
 
-  version :crop_version, :from_version => :cart do
-    attr_accessor :url
-    resize_to_fit(450, 450)
-  end
+  # version :crop_version, :from_version => :cart do
+    # attr_accessor :url
+    # resize_to_fit(450, 450)
+  # end
    
   
   version :thumb, :from_version => :cart do
