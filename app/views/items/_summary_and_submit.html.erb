@@ -7,10 +7,19 @@
   border-radius: 0px;
   font-weight: bold;
 }
+
+.grey_button {
+  background-color: #E2E2E2;
+  border-color: #E2E2E2;
+  color: white;
+  border-radius: 0px;
+  font-weight: bold;
+}
 	
 </style>
 
-<div class="row box" id="summary_and_submit" style="<% if hide_summary_section?(@edit, @show, @save_fail, params, @item) %> display:none; <% end %>border-color:black; margin-top: 30px; height: 370px">
+<div class="row box" id="summary_and_submit" style="<% if item_in_cart?(@item) %> border-color: black;<% end %>margin-top: 30px; height: 370px">
+	<div style="<% if !item_in_cart?(@item) %>opacity: 0.4;<% end %>" id="summary_and_submit_div">
 	<div class="row" align="center">
 		<h3>
 			SUMMARY
@@ -88,8 +97,9 @@
 				<% if item_in_cart?(@item) %>
 					<%= f.submit 'SAVE CHANGES', class: "btn btn-primary btn-lg orange_button", style:"width: 60%"%>
 				<% else %>
-					<%= f.submit 'ADD TO CART', class: "btn btn-primary btn-lg orange_button", style:"width: 60%", id: "add_to_cart_button"%>
+					<%= f.submit 'ADD TO CART', class: "btn btn-primary btn-lg grey_button", style:"width: 60%", disabled: "disabled", id: "add_to_cart_button"%>
 				<% end %>
 			</div>
-
+	
+	</div>
 </div>

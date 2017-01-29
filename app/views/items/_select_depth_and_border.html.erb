@@ -1,4 +1,4 @@
-<div class="row box" id="canvas_options" style="margin-top: 30px; <% if hide_canvas_options_section?(@item) %>display: none<% end %>">
+<div class="row box" id="canvas_options" style="margin-top: 30px; <% if hide_canvas_options_section?(@item, @update_image_cropped) %>display: none<% end %>">
 
 
 		<div class="row">
@@ -21,7 +21,7 @@
 
 				<label class="depth_options" > 
 					
-					<%= f.radio_button :depth, "0",  style:"visibility: hidden;", id: "depth_0" %>
+					<%= f.radio_button :depth, "0.0",  style:"visibility: hidden;", id: "depth_0" %>
 					<%= image_tag '/canvas_depth_0.jpeg', class: "depth_options_image"%> 
 					<h5 style="margin-left: 30px"> Rolled</h5> 
 				</label>

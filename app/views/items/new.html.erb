@@ -423,17 +423,29 @@
 			<!-- Select Filter -->
 			<%= render partial: 'select_filter',  locals:{f: f} %>
 			<%= render partial: 'select_filter_done',  locals:{f: f} %>
-			
+			<% @section_name = "filter" %>
+			<% @section_label = "Select art effect" %>
+			<%= render partial: 'section_placeholder', locals:{section_name: @section_name, section_label: @section_label, item: @item} %>			
 			
 			<!-- Select Product -->
 			<%= render partial: 'select_product', locals:{f: f} %>
-
+			<%= render partial: 'select_product_done',  locals:{f: f} %>
+			<% @section_name = "product" %>
+			<% @section_label = "Select product" %>
+			<%= render partial: 'section_placeholder', locals:{section_name: @section_name, section_label: @section_label, item: @item} %>
+			
 			<!-- Select Size -->
 			<%= render partial: 'select_size', locals:{f: f} %>
-
+			<% @section_name = "size" %>
+			<% @section_label = "Select size" %>
+			<%= render partial: 'section_placeholder', locals:{section_name: @section_name, section_label: @section_label, item: @item} %>
+			
 			<!-- Select Depth and Border -->
 			<%= render partial: 'select_depth_and_border', locals:{f: f}%>
-
+			<% @section_name = "options" %>
+			<% @section_label = "Select options" %>
+			<%= render partial: 'section_placeholder', locals:{section_name: @section_name, section_label: @section_label, item: @item} %>
+			
 			<!-- Select Frame and Mat -->
 			<%= render partial: 'select_frame_and_mat', locals:{f: f}%>
 			
@@ -522,11 +534,14 @@
 		//update option section
 		if (is_canvas_depth_checked() || is_canvas_border_checked()){
 			$('#canvas_options').show();
+		} else {
+			$('#section_placeholder_options').show();
 		}
-		$('#frame_options').hide();
-		$("html, body").animate({ scrollTop: $(document).height() }, 2000);
-		$('#size_price_options').fadeIn(2000);
 		
+		$('#frame_options').hide();
+		//$("html, body").animate({ scrollTop: $(document).height() }, 2000);
+		//$('#size_price_options').fadeIn(1000);
+		$('#product_done_label').text('Single canvas');
 
 		//remove frame and mat
 		$('#overview_image').attr('class','overview_image image_shadow_in_item');	
@@ -580,10 +595,13 @@
 		//update option section
 		if (is_canvas_depth_checked() || is_canvas_border_checked()){
 			$('#canvas_options').show();
+		} else {
+			$('#section_placeholder_options').show();
 		}
 		$('#frame_options').hide();
-		$('#size_price_options').show();
-
+		//$('#size_price_options').show();
+		$('#product_done_label').text('Triptych canvas');
+		
 		//remove frame and mat
 		$('#overview_image').attr('class','overview_image image_shadow_in_item');
 		$('#overview_image').css('padding', '0px');
@@ -651,8 +669,12 @@
 		$('#canvas_options').hide();
 		if (is_frame_frame_checked() || is_frame_mat_checked()){
 			$('#frame_options').show();
+		} else {
+			$('#section_placeholder_options').show();
 		}
-		$('#size_price_options').show();
+		
+		//$('#size_price_options').show();
+		$('#product_done_label').text('Frame');
 		
 		//update image frame, default is black frame border if none is checked
 		if($('#frame_white_wood').is(':checked')){
@@ -767,10 +789,12 @@
 			$('#select_filter_skip_collapse').show();
 			$('#select_filter_done_collapse').hide();
 			$('#select_filter_box').hide();
-			$('#select_product_box').fadeIn(2000);
+			if ( !is_product_checked() ) {
+				$('#select_product_box').fadeIn(1000);	
+			}
 			$('#art_filter_checkbox').prop('checked', true);
 			$('#overview_image').attr('src', '<%= get_image_url(@item, "overview", {"no_effect" => true}) %>');
-			
+			$('#section_placeholder_product').hide();
 		}
 		
 		$('.product_image').click(function(){
@@ -782,19 +806,23 @@
 			$('#select_size_arrow').show();
 			$('#select_size_done').hide();	
 			$('#select_product_done').show();
-			$('#summary_and_submit').hide();
+			$('#section_placeholder_size').hide();
+			$('#size_price_options').fadeIn(1000);
+			$('#select_product_collapse_box').show();
+			$('#select_product_box').hide();
 		});
 		
 		$('#item_size').change(function (){
 			$('#select_size_arrow').hide();
 			$('#select_size_done').show();
 			// $('#size_price_options').css("border-color", "black");
-
-
+			//$("html, body").animate({ scrollTop: $(window).scrollTop() + 450 }, 2000);
+			$('#section_placeholder_options').hide();
+			
 			if ($('#product_frame_radio').is(':checked')){
 		
 				$('#canvas_options').hide();
-				$('#frame_options').fadeIn(2000);
+				$('#frame_options').fadeIn(1000);
 				
 				if (!is_frame_frame_checked()){
 					$('#select_frame_options_frame_arrow').show();
@@ -802,16 +830,13 @@
 					$('#select_frame_options_mat_arrow').show();
 				} else {
 					// ready to add to cart
-					// $('#add_to_cart_button').css('background-color', 'black');
-					// $('#add_to_cart_button').css('color', 'white');
-					// $('#overview_box').css('border-color', 'black');
-					$('#summary_and_submit').show();
+					
 				}
 
 			} else {
 
-				$('#canvas_options').show();
-				$('#frame_options').fadeIn(2000);
+				$('#canvas_options').fadeIn(1000);
+				$('#frame_options').hide();
 				
 				if (!is_canvas_depth_checked()){
 					$('#select_canvas_options_depth_arrow').show();
@@ -819,14 +844,11 @@
 					$('#select_canvas_options_border_arrow').show();
 				} else {
 					// ready to add to cart
-					// $('#add_to_cart_button').css('background-color', 'black');
-					// $('#add_to_cart_button').css('color', 'white');
-					//$('#overview_box').css('border-color', 'black');
-					$('#summary_and_submit').show();
+					
 				}
 			}
 			
-			$("html, body").animate({ scrollTop: $(document).height() }, 2000);
+			
 		});
 		
 		$('.depth_options').click(function(){
@@ -836,11 +858,7 @@
 				$('#select_canvas_options_border_arrow').show();
 			} else {
 				// wizard process is done
-				//$('#canvas_options').css('border-color', 'black');
-				// $('#add_to_cart_button').css('background-color', 'black');
-				// $('#add_to_cart_button').css('color', 'white');
-				//$('#overview_box').css('border-color', 'black');
-				$('#summary_and_submit').show();
+				add_to_cart_is_ready();
 			}
 		});
 
@@ -851,11 +869,7 @@
 				$('#select_canvas_options_depth_arrow').show();
 			} else {
 				//wizard process is done
-				//$('#canvas_options').css('border-color', 'black');
-				// $('#add_to_cart_button').css('background-color', 'black');
-				// $('#add_to_cart_button').css('color', 'white');
-				//$('#overview_box').css('border-color', 'black');
-				$('#summary_and_submit').show();
+				add_to_cart_is_ready();
 			}
 		});
 
@@ -866,11 +880,7 @@
 				$('#select_frame_options_mat_arrow').show();
 			} else {
 				// wizard process is done
-				//$('#frame_options').css('border-color', 'black');
-				// $('#add_to_cart_button').css('background-color', 'black');
-				// $('#add_to_cart_button').css('color', 'white');
-				//$('#overview_box').css('border-color', 'black');	
-				$('#summary_and_submit').show();	
+				add_to_cart_is_ready();
 			}
 		});
 
@@ -881,16 +891,18 @@
 				$('#select_frame_options_frame_arrow').show();
 			} else {
 				// wizard process is done
-				//$('#frame_options').css('border-color', 'black');
-				// $('#add_to_cart_button').css('background-color', 'black');
-				// $('#add_to_cart_button').css('color', 'white');
-				//$('#overview_box').css('border-color', 'black');
-				$('#summary_and_submit').show();
+				add_to_cart_is_ready();
 			}
 		});
 	
 
-
+	function add_to_cart_is_ready(){
+		$('#add_to_cart_button').removeClass('grey_button');
+		$('#add_to_cart_button').addClass('orange_button');
+		$('#add_to_cart_button').removeAttr('disabled');
+		$('#summary_and_submit').css('border-color', 'black');
+		$('#summary_and_submit_div').css('opacity', 1);
+	}
 	function is_product_checked(){
 		return 	($('#product_single_canvas_radio').is(':checked') 
 				|| $('#product_triptych_canvas_radio').is(':checked') 
@@ -926,6 +938,11 @@
 		$('#image_upload_label').text('');
 		$('#upload_button_label').text('Upload Another Image');
 		$('#select_image_box').show();
+	});
+
+	$('#change_product').click(function(){
+		$('#select_product_collapse_box').hide();
+		$('#select_product_box').show();
 	});
 
 	$('#change_filter').click(function(){

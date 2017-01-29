@@ -1,0 +1,18 @@
+
+			<div class="row box" id="select_product_collapse_box" style="<% if hide_product_done_section?(@item) %>display:none<% end %>; margin-top: 30px;">
+				<div class="col-md-6" align="left">
+					<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px">
+						<span class="glyphicon glyphicon-ok ok_color" id="select_product_done_collapse"></span>&nbsp;&nbsp;
+						<span id="product_done_label">
+						<% if @item.product.nil? %>
+							Product
+						<% else %>
+							<%= @item.product.name.capitalize %>
+						<% end %>
+						</span>
+					</h4>
+				</div>
+				<div class="col-md-6" style="margin-top: 10px" align="right">
+					<%= button_tag "CHANGE", :type => 'button', id: 'change_product', style: 'margin-top: 7px;', :class => "btn btn-default btn-sm blue_style"%>
+				</div>
+			</div>

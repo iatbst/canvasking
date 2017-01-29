@@ -113,26 +113,31 @@ module ItemsHelper
     return !hide_filter_section?(params) || new_action
   end
   
+  def hide_product_done_section?(item)
+    return !( !item.product.nil? )
+  end
+  
   def hide_products_section?(edit, show, params, save_fail, item)
-    return !( edit || \
-              params[:art_filterred] || \
-              save_fail || \
-              (show && image_is_uploaded(item)))
+    return !( 
+              (params[:art_filterred] && item.product.nil?) || \
+              (show && item.product.nil?)
+             )
   end
 
   def hide_size_section?(edit, show, save_fail, params, item)
     return !( edit || \
               (save_fail && item.product) || \
               (params[:art_filterred] && item.product) || \
-              (show && image_is_uploaded(item) && item.product ))
+              (show && image_is_uploaded(item) && item.product ) || \
+              item_in_cart?(item))
   end
   
-  def hide_canvas_options_section?(item)
+  def hide_canvas_options_section?(item,  update_image_cropped)
     return !(item.product && item.product.name.include?("canvas"))
   end
   
-  def hide_frame_options_section?(item)
-    return !(item.product && item.product.name.include?("frame"))
+  def hide_frame_options_section?(item, update_image_cropped)
+    return !(item.product && item.product.name.include?("frame")) 
   end
   
   def hide_summary_section?(edit, show, save_fail, params, item)
@@ -140,6 +145,21 @@ module ItemsHelper
     return !( edit || \
             (show && item.size) || \
             (save_fail && item.size) || \
-            (params[:art_filterred] && item.size))
+            (params[:art_filterred] && item.size) || \
+            item_in_cart?(item))
   end
+  
+  def hide_placeholder_section?(item, section_name)
+    if section_name == "filter"
+      return !( !image_is_uploaded(item) )
+    elsif section_name == "product"
+      return !( item.image.file.nil?)
+    elsif section_name == "size"
+      return !( item.product.nil? )
+    elsif section_name == "options"
+      #return !( item.depth.nil? && item.border.nil? && item.frame_id.nil? && item.mat.nil? )
+      return !( item.size.nil? )
+    end
+  end
+  
 end
