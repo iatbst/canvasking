@@ -10,6 +10,7 @@ class ItemsController < ApplicationController
     @wizard = true
     @new = true
     @show_image_wizard_arrow = true
+    @size_price, @size_price_str = prepare_size_price(@item)
   end
   
   # NOT USED, because item is automatically created when user enter new page.
@@ -82,9 +83,7 @@ class ItemsController < ApplicationController
       
       # Override image version url with tmp file path until upload job done
       prepare_tmp_image_paths(@item, 'image_tmp_paths')
-      #@item.image.crop_version.url = @item.image.crop_version.current_path.split('public')[1]
-        
-      #@crop_image = true
+ 
       @size_price, @size_price_str = prepare_size_price(@item)
       
       render json: {'status'=> 'SUCCESS',
@@ -92,13 +91,14 @@ class ItemsController < ApplicationController
 
     # Image cropped, return to item new page
     elsif params[:image_cropped]
+      params[:item] = JSON.parse(params[:item])
       # Check if image cropped
       if params[:image_cropped_indeed] == "true"
         # Important: Process order should from high to low
         process_now_versions = ['origin','filter', 'overview', 'cart', 'thumb']
         crop_local_tmp_files(@item, process_now_versions)
       end
-
+      
       # get image ratio
       begin
         h_w_ratio = params[:item][:image_crop_h].to_f/params[:item][:image_crop_w].to_f
@@ -114,6 +114,8 @@ class ItemsController < ApplicationController
       
       @wizard = true
       @show_filter_wizard_arrow = true
+      @update_image_cropped = true
+      
       render 'new'
 
     # Image processed by art filter
@@ -358,7 +360,7 @@ class ItemsController < ApplicationController
     h = _size.split('x')[0]
     w = _size.split('x')[1]
     h_w_ratio = (h.to_f)/(w.to_f)
-    return (1 - ratio/h_w_ratio).abs < 0.04, h, (1 - ratio/h_w_ratio).abs
+    return (1 - ratio.to_f/h_w_ratio).abs < 0.04, h, (1 - ratio/h_w_ratio).abs
   end
     
   def process_size_price_table_by_image_ratio(item, size_price_obj)
@@ -380,7 +382,6 @@ class ItemsController < ApplicationController
           temp_price_list.push({'h'=> h, 's'=> size, 'p'=> price, 'diff'=> diff})
         end
       end
- 
       
       temp_price_list.sort_by! {|obj| obj['diff']}
       temp_price_list = temp_price_list[0..9]

@@ -15,7 +15,7 @@
 </style>
 
 <!-- Modal -->
-<div class="modal fade" id="crop_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="crop_modal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -25,18 +25,20 @@
 			<div class="modal-body">
 
 				<div class="row" align="center">
-					<%= form_for @item do |f| %>
-					<%= f.cropbox :image, version: :cart %>
-					<br />
-					<%= hidden_field_tag :image_cropped, true %>
-					<%= hidden_field_tag :image_cropped_indeed, false %>
-					<%= f.submit 'Save', id: "crop_submit_button", style:"display: none"%>
-					<% end %>
+					<div id="item_image_cropbox_wrapper">
+						
+					</div>
 
 				</div>
 			</div>
 			<div class="modal-footer" align="center">
 				<div align="center">
+					<%= form_for :item, url: item_path(@item), method: :patch do |f| %>
+						<%= hidden_field_tag :item, "", id: "crop_metrics_field" %>
+						<%= hidden_field_tag :image_cropped, true, id: "image_cropped_field"%>
+						<%= hidden_field_tag :image_cropped_indeed, false, id: "image_cropped_indeed_field" %>
+						<%= f.submit 'submit', style: "display:none", id: "form_submit"%>
+					<% end %>
 					<button type="button" onclick="crop();" class="btn btn-secondary blue_style" style="width: 50%;">
 					Save
 					</button>
@@ -51,20 +53,45 @@
 
 	// Trigger modal when page loaded an
 	$( window ).on("load", function(){
-		//$('.jcrop-selection').attr('onclick', 'return false;');
-		//$('.jcrop-selection').attr('value', $('.jcrop-selection').attr('style'));	
-		//$('#crop_modal').modal('show');
+		    // $('#item_image_cropbox').Jcrop({
+        			// setSelect: [0, 0, 450, 450],
+          		// allowSelect: false,
+    			// });
 	});
 
 			
 	// Use footer button to trigger form submit button
 	function crop(){
 		// Image cropped
-		if ($('.jcrop-selection').attr('style') != $('.jcrop-selection').attr('value')){
-			$('#image_cropped_indeed').attr('value', true);
-		}
-		$('#crop_submit_button').click();
+		// Send Ajax call back to server for crop
+		var crop_top = parseInt($('.jcrop-selection').css('top'));
+		var crop_left = parseInt($('.jcrop-selection').css('left'));
+		var crop_width = parseInt($('.jcrop-selection').css('width'));
+		var crop_height = parseInt($('.jcrop-selection').css('height'));
+		var image_width = parseInt($('.jcrop-active').css('width'));
+		var image_height = parseInt($('.jcrop-active').css('height'));
+		if (crop_top != 0 || crop_left != 0 || crop_width != image_width || crop_height != image_height){
+			$('#image_cropped_indeed_field').attr('value', true);
+		} 
 		$('#crop_modal').modal('hide');
 		$("div#divLoading").addClass('show');
+		$("#crop_metrics_field").attr("value", JSON.stringify({'image_crop_x': crop_left,
+											   'image_crop_y': crop_top,
+											   'image_crop_w': crop_width,
+											   'image_crop_h': crop_height}));
+		$("#form_submit").click();
+		
+    		// $.ajax({
+  				// url: "/items/<%= @item.id %>",
+  				// data: {'item': {'image_crop_x': crop_left, 'image_crop_y': crop_top, 'image_crop_w': crop_width, 'image_crop_h': crop_height},
+  					   // 'image_cropped': true,
+  					   // 'image_cropped_indeed': image_is_cropped},
+  				// dataType: 'json',
+  				// type: 'patch',
+			// }).done(function(data) {
+        			// // Show Crop Modal
+				// $("div#divLoading").removeClass('show');
+				// $('.overview_image').attr('src', data.overview_image_url);
+		// });
 	}
 </script>

@@ -16,6 +16,8 @@ module ItemsHelper
       # If image is still cached in local tmp, use it first, if not, use the one on S3
       if !item.image_tmp_paths.empty?
         return item.image_tmp_paths[version]
+      elsif item.image.file.nil?
+        return '/canvas_placeholder.png'
       else
         if version == "filter"
             return item.image.filter.url
@@ -36,6 +38,8 @@ module ItemsHelper
     
       if !item.art_image_tmp_paths.empty?
         return item.art_image_tmp_paths[version]
+      elsif item.art_image.file.nil?
+        return '/canvas_placeholder.png'
       else
         if version == "overview"
           return item.art_image.overview.url
