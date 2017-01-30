@@ -153,7 +153,7 @@ module ItemsHelper
     if section_name == "filter"
       return !( !image_is_uploaded(item) )
     elsif section_name == "product"
-      return !( item.image.file.nil?)
+      return !( !image_is_uploaded(item))
     elsif section_name == "size"
       return !( item.product.nil? )
     elsif section_name == "options"
