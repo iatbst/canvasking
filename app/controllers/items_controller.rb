@@ -141,9 +141,9 @@ class ItemsController < ApplicationController
       @item.time_to_save = true
       # special process for size, if user failed specify the size option,
       # return error page, not save
-      if params[:item] && params[:item]["size"].nil?
-        @item.update_attribute("size", nil)
-      end
+      #if params[:item] && params[:item]["size"].nil?
+      #  @item.update_attribute("size", nil)
+      #end
   
       if @item.update(item_params)
         # Calculate price
