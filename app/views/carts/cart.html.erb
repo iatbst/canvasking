@@ -1,4 +1,15 @@
 <%= render "layouts/navbar" %>
+<style>
+.blue_button {
+  width: 200px;
+  background-color: #709BC5;
+  border-color: #709BC5;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+</style>
 
 <div class="container">
 	<div class="row" style="margin-top: 50px">
@@ -6,8 +17,8 @@
 		<% if @cart.items.count == 0 %>
 			<div align="center">
 				<%= image_tag '/cart/empty_cart.png' %>
-				<h3>Oops...Your Cart is still empty. Let's fill it :)</h3><br />
-				<%= button_to 'Get Started', new_item_path, method: :get, class:"btn btn-primary btn-lg" %>
+				<h3>Oops...Your Cart is still empty. Let's fill it ^_^</h3><br />
+				<%= button_to 'Get Started', new_item_path, method: :get, class:"btn btn-primary btn-lg blue_button" %>
 			</div>
 		<% else %>
 			<%= render partial:'items', locals:{cart: @cart } %>

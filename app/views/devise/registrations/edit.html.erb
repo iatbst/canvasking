@@ -1,6 +1,15 @@
 <%= render 'layouts/navbar' %>
+<style>
+.orange_button {
+  background-color: #ef9223;
+  border-color: #ef9223;
+  color: white;
+  border-radius: 0px;
+  font-weight: bold;
+}
+</style>
 
-<div class="container" style="margin-top: 100px">
+<div class="container" style="margin-top: 50px;">
 	<div class="row" >
 		<div class="col-md-2" style="height: 500px" align="left">
 
@@ -41,7 +50,7 @@
 				<h4 class="no_bold"> You will need to fill in current password to update your profile. </h4>
 			</div>
 
-			<div style="margin-top: 20px">
+			<div style="margin-top: 20px; margin-bottom: 50px">
 				<% flash.each do |name, msg| %>
 				<%= content_tag :section, msg, :id => "flash_#{name}", :class => "flash", style: "color: green; font-size: 16px" %>
 				<% end %>
@@ -87,7 +96,7 @@
 				</div>
 				<br />
 				<div class="actions">
-					<%= f.submit "Update", class: "btn btn-primary btn-lg"%>
+					<%= f.submit "Update", class: "btn btn-primary btn-lg orange_button"%>
 				</div>
 				<% end %>
 			</div>
