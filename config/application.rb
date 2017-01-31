@@ -62,6 +62,6 @@ module Canvasking
   if Rails.env == "development"
     INSTAGRAM_RE_URL = 'http://localhost:3000'
   elsif Rails.env == "production"
-    INSTAGRAM_RE_URL = 'https://arcane-sands-61757.herokuapp.com'
+    INSTAGRAM_RE_URL = 'https://radiant-tundra-25592.herokuapp.com'
   end
 end
