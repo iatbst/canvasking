@@ -143,3 +143,35 @@
     display: none;
     display:inline-block;
 }
+
+label > input.radio_hide {/* HIDE RADIO */
+    visibility: hidden; /* Makes input not-clickable */
+    position: absolute; /* Remove input from document flow */
+  }
+  label > input + img {/* IMAGE STYLES */
+    cursor: pointer;
+    border: 2px solid transparent;
+  }
+  label > input:hover + img {/* (RADIO CHECKED) IMAGE STYLES */
+    border: 1px solid #ef9223;
+    border-radius: 5px;
+    padding: 5px;
+  }
+
+  label > input:checked + img {/* (RADIO CHECKED) IMAGE STYLES */
+    border: 2px solid #ef9223;
+    border-radius: 5px;
+    padding: 5px;
+      
+  }
+  
+  
+
+.blue_style {
+
+  background-color: #709BC5;
+  border-color: #709BC5;
+  color: white;
+  border-radius: 2px;
+  font-weight: bold;
+}

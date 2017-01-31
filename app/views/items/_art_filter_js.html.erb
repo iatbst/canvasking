@@ -1,0 +1,38 @@
+<script>
+	$('.style_option').click(function() {
+		$('#use_this_style').hide();
+		$('#skip').css('margin-top', '100px');
+		var style_id = $(this).attr('id');
+		var url = '<%= @somatic_realtime_api %>?id=' + style_id + 
+				  '&api_key=' + '<%= @somatic_api_key %>' + 
+				  '&--input=' + '<%= @filter_image_url %>';
+
+		var newImage = new Image();
+		var loadingSrc = '/loading.gif';
+		$('#filter_input').attr('src', loadingSrc);
+		$('#filter_input').addClass("loading");
+		newImage.onload = function() {
+    			$('#filter_input').attr('src', newImage.src);
+    			$('#filter_input').removeClass("loading");
+    			$('#use_this_style').show();
+    			$('#skip').css('margin-top', '0px');
+    			$('#use_this_style').removeAttr('disabled');
+		};
+		newImage.src = url;
+		
+		$('#radio_' + style_id).attr('value', url);	
+		//$('#use_this_style').removeAttr('disabled');
+	}); 
+	
+	$('#no_effects').click(function(){
+		$('#filter_input').attr('src', '<%= get_image_url(@item, 'filter', {"no_effect" => true}) %>');
+		$('#use_this_style').attr('disabled', 'disabled');
+	});
+	function submit(){
+		$('#art_style_options').click();
+	}
+	
+	$('#use_this_style').click(function () {
+    		$("div#divLoading").addClass('show');
+	});
+</script>

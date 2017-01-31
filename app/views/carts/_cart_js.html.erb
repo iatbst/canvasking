@@ -1,0 +1,92 @@
+<script>
+
+	$( window ).on( "load", function(){
+		
+		<% @cart.items.each do |item| %>
+
+		// Add frame effects if necessary
+		if (<%= image_is_triptych(item) %>){
+			// Add triptych effects if necessary
+			divide_image_to_3('item_' + <%= item.id %>, 'item_' + <%= item.id %> + '_triple');
+		}
+				
+		
+		<% end %>
+	
+	});
+
+	function divide_image_to_3(image_id, div_id){
+		$('#' + image_id).hide();
+		$('#' + div_id + '_1').show();
+		$('#' + div_id + '_2').show();
+		$('#' + div_id + '_3').show();
+		
+		var image_url = $('#' + image_id).attr('src');
+		var image_width = $('#' + image_id).width();
+		var image_width_3 = parseInt($('#' + image_id).width()/3);
+		var image_height = $('#' + image_id).height();
+		$('#' + div_id + '_1').css('background', 'url(' + image_url + ') 0 0');
+		$('#' + div_id + '_1').css('width', image_width_3 + 'px');
+		$('#' + div_id + '_1').css('height', image_height + 'px');
+
+		$('#' + div_id + '_2').css('background', 'url(' + image_url + ') -' + image_width_3 + 'px 0');
+		$('#' + div_id + '_2').css('width', image_width_3 + 'px');
+		$('#' + div_id + '_2').css('height', image_height + 'px');
+
+		$('#' + div_id + '_3').css('background', 'url(' + image_url + ') -' + image_width_3*2 + 'px 0');
+		$('#' + div_id + '_3').css('width', image_width_3 + 'px');
+		$('#' + div_id + '_3').css('height', image_height + 'px');
+	}
+
+	
+	// Using Jquery to update item quantities - Plus
+	$("span.glyphicon-plus").click(function() {
+		// get quantity
+		var item_id = $(this).attr('name')
+		var url = "/items/" + item_id
+		$.ajax({
+			url : url,
+			type : 'PUT',
+			data: "update_quantity=true&plus=true",
+			success : function(result) {
+				// Update item quantity on page
+				$('#quantity_' + item_id).text(result.quantity);
+				$('#cart_price').text(result.price);
+				$('#cart_quantity').text(result.cart_quantity);
+				$('#nav_bar_cart').text('CART(' + result.cart_quantity + ')');
+				if(result.cart_quantity > 1){
+					$('#item_single_or_plural').text('items');
+				} else {
+					$('#item_single_or_plural').text('item');
+				}
+			}
+		});
+		
+	});
+
+	// Using Jquery to update item quantities - Minus
+	$("span.glyphicon-minus").click(function() {
+		// get quantity
+		var item_id = $(this).attr('name')
+		var url = "/items/" + item_id
+		$.ajax({
+			url : url,
+			type : 'PUT',
+			data: "update_quantity=true&minus=true",
+			success : function(result) {
+				// Update item quantity on page
+				$('#quantity_' + item_id).text(result.quantity);
+				$('#cart_price').text(result.price);
+				$('#cart_quantity').text(result.cart_quantity);
+				$('#nav_bar_cart').text('CART(' + result.cart_quantity + ')');
+				if(result.cart_quantity > 1){
+					$('#item_single_or_plural').text('items');
+				} else {
+					$('#item_single_or_plural').text('item');
+				}
+			}
+		});
+		
+	});
+
+</script>

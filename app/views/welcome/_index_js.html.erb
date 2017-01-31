@@ -1,0 +1,44 @@
+<script type="text/javascript">
+	$(window).load(function() {
+		init_twentytwenty();
+		twentytwenty_auto_move('image_1');
+	});
+
+	$('.carousel').on('slid.bs.carousel', function(ev) {
+		init_twentytwenty();
+		var image_id = $(this).find('.active').find('.before_image').attr('id');
+		twentytwenty_auto_move(image_id);
+
+	});
+
+	function init_twentytwenty() {
+		//clear old wrapper, otherwise wrapper will growing creazy
+		$('.twentytwenty-wrapper').contents().unwrap();
+		$('.before_image').hide();
+
+		$(".twentytwenty-container").twentytwenty({
+			default_offset_pct : 0
+		});
+		$('.twentytwenty-handle').hide();
+		$('.twentytwenty-overlay').hide();
+		$('.after_image').show();
+		$('.before_image').show();
+	}
+
+	function twentytwenty_auto_move(image_id) {
+
+		var offset = 0;
+		var id = setInterval(frame, 20);
+		function frame() {
+			if (offset == 800) {
+				clearInterval(id);
+				$('.after_image').hide();
+				$('.carousel').carousel('next');
+			} else {
+				offset++;
+				$('#' + image_id).css('clip', 'rect(0px ' + offset + 'px 882px 0px');
+			}
+		}
+	
+	}
+</script>

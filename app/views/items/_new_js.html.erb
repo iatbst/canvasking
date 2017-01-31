@@ -1,0 +1,489 @@
+<script>
+	
+	$( window ).on( "load", function(){
+		// Add frame effects if necessary
+		if (<%= image_is_triptych(@item) %>){
+				// Add triptych effects if necessary
+				divide_image_to_3('overview_image');
+		}
+	});
+	
+	$("#art_filter_checkbox").change(function() {
+		if (this.checked) {
+			//use original image
+			$('#overview_image').attr('src', '<%= get_image_url(@item, "overview", {"no_effect" => true}) %>');
+			$('#select_filter_done_collapse').hide();
+			$('#select_filter_skip_collapse').show();
+		} else {
+			//use art filter
+			$('#overview_image').attr('src', '<%= get_image_url(@item, "overview", {"art_effect" => true}) %>');
+			$('#select_filter_skip_collapse').hide();
+			$('#select_filter_done_collapse').show();
+		}
+	});
+	
+	$("#product_single_canvas").click(function() {
+		$('#product_choice').text('Single Canvas')
+		
+		// show canvas options
+		if ($('#depth_0').is(':checked')){
+			$('#attr1_choice').text('Rolled. No frame.');
+		} else if ($('#depth_0_75').is(':checked')) {
+			$('#attr1_choice').text('0.75" deep canvas wrap');
+		} else if ($('#depth_1_5').is(':checked')) {
+			$('#attr1_choice').text('1.5" deep canvas wrap');
+		} else if ($('#depth_2_5').is(':checked')) {
+			$('#attr1_choice').text('2.5" deep canvas wrap');
+		} else {
+			$('#attr1_choice').text('Depth: ---')
+		}
+		
+		if ($('#border_photo').is(':checked')){
+			$('#attr2_choice').text('Photo Border')
+		} else if ($('#border_black').is(':checked')) {
+			$('#attr2_choice').text('Black Border')
+		} else if ($('#border_white').is(':checked')) {
+			$('#attr2_choice').text('White Border')
+		} else {
+			$('#attr2_choice').text('Border: ---')
+		}
+		$('#size_choice').text('')
+		$('#price_choice').text('')
+			
+		
+		$('#border_choice').show();
+		$('#depth_choice').show();
+		$('#frame_choice').hide();
+		$('#mat_choice').hide();
+		
+		//update price table
+		var size_price_str = '<%= @size_price_str %>'
+		var size_price = JSON.parse(size_price_str.replace(/&quot;/g,'"'));
+		$('#item_size').empty();
+		$('#item_size').append($('<option value=""></option>').text('Select Size'));
+		for(var size in size_price['single canvas']){
+			var option = $('<option></option>').attr("value", size).text(size + ' - $' + size_price['single canvas'][size]);
+			$('#item_size').append(option);			
+		}
+		//update option section
+		if (is_canvas_depth_checked() || is_canvas_border_checked()){
+			$('#canvas_options').show();
+		} else {
+			$('#section_placeholder_options').show();
+		}
+		
+		$('#frame_options').hide();
+		//$("html, body").animate({ scrollTop: $(document).height() }, 2000);
+		//$('#size_price_options').fadeIn(1000);
+		$('#product_done_label').text('Single canvas');
+
+		//remove frame and mat
+		$('#overview_image').attr('class','overview_image image_shadow_in_item');	
+		$('#overview_image').css('padding', '0px');
+
+		//hide triptych and show overview_image
+		$('#overview_image').show();
+		$('.triptych_1').hide();
+		$('.triptych_2').hide();
+		$('.triptych_3').hide();	
+	});
+	
+	$("#product_triptych_canvas").click(function() {
+		$('#product_choice').text('Triptych Canvas');
+
+		// show canvas options
+		if ($('#depth_0').is(':checked')){
+			$('#attr1_choice').text('Rolled. No frame.');
+		} else if ($('#depth_0_75').is(':checked')) {
+			$('#attr1_choice').text('0.75" deep canvas wrap');
+		} else if ($('#depth_1_5').is(':checked')) {
+			$('#attr1_choice').text('1.5" deep canvas wrap');
+		} else if ($('#depth_2_5').is(':checked')) {
+			$('#attr1_choice').text('2.5" deep canvas wrap');
+		} else {
+			$('#attr1_choice').text('Depth: ---')
+		}
+		
+		if ($('#border_photo').is(':checked')){
+			$('#attr2_choice').text('Photo Border')
+		} else if ($('#border_black').is(':checked')) {
+			$('#attr2_choice').text('Black Border')
+		} else if ($('#border_white').is(':checked')) {
+			$('#attr2_choice').text('White Border')
+		} else {
+			$('#attr2_choice').text('Border: ---')
+		}
+		$('#size_choice').text('')
+		$('#price_choice').text('')
+			
+		//update price table
+		var size_price_str = '<%= @size_price_str %>'
+		var size_price = JSON.parse(size_price_str.replace(/&quot;/g,'"'));
+		$('#item_size').empty();
+		$('#item_size').append($('<option value=""></option>').text('Select Size'));
+		for(var size in size_price['triptych canvas']){
+			var option = $('<option></option>').attr("value", size).text(size + ' - $' + size_price['triptych canvas'][size]);
+			$('#item_size').append(option);			
+		}
+
+		//update option section
+		if (is_canvas_depth_checked() || is_canvas_border_checked()){
+			$('#canvas_options').show();
+		} else {
+			$('#section_placeholder_options').show();
+		}
+		$('#frame_options').hide();
+		//$('#size_price_options').show();
+		$('#product_done_label').text('Triptych canvas');
+		
+		//remove frame and mat
+		$('#overview_image').attr('class','overview_image image_shadow_in_item');
+		$('#overview_image').css('padding', '0px');
+		
+		//divide image to 3 equal pieces
+		divide_image_to_3('overview_image');
+	});
+
+	function divide_image_to_3(image_id){
+		$('#' + image_id).hide();
+		$('.triptych_1').show();
+		$('.triptych_2').show();
+		$('.triptych_3').show();
+		var image_url = $('#' + image_id).attr('src');
+		var image_width = $('#' + image_id).width();
+		var image_width_3 = parseInt($('#' + image_id).width()/3);
+		var image_height = $('#' + image_id).height();
+		$('.triptych_1').css('background', 'url(' + image_url + ') 0 0');
+		$('.triptych_1').css('width', image_width_3 + 'px');
+		$('.triptych_1').css('height', image_height + 'px');
+
+		$('.triptych_2').css('background', 'url(' + image_url + ') -' + image_width_3 + 'px 0');
+		$('.triptych_2').css('width', image_width_3 + 'px');
+		$('.triptych_2').css('height', image_height + 'px');
+
+		$('.triptych_3').css('background', 'url(' + image_url + ') -' + image_width_3*2 + 'px 0');
+		$('.triptych_3').css('width', image_width_3 + 'px');
+		$('.triptych_3').css('height', image_height + 'px');
+	}
+	
+	$("#product_frame").click(function() {
+		$('#product_choice').text('Frame');
+
+		// show canvas options
+		if ($('#frame_black_wood').is(':checked')){
+			$('#attr1_choice').text('Frame: black wood')
+		} else if ($('#frame_white_wood').is(':checked')) {
+			$('#attr1_choice').text('Frame: white wood')
+		} else if ($('#frame_espresso_wood').is(':checked')) {
+			$('#attr1_choice').text('Frame: espresso wood')
+		} else {
+			$('#attr1_choice').text('Frame: ---')
+		}
+		
+		if ($('#mat_0').is(':checked')){
+			$('#attr2_choice').text('Mat: No')
+		} else if ($('#mat_2_5').is(':checked')) {
+			$('#attr2_choice').text('Mat: 2.5"')
+		} else {
+			$('#attr2_choice').text('Mat: ---')
+		}
+		$('#size_choice').text('')
+		$('#price_choice').text('')
+				
+		//update price table
+		var size_price_str = '<%= @size_price_str %>'
+		var size_price = JSON.parse(size_price_str.replace(/&quot;/g,'"'));
+		$('#item_size').empty();
+		$('#item_size').append($('<option value=""></option>').text('Select Size'));
+		for(var size in size_price['frame']){
+			var option = $('<option></option>').attr("value", size).text(size + ' - $' + size_price['frame'][size]);
+			$('#item_size').append(option);			
+		}
+		//update option section
+		$('#canvas_options').hide();
+		if (is_frame_frame_checked() || is_frame_mat_checked()){
+			$('#frame_options').show();
+		} else {
+			$('#section_placeholder_options').show();
+		}
+		
+		//$('#size_price_options').show();
+		$('#product_done_label').text('Frame');
+		
+		//update image frame, default is black frame border if none is checked
+		if($('#frame_white_wood').is(':checked')){
+			$('#overview_image').addClass('image_white_frame_in_item');
+		} else if($('#frame_espresso_wood').is(':checked')){
+			$('#overview_image').addClass('image_brown_frame_in_item');
+		} else {
+			$('#overview_image').addClass('image_black_frame_in_item');
+		}
+		//update mat if necessary
+		if($('#mat_2_5').is(':checked')){
+			$('#overview_image').css('padding', '15px');
+		}
+
+		//hide triptych and show overview_image
+		$('#overview_image').show();
+		$('.triptych_1').hide();
+		$('.triptych_2').hide();
+		$('.triptych_3').hide();
+	});
+	
+	$("#item_size").change(function() {
+		$('#size_choice').text('Size: ' + this.value);
+		$('#price_choice').text($("#item_size option:selected").text().split(' ')[2]);
+	});
+
+
+	$("#depth_0").click(function() {
+		$('#attr1_choice').text('Rolled. No frame.')
+	});
+
+	$("#depth_0_75").click(function() {
+		$('#attr1_choice').text('0.75" deep canvas wrap')
+	});
+
+	$("#depth_1_5").click(function() {
+		$('#attr1_choice').text('1.5" deep canvas wrap')
+	});
+
+	$("#depth_2_5").click(function() {
+		$('#attr1_choice').text('2.5" deep canvas wrap')
+	});
+	$("#border_photo").click(function() {
+		$('#attr2_choice').text('Photo Border')
+	});
+
+	$("#border_black").click(function() {
+		$('#attr2_choice').text('Black Border')
+	});
+
+	$("#border_white").click(function() {
+		$('#attr2_choice').text('White Border')
+	});
+
+	$("#frame_black_wood").click(function() {
+		$('#attr1_choice').text('Frame: black wood');
+		//add frame
+		if ($('#overview_image').hasClass('image_frame_mat_in_item')){
+			$('#overview_image').css('padding', '25px');
+		}
+		$('#overview_image').attr('class','overview_image image_shadow_in_item');
+		$('#overview_image').addClass('image_black_frame_in_item');
+	});
+
+	$("#frame_white_wood").click(function() {
+		$('#attr1_choice').text('Frame: white wood');
+		//add frame
+		if ($('#overview_image').hasClass('image_frame_mat_in_item')){
+			$('#overview_image').css('padding', '25px');
+		}
+		$('#overview_image').attr('class','overview_image image_shadow_in_item');
+		$('#overview_image').addClass('image_white_frame_in_item');
+	});
+
+	$("#frame_espresso_wood").click(function() {
+		$('#attr1_choice').text('Frame: espresso wood');
+		//add frame
+		if ($('#overview_image').hasClass('image_frame_mat_in_item')){
+			$('#overview_image').css('padding', '25px');
+		}
+		$('#overview_image').attr('class','overview_image image_shadow_in_item');
+		$('#overview_image').addClass('image_brown_frame_in_item');
+	});
+
+	$("#mat_0").click(function() {
+		$('#attr2_choice').text('Mat: No');
+		$('#overview_image').css('padding', '0px');
+	});
+
+	$("#mat_2_5").click(function() {
+		$('#attr2_choice').text('Mat: 2.5"');
+		$('#overview_image').css('padding', '15px');
+	});
+
+	// Handle Error Image
+	function imgError(image) {
+    		image.onerror = "";
+    		image.src = "/canvas_placeholder.png";
+    		return true;
+	}
+	
+
+	
+	
+
+		function not_interested_for_art_filter(){
+			$('#select_filter_arrow').hide();
+			if (!is_product_checked()){
+				$('#select_product_arrow').show();
+			}
+			$('#select_filter_collapse_box').show();
+			$('#select_filter_skip_collapse').show();
+			$('#select_filter_done_collapse').hide();
+			$('#select_filter_box').hide();
+			if ( !is_product_checked() ) {
+				$('#select_product_box').fadeIn(1000);	
+			}
+			$('#art_filter_checkbox').prop('checked', true);
+			$('#overview_image').attr('src', '<%= get_image_url(@item, "overview", {"no_effect" => true}) %>');
+			$('#section_placeholder_product').hide();
+		}
+		
+		$('.product_image').click(function(){
+			$('#select_product_arrow').hide();
+			$('#select_frame_options_frame_arrow').hide();
+			$('#select_frame_options_mat_arrow').hide();
+			$('#select_canvas_options_depth_arrow').hide();
+			$('#select_canvas_options_border_arrow').hide();
+			$('#select_size_arrow').show();
+			$('#select_size_done').hide();	
+			$('#select_product_done').show();
+			$('#section_placeholder_size').hide();
+			$('#size_price_options').fadeIn(1000);
+			$('#select_product_collapse_box').show();
+			$('#select_product_box').hide();
+		});
+		
+		$('#item_size').change(function (){
+			$('#select_size_arrow').hide();
+			$('#select_size_done').show();
+			// $('#size_price_options').css("border-color", "black");
+			//$("html, body").animate({ scrollTop: $(window).scrollTop() + 450 }, 2000);
+			$('#section_placeholder_options').hide();
+			
+			if ($('#product_frame_radio').is(':checked')){
+		
+				$('#canvas_options').hide();
+				$('#frame_options').fadeIn(1000);
+				
+				if (!is_frame_frame_checked()){
+					$('#select_frame_options_frame_arrow').show();
+				} else if (!is_frame_mat_checked()) {
+					$('#select_frame_options_mat_arrow').show();
+				} else {
+					// ready to add to cart
+					
+				}
+
+			} else {
+
+				$('#canvas_options').fadeIn(1000);
+				$('#frame_options').hide();
+				
+				if (!is_canvas_depth_checked()){
+					$('#select_canvas_options_depth_arrow').show();
+				} else if (!is_canvas_border_checked()) {
+					$('#select_canvas_options_border_arrow').show();
+				} else {
+					// ready to add to cart
+					
+				}
+			}
+			
+			
+		});
+		
+		$('.depth_options').click(function(){
+			$('#select_canvas_options_depth_arrow').hide();
+			$('#select_depth_done').show();
+			if (!is_canvas_border_checked()){
+				$('#select_canvas_options_border_arrow').show();
+			} else {
+				// wizard process is done
+				add_to_cart_is_ready();
+			}
+		});
+
+		$('.border_options').click(function(){
+			$('#select_canvas_options_border_arrow').hide();
+			$('#select_border_done').show();
+			if (!is_canvas_depth_checked()){
+				$('#select_canvas_options_depth_arrow').show();
+			} else {
+				//wizard process is done
+				add_to_cart_is_ready();
+			}
+		});
+
+		$('.frame_options').click(function(){
+			$('#select_frame_options_frame_arrow').hide();
+			$('#select_frame_done').show();
+			if (!is_frame_mat_checked()){
+				$('#select_frame_options_mat_arrow').show();
+			} else {
+				// wizard process is done
+				add_to_cart_is_ready();
+			}
+		});
+
+		$('.mat_options').click(function(){
+			$('#select_frame_options_mat_arrow').hide();
+			$('#select_mat_done').show();
+			if (!is_frame_frame_checked()){
+				$('#select_frame_options_frame_arrow').show();
+			} else {
+				// wizard process is done
+				add_to_cart_is_ready();
+			}
+		});
+	
+
+	function add_to_cart_is_ready(){
+		$('#add_to_cart_button').removeClass('grey_button');
+		$('#add_to_cart_button').addClass('orange_button');
+		$('#add_to_cart_button').removeAttr('disabled');
+		$('#summary_and_submit').css('border-color', 'black');
+		$('#summary_and_submit_div').css('opacity', 1);
+	}
+	function is_product_checked(){
+		return 	($('#product_single_canvas_radio').is(':checked') 
+				|| $('#product_triptych_canvas_radio').is(':checked') 
+				|| $('#product_frame_radio').is(':checked'));		
+	}
+
+	function is_canvas_depth_checked(){
+		return 	($('#depth_0').is(':checked') 
+				|| $('#depth_0_75').is(':checked') 
+				|| $('#depth_1_5').is(':checked') 
+				|| $('#depth_2_5').is(':checked'));
+	}
+		
+	function is_canvas_border_checked(){
+		return 	($('#border_photo').is(':checked') 
+				|| $('#border_black').is(':checked') 
+				|| $('#border_white').is(':checked'));
+	}
+	
+	function is_frame_frame_checked(){
+		return 	($('#frame_white_wood').is(':checked') 
+				|| $('#frame_black_wood').is(':checked') 
+				|| $('#frame_espresso_wood').is(':checked'));
+	}
+
+	function is_frame_mat_checked(){
+		return 	($('#mat_0').is(':checked') 
+				|| $('#mat_2_5').is(':checked'));
+	}
+	
+	$('#change_image').click(function(){
+		$('#select_image_collapse_box').hide();
+		$('#image_upload_label').text('');
+		$('#upload_button_label').text('Upload Another Image');
+		$('#select_image_box').show();
+	});
+
+	$('#change_product').click(function(){
+		$('#select_product_collapse_box').hide();
+		$('#select_product_box').show();
+	});
+
+	$('#change_filter').click(function(){
+		$('#select_filter_collapse_box').hide();
+		$('#select_filter_box').show();
+		$(".twentytwenty-container").twentytwenty();
+		$('.twentytwenty-overlay').hide();
+	});
+	
+</script>

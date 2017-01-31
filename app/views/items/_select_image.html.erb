@@ -50,12 +50,12 @@
 		
 		<!--  Upload Photo From Facebook/Instagram -->
 		<div class="col-md-1" align="center" style="margin-right: 10px; margin-top: 0px; cursor: pointer">
-			<%= image_tag '/items/facebook_icon.png', class: "facebook_icon", id: "facebook_upload_button", onclick: "load_images_from_facebook()" %>
+			<%= image_tag '/items/facebook_icon.png', class: "facebook_icon", id: "facebook_upload_button", value: @item.id %>
 			
 		</div>
 		<div class="col-md-1" align="center" style="margin-top: 0px; cursor: pointer">
 			
-			<%= image_tag '/items/instagram_icon.png', class: "facebook_icon", id: "instagram_upload_button", onclick: "instagram_login()" %>
+			<%= image_tag '/items/instagram_icon.png', class: "facebook_icon", id: "instagram_upload_button", value: @item.id %>
 		</div>
 		
 		
