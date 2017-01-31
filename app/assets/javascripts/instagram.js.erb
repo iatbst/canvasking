@@ -1,142 +1,150 @@
-$(window).on('load', function(){
+$(window).on('load', function() {
 
-	$('#instagram_upload_button').click(function(){
-		load_images_from_instagram();	
-	});
-	
-var accessToken = null; //the access token is required to make any endpoint calls, http://instagram.com/developer/endpoints/
-		var authenticateInstagram = function(instagramClientId, instagramRedirectUri, callback) {
-			//the pop-up window size, change if you want
-			var popupWidth = 400,
-				popupHeight = 230,
-				popupLeft = (window.screen.width - popupWidth) / 2,
-				popupTop = (window.screen.height - popupHeight) / 2;
-			//the url needs to point to instagram_auth.php
-			var auth_url = "https://api.instagram.com/oauth/authorize/?client_id=<%= Canvasking::INSTAGRAM_APP_ID %>&redirect_uri=<%= Canvasking::INSTAGRAM_RE_URL %>&response_type=token"
-			
-			var popup = window.open( '/upload_images_from_instagram', '', 'width='+popupWidth+',height='+popupHeight+',left='+popupLeft+',top='+popupTop+'');
+    $('#instagram_upload_button').click(function() {
+        load_images_from_instagram();
+    });
 
-			popup.onload = function() {
-				//open authorize url in pop-up
-				if(window.location.hash.length == 0) {
-					popup.open(auth_url, '_self');
-				}
-				//an interval runs to get the access token from the pop-up
-				var interval = setInterval(function() {
-					try {
-						//check if hash exists
-						if(popup.location.hash.length) {
-							//hash found, that includes the access token
-							clearInterval(interval);
-							accessToken = popup.location.hash.slice(14); //slice #access_token= from string
-							popup.close();
-							if(callback != undefined && typeof callback == 'function') callback();
-						}
-						
-					}
-					catch(evt) {
-						//permission denied
-					}
-				}, 100);
-			}
-		};
-		
-		function login_callback() {
-			var get_images_url = "https://api.instagram.com/v1/users/self/media/recent";
-			
-			$.ajax({
-					 url: get_images_url,
-					 dataType: 'jsonp',
-					 type: 'GET',
-					 data: {access_token: accessToken},
-					 
-					 success: function(photos){
-					    
-					    // display modal
-  						open_instagram_modal();
-  						
-		 		    	  	// Build the grid system for images
-				    	  	if (photos && photos.data && photos.data.length){
-				    	  		for (var j=0; j<photos.data.length; j++){
-				    	  			var photo = photos.data[j];
-				    	  			var row_num = parseInt(j/5);
-				    	  			var row_id = "my_instagram_images_" + row_num;
-				    	  			if (j%5 == 0) {
-				    	  				$('#my_instagram_images').append('<div class="row" id="' + row_id + '"></div>');
-				    	  			}
-				    	  			$('#' + row_id).append('<div class="col-md-2 box instagram_image_grid" align="center" id="' + photo.id + '"></div>');
-				    	  
-				    	  		}
-				    	  	}
-				    	  	
-				    		if (photos && photos.data && photos.data.length){
-		        				for (var j=0; j<photos.data.length; j++){
-		          				var photo = photos.data[j];
-		          				var large_image_url = photo.images.standard_resolution.url
-		          				var thumb_image_url = photo.images.thumbnail.url
-		          				// photo.picture contain the link to picture          
-		          				$('#' + photo.id).append('<img src="' + thumb_image_url + '" \
+    var accessToken = null; //the access token is required to make any endpoint calls, http://instagram.com/developer/endpoints/
+    
+    var authenticateInstagram = function(instagramClientId, instagramRedirectUri, callback) {
+        //the pop-up window size, change if you want
+        var popupWidth = 400,
+            popupHeight = 230,
+            popupLeft = (window.screen.width - popupWidth) / 2,
+            popupTop = (window.screen.height - popupHeight) / 2;
+        //the url needs to point to instagram_auth.php
+        var auth_url = "https://api.instagram.com/oauth/authorize/?client_id=<%= Canvasking::INSTAGRAM_APP_ID %>&redirect_uri=<%= Canvasking::INSTAGRAM_RE_URL %>&response_type=token"
+
+        var popup = window.open('/upload_images_from_instagram', '', 'width=' + popupWidth + ',height=' + popupHeight + ',left=' + popupLeft + ',top=' + popupTop + '');
+
+        popup.onload = function() {
+            //open authorize url in pop-up
+            if (window.location.hash.length == 0) {
+                popup.open(auth_url, '_self');
+            }
+            //an interval runs to get the access token from the pop-up
+            var interval = setInterval(function() {
+                try {
+                    //check if hash exists
+                    if (popup.location.hash.length) {
+                        //hash found, that includes the access token
+                        clearInterval(interval);
+                        accessToken = popup.location.hash.slice(14); //slice #access_token= from string
+                        popup.close();
+                        if (callback != undefined && typeof callback == 'function') callback();
+                    }
+
+                } catch (evt) {
+                    //permission denied
+                }
+            }, 100);
+        }
+    };
+
+    function login_callback() {
+        var get_images_url = "https://api.instagram.com/v1/users/self/media/recent";
+
+        $.ajax({
+            url: get_images_url,
+            dataType: 'jsonp',
+            type: 'GET',
+            data: {
+                access_token: accessToken
+            },
+
+            success: function(photos) {
+
+                // display modal
+                open_instagram_modal();
+
+                // Build the grid system for images
+                if (photos && photos.data && photos.data.length) {
+                    for (var j = 0; j < photos.data.length; j++) {
+                        var photo = photos.data[j];
+                        var row_num = parseInt(j / 5);
+                        var row_id = "my_instagram_images_" + row_num;
+                        if (j % 5 == 0) {
+                            $('#my_instagram_images').append('<div class="row" id="' + row_id + '"></div>');
+                        }
+                        $('#' + row_id).append('<div class="col-md-2 box instagram_image_grid" align="center" id="' + photo.id + '"></div>');
+
+                    }
+                }
+
+                if (photos && photos.data && photos.data.length) {
+                    for (var j = 0; j < photos.data.length; j++) {
+                        var photo = photos.data[j];
+                        var large_image_url = photo.images.standard_resolution.url
+                        var thumb_image_url = photo.images.thumbnail.url
+                        // photo.picture contain the link to picture          
+                        $('#' + photo.id).append('<img src="' + thumb_image_url + '" \
 		          								 class="instagram_image" id="' + large_image_url + '"></img>');
-		        					}
-		      			}
-					 
-					 },
-					
-					 error: function(data){
-					    console.log(data);
-					 }
-			});
-			
-			$('#instagram_upload_button').off();
-			$('#instagram_upload_button').click(function(){
-				open_instagram_modal();
-			});
-		}
-		
-		function open_instagram_modal() {
-			$('#instagram_images').modal('show');
-		}
+                    }
+                }
 
-		function load_images_from_instagram() {
-			authenticateInstagram(
-			    '<%= Canvasking::INSTAGRAM_APP_ID %>', //instagram client ID
-			    '<%= Canvasking::INSTAGRAM_RE_URL %>', //instagram redirect URI
-			    login_callback //optional - a callback function
-			);
-			return false;
-		}
-		
-	$('body').on('click','img.instagram_image', function() {
-		$('.instagram_image_grid').css('border-color', '');
-		$('.instagram_image_grid').css('border-weight', '');
-		$(this).parent().css('border-color', 'red');
-		$(this).parent().css('border-weight', '3px');
- 
-    		$('#instagram_images').modal('hide');
-    		$("div#divLoading").addClass('show');
+            },
 
-    		// and ajax call to server
-    		$.ajax({
-  				url: "/items/" + $('#instagram_upload_button').attr('value'),
-  				data: {'image_upload': true, 'upload_from_instagram': true, 'instagram_image_url': $(this).attr('id')},
-  				dataType: 'json',
-  				type: 'patch',
-			}).done(function(data) {
-        			// Show Crop Modal
-        			$('.jcrop-active').remove();
-        			if ($('#item_image_cropbox').length == 0){
-        				$('#item_image_cropbox_wrapper').append('<img id="item_image_cropbox" src=""></img>');
-        			}
-        			$('#item_image_cropbox').Jcrop({
-        				setSelect: [0, 0, 450, 450],
-          			allowSelect: false,
-    				});
-    				$('#item_image_cropbox').attr('src', data.crop_image_url);			
-				$('.jcrop-selection').click(function(){return false});
-				$('.jcrop-selection').attr('onclick', 'return false');
-				$('#crop_modal').modal('show');
-				$("div#divLoading").removeClass('show');
-		});
-	});	
-	
+            error: function(data) {
+                console.log(data);
+            }
+        });
+
+        $('#instagram_upload_button').off();
+        $('#instagram_upload_button').click(function() {
+            open_instagram_modal();
+        });
+    }
+
+    function open_instagram_modal() {
+        $('#instagram_images').modal('show');
+    }
+
+    function load_images_from_instagram() {
+        authenticateInstagram(
+            '<%= Canvasking::INSTAGRAM_APP_ID %>', //instagram client ID
+            '<%= Canvasking::INSTAGRAM_RE_URL %>', //instagram redirect URI
+            login_callback //optional - a callback function
+        );
+        return false;
+    }
+
+    $('body').on('click', 'img.instagram_image', function() {
+        $('.instagram_image_grid').css('border-color', '');
+        $('.instagram_image_grid').css('border-weight', '');
+        $(this).parent().css('border-color', 'red');
+        $(this).parent().css('border-weight', '3px');
+
+        $('#instagram_images').modal('hide');
+        $("div#divLoading").addClass('show');
+
+        // and ajax call to server
+        $.ajax({
+            url: "/items/" + $('#instagram_upload_button').attr('value'),
+            data: {
+                'image_upload': true,
+                'upload_from_instagram': true,
+                'instagram_image_url': $(this).attr('id')
+            },
+            dataType: 'json',
+            type: 'patch',
+        }).done(function(data) {
+            // Show Crop Modal
+            $('.jcrop-active').remove();
+            if ($('#item_image_cropbox').length == 0) {
+                $('#item_image_cropbox_wrapper').append('<img id="item_image_cropbox" src=""></img>');
+            }
+            $('#item_image_cropbox').Jcrop({
+                setSelect: [0, 0, 450, 450],
+                allowSelect: false,
+            });
+            $('#item_image_cropbox').attr('src', data.crop_image_url);
+            $('.jcrop-selection').click(function() {
+                return false
+            });
+            $('.jcrop-selection').attr('onclick', 'return false');
+            $('#crop_modal').modal('show');
+            $("div#divLoading").removeClass('show');
+        });
+    });
+
 });

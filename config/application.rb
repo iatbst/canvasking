@@ -60,8 +60,9 @@ module Canvasking
   FACEBOOK_APP_ID = '744629489021986'
   INSTAGRAM_APP_ID = 'adca74ff860d43d18d264082283df380'
   if Rails.env == "development"
-    INSTAGRAM_RE_URL = 'http://localhost:3000'
+    INSTAGRAM_RE_URL = 'https://radiant-tundra-25592.herokuapp.com/'
+    #INSTAGRAM_RE_URL = 'http://localhost:3000'
   elsif Rails.env == "production"
-    INSTAGRAM_RE_URL = 'https://radiant-tundra-25592.herokuapp.com'
+    INSTAGRAM_RE_URL = 'https://radiant-tundra-25592.herokuapp.com/'
   end
 end
