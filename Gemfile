@@ -47,7 +47,7 @@ gem 'autoprefixer-rails'
 gem 'carrierwave'
 gem 'mini_magick'
 #gem 'rmagick'
-gem 'carrierwave-crop' # for image cropping
+#gem 'carrierwave-crop' # for image cropping
 
 # S3
 gem "fog"

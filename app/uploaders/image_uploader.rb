@@ -30,7 +30,6 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Process files as they are uploaded:
   # WARN: This is the process eat up your upload times
   # process resize_to_fit: [3000, 3000]
-  process crop: :image
   
   
   # def scale(width, height)

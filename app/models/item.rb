@@ -6,7 +6,6 @@ class Item < ActiveRecord::Base
   has_many :item_messages
   mount_uploader :image, ImageUploader
   mount_uploader :art_image, ImageUploader
-  crop_uploaded :image
   
   # Validations
   validates :product_id, presence: {message: "Please choose a product"}, if: :image_is_uploaded?
