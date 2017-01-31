@@ -1,0 +1,77 @@
+
+
+
+
+<div class="container">
+	
+
+<h3>
+	Table1
+</h3>
+
+<%= form_tag('/site_manage/update_prices') do %>
+<table class="table table-bordered" style="margin-bottom: 50px">
+	<thead>
+		<th>
+			<% @width_list.each do |w|%>
+				<td>
+					<%= w %>
+				</td>
+			<% end %>
+		</th>
+	</thead>
+	<tbody>
+		<% @height_list.each do |h| %>
+			<tr>
+				<td>
+					<%= h %>
+				</td>
+				<% @width_list.each do |w| %>
+					<td style="width: 100%">
+						<% size = "#{h}\\\"x#{w}\\\""%>
+						<span style="color: grey">
+							<%= "#{h}x#{w}"%>
+						</span>
+						<b>
+							<%= text_field_tag "single_canvas_#{size}", @size_price_obj['single canvas'][size] == 0.0 ? "" : @size_price_obj['single canvas'][size], style: "width: 50px", name: "single canvas[#{size}]"%>
+						 </b>
+					</td>
+				<% end %>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+<%= submit_tag 'Update' %>
+<% end %>
+
+<h3>
+	Table2
+</h3>
+<table class="table table-bordered">
+	<thead>
+		<th>
+			<% @width_list.each do |w|%>
+				<td>
+					<%= w %>
+				</td>
+			<% end %>
+		</th>
+	</thead>
+	<tbody>
+		<% @height_list.each do |h| %>
+			<tr>
+				<td>
+					<%= h %>
+				</td>
+				<% @width_list.each do |w| %>
+					<td>
+						<% size = "#{h}\\\"x#{w}\\\"" %>
+						<%= @size_price_obj['frame'][size] %>
+					</td>
+				<% end %>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+
+</div>

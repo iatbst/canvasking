@@ -19,9 +19,9 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header" align="center" style="color: grey">
-				<h5 class="no_bold">
-					Drag image border or corner to specify the area you want to print out
-				</h5>
+				<h4 class="no_bold">
+					Crop (optional): Crop by dragging the corners, then click done.
+				</h4>
 				
 			</div>
 			<div class="modal-body">
@@ -41,8 +41,8 @@
 						<%= hidden_field_tag :image_cropped_indeed, false, id: "image_cropped_indeed_field" %>
 						<%= f.submit 'submit', style: "display:none", id: "form_submit"%>
 					<% end %>
-					<button type="button" onclick="crop();" class="btn btn-secondary blue_style" style="width: 50%;">
-					Save
+					<button type="button" onclick="crop();" class="btn btn-secondary blue_style" style="width: 50%;margin-top: 10px">
+					DONE
 					</button>
 				</div>
 			</div>
