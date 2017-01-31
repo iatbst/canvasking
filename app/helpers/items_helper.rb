@@ -149,11 +149,11 @@ module ItemsHelper
             item_in_cart?(item))
   end
   
-  def hide_placeholder_section?(item, section_name)
+  def hide_placeholder_section?(item, section_name, params)
     if section_name == "filter"
       return !( !image_is_uploaded(item) )
     elsif section_name == "product"
-      return !( !image_is_uploaded(item))
+      return !( !image_is_uploaded(item) || params[:image_cropped])
     elsif section_name == "size"
       return !( item.product.nil? )
     elsif section_name == "options"

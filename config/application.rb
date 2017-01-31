@@ -52,9 +52,9 @@ module Canvasking
   GAMIL_TEST_USER_PW = 'agarienforce'
   
   # Heroku
-  HEROKU_HOST_URL = 'https://arcane-sands-61757.herokuapp.com/'
+  HEROKU_HOST_URL = 'https://radiant-tundra-25592.herokuapp.com/'
   # This will be replaced with real web url
-  WEBSITE_URL = 'https://arcane-sands-61757.herokuapp.com/'
+  WEBSITE_URL = 'https://radiant-tundra-25592.herokuapp.com/'
   
   # Facebook/Instagram
   FACEBOOK_APP_ID = '744629489021986'
