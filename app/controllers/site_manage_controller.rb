@@ -1,5 +1,6 @@
 class SiteManageController < ApplicationController
   before_action :authenticate_user!
+  before_action :is_admin?
   include PricingHelper
   
   def list_users
@@ -28,6 +29,14 @@ class SiteManageController < ApplicationController
     end 
     
     redirect_to site_manage_show_prices_path
+  end
+  
+  private
+  # WARN: Only Website Administrator could access this controllers
+  def is_admin?
+    unless Canvasking::ADMINISTRATORS.include?(current_user.email)
+      redirect_to root_path
+    end
   end
   
 end

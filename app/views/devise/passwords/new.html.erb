@@ -21,7 +21,7 @@
 			</div>
 			
 			<div align="center">
-				<%= f.submit "Send Instructions", type: "submit", class: "btn btn-primary btn-lg", style:"width: 90%"  %>
+				<%= f.submit "Send Instructions", type: "submit", class: "btn btn-primary btn-lg", style:"width: 90%; background-color: #ef9223; border-color: #ef9223"  %>
 			</div>
 			<% end %>
 			
@@ -31,10 +31,10 @@
 			
 			<div class="row" style="margin-top: 20px">
 				<div class="col-sm-6" align="center">
-					<h4 style="font-weight: lighter"><%= link_to 'Login', new_user_session_path %></h4>
+					<h4 class="no_bold"><%= link_to 'Login', new_user_session_path %></h4>
 				</div>
 				<div class="col-sm-6" align="center">
-					<h4 style="font-weight: lighter"><%= link_to 'Sign Up', new_user_registration_path %></h4>
+					<h4 class="no_bold"><%= link_to 'Sign Up', new_user_registration_path %></h4>
 				</div>
 			</div>
 		</div>

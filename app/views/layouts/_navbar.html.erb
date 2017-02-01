@@ -12,24 +12,44 @@
 		<div class="collapse navbar-collapse" style="margin-right: 1px">
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<%= link_to 'START', new_item_path, method:"get", class:"smoothScroll" %>
+					<% if controller_name == "items" %>
+						<%= link_to 'START', new_item_path, method:"get", class:"smoothScroll" , style:"color: #EF9223" %>
+					<% else %>
+						<%= link_to 'START', new_item_path, method:"get", class:"smoothScroll" %>
+					<% end %>
 				</li>
 				<li>
 					<%= link_to 'PRODUCTS', new_item_path, method:"get", class:"smoothScroll" %>
 				</li>
 				<li>
-					<%= link_to 'PRICING', pricing_index_path, method:"get", class:"smoothScroll" %>
+					<% if controller_name == "pricing" %>
+						<%= link_to 'PRICING', pricing_index_path, method:"get", class:"smoothScroll", style:"color: #EF9223" %>
+					<% else %>
+						<%= link_to 'PRICING', pricing_index_path, method:"get", class:"smoothScroll" %>
+					<% end %>
 				</li>
 				<li>
-					<a href="/cart" class="smoothScroll">
+					<% if controller_name == "carts" %>
+						<a href="/cart" class="smoothScroll" style="color: #EF9223" >
 						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-					<% cart = get_current_cart %>
-					<% if cart.quantity != 0 %>
-						<%= "CART(#{cart.quantity})"%>
-					<% else  %>
-						CART
+						<% cart = get_current_cart %>
+						<% if cart.quantity != 0 %>
+							<%= "CART(#{cart.quantity})"%>
+						<% else  %>
+							CART
+						<% end %>
+						</a>
+					<% else %>
+						<a href="/cart" class="smoothScroll">
+						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+						<% cart = get_current_cart %>
+						<% if cart.quantity != 0 %>
+							<%= "CART(#{cart.quantity})"%>
+						<% else  %>
+							CART
+						<% end %>
+						</a>					
 					<% end %>
-					</a>
 				</li>
 				<% unless user_signed_in? %>
 					<li><a href="/users/sign_up" class="smoothScroll">SIGN UP</a></li>
@@ -37,10 +57,18 @@
 				<% end %>
 				<% if user_signed_in? %>
 					<li>
-						<%= link_to "MY ORDERS", orders_path %>
+						<% if controller_name == "orders" %>
+							<%= link_to "MY ORDERS", orders_path, style:"color: #EF9223" %>
+						<% else %>
+							<%= link_to "MY ORDERS", orders_path %>
+						<% end %>
 					</li>
 					<li>
-						<%= link_to "SETTINGS", edit_user_registration_path %>
+						<% if controller_name == "registrations" %>
+							<%= link_to "SETTINGS", edit_user_registration_path, style:"color: #EF9223" %>
+						<% else %>
+							<%= link_to "SETTINGS", edit_user_registration_path %>
+						<% end %>
 					</li>
 				<% end %>
 			</ul>

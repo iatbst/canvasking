@@ -64,4 +64,7 @@ module Canvasking
   elsif Rails.env == "production"
     INSTAGRAM_RE_URL = 'https://radiant-tundra-25592.herokuapp.com'
   end
+  
+  # Administrators
+  ADMINISTRATORS = ['iatbst@gmail.com']
 end

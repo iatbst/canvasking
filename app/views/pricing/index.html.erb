@@ -1,15 +1,5 @@
 <%= render "layouts/navbar" %>
 
-<style>
-
-	.item_price:hover	{
-		color:#EF9223;
-	}
-	
-	li.active > a: {
-		color:#EF9223 !important;
-	}
-</style>
 
 <div class="container" style="margin-top: 50px; margin-bottom: 50px">
 	
@@ -18,16 +8,16 @@
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active">
+    <li role="presentation" class="active product_tab">
     	<a href="#canvas_price_table" aria-controls="home" role="tab" data-toggle="tab" align="center" style="color: #EF9223">
     		<%= image_tag '/pricing/canvas_icon.png', class: "depth_options_image"%>
-    		<h4>Canvas</h4>
+    		<h4>CANVAS</h4>
     	</a>
     </li>
-    <li role="presentation">
+    <li role="presentation" class="product_tab">
     	<a href="#frame_price_table" aria-controls="profile" role="tab" data-toggle="tab" align="center" style="color: grey">
     		<%= image_tag '/pricing/frame_icon.png', class: "depth_options_image"%>
-    		<h4>Frame</h4>
+    		<h4>FRAME</h4>
     	</a>
     </li>
   </ul>
@@ -51,8 +41,8 @@
 
 <script>
 	
-	$('li > a').click( function () {
-		$('li > a').css('color', 'grey');
+	$('li.product_tab > a').click( function () {
+		$('li.product_tab > a').css('color', 'grey');
 		$(this).css('color', '#EF9223');		
 	});
 	
