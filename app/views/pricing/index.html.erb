@@ -1,10 +1,69 @@
 <%= render "layouts/navbar" %>
 
+<style>
+	
+</style>
 
 <div class="container" style="margin-top: 50px; margin-bottom: 50px">
 	
 
-<div>
+<div class="row box" style="height: 200px; margin-bottom: 80px; background-color: #E2E2E2; border-radius: 5px">
+	
+	<div class="row" style="margin-left: 20px; margin-top: 20px">
+		<h4>
+			CHOOSE YOUR OWN CANVAS SIZE
+		</h4>
+		<h5 style="font-weight: normal">
+			All prices in <u style="color: #EF9223">USD</u>. Measured in <u style="color: #EF9223">inches</u>.
+		</h5>
+	</div>
+	
+	<div class="col-md-2" style="margin-top: 20px">
+		<select class="form-control query_select" name="item[width]" id="item_product">
+			<option value="" selected disabled>Select Product</option>
+			<% @product_list.each do |p| %>
+				<option value="<%= p %>"><%= p %></option>
+			<% end %>
+		</select>
+	</div>
+	
+	<div class="col-md-2" style="margin-top: 20px">
+		<select class="form-control query_select" name="item[height]" id="item_height">
+			<option value="" selected disabled>Select Height</option>
+			<% @height_list.each do |h| %>
+				<option value="<%= h %>"><%= h %>"</option>
+			<% end %>
+		</select>
+	</div>
+
+	<div class="col-md-2" style="margin-top: 20px">
+		<select class="form-control query_select" name="item[width]" id="item_width">
+			<option value="" selected disabled>Select Width</option>
+			<% @width_list.each do |w| %>
+				<option value="<%= w %>"><%= w %>"</option>
+			<% end %>
+		</select>
+	</div>
+	
+	<div class="col-md-3" >
+		<h4 id="product">			
+		</h4>
+		<h4 id="size">		
+		</h4>
+		<h3 id="price" style="color: #EF9223">
+		</h3>
+	</div>
+	
+	<div class="col-md-3" style="margin-top: 20px" align="center">
+		<%= button_to 'CREATE THIS PRODUCT', new_item_path, method: :get, class:"btn btn-primary", id: "create_button", disabled: "disabled"%>
+	</div>
+</div>
+
+<h3>
+	STANDARD SIZES AND PRICES
+</h3>
+<h5 style="color: grey">All prices in <u style="color: #EF9223">USD</u>.</h5>
+<div style="margin-top: 30px">
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
@@ -45,6 +104,44 @@
 		$('li.product_tab > a').css('color', 'grey');
 		$(this).css('color', '#EF9223');		
 	});
+	
+	$('.query_select').change(function () {
+		if (all_selected()){
+			//$('#price').text('$');
+			var product = $('#item_product').val();
+			var height = $('#item_height').val();
+			var width = $('#item_width').val();
+			query_and_show_price(product, height, width);
+		}
+	})
+	
+	function query_and_show_price(product, height, width){
+
+		var url = "/pricing/query_price"
+		$.ajax({
+			url : url,
+			type : 'GET',
+			data: {'product': product, 'height': height, 'width': width},
+			success : function(result) {
+				// Update item quantity on page
+				if (parseInt(result.price) == 0){
+					$('#price').text('SORRY, UNAVAILABLE NOW.');
+					$('#product').text('');
+					$('#size').text('');
+					$('#create_button').attr('disabled', 'disabled');
+				} else {
+					$('#product').text(product);
+					$('#size').text(height + '" x ' + width + '" ( H x W in inches )');
+					$('#price').text('$' + result.price);
+					$('#create_button').removeAttr('disabled');
+				}
+			}
+		});			
+	}
+	
+	function all_selected(){
+		return $('#item_product').val() && $('#item_height').val() && $('#item_width').val();
+	}
 	
 	
 </script>
