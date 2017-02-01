@@ -1,12 +1,11 @@
+<%= render "layouts/navbar" %>
 
 
-
-
-<div class="container">
+<div class="container" style="margin-top: 50px; margin-bottom: 50px">
 	
 
 <h3>
-	Table1
+	Canvas Price Table
 </h3>
 
 <%= form_tag('/site_manage/update_prices') do %>
@@ -45,9 +44,11 @@
 <% end %>
 
 <h3>
-	Table2
+	Frame Price Table
 </h3>
-<table class="table table-bordered">
+
+<%= form_tag('/site_manage/update_prices') do %>
+<table class="table table-bordered" style="margin-bottom: 50px">
 	<thead>
 		<th>
 			<% @width_list.each do |w|%>
@@ -64,14 +65,19 @@
 					<%= h %>
 				</td>
 				<% @width_list.each do |w| %>
-					<td>
-						<% size = "#{h}\\\"x#{w}\\\"" %>
-						<%= @size_price_obj['frame'][size] %>
+					<td style="width: 100%">
+						<% size = "#{h}\\\"x#{w}\\\""%>
+						<span style="color: grey">
+							<%= "#{h}x#{w}"%>
+						</span>
+						<b>
+							<%= text_field_tag "frame_#{size}", @size_price_obj['frame'][size] == 0.0 ? "" : @size_price_obj['frame'][size], style: "width: 50px", name: "frame[#{size}]"%>
+						 </b>
 					</td>
 				<% end %>
 			</tr>
 		<% end %>
 	</tbody>
 </table>
-
-</div>
+<%= submit_tag 'Update' %>
+<% end %>

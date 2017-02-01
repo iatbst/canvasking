@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   include CartsHelper
+  include PricingHelper
   layout "application", except: [:empty_page]
   
   # TODO: need to refactor, otherwise every new page will create a item in DB, NO GOOD !!!
@@ -204,10 +205,6 @@ class ItemsController < ApplicationController
   private
 
     
-    def read_size_price_table
-      YAML.load(File.read(Rails.root.join('business','pricing.yml')))
-    end
-    
     def calculate_price(item)
       product = item.product.name
       size_price = YAML.load(File.read(Rails.root.join('business','pricing.yml')).gsub!("\\", ""))
@@ -378,7 +375,8 @@ class ItemsController < ApplicationController
       temp_price_list = []
       table.each do |size, price|
         available_r, h, diff = available_ratio(image_h_w_ratio, size)
-        if available_r
+        # Only reasonable size and none-zero prices
+        if available_r && price.to_i != 0
           temp_price_list.push({'h'=> h, 's'=> size, 'p'=> price, 'diff'=> diff})
         end
       end

@@ -1,5 +1,6 @@
 class SiteManageController < ApplicationController
   before_action :authenticate_user!
+  include PricingHelper
   
   def list_users
     @users = User.all
@@ -29,8 +30,4 @@ class SiteManageController < ApplicationController
     redirect_to site_manage_show_prices_path
   end
   
-  private
-      def read_size_price_table
-        YAML.load(File.read(Rails.root.join('business','pricing.yml')))
-      end
 end

@@ -1,0 +1,60 @@
+<%= render "layouts/navbar" %>
+
+<style>
+
+	.item_price:hover	{
+		color:#EF9223;
+	}
+	
+	li.active > a: {
+		color:#EF9223 !important;
+	}
+</style>
+
+<div class="container" style="margin-top: 50px; margin-bottom: 50px">
+	
+
+<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+    	<a href="#canvas_price_table" aria-controls="home" role="tab" data-toggle="tab" align="center" style="color: #EF9223">
+    		<%= image_tag '/pricing/canvas_icon.png', class: "depth_options_image"%>
+    		<h4>Canvas</h4>
+    	</a>
+    </li>
+    <li role="presentation">
+    	<a href="#frame_price_table" aria-controls="profile" role="tab" data-toggle="tab" align="center" style="color: grey">
+    		<%= image_tag '/pricing/frame_icon.png', class: "depth_options_image"%>
+    		<h4>Frame</h4>
+    	</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="canvas_price_table">
+    	<%= render "canvas_price_table" %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="frame_price_table">
+    	<%= render "frame_price_table" %>
+    </div>
+  </div>
+
+</div>
+
+	
+
+
+</div>
+
+<script>
+	
+	$('li > a').click( function () {
+		$('li > a').css('color', 'grey');
+		$(this).css('color', '#EF9223');		
+	});
+	
+	
+</script>

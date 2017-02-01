@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'site_manage/list_users'
   get 'site_manage/show_prices'
   post 'site_manage/update_prices'
+  get 'pricing/index'
 
   devise_for :users, :controllers => { :sessions => "custom_sessions", :registrations => 'registrations' }
   get 'welcome/index'

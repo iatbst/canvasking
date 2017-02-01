@@ -1,0 +1,96 @@
+<table class="table table-striped">
+		<thead>
+			<tr>
+				<td align="center" >
+					<h4 style="margin-top: 50px">
+						SIZE
+					</h4>
+					<h5>
+						H x W (inch)
+					</h5>
+				</td>
+				<td align="center">
+					<%= image_tag '/canvas_depth_0.jpeg', class: "depth_options_image"%> 
+					<h5 style="color:#EF9223"> ROLLED</h5> 
+				</td>
+				<td align="center">
+					<%= image_tag '/canvas_depth_0.75.jpeg', class: "depth_options_image"%>
+					<h5 style="color:#EF9223"> 0.75" DEEP</h5> 					
+				</td>
+				<td align="center">
+					<%= image_tag '/canvas_depth_1.5.jpeg', class: "depth_options_image"%>
+					<h5 style="color:#EF9223"> 1.5" DEEP</h5>
+				</td>
+				<td align="center">
+					<%= image_tag '/canvas_depth_2.5.jpeg', class: "depth_options_image"%> 
+					<h5 style="color:#EF9223"> 2.5" DEEP</h5>
+				</td>
+				
+			</tr>
+		</thead>
+		
+		<tbody>
+			<% @sizes['single canvas'].each do |size|%>
+				<tr>
+					<td align="center" >
+						<h4 class="no_bold">
+							<%= size.gsub("\\", "").split('x').join(' x ') %>
+						</h4>
+					</td>
+					<td align="center">
+						<% if @size_price_obj['single canvas'][size] != 0.0 %>
+							<a href="/items/new" style="text-decoration: none; color: black">
+								<div class="item_price">
+									<h4>$<%= @size_price_obj['single canvas'][size] %></h4>
+								</div>
+							</a>					
+						<% else %>
+								<div>
+									<h4 style="color: grey">N/A</h4>
+								</div>								
+						<% end %>
+					</td>
+					<td align="center" >
+						<% if @size_price_obj['single canvas'][size] != 0.0 %>
+							<a href="/items/new" style="text-decoration: none; color: black">
+								<div class="item_price">
+									<h4>$<%= @size_price_obj['single canvas'][size] %></h4>
+								</div>
+							</a>					
+						<% else %>
+								<div>
+									<h4 style="color: grey">N/A</h4>
+								</div>								
+						<% end %>
+					</td>
+					<td align="center" >
+						<% if @size_price_obj['single canvas'][size] != 0.0 %>
+							<a href="/items/new" style="text-decoration: none; color: black">
+								<div class="item_price">
+									<h4>$<%= @size_price_obj['single canvas'][size] %></h4>
+								</div>
+							</a>					
+						<% else %>
+								<div>
+									<h4 style="color: grey">N/A</h4>
+								</div>								
+						<% end %>
+					</td>
+					<td align="center" >
+						<% if @size_price_obj['single canvas'][size] != 0.0 %>
+							<a href="/items/new" style="text-decoration: none; color: black">
+								<div class="item_price">
+									<h4>$<%= @size_price_obj['single canvas'][size] %></h4>
+								</div>
+							</a>					
+						<% else %>
+								<div>
+									<h4 style="color: grey">N/A</h4>
+								</div>								
+						<% end %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+		
+	</table>

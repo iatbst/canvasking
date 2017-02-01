@@ -1,0 +1,79 @@
+<table class="table table-striped">
+		<thead>
+			<tr>
+				<td align="center" >
+					<h4 style="margin-top: 50px">
+						SIZE
+					</h4>
+					<h5>
+						H x W (inch)
+					</h5>
+				</td>
+				<td align="center">
+					<%= image_tag '/items/frame_wood_black.jpg', class: "frame_option_image"%> 
+					<h5 style="color:#EF9223"> BLACK WOOD</h5> 
+				</td>
+				<td align="center">
+					<%= image_tag '/items/frame_wood_white.jpg', class: "frame_option_image"%> 
+					<h5 style="color:#EF9223"> WHITE WOOD</h5> 				
+				</td>
+				<td align="center">
+					<%= image_tag '/items/frame_espresso_wood.jpg', class: "frame_option_image"%> 
+					<<h5 style="color:#EF9223"> BROWN WOOD</h5> 
+				</td>
+				
+			</tr>
+		</thead>
+		
+		<tbody>
+			<% @sizes['frame'].each do |size|%>
+				<tr>
+					<td align="center" >
+						<h4 class="no_bold">
+							<%= size.gsub("\\", "").split('x').join(' x ') %>
+						</h4>
+					</td>
+					<td align="center">
+						<% if @size_price_obj['frame'][size] != 0.0 %>
+							<a href="/items/new" style="text-decoration: none; color: black">
+								<div class="item_price">
+									<h4>$<%= @size_price_obj['frame'][size] %></h4>
+								</div>
+							</a>					
+						<% else %>
+								<div>
+									<h4 style="color: grey">N/A</h4>
+								</div>								
+						<% end %>
+					</td>
+					<td align="center" >
+						<% if @size_price_obj['frame'][size] != 0.0 %>
+							<a href="/items/new" style="text-decoration: none; color: black">
+								<div class="item_price">
+									<h4>$<%= @size_price_obj['frame'][size] %></h4>
+								</div>
+							</a>					
+						<% else %>
+								<div>
+									<h4 style="color: grey">N/A</h4>
+								</div>								
+						<% end %>
+					</td>
+					<td align="center" >
+						<% if @size_price_obj['frame'][size] != 0.0 %>
+							<a href="/items/new" style="text-decoration: none; color: black">
+								<div class="item_price">
+									<h4>$<%= @size_price_obj['frame'][size] %></h4>
+								</div>
+							</a>					
+						<% else %>
+								<div>
+									<h4 style="color: grey">N/A</h4>
+								</div>								
+						<% end %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+		
+	</table>
