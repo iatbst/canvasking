@@ -49,6 +49,30 @@
   font-weight: bold;
 }
 
+#size_compare_background_image {
+    height: auto; 
+    width: auto; 
+    max-width: 250px; 
+    max-height: 250px; 
+    z-index: 1;
+    display: none;
+}
+#size_compare_image {
+    height: auto; 
+    width: auto; 
+    padding: 3px;
+    max-width: 50px; 
+    max-height: 50px;  
+    border-width: 3px;
+    border-color: black;
+    border-style:solid;
+    z-index: 3;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: none;
+}
+
 .product_image {
     height: auto; 
     width: auto; 

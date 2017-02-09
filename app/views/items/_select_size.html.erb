@@ -1,4 +1,4 @@
-<div class="row box" id="size_price_options" style="margin-top: 30px;<% if hide_size_section?(@edit, @show, @save_fail, params, @item) %>display: none<% end %>">
+<div class="row box" id="size_price_options" style="<% if @item.size %>border-color: black;<% end %>margin-top: 30px;<% if hide_size_section?(@edit, @show, @save_fail, params, @item) %>display: none<% end %>">
 	<div class="row">
 		<h4 class="no_bold" style="margin-left: 70px; margin-top: 20px; margin-bottom: 20px"> 
 			
@@ -17,7 +17,7 @@
 
 		<div class="col-md-4">
 			
-			<select class="form-control" name="item[size]" id="item_size">
+			<select class="form-control" name="item[size]" id="item_size" style="margin-left: 20px;">
 				<% if @item.size.nil? || @item.errors[:size] %>
 				<option value="" selected disabled>Select Size</option>
 				<% end %>
@@ -29,6 +29,12 @@
 				<% end %>
 			</select>
 		
+		</div>
+		<div class="col-md-8">
+			<div style="margin-left: 50px; margin-top: 20px">
+				<%= image_tag get_image_url(@item, "overview"), id: "size_compare_image"%>
+				<%= image_tag '/sofa_icon.png', id: "size_compare_background_image"%>
+			</div>
 		</div>
 	</div>
 </div>

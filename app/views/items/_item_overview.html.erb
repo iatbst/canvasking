@@ -1,19 +1,8 @@
-<style>
-
-
-#overview_image_background {
-  display: inline-block;
-  position: relative;
-  background: url("/white_canvas.jpg") repeat;
-}
-</style>
 
 <div class="row" align="center" id="overview_box" style="height:550px; width:500px; margin-right:50px; position:fixed">
 	<div class="row" style="height:500px;">
 		<% if image_is_uploaded(@item) %>
-			<div id="overview_image_background">
-				<%= image_tag get_image_url(@item, "overview"), class: "overview_image image_shadow_in_item #{add_frame_and_mat_class(@item, 'item')}", id: "overview_image", onerror: "imgError(this);", style: "opacity: 0.85"%>
-			</div>
+				<%= image_tag get_image_url(@item, "overview"), class: "overview_image image_shadow_in_item #{add_frame_and_mat_class(@item, 'item')}", id: "overview_image", onerror: "imgError(this);"%>
 		<% else %>
 			<%= image_tag '/canvas_placeholder.png', class: "overview_image"%>
 		<% end %>
