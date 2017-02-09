@@ -357,7 +357,7 @@ class ItemsController < ApplicationController
     h = _size.split('x')[0]
     w = _size.split('x')[1]
     h_w_ratio = (h.to_f)/(w.to_f)
-    return (1 - ratio.to_f/h_w_ratio).abs < 0.04, h, (1 - ratio/h_w_ratio).abs
+    return (1 - ratio.to_f/h_w_ratio).abs < 0.04, h, w, (1 - ratio/h_w_ratio).abs
   end
     
   def process_size_price_table_by_image_ratio(item, size_price_obj)
@@ -374,16 +374,17 @@ class ItemsController < ApplicationController
       
       temp_price_list = []
       table.each do |size, price|
-        available_r, h, diff = available_ratio(image_h_w_ratio, size)
+        available_r, h, w, diff = available_ratio(image_h_w_ratio, size)
         # Only reasonable size and none-zero prices
         if available_r && price.to_i != 0
-          temp_price_list.push({'h'=> h, 's'=> size, 'p'=> price, 'diff'=> diff})
+          temp_price_list.push({'h'=> h, 'w'=> w, 's'=> size, 'p'=> price, 'diff'=> diff})
         end
       end
       
       temp_price_list.sort_by! {|obj| obj['diff']}
       temp_price_list = temp_price_list[0..9]
-      temp_price_list.sort_by! {|obj| obj['h'].to_i}
+      # TODO: image resolution should be considered, some low resolution can't be print out on large size
+      temp_price_list.sort_by! {|obj| [obj['h'].to_i, obj['w'].to_i]}
       
       new_size_price_obj[product] = {}
       temp_price_list.each do |obj|
