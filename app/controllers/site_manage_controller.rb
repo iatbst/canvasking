@@ -3,6 +3,10 @@ class SiteManageController < ApplicationController
   before_action :is_admin?
   include PricingHelper
   
+  def dashboard
+    
+  end
+  
   def list_users
     @users = User.all
   end

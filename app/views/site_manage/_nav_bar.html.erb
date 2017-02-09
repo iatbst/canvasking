@@ -1,0 +1,80 @@
+<style>
+
+@media (min-width: 768px) {
+  .navbar-collapse {
+    height: auto;
+    border-top: 0;
+    box-shadow: none;
+    max-height: none;
+    padding-left:0;
+    padding-right:0;
+  }
+  .navbar-collapse.collapse {
+    display: block !important;
+    width: auto !important;
+    padding-bottom: 0;
+    overflow: visible !important;
+  }
+  .navbar-collapse.in {
+    overflow-x: visible;
+  }
+
+.navbar
+{
+  height: 650px;
+  max-width:300px;
+  margin-right: 0;
+  margin-left: 0;
+} 
+
+.navbar-header
+{
+  margin-bottom: 50px;
+}
+.navbar-nav,
+.navbar-nav > li,
+.navbar-left,
+.navbar-right,
+.navbar-header
+{float:none !important;}
+
+.navbar-right .dropdown-menu {left:0;right:auto;}
+.navbar-collapse .navbar-nav.navbar-right:last-child {
+    margin-right: 0;
+}
+}
+
+</style>
+
+<nav class="navbar navbar-default" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header" align="center">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="<%= site_manage_dashboard_path %>" style="margin-left: 30px"><h1>Dashboard</h1></a>
+  </div>
+  <hr style="border-color: black; width: 80%"/>
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse navbar-ex1-collapse" style="margin-bottom: 150px">
+    <ul class="nav navbar-nav" align="center">
+      <li><a href="<%= site_manage_list_users_path %>"><h3>Users</h3></a></li>
+      <li><a href="#"><h3>Orders</h3></a></li>
+      <li><a href="<%= site_manage_show_prices_path %>"><h3>Prices</h3></a></li>
+      
+    </ul>
+
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav" align="center">
+      <li><a href="<%= root_path %>"><h3><span class="glyphicon glyphicon-arrow-left">&nbsp;</span>Back To Web</h3></a></li>
+      
+    </ul>
+
+  </div>
+</nav>

@@ -1,0 +1,29 @@
+<div style="margin-top: 30px">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active product_tab">
+    	<a href="#canvas_price_table" aria-controls="home" role="tab" data-toggle="tab" align="center" style="color: #EF9223">
+    		<%= image_tag '/pricing/canvas_icon.png', class: "depth_options_image"%>
+    		<h4>CANVAS</h4>
+    	</a>
+    </li>
+    <li role="presentation" class="product_tab">
+    	<a href="#frame_price_table" aria-controls="profile" role="tab" data-toggle="tab" align="center" style="color: grey">
+    		<%= image_tag '/pricing/frame_icon.png', class: "depth_options_image"%>
+    		<h4>FRAME</h4>
+    	</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="canvas_price_table">
+    	<%= render "canvas_price_table" %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="frame_price_table">
+    	<%= render "frame_price_table" %>
+    </div>
+  </div>
+
+</div>

@@ -1,14 +1,41 @@
-<h1>Here is all users, who love canvas printing :)</h1>
 
-<%= link_to "HOME", welcome_index_path %>
+<div >
+	<div class="row">
+		<div class="col-md-3">
+			<%= render 'nav_bar' %>
+		</div>
+		<div class="col-md-8" style="margin-top: 100px">
+			
+			<div style="row">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<th>Email</th>
+					<th>Nick Name</th>
+					<th>Signup Date</th>
+					<th>Last Signin</th>
+				</thead>
+				<tbody>
+					<% @users.each do |user| %>
+						<tr>
+							<td> 
+								<%= user.email %> 
+							</td>
+							<td> 
+								<%= user.name %> 
+							</td>
+							<td>
+								<%= user.created_at %>
+							</td>
+							<td>
+								<%= user.updated_at %>
+							</td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+			
+			</div>			
+		</div>
+	</div>
+</div>
 
-<table class="table">
-	<thead>
-		<th>Email</th>
-	</thead>
-	<tbody>
-		<% @users.each do |user| %>
-			<tr><td> <%= user.email %> </td></tr>
-		<% end %>
-	</tbody>
-</table>

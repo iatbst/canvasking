@@ -36,7 +36,7 @@
 			<input type="hidden" name="_method" value="patch" />
 			<%= hidden_field_tag :image_upload, true %>
 			<span class="btn btn-default fileinput-button orange_button_round">
-				<span class="glyphicon glyphicon-plus"></span>
+				<span class="glyphicon glyphicon-open"></span>
 				<span id="upload_button_label">Upload From Comupter</span>
 				<input id="fileupload" type="file" name="item[image]" data-url="/items/<%= @item.id %>" multiple>
 			</span>
@@ -45,7 +45,7 @@
 		</div>
 		
 		<div class="col-md-3" align="left" style="margin-left: 10px;margin-top: 0px">
-			<h4 class="no_bold" style="margin-top: 10px">or    from</h4>
+			<h4 class="no_bold" style="margin-top: 10px">or from </h4>
 		</div>
 		
 		<!--  Upload Photo From Facebook/Instagram -->
