@@ -11,10 +11,10 @@
 	
 	<div class="row" style="margin-left: 20px; margin-top: 20px">
 		<h4>
-			CHOOSE YOUR OWN CANVAS SIZE
+			CHOOSE YOUR OWN PRODUCT SIZE
 		</h4>
 		<h5 style="font-weight: normal">
-			All prices in <u style="color: #EF9223">USD</u>. Measured in <u style="color: #EF9223">inches</u>.
+			All prices in <span style="color: #EF9223">USD</span>. Measured in <span style="color: #EF9223">inches</span>.
 		</h5>
 	</div>
 	
@@ -62,7 +62,7 @@
 <h3>
 	STANDARD SIZES AND PRICES
 </h3>
-<h5 style="color: grey">All prices in <u style="color: #EF9223">USD</u>.</h5>
+<h5 style="color: grey">All prices in <span style="color: #EF9223">USD</span>.</h5>
 <div style="margin-top: 30px">
 
   <!-- Nav tabs -->
@@ -131,7 +131,7 @@
 					$('#create_button').attr('disabled', 'disabled');
 				} else {
 					$('#product').text(product);
-					$('#size').text(height + '" x ' + width + '" ( H x W in inches )');
+					$('#size').text(height + '" x ' + width + '" ( H x W )');
 					$('#price').text('$' + result.price);
 					$('#create_button').removeAttr('disabled');
 				}

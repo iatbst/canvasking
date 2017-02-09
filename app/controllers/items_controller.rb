@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
   include CartsHelper
   include PricingHelper
   layout "application", except: [:empty_page]
-  
+
   # TODO: need to refactor, otherwise every new page will create a item in DB, NO GOOD !!!
   def new
     @item = Item.new
