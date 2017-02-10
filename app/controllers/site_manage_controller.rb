@@ -20,12 +20,20 @@ class SiteManageController < ApplicationController
   end
   
   def manage_orders
-    @new_orders = Order.where(status: 'new')
-    @processing_orders = Order.where(status: 'processing')
-    @closed_orders = Order.where(status: 'closed')
+    @new_orders = Order.where(status: 'new').sort_by { |obj| obj.created_at }
+    @processing_orders = Order.where(status: 'processing').sort_by { |obj| obj.created_at }
+    @closed_orders = Order.where(status: 'closed').sort_by { |obj| obj.created_at }.reverse
   end
   
-  def process_order
+  def new_order_detail
+    @order = Order.find(params[:id])  
+  end
+
+  def processing_order_detail
+    @order = Order.find(params[:id])  
+  end
+  
+  def closed_order_detail
     @order = Order.find(params[:id])  
   end
   
@@ -38,7 +46,7 @@ class SiteManageController < ApplicationController
       if !validate_oem_number(params)
         flash[:error] = params[:order].to_s
         flash[:notice] = "Order failed to mark from new to processing as invalid input"
-        redirect_to process_order_path(@order) and return      
+        redirect_to new_order_detail_path(@order) and return      
       end
       
       @order.oem_info['oem_order_number'] = params[:order][:oem_order_number]
@@ -46,6 +54,7 @@ class SiteManageController < ApplicationController
       @order.oem_info['oem_shipping_detail_url'] = generate_shipping_detail_url(params[:order][:oem_order_number])
       @order.oem_info['oem_order_other_notes'] = params[:order][:oem_order_other_notes]
       @order.status = 'processing'
+      @order.processing_status = 1 # order placed
       
       if @order.save
         # SUCCESS
@@ -54,10 +63,20 @@ class SiteManageController < ApplicationController
         # FAIL
         flash[:error] = @order.errors.to_s
         flash[:notice] = "Order failed to mark from new to processing as DB failure"
-        redirect_to process_order_path(@order) and return 
+        redirect_to new_order_detail_path(@order) and return 
       end
     elsif params['processing_to_closed']
+    
+    elsif params['processing_status_update']
+      @order.processing_status = params[:order][:processing_status]
+      @order.save
+
+      @new_orders = Order.where(status: 'new').sort_by { |obj| obj.created_at }
+      @processing_orders = Order.where(status: 'processing').sort_by { |obj| obj.created_at }
+      @closed_orders = Order.where(status: 'closed').sort_by { |obj| obj.created_at }.reverse
+      @active_tab = 'processing'
       
+      render 'manage_orders' and return
     end
   end
   

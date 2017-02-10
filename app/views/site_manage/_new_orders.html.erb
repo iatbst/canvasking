@@ -1,6 +1,6 @@
 
 
-<table class="table table-bordered">
+<table class="table">
 	<thead>
 
 			<th>
@@ -9,13 +9,11 @@
 			<th style="width: 100px">
 				Time
 			</th>
-			<th style="width: 100px">
-				User
-			</th>
 			<th style="width: 200px">
-				Email
+				User & Email
 			</th>
-			<th style="width: 250px">
+
+			<th style="width: 600px">
 				Images
 			</th>
 			<th>
@@ -34,32 +32,30 @@
 				</td>
 				<td>
 					<%= order.user.name %>
-				</td>
-				<td>
+					<br />
 					<%= order.user.email %>
 				</td>
+
 				<td>
 					<div class="row">
-						<div class="col-md-6">
 						
-							<div class="xs_image_grid" align="center">
-								<% item = order.items[0] %>
-								<% if item && item.art_filter %>
-									<%= image_tag get_image_url(item, 'thumb', {'art_effect'=> true}), class: 'xs_image' %>
-								<% elsif item %>
-									<%= image_tag get_image_url(item, 'thumb', {'no_effect'=> true}), class: 'xs_image' %>
-								<% end %>
+							<% order.items[0..2].each do |item| %>
+							<div class="col-md-3">
+								<div class="xs_image_grid" align="center">
+									<%= image_tag get_image_url(item, 'thumb'), class: 'xs_image' %>			
+								</div>
 							</div>
-						</div>
-						<div class="col-md-6">
-							<% if order.items.count > 1 %>
-								<h5><%= "...#{order.items.count - 1} More" %></h5>
+							<% end %>
+						
+						<div class="col-md-3">
+							<% if order.items.count > 3 %>
+								<h5><%= "...#{order.items.count - 3} More" %></h5>
 							<% end %>
 						</div>
 					</div>
 				</td>
 				<td align="center">
-					<%= link_to 'Process', process_order_path(order), class: "process_button btn btn-secondary"  %>
+					<%= link_to 'Process', new_order_detail_path(order), class: "process_button btn btn-secondary"  %>
 				</td>
 			</tr>
 		<% end %>

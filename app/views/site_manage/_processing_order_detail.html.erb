@@ -86,7 +86,7 @@
 					</div>
 					<div class="col-md-4">
 						<br />
-						<%= link_to 'Download Image', get_image_url(item, 'origin'), type: 'button', class: 'btn btn-primary'%>
+						<%= link_to 'Download Image', get_image_url(item, 'origin'), type: 'button', target: '_blank', class: 'btn btn-primary'%>
 					</div>
 	
 		</div>
@@ -101,25 +101,29 @@
 	</div>
 	<br />
 	<br />
-	<div>
-		<%= form_for :order, url: update_order_path(@order) do |f| %>
-		
-			<div class="form-group">
-				<input class="form-control input-lg" placeholder="OEM Order Number" type="text" name="order[oem_order_number]" style="width:80%" />
-			</div>
-			<div class="form-group">
-				<input class="form-control input-lg" placeholder="OEM Order Detail Page Url" type="text" name="order[oem_order_detail_url]" style="width:80%" />
-			</div>
-
-			<div class="form-group">
-				<textarea class="form-control input-lg" placeholder="OEM Order Other Notes" type="text" name="order[oem_order_other_notes]" style="width:80%; height: 300px" ></textarea>
-			</div>
-			
-			<%= hidden_field_tag :new_to_processing, true %>
-			<br />
-			<%= f.submit 'Mark Order As Processing', class: 'process_button btn btn-default btn-lg' %>
-		<% end %>
-		
+	<div class="row box" style="margin-top: 20px;">
+		<table class="table">
+			<tr>
+				<td>
+					<h3>Taobao Order ID: <%= @order.oem_info['oem_order_number'] %></h3>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h3>Taobao Order Detail Page: <%= @order.oem_info['oem_order_detail_url'] %></h3>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h3>Taobao Shipping Detail Page: <%= @order.oem_info['oem_shipping_detail_url'] %></h3>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h3>Taobao Other Notes: <%= @order.oem_info['oem_order_other_notes'] %></h3>
+				</td>
+			</tr>
+		</table>
 	</div>
 </div>
 
