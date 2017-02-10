@@ -3,6 +3,18 @@ class SiteManageController < ApplicationController
   before_action :is_admin?
   include PricingHelper
   
+  
+  ###################################
+  #       3 status for order        #
+  #  1. new 2. processing 3. closed #
+  #                                 #
+  #       5 status for taobao order #
+  #  1. order placed                #
+  #  2. product ship out to RC      #
+  #  3. product reach RC            #
+  #  4. product ship out from RC    #
+  #  5. product reached             #
+  ###################################
   def dashboard
     
   end
@@ -11,6 +23,42 @@ class SiteManageController < ApplicationController
     @new_orders = Order.where(status: 'new')
     @processing_orders = Order.where(status: 'processing')
     @closed_orders = Order.where(status: 'closed')
+  end
+  
+  def process_order
+    @order = Order.find(params[:id])  
+  end
+  
+  def update_order
+    @order = Order.find(params[:id])
+    
+    if params['new_to_processing']
+      
+      # Process Invalid Input
+      if !validate_oem_number(params)
+        flash[:error] = params[:order].to_s
+        flash[:notice] = "Order failed to mark from new to processing as invalid input"
+        redirect_to process_order_path(@order) and return      
+      end
+      
+      @order.oem_info['oem_order_number'] = params[:order][:oem_order_number]
+      @order.oem_info['oem_order_detail_url'] = generate_order_detail_url(params[:order][:oem_order_number])
+      @order.oem_info['oem_shipping_detail_url'] = generate_shipping_detail_url(params[:order][:oem_order_number])
+      @order.oem_info['oem_order_other_notes'] = params[:order][:oem_order_other_notes]
+      @order.status = 'processing'
+      
+      if @order.save
+        # SUCCESS
+        redirect_to site_manage_manage_orders_path and return 
+      else
+        # FAIL
+        flash[:error] = @order.errors.to_s
+        flash[:notice] = "Order failed to mark from new to processing as DB failure"
+        redirect_to process_order_path(@order) and return 
+      end
+    elsif params['processing_to_closed']
+      
+    end
   end
   
   def manage_users
@@ -49,4 +97,17 @@ class SiteManageController < ApplicationController
     end
   end
   
+  def validate_oem_number(params)
+    order_number = params[:order][:oem_order_number]
+    # TAOBAO order is composed of 16 numbers !
+    return order_number.length == 16 && !/\A\d+\z/.match(order_number).nil?
+  end
+  
+  def generate_order_detail_url(order_number)
+    return "#{Canvasking::TAOBAO_ORDER_DETAIL_URL}?biz_order_id=#{order_number}"
+  end
+
+  def generate_shipping_detail_url(order_number)
+    return "#{Canvasking::TAOBAO_SHIPPING_DETAIL_URL}?tId=#{order_number}&userId=#{Canvasking::TAOBAO_USER_ID}"
+  end 
 end

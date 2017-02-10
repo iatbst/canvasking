@@ -1,0 +1,126 @@
+
+<% if flash[:notice] && flash[:error] %>
+	<h3 style="color: red">
+		Woopse, Order failed to mark from new to processing as:
+	</h3>	
+	<h5><%= flash[:notice] %></h5>
+	<h5><%= flash[:error] %></h5>
+<% end %>
+
+<div class="" style="margin-top: 50px; margin-bottom: 20px" >
+
+	<h3 class="no_bold">Order # <%= @order.number %></h3>
+	<div class="row box">
+		<div class="col-md-4">
+			<br />
+			<h5><b>Shipping Address</b></h5>
+			<%= @order.shipping_full_name %>
+			<br />
+			<%= @order.shipping_address_1 %>
+			<br />
+			<% if !@order.shipping_address_2.empty? %>
+			<%= @order.shipping_address_2 %>
+			<br />
+			<% end %>
+			<%= @order.shipping_city %>,&nbsp;<%= @order.state.name %>&nbsp;<%= @order.shipping_zip %>
+			<br />
+			<%= @order.country.name %>
+			<br />
+		</div>
+		<div class="col-md-4">
+			<br />
+			<h5>Payment Method</h5>
+			VISA &nbsp;**** &nbsp;4369
+		</div>
+		<div class="col-md-4">
+			<br />
+			<h5>Order Summary</h5>
+			Item(s) Subtotal: $<%= @order.before_price %>
+			<br />
+			Shipping & Handling: $<%= @order.shipping_price %>
+			<br />
+			Total before tax: $<%= @order.before_price + @order.shipping_price %>
+			<br />
+			Tax collected: $<%= @order.tax_price %>
+			<br />
+			<br />
+			<b>Grand Total: $<%= @order.total_price %></b>
+			<br />
+		</div>
+	</div>
+	
+	
+	<div class="row box" style="margin-top: 20px;">
+
+		<% @order.items.each_with_index do |item, ix| %>
+		<div class="row">
+
+	
+				
+					<div class="col-md-4" align="center">
+						<br />	
+						<%= image_tag get_image_url(item, "thumb"), id: "item_#{item.id}" %>
+					</div>
+
+					<div class="col-md-4" >
+						<br />
+						
+						
+						Type: <%= item.product.name %>
+						<br />
+						Size: <%= item.size %>
+						<br />
+						<% if item.product.name.include?('canvas')%>
+							Depth: <%= item.depth %>
+							<br />
+							Border: <%= item.border %>								
+						<% else %>
+							Frame: <%= Frame.find(item.frame_id).name %>
+							<br />
+							Mat: <%= "#{item.mat}\"".gsub("0.0\"", "No") %>								
+						<% end %>
+						<br />
+						Quantity: <b><%= item.quantity %></b><br />
+						Subtotal: $<b><%= item.price*item.quantity %></b>						
+
+					</div>
+					<div class="col-md-4">
+						<br />
+						<%= link_to 'Download Image', get_image_url(item, 'origin'), type: 'button', class: 'btn btn-primary'%>
+					</div>
+	
+		</div>
+	
+				<% if ix != @order.items.count - 1 %>
+					<hr style="width: 100%; border-color:#EDEDED;"/>
+				<% else %>
+					<br />
+				<% end %>
+				
+		<% end %>
+	</div>
+	<br />
+	<br />
+	<div>
+		<%= form_for :order, url: update_order_path(@order) do |f| %>
+		
+			<div class="form-group">
+				<input class="form-control input-lg" placeholder="OEM Order Number" type="text" name="order[oem_order_number]" style="width:80%" />
+			</div>
+			<div class="form-group">
+				<input class="form-control input-lg" placeholder="OEM Order Detail Page Url" type="text" name="order[oem_order_detail_url]" style="width:80%" />
+			</div>
+
+			<div class="form-group">
+				<textarea class="form-control input-lg" placeholder="OEM Order Other Notes" type="text" name="order[oem_order_other_notes]" style="width:80%; height: 300px" ></textarea>
+			</div>
+			
+			<%= hidden_field_tag :new_to_processing, true %>
+			<br />
+			<%= f.submit 'Mark Order As Processing', class: 'process_button btn btn-default btn-lg' %>
+		<% end %>
+		
+	</div>
+</div>
+
+

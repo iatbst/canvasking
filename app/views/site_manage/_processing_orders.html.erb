@@ -1,0 +1,68 @@
+<style>
+	.process_button {
+
+		background-color: #ef9223;
+		border-color: #ef9223;
+		color: white;
+		border-radius: 2px;
+		font-weight: bold;
+	}
+
+	.order_detail_button {
+
+		background-color: grey;
+		border-color: grey;
+		color: black;
+		border-radius: 2px;
+		font-weight: bold;
+	}
+
+	.shipping_detail_button {
+
+		background-color: grey;
+		border-color: grey;
+		color: black;
+		border-radius: 2px;
+		font-weight: bold;
+	}
+
+	
+
+
+
+</style>
+
+<table class="table table-bordered">
+	<thead>
+
+		<th> No. </th>
+		<th style="width: 100px"> Time </th>
+		<th style="width: 100px"> User </th>
+		<th style="width: 200px"> Email </th>
+		<th style="width: 250px"> Progress </th>
+		<th> Operations </th>
+
+	</thead>
+	<tbody>
+		<% @processing_orders.each do | order | %>
+		<tr>
+			<td> <%= order.number %>
+			<br />
+			<%= order.oem_info['oem_order_number'] %> </td>
+			<td> <%= order.created_at.to_s.gsub!('UTC', '') %> </td>
+			<td> <%= order.user.name %> </td>
+			<td> <%= order.user.email %> </td>
+			<td>
+				
+			</td>
+			<td align="center"> <%= link_to 'Order detail', order.oem_info['oem_order_detail_url'], style: "width: 100%",  target: '_blank', class: "order_detail_button btn btn-secondary btn-xs"  %>
+			<br />
+			<br />
+			<%= link_to 'Shipping detail', order.oem_info['oem_shipping_detail_url'], style: "width: 100%",  target: '_blank', class: "shipping_detail_button btn btn-secondary btn-xs"  %>
+			<br />
+			<br />
+			<%= link_to 'Process', process_order_path(order), style: "width: 100%", class: "process_button btn btn-secondary btn-xs"  %> </td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>

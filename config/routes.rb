@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   get 'site_manage/manage_users'
   get 'site_manage/manage_prices'
   get 'site_manage/manage_orders'
+  get 'site_manage/process_order/:id(.:format)' => 'site_manage#process_order', as: 'process_order'
+  post 'site_manage/update_order/:id(.:format)' => 'site_manage#update_order', as: 'update_order'
   get 'site_manage/dashboard'
   post 'site_manage/update_prices'
   get 'pricing/index'

@@ -67,4 +67,9 @@ module Canvasking
   
   # Administrators
   ADMINISTRATORS = ['iatbst@gmail.com']
+  
+  # TaoBao
+  TAOBAO_ORDER_DETAIL_URL = 'https://trade.taobao.com/trade/detail/trade_order_detail.htm'
+  TAOBAO_SHIPPING_DETAIL_URL = 'https://detail.i56.taobao.com/trace/trace_detail.htm'
+  TAOBAO_USER_ID = '1739501216'
 end
