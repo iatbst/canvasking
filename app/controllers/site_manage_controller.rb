@@ -71,12 +71,12 @@ class SiteManageController < ApplicationController
       @order.processing_status = params[:order][:processing_status]
       @order.save
 
-      @new_orders = Order.where(status: 'new').sort_by { |obj| obj.created_at }
-      @processing_orders = Order.where(status: 'processing').sort_by { |obj| obj.created_at }
-      @closed_orders = Order.where(status: 'closed').sort_by { |obj| obj.created_at }.reverse
-      @active_tab = 'processing'
+      # @new_orders = Order.where(status: 'new').sort_by { |obj| obj.created_at }
+      # @processing_orders = Order.where(status: 'processing').sort_by { |obj| obj.created_at }
+      # @closed_orders = Order.where(status: 'closed').sort_by { |obj| obj.created_at }.reverse
+      # @active_tab = 'processing'
       
-      render 'manage_orders' and return
+      render json: { 'processing_status'=> @order.processing_status } and return
     end
   end
   

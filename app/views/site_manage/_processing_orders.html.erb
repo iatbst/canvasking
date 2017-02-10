@@ -81,7 +81,7 @@
 <table class="table ">
 	<thead>
 
-		<th> No. </th>
+		<th style="width: 200px"> No. </th>
 		<th style="width: 100px"> Time </th>
 		<th style="width: 200px"> User & Email </th>
 		<th style="width: 300px"> Progress </th>
@@ -102,7 +102,7 @@
 				<%= order.user.email %>
 			</td>
 			<td>
-				<div class="row" style="height: 100px; background-color: white; border-color: white">
+				<div class="row" id="progress_bar_<%= order.id %>" style="height: 100px; background-color: white; border-color: white">
 					<% order.processing_status.times.each do |i| %>
 					  <% if i < 4 %>
 					  	<div class="complete col-md-2"></div>
@@ -120,8 +120,8 @@
 				</div>
 			</td>
 			<td>
-				<%= form_for :order, url: update_order_path(order) do |f| %>
-					<select class="form-control" name="order[processing_status]" id="processing_status" style="margin-top: 30px;">
+			
+					<select class="form-control" name="order[processing_status]" id="processing_status_<%= order.id %>" style="margin-top: 30px;">
 						<option value="1" <% if order.processing_status == 1 %>selected<% end %>>客户下单</option>
 						<option value="2" <% if order.processing_status == 2 %>selected<% end %>>卖家发货</option>
 						<option value="3" <% if order.processing_status == 3 %>selected<% end %>>到达集运</option>
@@ -131,11 +131,15 @@
 					<br />
 					<%= hidden_field_tag :processing_status_update, true %>
 					<% if (Time.now - order.updated_at) < Canvasking::TAOBAO_ORDER_QUERY_INTERVAL %>
-						<%= f.submit 'update', class: "btn btn-sm"%>
+						<button class="btn btn-sm update_button" id="<%= order.id %>" style="background-color: lightgrey; border-color: lightgrey">
+							update
+						</button>
 					<% else %>
-						<%= f.submit 'update', class: "btn btn-sm", style:"background-color: white; border-color: black" %>
+						<button class="btn btn-sm update_button" id="<%= order.id %>" style="background-color: white; border-color: black">
+							update
+						</button>
 					<% end %>
-				<% end %>
+	
 			</td>
 			<td align="center"> <%= link_to 'Order detail', order.oem_info['oem_order_detail_url'], style: "width: 100%",  target: '_blank', class: "order_detail_button btn btn-secondary btn-xs"  %>
 			<br />
@@ -148,3 +152,6 @@
 		<% end %>
 	</tbody>
 </table>
+
+
+

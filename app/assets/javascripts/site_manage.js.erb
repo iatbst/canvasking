@@ -1,0 +1,31 @@
+$(window).on('load', function(){
+
+	// Using Jquery to update item quantities - Plus
+	$(".update_button").click(function() {
+		// get status
+		var order_id = $(this).attr('id');
+		var processing_status = $('#processing_status_' + order_id).val();
+		var url = "/site_manage/update_order/" + order_id;
+		$(this).css('border-color', 'lightgrey');
+		$(this).css('background-color', 'lightgrey');
+		$.ajax({
+			url : url,
+			type : 'POST',
+			data: {'processing_status_update': true, 'order': {'processing_status': processing_status}},
+			success : function(result) {
+				// Update Order progress bar
+				var complete_count = result.processing_status;
+				$('#progress_bar_' + order_id + ' > div').slice(0, complete_count).removeClass('not_complete');
+				$('#progress_bar_' + order_id + ' > div').slice(0, complete_count).addClass('complete');
+				$('#progress_bar_' + order_id + ' > div').slice(complete_count, 5).removeClass('complete');
+				$('#progress_bar_' + order_id + ' > div').slice(complete_count, 5).addClass('not_complete');
+			},
+		    error: function (jqXHR, textStatus, errorThrown) {
+		       alert('request failed');
+		    }
+		});
+		
+	});
+	
+
+});
