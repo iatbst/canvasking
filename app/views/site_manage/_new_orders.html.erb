@@ -1,0 +1,67 @@
+
+
+<table class="table table-bordered">
+	<thead>
+
+			<th>
+				No.
+			</th>
+			<th style="width: 100px">
+				Time
+			</th>
+			<th style="width: 100px">
+				User
+			</th>
+			<th style="width: 200px">
+				Email
+			</th>
+			<th style="width: 250px">
+				Images
+			</th>
+			<th>
+				Operations
+			</th>
+	
+	</thead>
+	<tbody>
+		<% @new_orders.each do | order | %>
+			<tr>
+				<td>
+					<%= order.number %>
+				</td>
+				<td>
+					<%= order.created_at.to_s.gsub!('UTC', '') %>
+				</td>
+				<td>
+					<%= order.user.name %>
+				</td>
+				<td>
+					<%= order.user.email %>
+				</td>
+				<td>
+					<div class="row">
+						<div class="col-md-6">
+						
+							<div class="xs_image_grid" align="center">
+								<% item = order.items[0] %>
+								<% if item && item.art_filter %>
+									<%= image_tag get_image_url(item, 'thumb', {'art_effect'=> true}), class: 'xs_image' %>
+								<% elsif item %>
+									<%= image_tag get_image_url(item, 'thumb', {'no_effect'=> true}), class: 'xs_image' %>
+								<% end %>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<% if order.items.count > 1 %>
+								<h5><%= "...#{order.items.count - 1} More" %></h5>
+							<% end %>
+						</div>
+					</div>
+				</td>
+				<td align="center">
+					<%= link_to 'Process', '#', class: "process_button btn btn-secondary"  %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

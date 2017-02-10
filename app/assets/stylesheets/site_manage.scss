@@ -1,3 +1,31 @@
 // Place all the styles related to the site_manage controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.xs_image {
+    height: auto; 
+    width: auto; 
+    max-width: 90px; 
+    max-height: 90px;  
+
+    top: 50%;
+    position: relative;
+    transform:      translateY(-50%);
+}
+
+.xs_image_grid {
+   height: 100px;
+   width: 100px;
+   border: 2px solid #ef9223;
+}
+
+  
+  
+.process_button {
+
+  background-color: #ef9223;
+  border-color: #ef9223;
+  color: white;
+  border-radius: 0px;
+  font-weight: bold;
+}

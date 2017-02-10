@@ -1,0 +1,35 @@
+<div style="margin-top: 30px">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active order_tab">
+    	<a href="#new_orders_table" aria-controls="home" role="tab" data-toggle="tab" align="center" style="color: #EF9223">
+    		<h4>New Orders ( <%= @new_orders.count %> )</h4>
+    	</a>
+    </li>
+    <li role="presentation" class="order_tab">
+    	<a href="#open_orders_table" aria-controls="profile" role="tab" data-toggle="tab" align="center" style="color: grey">
+    		<h4>Processing Orders ( <%= @processing_orders.count %> )</h4>
+    	</a>
+    </li>
+    <li role="presentation" class="order_tab">
+    	<a href="#closed_orders_table" aria-controls="profile" role="tab" data-toggle="tab" align="center" style="color: grey">
+    		<h4>Closed Orders ( <%= @closed_orders.count %> )</h4>
+    	</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="new_orders_table">
+    	<%= render "new_orders" %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="open_orders_table">
+    	<%= render "processing_orders" %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="closed_orders_table">
+    	<%= render "closed_orders" %>
+    </div>
+  </div>
+
+</div>

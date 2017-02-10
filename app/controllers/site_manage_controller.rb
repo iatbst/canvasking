@@ -7,11 +7,17 @@ class SiteManageController < ApplicationController
     
   end
   
-  def list_users
+  def manage_orders
+    @new_orders = Order.where(status: 'new')
+    @processing_orders = Order.where(status: 'processing')
+    @closed_orders = Order.where(status: 'closed')
+  end
+  
+  def manage_users
     @users = User.all
   end
   
-  def show_prices
+  def manage_prices
     @size_price_obj = read_size_price_table
     @height_list = (8..40).step(2).to_a
     @width_list = (8..40).step(2).to_a
@@ -32,7 +38,7 @@ class SiteManageController < ApplicationController
       file.write @size_price_obj.to_yaml
     end 
     
-    redirect_to site_manage_show_prices_path
+    redirect_to site_manage_manage_prices_path
   end
   
   private

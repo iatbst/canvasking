@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170121201211) do
+ActiveRecord::Schema.define(version: 20170209233314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,8 +88,8 @@ ActiveRecord::Schema.define(version: 20170121201211) do
     t.string   "shipping_city"
     t.string   "shipping_zip"
     t.string   "shipping_phone"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.integer  "user_id"
     t.decimal  "before_price"
     t.decimal  "shipping_price"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 20170121201211) do
     t.integer  "state_id"
     t.integer  "country_id"
     t.string   "number"
+    t.string   "status",             default: "new"
   end
 
   add_index "orders", ["country_id"], name: "index_orders_on_country_id", using: :btree

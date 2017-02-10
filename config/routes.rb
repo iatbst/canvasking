@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  get 'site_manage/list_users'
-  get 'site_manage/show_prices'
+  get 'site_manage/manage_users'
+  get 'site_manage/manage_prices'
+  get 'site_manage/manage_orders'
   get 'site_manage/dashboard'
   post 'site_manage/update_prices'
   get 'pricing/index'
