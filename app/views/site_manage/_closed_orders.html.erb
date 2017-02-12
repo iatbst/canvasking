@@ -1,0 +1,48 @@
+
+
+
+<table class="table">
+	<thead>
+
+			<th style="width: 200px"> No. </th>
+			<th style="width: 150px"> Create Time </th>
+			<th style="width: 150px"> Received Time </th>
+			<th style="width: 200px"> User & Email </th>
+			<th style="width: 200px">
+				Price
+			</th>
+			<th>
+			
+			</th>
+	
+	</thead>
+	<tbody>
+		<% @closed_orders.each do | order | %>
+			<tr>
+				<td>
+					<%= order.number %>
+					<br />
+					<%= order.oem_info['oem_order_number'] %> </td>
+				</td>
+				<td>
+					<%= order.created_at.to_s.gsub!('UTC', '') %>
+				</td>
+				<td>
+					<%= order.order_recv_date.to_s.gsub!('UTC', '') %>
+				</td>
+				<td>
+					<%= order.user.name %>
+					<br />
+					<%= order.user.email %>
+				</td>
+
+				<td>
+					$<b><%= order.total_price %></b>
+				</td>
+				<td align="center">
+					<%= link_to 'Detail', closed_order_detail_path(order), class: "process_button btn btn-secondary"  %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

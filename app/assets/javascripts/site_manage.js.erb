@@ -6,8 +6,6 @@ $(window).on('load', function(){
 		var order_id = $(this).attr('id');
 		var processing_status = $('#processing_status_' + order_id).val();
 		var url = "/site_manage/update_order/" + order_id;
-		$(this).css('border-color', 'lightgrey');
-		$(this).css('background-color', 'lightgrey');
 		$.ajax({
 			url : url,
 			type : 'POST',
@@ -24,6 +22,13 @@ $(window).on('load', function(){
 		       alert('request failed');
 		    }
 		});
+		$(this).css('border-color', 'lightgrey');
+		$(this).css('background-color', 'lightgrey');
+		if (processing_status == 5){
+			$(this).attr('disabled', 'disabled');
+			$('#shipping_done_icon_' + order_id).show();
+		}
+		
 		
 	});
 	

@@ -86,7 +86,7 @@
 		<th style="width: 200px"> User & Email </th>
 		<th style="width: 300px"> Progress </th>
 		<th style="width: 150px"> Update </th>
-		<th> Operations </th>
+		<th> </th>
 
 	</thead>
 	<tbody>
@@ -117,6 +117,13 @@
 					  	<div class="not_complete col-md-2 last_dot"></div>
 					  <% end %>					
 					<% end %>
+					<div class="col-md-2">
+						
+					<h3 style="margin-top: 40px">
+						<span id="shipping_done_icon_<%= order.id %>" class="glyphicon glyphicon-ok-circle" style="color: lightgreen;<% if order.processing_status != 5 %>display: none<% end %>"></span>
+					</h3>
+				
+					</div>
 				</div>
 			</td>
 			<td>
@@ -128,9 +135,15 @@
 						<option value="4" <% if order.processing_status == 4 %>selected<% end %>>集运发货</option>
 						<option value="5" <% if order.processing_status == 5 %>selected<% end %>>客户收货</option>
 					</select>
+
+					
 					<br />
 					<%= hidden_field_tag :processing_status_update, true %>
-					<% if (Time.now - order.updated_at) < Canvasking::TAOBAO_ORDER_QUERY_INTERVAL %>
+					<% if order.processing_status == 5 %>
+						<button class="btn btn-sm update_button" id="<%= order.id %>" disabled="disabled" style="background-color: lightgrey; border-color: lightgrey">
+							update
+						</button>	
+					<% elsif (Time.now - order.updated_at) < Canvasking::TAOBAO_ORDER_QUERY_INTERVAL %>
 						<button class="btn btn-sm update_button" id="<%= order.id %>" style="background-color: lightgrey; border-color: lightgrey">
 							update
 						</button>
@@ -141,7 +154,8 @@
 					<% end %>
 	
 			</td>
-			<td align="center"> <%= link_to 'Order detail', order.oem_info['oem_order_detail_url'], style: "width: 100%",  target: '_blank', class: "order_detail_button btn btn-secondary btn-xs"  %>
+			<td align="center"> 
+				<%= link_to 'Order detail', order.oem_info['oem_order_detail_url'], style: "width: 100%",  target: '_blank', class: "order_detail_button btn btn-secondary btn-xs"  %>
 			<br />
 			<br />
 			<%= link_to 'Shipping detail', order.oem_info['oem_shipping_detail_url'], style: "width: 100%",  target: '_blank', class: "shipping_detail_button btn btn-secondary btn-xs"  %>

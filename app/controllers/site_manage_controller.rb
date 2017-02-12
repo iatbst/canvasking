@@ -51,8 +51,8 @@ class SiteManageController < ApplicationController
       
       @order.oem_info['oem_order_number'] = params[:order][:oem_order_number]
       @order.oem_info['oem_order_detail_url'] = generate_order_detail_url(params[:order][:oem_order_number])
-      @order.oem_info['oem_shipping_detail_url'] = generate_shipping_detail_url(params[:order][:oem_order_number])
-      @order.oem_info['oem_order_other_notes'] = params[:order][:oem_order_other_notes]
+      #@order.oem_info['oem_shipping_detail_url'] = generate_shipping_detail_url(params[:order][:oem_order_number])
+      @order.notes = params[:order][:notes]
       @order.status = 'processing'
       @order.processing_status = 1 # order placed
       
@@ -66,15 +66,41 @@ class SiteManageController < ApplicationController
         redirect_to new_order_detail_path(@order) and return 
       end
     elsif params['processing_to_closed']
+      @order.status = 'closed'
+      @order.save
+      @new_orders = Order.where(status: 'new').sort_by { |obj| obj.created_at }
+      @processing_orders = Order.where(status: 'processing').sort_by { |obj| obj.created_at }
+      @closed_orders = Order.where(status: 'closed').sort_by { |obj| obj.created_at }.reverse
+      @active_tab = 'processing'
+      
+      render 'manage_orders'
     
+    elsif params['closed_to_processing']
+      @order.status = 'closed'
+      @order.save
+      @new_orders = Order.where(status: 'new').sort_by { |obj| obj.created_at }
+      @processing_orders = Order.where(status: 'processing').sort_by { |obj| obj.created_at }
+      @closed_orders = Order.where(status: 'closed').sort_by { |obj| obj.created_at }.reverse
+      @active_tab = 'closed'
+      
+      render 'manage_orders'
+    
+    elsif params['update_notes']
+      @order.notes = params[:order][:notes]   
+      @order.save
+      redirect_to(:back)
+      
+    elsif params['update_shipping_url']
+      @order.oem_info['oem_shipping_detail_url'] = params[:order][:oem_shipping_detail_url]   
+      @order.save
+      redirect_to(:back)     
+        
     elsif params['processing_status_update']
       @order.processing_status = params[:order][:processing_status]
+      if @order.processing_status == 5
+        @order.order_recv_date = Time.now
+      end
       @order.save
-
-      # @new_orders = Order.where(status: 'new').sort_by { |obj| obj.created_at }
-      # @processing_orders = Order.where(status: 'processing').sort_by { |obj| obj.created_at }
-      # @closed_orders = Order.where(status: 'closed').sort_by { |obj| obj.created_at }.reverse
-      # @active_tab = 'processing'
       
       render json: { 'processing_status'=> @order.processing_status } and return
     end
@@ -126,6 +152,7 @@ class SiteManageController < ApplicationController
     return "#{Canvasking::TAOBAO_ORDER_DETAIL_URL}?biz_order_id=#{order_number}"
   end
 
+  # Deprecated : Not working ! TAOBAO_USER_ID always change
   def generate_shipping_detail_url(order_number)
     return "#{Canvasking::TAOBAO_SHIPPING_DETAIL_URL}?tId=#{order_number}&userId=#{Canvasking::TAOBAO_USER_ID}"
   end 
