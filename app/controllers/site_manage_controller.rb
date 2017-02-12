@@ -23,6 +23,7 @@ class SiteManageController < ApplicationController
     @new_orders = Order.where(status: 'new').sort_by { |obj| obj.created_at }
     @processing_orders = Order.where(status: 'processing').sort_by { |obj| obj.created_at }
     @closed_orders = Order.where(status: 'closed').sort_by { |obj| obj.created_at }.reverse
+    @active_tab = params['active_tab']
   end
   
   def new_order_detail

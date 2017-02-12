@@ -158,7 +158,11 @@
 				<%= link_to 'Order detail', order.oem_info['oem_order_detail_url'], style: "width: 100%",  target: '_blank', class: "order_detail_button btn btn-secondary btn-xs"  %>
 			<br />
 			<br />
-			<%= link_to 'Shipping detail', order.oem_info['oem_shipping_detail_url'], style: "width: 100%",  target: '_blank', class: "shipping_detail_button btn btn-secondary btn-xs"  %>
+			<% if order.oem_info['oem_shipping_detail_url'].nil? %>
+				<%= link_to 'Shipping detail', '#', style: "width: 100%", class: "shipping_detail_button btn btn-secondary btn-xs", disabled: "disabled"  %>
+			<% else %>
+				<%= link_to 'Shipping detail', order.oem_info['oem_shipping_detail_url'], style: "width: 100%",  target: '_blank', class: "shipping_detail_button btn btn-secondary btn-xs" %>
+			<% end %>
 			<br />
 			<br />
 			<%= link_to 'Detail', processing_order_detail_path(order), style: "width: 100%", class: "process_button btn btn-secondary btn-xs"  %> </td>

@@ -55,23 +55,37 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="<%= site_manage_dashboard_path %>" style="margin-left: 30px"><h1>Dashboard</h1></a>
+    <a class="navbar-brand" href="<%= site_manage_dashboard_path %>" style="margin-left: 15px"><h1>Dashboard</h1></a>
   </div>
   <hr style="border-color: black; width: 80%"/>
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse navbar-ex1-collapse" style="margin-bottom: 150px">
-    <ul class="nav navbar-nav" align="center">
-      <li><a href="<%= site_manage_manage_orders_path %>"><h3>Orders</h3></a></li>
-      <li><a href="<%= site_manage_manage_prices_path %>"><h3>Prices</h3></a></li>
-      <li><a href="<%= site_manage_manage_users_path %>"><h3>Users</h3></a></li>
-    </ul>
+  	<div class="row" style="margin-left: 50px;">
+  		<a  href="<%= site_manage_manage_orders_path %>"><h3>Orders</h3></a>
+  	</div>
+  	<div class="row" style="margin-top: 0px; margin-left: 80px">
+  		<a href="<%= site_manage_manage_orders_path %>"><h5>New Order</h5></a>
+  	</div>
+  	<div class="row" style="margin-top: 0px; margin-left: 80px">
+  		<a  href="<%= site_manage_manage_orders_path %>?active_tab=processing"><h5>Processing Order</h5></a>
+  	</div>
+  	<div class="row" style="margin-top: 0px; margin-left: 80px">
+  		<a  href="<%= site_manage_manage_orders_path %>?active_tab=closed"><h5>Closed Order</h5></a>
+  	</div>
+  	<div class="row" style="margin-top: 0px; margin-left: 50px">
+  		<a href="<%= site_manage_manage_prices_path %>"><h3>Prices</h3></a>
+  	</div>
+  	<div class="row" style="margin-top: 0px; margin-left: 50px">
+  		<a href="<%= site_manage_manage_users_path %>"><h3>Users</h3></a>
+  	</div> 	
+  	  	
 
   </div>
 
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav" align="center">
-      <li><a href="<%= root_path %>"><h3><span class="glyphicon glyphicon-arrow-left">&nbsp;</span>Back To Web</h3></a></li>
+      <li><a href="<%= root_path %>"><h4><span class="glyphicon glyphicon-arrow-left">&nbsp;</span>Back To Web</h4></a></li>
       
     </ul>
 
