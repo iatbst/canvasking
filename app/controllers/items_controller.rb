@@ -110,7 +110,7 @@ class ItemsController < ApplicationController
       # Upload images to S3
       origin_tmp_file_path = "#{Rails.root}/public#{@item.image_tmp_paths['origin']}"
       ImageUploadWorker.perform_async(origin_tmp_file_path, @item.id, 'image')
-      TmpImageRemoveWorker.perform_in(10.minutes, origin_tmp_file_path, @item.id, 'image')
+      TmpImageRemoveWorker.perform_in(Canvasking::IMAGE_TMP_CACHE_TIME.hours, origin_tmp_file_path, @item.id, 'image')
       @size_price, @size_price_str = prepare_size_price(@item)
       
       @wizard = true
@@ -132,7 +132,7 @@ class ItemsController < ApplicationController
       # Upload images to S3
       origin_tmp_file_path = "#{Rails.root}/public#{@item.art_image_tmp_paths['origin']}"
       ImageUploadWorker.perform_async(origin_tmp_file_path, @item.id, 'art_image')
-      TmpImageRemoveWorker.perform_in(10.minutes, origin_tmp_file_path, @item.id, 'art_image')
+      TmpImageRemoveWorker.perform_in(Canvasking::IMAGE_TMP_CACHE_TIME.hours, origin_tmp_file_path, @item.id, 'art_image')
       
       @size_price, @size_price_str = prepare_size_price(@item)
       render 'new'

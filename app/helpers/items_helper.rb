@@ -14,7 +14,7 @@ module ItemsHelper
 
   def get_normal_image_url(item, version)
       # If image is still cached in local tmp, use it first, if not, use the one on S3
-      if !item.image_tmp_paths.empty?
+      if !item.image_tmp_paths.empty? && File.exist?("#{Rails.root}/public#{item.image_tmp_paths[version]}")
         return item.image_tmp_paths[version]
       elsif item.image.file.nil?
         return '/canvas_placeholder.png'
@@ -36,7 +36,7 @@ module ItemsHelper
   
   def get_art_image_url(item, version)
     
-      if !item.art_image_tmp_paths.empty?
+      if !item.art_image_tmp_paths.empty? && File.exist?("#{Rails.root}/public#{item.art_image_tmp_paths[version]}")
         return item.art_image_tmp_paths[version]
       elsif item.art_image.file.nil?
         return '/canvas_placeholder.png'

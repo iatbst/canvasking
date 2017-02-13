@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'site_manage/manage_users'
   get 'site_manage/manage_prices'
   get 'site_manage/manage_orders'
+  get 'site_manage/update_order_status'
   get 'site_manage/new_order_detail/:id(.:format)' => 'site_manage#new_order_detail', as: 'new_order_detail'
   get 'site_manage/processing_order_detail/:id(.:format)' => 'site_manage#processing_order_detail', as: 'processing_order_detail'
   get 'site_manage/closed_order_detail/:id(.:format)' => 'site_manage#closed_order_detail', as: 'closed_order_detail'

@@ -113,7 +113,12 @@
 					<%= link_to 'Order detail', @order.oem_info['oem_order_detail_url'], style: "width: 300px",  target: '_blank', class: "order_detail_button btn btn-primary"  %>
 				</td>
 				<td align="center">
-					<%= link_to 'Shipping detail', @order.oem_info['oem_shipping_detail_url'], style: "width: 300px",  target: '_blank', class: "shipping_detail_button btn btn-primary"  %>
+					<% if @order.oem_info['oem_shipping_detail_url'].nil? %>
+						<button class="shipping_detail_button btn btn-primary" style="width: 300px" disabled="disabled">Shipping detail</button>
+					<% else %>
+						<%= link_to 'Shipping detail', @order.oem_info['oem_shipping_detail_url'], style: "width: 300px",  target: '_blank', class: "shipping_detail_button btn btn-primary"  %>
+					<% end %>
+					
 				</td>
 			
 			</tr>

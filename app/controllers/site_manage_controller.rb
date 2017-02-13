@@ -77,7 +77,7 @@ class SiteManageController < ApplicationController
       render 'manage_orders'
     
     elsif params['closed_to_processing']
-      @order.status = 'closed'
+      @order.status = 'processing'
       @order.save
       @new_orders = Order.where(status: 'new').sort_by { |obj| obj.created_at }
       @processing_orders = Order.where(status: 'processing').sort_by { |obj| obj.created_at }
@@ -105,6 +105,18 @@ class SiteManageController < ApplicationController
       
       render json: { 'processing_status'=> @order.processing_status } and return
     end
+  end
+  
+  # Update processing orders to closed order 30 days later after customer received the product
+  def update_order_status
+    @processing_orders = Order.where(status: 'processing', processing_status: 5)
+    @processing_orders.each do | order|
+      if (order.order_recv_date - Time.now) > Canvasking::ORDER_CLOSED_WAITING_TIME
+        order.status = 'closed'
+        order.save
+      end
+    end
+    redirect_to "#{site_manage_manage_orders_path}?active_tab=processing"
   end
   
   def manage_users
