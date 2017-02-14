@@ -1,0 +1,76 @@
+<div class="row">
+	<div class="col-md-10 col-md-offset-1" style="margin-top:100px">
+		
+  <% if @coupon.errors.any? %>
+    <div id="error_explanation">
+      <h3>
+        <%= pluralize(@coupon.errors.count, "error") %> prohibited
+        this coupon from being saved:
+      </h3>
+      <ul>
+        <% @coupon.errors.full_messages.each do |msg| %>
+          <li style="color: red"><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+<%= form_for :coupon, url: site_manage_create_coupon_path do |f| %>
+
+	<div class="form-group">
+		<%= f.text_field :code, class:"form-control input-lg", placeholder:"Code", style:"width:71%"%>
+	</div>
+
+	<div class="form-group">
+		<select class="form-control" name="coupon[public]" id="select_discount_type_1" style="margin-left: 0px; width: 35%">
+			<option value="true" selected>Public</option>
+			<option value="false">Private</option>
+		</select>
+	</div>
+
+	<div class="form-group">
+		<%= f.text_field :user_id, class:"form-control input-lg", placeholder:"To which user ( by email )", style:"width:71%; display:none"%>
+	</div>
+	
+	<div class="form-group">
+		<%= f.text_area :description, class:"form-control input-lg", placeholder:"What's this coupon for", style:"width:71%"%>
+	</div>	
+
+	<div class="form-group">
+		<select class="form-control" name="" id="select_discount_type_2" style="margin-left: 0px; width: 35%">
+			<option value="value" selected>Discount By Value</option>
+			<option value="percentage" >Discount By Percentage</option>
+		</select>
+	</div>
+
+	<div class="form-group" id="discount_value">
+		<%= f.text_field :discount_val, class:"form-control input-lg", placeholder:"Discount value", style:"width:71%"%>
+	</div>	
+
+	<div class="form-group" id="discount_ptg" style="display:none">
+		<%= f.text_field :discount_ptg, class:"form-control input-lg", placeholder:"Discount percentage", style:"width:71%"%>
+	</div>
+	
+	<div class="form-group">
+		<%= f.text_field :exp_date, class:"form-control input-lg", placeholder:"Expire Date", style:"width:71%"%>
+	</div>
+	
+	<%= f.submit 'Create', class: 'btn btn-primary btn-lg' %>
+<% end %>
+
+	</div>
+</div>
+
+<script>
+	
+	$('#select_discount_type_2').change(function (){
+		if ($(this).val() == 'value'){
+			$('#discount_value').show();
+			$('#discount_ptg').hide();
+		} else {
+			$('#discount_value').hide();
+			$('#discount_ptg').show();			
+		}
+	});
+	
+</script>

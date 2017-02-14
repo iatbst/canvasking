@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   get 'site_manage/manage_users'
   get 'site_manage/manage_prices'
   get 'site_manage/manage_orders'
+  get 'site_manage/manage_coupons'
+  get 'site_manage/new_coupon'
   get 'site_manage/update_order_status'
   get 'site_manage/new_order_detail/:id(.:format)' => 'site_manage#new_order_detail', as: 'new_order_detail'
   get 'site_manage/processing_order_detail/:id(.:format)' => 'site_manage#processing_order_detail', as: 'processing_order_detail'
@@ -9,6 +11,7 @@ Rails.application.routes.draw do
   post 'site_manage/update_order/:id(.:format)' => 'site_manage#update_order', as: 'update_order'
   get 'site_manage/dashboard'
   post 'site_manage/update_prices'
+  post 'site_manage/create_coupon'
   get 'pricing/index'
   get 'pricing/query_price'
 
@@ -38,6 +41,7 @@ Rails.application.routes.draw do
     resources :item_messages
   end
   resources :orders
+  # resources :coupons
   
   #mount Sidekiq::Web, at: '/sidekiq'
   # Example resource route with options:

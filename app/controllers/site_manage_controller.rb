@@ -3,6 +3,7 @@ class SiteManageController < ApplicationController
   before_action :is_admin?
   include PricingHelper
   
+  ################  Orders ######################
   
   ###################################
   #       3 status for order        #
@@ -119,9 +120,15 @@ class SiteManageController < ApplicationController
     redirect_to "#{site_manage_manage_orders_path}?active_tab=processing"
   end
   
+  
+  
+  ################  Users ######################
+  
   def manage_users
     @users = User.all
   end
+  
+  ################  Users ######################
   
   def manage_prices
     @size_price_obj = read_size_price_table
@@ -147,7 +154,38 @@ class SiteManageController < ApplicationController
     redirect_to site_manage_manage_prices_path
   end
   
+  ################  Coupons ######################
+  def manage_coupons
+    @public_coupons = Coupon.where(public: true).where('exp_date > ?', Time.now)
+    @private_coupons = Coupon.where(public: false, used: false).where('exp_date > ?', Time.now)
+    @exp_coupons = Coupon.where('exp_date <= ?', Time.now)
+  end
+  
+  def new_coupon
+    @coupon = Coupon.new
+  end
+  
+  def create_coupon
+
+    if params[:coupon][:public]
+      # Public Coupon
+      @coupon = Coupon.new(coupon_params)
+      if @coupon.save
+        redirect_to site_manage_manage_coupons_path
+      else
+        render 'new_coupon' # return with error
+      end
+    else
+      # Private Coupon
+      
+    end
+  end
+  
   private
+  def coupon_params
+    return params.require('coupon').permit!  
+  end
+  
   # WARN: Only Website Administrator could access this controllers
   def is_admin?
     unless Canvasking::ADMINISTRATORS.include?(current_user.email)

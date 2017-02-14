@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170212070510) do
+ActiveRecord::Schema.define(version: 20170214025630) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,23 @@ ActiveRecord::Schema.define(version: 20170212070510) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "coupons", force: :cascade do |t|
+    t.string   "code"
+    t.boolean  "public",       default: true
+    t.integer  "user_id"
+    t.decimal  "discount_val"
+    t.integer  "discount_ptg"
+    t.boolean  "used",         default: false
+    t.datetime "exp_date"
+    t.string   "description"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "used_count"
+  end
+
+  add_index "coupons", ["code"], name: "index_coupons_on_code", unique: true, using: :btree
+  add_index "coupons", ["user_id"], name: "index_coupons_on_user_id", using: :btree
 
   create_table "frames", force: :cascade do |t|
     t.string "name"
@@ -159,6 +176,7 @@ ActiveRecord::Schema.define(version: 20170212070510) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "carts", "users"
+  add_foreign_key "coupons", "users"
   add_foreign_key "item_messages", "items"
   add_foreign_key "items", "carts"
   add_foreign_key "items", "frames"

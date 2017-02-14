@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  public: false
+  user_id: 
+  discount_val: 9.99
+  discount_ptg: 1
+  used: false
+  exp_date: 2017-02-13 16:10:03
+  description: MyString
+
+two:
+  code: MyString
+  public: false
+  user_id: 
+  discount_val: 9.99
+  discount_ptg: 1
+  used: false
+  exp_date: 2017-02-13 16:10:03
+  description: MyString

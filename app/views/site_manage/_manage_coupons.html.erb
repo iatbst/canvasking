@@ -1,0 +1,35 @@
+<div style="margin-top: 30px">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="<% if @active_tab.nil? %>active<% end %> order_tab">
+    	<a href="#new_orders_table" aria-controls="home" role="tab" data-toggle="tab" align="center" style="color: #EF9223">
+    		<h4>Public Coupons ( <%= @public_coupons.count %> )</h4>
+    	</a>
+    </li>
+    <li role="presentation" class="<% if @active_tab == "processing" %>active<% end %> order_tab">
+    	<a href="#open_orders_table" aria-controls="profile" role="tab" data-toggle="tab" align="center" style="color: grey">
+    		<h4>Private Coupons ( <%= @private_coupons.count %> )</h4>
+    	</a>
+    </li>
+    <li role="presentation" class="<% if @active_tab == "closed" %>active<% end %> order_tab">
+    	<a href="#closed_orders_table" aria-controls="profile" role="tab" data-toggle="tab" align="center" style="color: grey">
+    		<h4>Expired/Used Coupons ( <%= @exp_coupons.count %> )</h4>
+    	</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane <% if @active_tab.nil? %>active<% end %>" id="new_orders_table">
+    	<%= render "public_coupons" %>
+    </div>
+    <div role="tabpanel" class="tab-pane <% if @active_tab == "processing" %>active<% end %>" id="open_orders_table">
+    	<%= render "private_coupons" %>
+    </div>
+    <div role="tabpanel" class="tab-pane <% if @active_tab == "closed" %>active<% end %>" id="closed_orders_table">
+    	<%= render "exp_coupons" %>
+    </div>
+  </div>
+
+</div>
