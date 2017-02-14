@@ -11,20 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214025630) do
+ActiveRecord::Schema.define(version: 20170214195256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
 
   create_table "carts", force: :cascade do |t|
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
     t.integer  "user_id"
-    t.decimal  "price",      default: 0.0
-    t.integer  "quantity",   default: 0
+    t.decimal  "price",                                   default: 0.0
+    t.integer  "quantity",                                default: 0
+    t.decimal  "discount_price", precision: 30, scale: 2
+    t.integer  "coupon_id"
   end
 
+  add_index "carts", ["coupon_id"], name: "index_carts_on_coupon_id", using: :btree
   add_index "carts", ["user_id"], name: "index_carts_on_user_id", using: :btree
 
   create_table "countries", force: :cascade do |t|
@@ -120,9 +123,11 @@ ActiveRecord::Schema.define(version: 20170214025630) do
     t.integer  "processing_status"
     t.datetime "order_recv_date"
     t.text     "notes"
+    t.integer  "coupon_id"
   end
 
   add_index "orders", ["country_id"], name: "index_orders_on_country_id", using: :btree
+  add_index "orders", ["coupon_id"], name: "index_orders_on_coupon_id", using: :btree
   add_index "orders", ["state_id"], name: "index_orders_on_state_id", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
@@ -175,6 +180,7 @@ ActiveRecord::Schema.define(version: 20170214025630) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "carts", "coupons"
   add_foreign_key "carts", "users"
   add_foreign_key "coupons", "users"
   add_foreign_key "item_messages", "items"
@@ -183,6 +189,7 @@ ActiveRecord::Schema.define(version: 20170214025630) do
   add_foreign_key "items", "orders"
   add_foreign_key "items", "products"
   add_foreign_key "orders", "countries"
+  add_foreign_key "orders", "coupons"
   add_foreign_key "orders", "states"
   add_foreign_key "orders", "users"
   add_foreign_key "shipping_addresses", "countries"

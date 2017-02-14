@@ -114,8 +114,70 @@ class OrdersController < ApplicationController
     end
   end
   
+  def apply_coupon
+    code = params[:code]
+    cart = get_current_cart
+    
+    if cart.coupon
+      # Coupon already applied
+      render json: {'error'=> "#{cart.coupon.code} is already applied, one coupon allowed per order."}
+    elsif validate_coupon(code)
+      # Valid Coupon code
+      
+      # update discount_price and coupon field in current cart
+      coupon = Coupon.find_by_code(code)
+      cart.coupon_id = coupon.id
+      cart.discount_price = calculate_discount_price(cart.price, coupon)
+      cart.save
+      
+      render json: {'discount_price'=> cart.discount_price, 'code'=>code, 'desc'=>coupon.description }
+      
+    else
+      # Invalid Coupon code
+      render json: {'error'=> "#{code} is invalid or expired."}
+    end
+    
+  end
+  
+  def remove_coupon
+    cart = get_current_cart
+    cart.discount_price = nil
+    cart.coupon_id = nil
+ 
+    if cart.save
+      render json: {'price'=> cart.price }
+    else
+      render json: {'error'=> "Can't remove this coupon."}
+    end
+  end
+  
   private
 
+  def validate_coupon(code)
+    coupon = Coupon.find_by_code(code)
+    if coupon.nil?
+      return false
+    end
+    
+    if coupon.public
+      if coupon.exp_date > Time.now
+        return true
+      else 
+        return false
+      end
+    else
+      #TODO private coupon
+    end  
+  end
+  
+  def calculate_discount_price(price, coupon)
+    if coupon.discount_val
+      return price - coupon.discount_val
+    else
+      return (price*((100 - coupon.discount_ptg).to_f/100.to_f)).round(2)
+    end  
+  end
+  
   def generate_unique_order_number
     # Find a unique one
     while true

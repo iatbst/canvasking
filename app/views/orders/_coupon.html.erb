@@ -1,0 +1,78 @@
+<h3>Apply Coupon</h3>
+<hr style="width: 550px; margin-left: 1px; border-width: 1px; border-color:#E2E2E2;"/>
+
+<div class="row" style="margin-left: 10px; margin-top: -10px">
+	<a href="#">Need a coupon code ?</a>
+</div>
+
+<!-- Coupon Validations -->
+<div class="row" style="margin-left: -10px; margin-bottom: 0px">
+
+	<div class="col-md-6">
+		<input type="text" class="form-control input-lg" placeholder="coupon code" style="width:100%" id="coupon_code_input" />
+		<h5 style="color: orange" id="coupon_error_msg"></h5>
+	</div>
+	<div class="col-md-4">
+		<button class="btn btn-primary btn-lg" style="width: 70%" id="apply_coupon_button">Apply</button>
+	</div>
+</div>
+<div class="row" style="margin-top: 0px; margin-left: 10px; margin-bottom: 80px">
+	<h5 style="color: grey" id="coupon_applied">
+		<% if @cart.coupon %>
+			<%= "#{@cart.coupon.description} ( #{@cart.coupon.code} ) " %><a onclick="remove_coupon();" style="color: black; cursor: pointer; text-decoration: underline;">remove</a>
+		<% end %>
+	</h5>
+</div>
+
+<script>
+
+	// Using Jquery to apply coupon
+	$("#apply_coupon_button").click(function() {
+		// get quantity
+		var code = $('#coupon_code_input').val();
+		var url = "/orders/apply_coupon";
+		$.ajax({
+			url : url,
+			type : 'POST',
+			data: {'code': code},
+			success : function(result) {
+				// Update item quantity on page
+				if (result['error']){
+					$('#coupon_error_msg').text(result['error']);
+				} else {
+					// update price in summary
+					$('#discount_total_price').text('Total with discount: ' + result['discount_price']);
+					// append coupon 
+					var remove_html = '<a onclick="remove_coupon();" style="color: black; cursor: pointer; text-decoration: underline;">remove</a>';
+					$('#coupon_applied').append(result['desc'] + ' ( ' + code + ' ) ' + remove_html);
+				}
+				
+			}
+		});
+		$('#coupon_error_msg').text('');
+	});
+
+	// Using Jquery to cancel coupon
+	function remove_coupon() {
+		// get quantity
+		var url = "/orders/remove_coupon";
+		$.ajax({
+			url : url,
+			type : 'GET',
+			success : function(result) {
+				// Update item quantity on page
+				if (result['error']){
+					$('#coupon_error_msg').text(result['error']);
+				} else {
+					// update price in summary
+					$('#discount_total_price').text('');
+					// remove coupon 
+					$('#coupon_applied').html('');
+				}
+				
+			}
+		});
+		$('#coupon_error_msg').text('');
+	}
+	
+</script>

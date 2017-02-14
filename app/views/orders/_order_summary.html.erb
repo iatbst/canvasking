@@ -17,6 +17,7 @@
 				</div>
 				<hr style="width: 50%"/>
 				<div class="row" align="center" style="height:50px;" >
-					<h3 class="no_bold">Total: <b>$<%= @cart.price + @shipping_cost + @tax %></b></h3>
+					<h3 class="no_bold" id="total_price">Total: <b>$<%= @cart.price + @shipping_cost + @tax %></b></h3>
+					<h3 class="no_bold" id="discount_total_price"></h3>
 				</div>
 			</div>
