@@ -354,6 +354,7 @@
 			// show compare images and adjust relative canvas size
 			$('#size_compare_background_image').show();
 			$('#size_compare_image').show();
+			$('#lamp_image').show();
 			var height = parseInt($('#item_size').val().split('x')[0].replace('"', ''));
 			var width = parseInt($('#item_size').val().split('x')[1].replace('"', ''));
 			if (height > width){
@@ -363,12 +364,13 @@
 				$('#size_compare_image').css('max-height', width*3 + 'px');
 				$('#size_compare_image').css('max-width', width*3 + 'px');				
 			}
-			if ((57 - height*3/2) < (95 - height*3) ){
-				$('#size_compare_image').css('top', (57 - height*3/2) + 'px');
+			if ((47 - height*3/2) < (85 - height*3) ){
+				$('#size_compare_image').css('top', (47 - height*3/2) + 'px');
 			} else {
-				$('#size_compare_image').css('top', (95 - height*3) + 'px');
+				$('#size_compare_image').css('top', (85 - height*3) + 'px');
 			}
-			$('#size_compare_image').css('left', (188 - width*3/2) + 'px');
+			$('#size_compare_image').css('left', (178 - width*3/2) + 'px');
+
 
 			if (height < 16 && width < 16){
 				$('#size_compare_image').css('padding', '2px');

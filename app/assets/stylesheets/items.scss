@@ -54,7 +54,7 @@
     width: auto; 
     max-width: 250px; 
     max-height: 250px; 
-    z-index: 1;
+    z-index: 2;
     display: none;
 }
 #size_compare_image {
@@ -70,6 +70,18 @@
     position: absolute;
     top: 0px;
     left: 0px;
+    display: none;
+}
+
+#lamp_image {
+    height: auto; 
+    width: auto; 
+    max-width: 225px; 
+    max-height: 225px;  
+    z-index: 1;
+    position: absolute;
+    top: 2px;
+    left: 295px;
     display: none;
 }
 
