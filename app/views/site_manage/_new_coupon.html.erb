@@ -14,6 +14,12 @@
       </ul>
     </div>
   <% end %>
+
+  <% if flash[:error] %>
+  	<h3 style="color: red">
+  		<%= flash[:error] %>
+  	</h3>
+  <% end %>
   
 <%= form_for :coupon, url: site_manage_create_coupon_path do |f| %>
 
@@ -23,13 +29,13 @@
 
 	<div class="form-group">
 		<select class="form-control" name="coupon[public]" id="select_discount_type_1" style="margin-left: 0px; width: 35%">
-			<option value="true" selected>Public</option>
-			<option value="false">Private</option>
+			<option value=true selected>Public</option>
+			<option value=false>Private</option>
 		</select>
 	</div>
 
-	<div class="form-group">
-		<%= f.text_field :user_id, class:"form-control input-lg", placeholder:"To which user ( by email )", style:"width:71%; display:none"%>
+	<div class="form-group" id="user_email" style="display:none">
+		<%= f.text_field :user_id, class:"form-control input-lg", placeholder:"To which user ( by email )", style:"width:35%;"%>
 	</div>
 	
 	<div class="form-group">
@@ -51,8 +57,15 @@
 		<%= f.text_field :discount_ptg, class:"form-control input-lg", placeholder:"Discount percentage", style:"width:71%"%>
 	</div>
 	
+	<h4 class="no_bold" style="color: grey"> ------------------------ Coupon Conditions ------------------------</h4>
+	
 	<div class="form-group">
 		<%= f.text_field :exp_date, class:"form-control input-lg", placeholder:"Expire Date", style:"width:71%"%>
+	</div>
+
+	<div class="form-group">
+		<input class="form-control input-lg" placeholder="At Least Amount" name="coupon[condition][at_least_amount]" style="width: 71%"/>
+		
 	</div>
 	
 	<%= f.submit 'Create', class: 'btn btn-primary btn-lg' %>
@@ -70,6 +83,14 @@
 		} else {
 			$('#discount_value').hide();
 			$('#discount_ptg').show();			
+		}
+	});
+	
+	$('#select_discount_type_1').change(function (){
+		if ($(this).val() == 'false'){
+			$('#user_email').show();
+		} else {
+			$('#user_email').hide();		
 		}
 	});
 	

@@ -7,14 +7,14 @@
     		<h4>Public Coupons ( <%= @public_coupons.count %> )</h4>
     	</a>
     </li>
-    <li role="presentation" class="<% if @active_tab == "processing" %>active<% end %> order_tab">
+    <li role="presentation" class="<% if @active_tab == "private" %>active<% end %> order_tab">
     	<a href="#open_orders_table" aria-controls="profile" role="tab" data-toggle="tab" align="center" style="color: grey">
     		<h4>Private Coupons ( <%= @private_coupons.count %> )</h4>
     	</a>
     </li>
-    <li role="presentation" class="<% if @active_tab == "closed" %>active<% end %> order_tab">
+    <li role="presentation" class="<% if @active_tab == "expired" %>active<% end %> order_tab">
     	<a href="#closed_orders_table" aria-controls="profile" role="tab" data-toggle="tab" align="center" style="color: grey">
-    		<h4>Expired/Used Coupons ( <%= @exp_coupons.count %> )</h4>
+    		<h4>Expired Public Coupons ( <%= @exp_coupons.count %> )</h4>
     	</a>
     </li>
   </ul>
@@ -24,10 +24,10 @@
     <div role="tabpanel" class="tab-pane <% if @active_tab.nil? %>active<% end %>" id="new_orders_table">
     	<%= render "public_coupons" %>
     </div>
-    <div role="tabpanel" class="tab-pane <% if @active_tab == "processing" %>active<% end %>" id="open_orders_table">
+    <div role="tabpanel" class="tab-pane <% if @active_tab == "private" %>active<% end %>" id="open_orders_table">
     	<%= render "private_coupons" %>
     </div>
-    <div role="tabpanel" class="tab-pane <% if @active_tab == "closed" %>active<% end %>" id="closed_orders_table">
+    <div role="tabpanel" class="tab-pane <% if @active_tab == "expired" %>active<% end %>" id="closed_orders_table">
     	<%= render "exp_coupons" %>
     </div>
   </div>

@@ -157,8 +157,9 @@ class SiteManageController < ApplicationController
   ################  Coupons ######################
   def manage_coupons
     @public_coupons = Coupon.where(public: true).where('exp_date > ?', Time.now)
-    @private_coupons = Coupon.where(public: false, used: false).where('exp_date > ?', Time.now)
-    @exp_coupons = Coupon.where('exp_date <= ?', Time.now)
+    @private_coupons = Coupon.where(public: false)
+    @exp_coupons = Coupon.where(public: true).where('exp_date <= ?', Time.now)
+    @active_tab = params['active_tab']
   end
   
   def new_coupon
@@ -166,8 +167,12 @@ class SiteManageController < ApplicationController
   end
   
   def create_coupon
-
-    if params[:coupon][:public]
+    if params[:coupon][:condition][:at_least_amount] && 
+        params[:coupon][:condition][:at_least_amount].empty?
+      params[:coupon][:condition].delete('at_least_amount')
+    end
+    
+    if params[:coupon][:public] == "true"
       # Public Coupon
       @coupon = Coupon.new(coupon_params)
       if @coupon.save
@@ -177,7 +182,20 @@ class SiteManageController < ApplicationController
       end
     else
       # Private Coupon
-      
+      user = User.find_by_email(params[:coupon][:user_id])
+      if user
+        params[:coupon][:user_id] = user.id
+        @coupon = Coupon.new(coupon_params)
+        if @coupon.save
+          redirect_to site_manage_manage_coupons_path
+        else
+          render 'new_coupon' # return with error
+        end       
+      else
+        @coupon = Coupon.new
+        flash[:error] = 'user:' + params[:coupon][:user_id] + ' not found'
+        render 'new_coupon' # return with error
+      end
     end
   end
   

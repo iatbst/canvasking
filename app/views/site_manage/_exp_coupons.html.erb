@@ -1,0 +1,48 @@
+
+
+<table class="table">
+	<thead>
+
+			<th style="width: 100px">Code</th>
+			<th style="width: 300px">Description</th>
+			<th style="width: 100px">Discount</th>
+			<th style="width: 100px">Used Count</th>
+			<th style="width: 200px">Expire Date</th>
+			<th style="width: 100px">At Least</th>
+			<th style="width: 100px"></th>
+	</thead>
+	<tbody>
+			<% @exp_coupons.each do |coupon| %>
+				<tr>
+					<td>
+						<%= coupon.code %>
+					</td>
+					<td>
+						<%= coupon.description %>
+					</td>
+					<td>
+						<% if coupon.discount_val %>
+							$<%= coupon.discount_val %>
+						<% else %>
+							<%= coupon.discount_ptg %>%
+						<% end %>
+					</td>
+					<td>
+						<%= coupon.used_count %>
+					</td>
+					<td>
+						<%= coupon.exp_date.to_s.gsub!('UTC', '') %>
+					</td>
+					<td>
+						<% if coupon.condition['at_least_amount']%>
+							$<%= coupon.condition['at_least_amount'] %>
+						<% end %>
+					</td>
+					<td>
+						<%= link_to 'Edit', '#', class: 'btn btn-secondary btn-sm' %>
+					</td>
+				</tr>
+			<% end %>
+	</tbody>
+
+</table>

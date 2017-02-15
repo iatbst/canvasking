@@ -6,7 +6,8 @@ class OrdersController < ApplicationController
   def new
     @order = Order.new
     prepare_data_for_order_new_page
-
+    update_coupon_in_cart
+    
   end
 
   def index
@@ -25,8 +26,16 @@ class OrdersController < ApplicationController
     # Shipping form validation success, try to charge
     if @order.valid?
       cart = get_current_cart
-      charge_amount = (cart.price*100).to_i # Important: Stripe process money amount as cents
-      charge_result = charge_money_by_stripe(charge_amount)
+      
+      # CHARGE MONEY: Stripe process money amount as cents
+      if cart.coupon
+        charge_amount = (cart.discount_price*100).to_i
+        @order.coupon_id = cart.coupon.id # Mark this order is using coupon
+      else
+        charge_amount = (cart.price*100).to_i
+      end
+      @order.number = generate_unique_order_number
+      charge_result = charge_money_by_stripe(charge_amount, @order)
 
       # Charge failed, return back to order new page
       if charge_result[0] == false
@@ -44,13 +53,24 @@ class OrdersController < ApplicationController
         cart = get_current_cart
         @order.items.push(*cart.items)
 
-        # Calculate all kind of prices
-        @order.before_price = cart.price
+        # Calculate all kind of prices        
         # TODO: Need to collect tax depend on state law and shipping cost
         @order.shipping_price = 0
         @order.tax_price = 0
-        @order.total_price = @order.before_price + @order.shipping_price + @order.tax_price
-        @order.number = generate_unique_order_number
+        @order.before_price = cart.price
+        if cart.coupon
+          # If private coupon, mark as used
+          if cart.coupon.public
+            cart.coupon.used_count += 1
+          else
+            cart.coupon.used = true
+          end
+          cart.coupon.save
+          @order.discount_price = cart.discount_price
+          @order.total_price = @order.discount_price + @order.shipping_price + @order.tax_price
+        else
+          @order.total_price = @order.before_price + @order.shipping_price + @order.tax_price
+        end
         @order.save!
 
         # Empty Cart !
@@ -115,13 +135,13 @@ class OrdersController < ApplicationController
   end
   
   def apply_coupon
-    code = params[:code]
+    code = params[:code].strip
     cart = get_current_cart
     
     if cart.coupon
       # Coupon already applied
-      render json: {'error'=> "#{cart.coupon.code} is already applied, one coupon allowed per order."}
-    elsif validate_coupon(code)
+      render json: {'error'=> "#{cart.coupon.code} is already applied, one coupon allowed per order. You need to remove it before applying another coupon."}
+    elsif coupon_is_valid(code) && coupon_is_applicable(code, cart)
       # Valid Coupon code
       
       # update discount_price and coupon field in current cart
@@ -130,11 +150,11 @@ class OrdersController < ApplicationController
       cart.discount_price = calculate_discount_price(cart.price, coupon)
       cart.save
       
-      render json: {'discount_price'=> cart.discount_price, 'code'=>code, 'desc'=>coupon.description }
+      render json: {'discount_price'=> cart.discount_price, 'code'=>code, 'desc'=>coupon.description, 'saving'=> cart.price - cart.discount_price }
       
     else
       # Invalid Coupon code
-      render json: {'error'=> "#{code} is invalid or expired."}
+      render json: {'error'=> @coupon_error}
     end
     
   end
@@ -151,11 +171,13 @@ class OrdersController < ApplicationController
     end
   end
   
+  ############################## Private ############################## 
   private
 
-  def validate_coupon(code)
+  def coupon_is_valid(code)
     coupon = Coupon.find_by_code(code)
     if coupon.nil?
+      @coupon_error = "Coupon not found."
       return false
     end
     
@@ -163,11 +185,38 @@ class OrdersController < ApplicationController
       if coupon.exp_date > Time.now
         return true
       else 
+        @coupon_error = "Coupon #{code} is expired."
         return false
       end
     else
-      #TODO private coupon
+      if coupon.exp_date <= Time.now
+        @coupon_error = "Coupon #{code} is expired."
+        return false
+      elsif current_user.id != coupon.user.id
+        @coupon_error = "Coupon #{code} is invalid."
+        return false
+      elsif coupon.used
+        @coupon_error = "Coupon #{code} is used before."
+        return false       
+      else
+        return true
+      end
     end  
+  end
+  
+  # This function is different with `coupon_is_valid`, which verify if coupon valid.
+  # This is used to inspect if coupon condition is met, eg, some coupon require spend at least amount to use
+  def coupon_is_applicable(code, cart)
+    coupon = Coupon.find_by_code(code)
+    
+    # Check if amount in cart exceed coupon least amount
+    if coupon.condition['at_least_amount'] && cart.price < coupon.condition['at_least_amount'].to_f
+      @coupon_error = "Coupon #{code} is allowed on order which has amount $#{coupon.condition['at_least_amount']} or higher."
+      return false
+    # TODO: other conditions may applied here
+    else
+      return true
+    end
   end
   
   def calculate_discount_price(price, coupon)
@@ -193,6 +242,17 @@ class OrdersController < ApplicationController
     params.require(:order).permit(:shipping_full_name, :shipping_address_1, :shipping_address_2, :shipping_city, :country_id, :state_id, :shipping_zip, :shipping_phone)
   end
 
+  def update_coupon_in_cart
+    # coupon need to update every time user checkout, in case, eg coupon expire, not meet coupon condition
+    cart = get_current_cart
+    coupon = cart.coupon
+    if coupon && ( !coupon_is_valid(coupon.code) || !coupon_is_applicable(coupon.code, cart))
+      cart.coupon = nil
+      cart.discount_price = nil
+      cart.save
+    end
+  end
+  
   def prepare_data_for_order_new_page
     @cart = get_current_cart
     @shipping_cost = prepare_shipping_cost
@@ -223,7 +283,7 @@ class OrdersController < ApplicationController
   end
   
   # Stripe way to charge the card
-  def charge_money_by_stripe(amount)
+  def charge_money_by_stripe(amount, order)
     # Set your secret key: remember to change this to your live secret key in production
     # See your keys here: https://dashboard.stripe.com/account/apikeys
     Stripe.api_key = Canvasking::STRIPE_SECRET_KEY_TEST
@@ -237,7 +297,7 @@ class OrdersController < ApplicationController
       :amount => amount, # Amount in cents
       :currency => "usd",
       :source => token,
-      :description => "Example charge"
+      :description => "Order: #{order.number}"
       )
     rescue Stripe::CardError => e
     # The card has been declined

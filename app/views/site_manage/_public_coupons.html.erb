@@ -6,9 +6,10 @@
 			<th style="width: 100px">Code</th>
 			<th style="width: 300px">Description</th>
 			<th style="width: 100px">Discount</th>
-			<th style="width: 200px">Expire Date</th>
 			<th style="width: 100px">Used Count</th>
-			<th style="width: 200px"></th>
+			<th style="width: 200px">Expire Date</th>
+			<th style="width: 100px">At Least</th>
+			<th style="width: 100px"></th>
 	</thead>
 	<tbody>
 			<% @public_coupons.each do |coupon| %>
@@ -27,12 +28,18 @@
 						<% end %>
 					</td>
 					<td>
+						<%= coupon.used_count %>
+					</td>
+					<td>
 						<%= coupon.exp_date.to_s.gsub!('UTC', '') %>
 					</td>
 					<td>
+						<% if coupon.condition['at_least_amount']%>
+							$<%= coupon.condition['at_least_amount'] %>
+						<% end %>
 					</td>
 					<td>
-						<% link_to 'Edit', '#', class: 'btn btn-secondary btn-sm' %>
+						<%= link_to 'Edit', '#', class: 'btn btn-secondary btn-sm' %>
 					</td>
 				</tr>
 			<% end %>

@@ -4,6 +4,7 @@
 <div class="row" style="margin-left: 10px; margin-top: -10px">
 	<a href="#">Need a coupon code ?</a>
 </div>
+<br />
 
 <!-- Coupon Validations -->
 <div class="row" style="margin-left: -10px; margin-bottom: 0px">
@@ -16,10 +17,11 @@
 		<button class="btn btn-primary btn-lg" style="width: 70%" id="apply_coupon_button">Apply</button>
 	</div>
 </div>
+
 <div class="row" style="margin-top: 0px; margin-left: 10px; margin-bottom: 80px">
 	<h5 style="color: grey" id="coupon_applied">
 		<% if @cart.coupon %>
-			<%= "#{@cart.coupon.description} ( #{@cart.coupon.code} ) " %><a onclick="remove_coupon();" style="color: black; cursor: pointer; text-decoration: underline;">remove</a>
+			<span class="glyphicon glyphicon-ok" style="color: #709BC5"></span><%= " #{@cart.coupon.description} ( #{@cart.coupon.code} ) " %><a onclick="remove_coupon();" style="color: black; cursor: pointer; text-decoration: underline;">remove</a>
 		<% end %>
 	</h5>
 </div>
@@ -41,10 +43,13 @@
 					$('#coupon_error_msg').text(result['error']);
 				} else {
 					// update price in summary
-					$('#discount_total_price').text('Total with discount: ' + result['discount_price']);
+					$('#coupon_saving').text('Coupon save: ' + '-$' + result['saving']);
+					$('#total_price').text('$' + result['discount_price']);
+					
 					// append coupon 
 					var remove_html = '<a onclick="remove_coupon();" style="color: black; cursor: pointer; text-decoration: underline;">remove</a>';
-					$('#coupon_applied').append(result['desc'] + ' ( ' + code + ' ) ' + remove_html);
+					$('#coupon_applied').append('<span class="glyphicon glyphicon-ok" style="color: #709BC5"></span> ' + result['desc'] + ' ( ' + code + ' ) ' + remove_html);
+					
 				}
 				
 			}
@@ -65,7 +70,9 @@
 					$('#coupon_error_msg').text(result['error']);
 				} else {
 					// update price in summary
-					$('#discount_total_price').text('');
+					$('#coupon_saving').text('');
+					$('#total_price').text('$' + result['price']);
+					
 					// remove coupon 
 					$('#coupon_applied').html('');
 				}

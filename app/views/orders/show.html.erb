@@ -45,6 +45,10 @@
 			<br />
 			Tax collected: $<%= @order.tax_price %>
 			<br />
+			<% if @order.coupon %>		
+					Coupon saved: -$<%= @order.before_price - @order.discount_price%>
+					<br />
+			<% end %>
 			<br />
 			<b>Grand Total: $<%= @order.total_price %></b>
 			<br />

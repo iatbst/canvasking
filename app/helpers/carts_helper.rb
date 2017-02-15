@@ -40,6 +40,8 @@ module CartsHelper
        cart.items.clear
        cart.quantity = 0
        cart.price = 0
+       cart.coupon_id = nil
+       cart.discount_price = nil
        cart.save!
     end
     
