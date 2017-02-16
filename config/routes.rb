@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'site_manage/manage_orders'
   get 'site_manage/manage_coupons'
   get 'site_manage/new_coupon'
+  get 'site_mange/edit_coupon/:id(.:format)' => 'site_manage#edit_coupon', as: 'site_manage_edit_coupon'
   get 'site_manage/update_order_status'
   get 'site_manage/new_order_detail/:id(.:format)' => 'site_manage#new_order_detail', as: 'new_order_detail'
   get 'site_manage/processing_order_detail/:id(.:format)' => 'site_manage#processing_order_detail', as: 'processing_order_detail'
@@ -12,6 +13,7 @@ Rails.application.routes.draw do
   get 'site_manage/dashboard'
   post 'site_manage/update_prices'
   post 'site_manage/create_coupon'
+  patch 'site_manage/update_coupon/:id(.:format)'=> 'site_manage#update_coupon', as: 'site_manage_update_coupon'
   get 'pricing/index'
   get 'pricing/query_price'
 

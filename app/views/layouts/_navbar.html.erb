@@ -1,3 +1,26 @@
+
+<style>
+
+
+#nav_pricing_menu:hover, 
+#nav_inspiration_menu:hover, 
+#nav_cart_menu:hover, 
+#nav_orders_menu:hover, 
+#nav_setting_menu:hover,
+#nav_signup_menu:hover,
+#nav_login_menu:hover {
+	color: #EF9223;
+}
+
+#nav_start_menu {
+  background-color: #ef9223;
+  border-color: #ef9223;
+  color: white;
+  
+  font-weight: bold;
+}
+</style>
+
 <!-- navigation section -->
 <section class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container">
@@ -12,25 +35,22 @@
 		<div class="collapse navbar-collapse" style="margin-right: 1px">
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<% if controller_name == "items" %>
-						<%= link_to 'START', new_item_path, method:"get", class:"smoothScroll" , style:"color: #EF9223" %>
-					<% else %>
-						<%= link_to 'START', new_item_path, method:"get", class:"smoothScroll" %>
-					<% end %>
+
+					<%= button_to 'GET START', new_item_path, style:"margin-top: 10px;", class:"btn btn-warning btn-sm", method:"get", id:"nav_start_menu" %>
 				</li>
 				<li>
-					<%= link_to 'PRODUCTS', new_item_path, method:"get", class:"smoothScroll" %>
+					<%= link_to 'INSPIRATION', new_item_path, method:"get", id:"nav_inspiration_menu" %>
 				</li>
 				<li>
 					<% if controller_name == "pricing" %>
-						<%= link_to 'PRICING', pricing_index_path, method:"get", class:"smoothScroll", style:"color: #EF9223" %>
+						<%= link_to 'PRICING', pricing_index_path, method:"get", id:"nav_pricing_menu", style:"color: #EF9223" %>
 					<% else %>
-						<%= link_to 'PRICING', pricing_index_path, method:"get", class:"smoothScroll" %>
+						<%= link_to 'PRICING', pricing_index_path, method:"get", id:"nav_pricing_menu"%>
 					<% end %>
 				</li>
 				<li>
 					<% if controller_name == "carts" %>
-						<a href="/cart" class="smoothScroll" style="color: #EF9223" >
+						<a href="/cart" id="nav_cart_menu" style="color: #EF9223" >
 						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
 						<% cart = get_current_cart %>
 						<% if cart.quantity != 0 %>
@@ -40,7 +60,7 @@
 						<% end %>
 						</a>
 					<% else %>
-						<a href="/cart" class="smoothScroll">
+						<a href="/cart" id="nav_cart_menu">
 						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
 						<% cart = get_current_cart %>
 						<% if cart.quantity != 0 %>
@@ -52,22 +72,22 @@
 					<% end %>
 				</li>
 				<% unless user_signed_in? %>
-					<li><a href="/users/sign_up" class="smoothScroll">SIGN UP</a></li>
-					<li><a href="/users/sign_in" class="smoothScroll">LOGIN</a></li>
+					<li><a href="/users/sign_up" id="nav_signup_menu">SIGN UP</a></li>
+					<li><a href="/users/sign_in" id="nav_login_menu">LOGIN</a></li>
 				<% end %>
 				<% if user_signed_in? %>
 					<li>
 						<% if controller_name == "orders" %>
-							<%= link_to "MY ORDERS", orders_path, style:"color: #EF9223" %>
+							<%= link_to "MY ORDERS", orders_path, style:"color: #EF9223", id:"nav_orders_menu"%>
 						<% else %>
-							<%= link_to "MY ORDERS", orders_path %>
+							<%= link_to "MY ORDERS", orders_path, id:"nav_orders_menu"%>
 						<% end %>
 					</li>
 					<li>
 						<% if controller_name == "registrations" %>
-							<%= link_to "SETTINGS", edit_user_registration_path, style:"color: #EF9223" %>
+							<%= link_to "SETTINGS", edit_user_registration_path, style:"color: #EF9223", id:"nav_setting_menu"%>
 						<% else %>
-							<%= link_to "SETTINGS", edit_user_registration_path %>
+							<%= link_to "SETTINGS", edit_user_registration_path, id:"nav_setting_menu"%>
 						<% end %>
 					</li>
 				<% end %>

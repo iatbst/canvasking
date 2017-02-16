@@ -30,7 +30,6 @@ class OrdersController < ApplicationController
       # CHARGE MONEY: Stripe process money amount as cents
       if cart.coupon
         charge_amount = (cart.discount_price*100).to_i
-        @order.coupon_id = cart.coupon.id # Mark this order is using coupon
       else
         charge_amount = (cart.price*100).to_i
       end
@@ -66,6 +65,7 @@ class OrdersController < ApplicationController
             cart.coupon.used = true
           end
           cart.coupon.save
+          @order.coupon_id = cart.coupon.id # Mark this order is using coupon
           @order.discount_price = cart.discount_price
           @order.total_price = @order.discount_price + @order.shipping_price + @order.tax_price
         else
@@ -210,8 +210,8 @@ class OrdersController < ApplicationController
     coupon = Coupon.find_by_code(code)
     
     # Check if amount in cart exceed coupon least amount
-    if coupon.condition['at_least_amount'] && cart.price < coupon.condition['at_least_amount'].to_f
-      @coupon_error = "Coupon #{code} is allowed on order which has amount $#{coupon.condition['at_least_amount']} or higher."
+    if coupon.condition_at_least_amount && cart.price < coupon.condition_at_least_amount.to_f
+      @coupon_error = "Coupon #{code} is allowed on order which has amount $#{coupon.condition_at_least_amount} or higher."
       return false
     # TODO: other conditions may applied here
     else
@@ -220,7 +220,7 @@ class OrdersController < ApplicationController
   end
   
   def calculate_discount_price(price, coupon)
-    if coupon.discount_val
+    if coupon.discount_by_val
       return price - coupon.discount_val
     else
       return (price*((100 - coupon.discount_ptg).to_f/100.to_f)).round(2)

@@ -166,11 +166,38 @@ class SiteManageController < ApplicationController
     @coupon = Coupon.new
   end
   
-  def create_coupon
-    if params[:coupon][:condition][:at_least_amount] && 
-        params[:coupon][:condition][:at_least_amount].empty?
-      params[:coupon][:condition].delete('at_least_amount')
+  def edit_coupon
+    @coupon = Coupon.find(params[:id])
+    
+  end
+  
+  def update_coupon
+    @coupon = Coupon.find(params[:id])
+
+    if params[:coupon][:public] == "true"
+      # Public Coupon
+      if @coupon.update(coupon_params)
+        redirect_to site_manage_manage_coupons_path
+      else
+        render 'edit_coupon' # return with error
+      end
+    else
+      # Private Coupon
+      user = User.find(params[:coupon][:user_id])
+      if user
+        if @coupon.update(coupon_params)
+          redirect_to site_manage_manage_coupons_path
+        else
+          render 'edit_coupon' # return with error
+        end       
+      else
+        flash[:error] = 'user_id:' + params[:coupon][:user_id] + ' not found'
+        render 'edit_coupon' # return with error
+      end
     end
+  end
+  
+  def create_coupon
     
     if params[:coupon][:public] == "true"
       # Public Coupon

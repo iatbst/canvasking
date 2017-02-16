@@ -21,7 +21,7 @@
   	</h3>
   <% end %>
   
-<%= form_for :coupon, url: site_manage_create_coupon_path do |f| %>
+<%= form_for @coupon, url: site_manage_update_coupon_path(@coupon) do |f| %>
 
 	<div class="form-group">
 		<%= f.text_field :code, class:"form-control input-lg", placeholder:"Code", style:"width:71%"%>
@@ -31,7 +31,7 @@
 		<%= f.select :public, [["Public", "true"], ["Private", "false"]], {}, {class: "form-control", id:"select_discount_type_1", style:"margin-left: 0px; width: 35%"} %>
 	</div>
 
-	<div class="form-group" id="user_email" style="display:none">
+	<div class="form-group" id="user_email" style="<% if @coupon.public %>display:none<% end %>">
 		<%= f.text_field :user_id, class:"form-control input-lg", placeholder:"To which user ( by email )", style:"width:35%;"%>
 	</div>
 	
@@ -43,11 +43,11 @@
 		<%= f.select :discount_by_val, [["Discount By Value", "true"], ["Discount By Percentage", "false"]], {}, {class: "form-control", id:"select_discount_type_2", style:"margin-left: 0px; width: 35%"} %>
 	</div>
 
-	<div class="form-group" id="discount_value">
+	<div class="form-group" id="discount_value" style="<% if !@coupon.discount_by_val %>display:none<% end %>">
 		<%= f.text_field :discount_val, class:"form-control input-lg", placeholder:"Discount value", style:"width:71%"%>
 	</div>	
 
-	<div class="form-group" id="discount_ptg" style="display:none">
+	<div class="form-group" id="discount_ptg" style="<% if @coupon.discount_by_val %>display:none<% end %>">
 		<%= f.text_field :discount_ptg, class:"form-control input-lg", placeholder:"Discount percentage", style:"width:71%"%>
 	</div>
 	
@@ -61,7 +61,7 @@
 		<%= f.text_field :condition_at_least_amount, class:"form-control input-lg", placeholder:"At Least Amount", style:"width:71%"%>
 	</div>
 	
-	<%= f.submit 'Create', class: 'btn btn-primary btn-lg' %>
+	<%= f.submit 'Update', class: 'btn btn-primary btn-lg' %>
 <% end %>
 
 	</div>
