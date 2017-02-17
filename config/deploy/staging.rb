@@ -33,6 +33,7 @@ server '52.37.1.190', user: 'deploy', roles: %w{web app db}
 set :branch, :development
 set :puma_env, :staging
 set :rails_env, :staging
+set :default_env, { 'RAILS_ENV'=> "staging" }
 
 # Custom SSH Options
 # ==================
