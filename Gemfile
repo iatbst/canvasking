@@ -71,17 +71,18 @@ group :production do
   gem 'rails_12factor'
 end
 
-#group :development, :test do
+group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
-gem 'debugger'
+  gem 'debugger'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
-gem 'web-console', '~> 2.0'
+  gem 'web-console', '~> 2.0'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring'
-#end
+  #gem 'spring'
+end
 
+gem 'spring'
 
 ##### Deployment #####
 gem 'figaro'
