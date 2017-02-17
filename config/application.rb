@@ -56,7 +56,7 @@ module Canvasking
   # Heroku
   HEROKU_HOST_URL = 'https://radiant-tundra-25592.herokuapp.com/'
   # This will be replaced with real web url
-  WEBSITE_URL = 'https://radiant-tundra-25592.herokuapp.com/'
+  WEBSITE_URL = 'http://ec2-52-37-1-190.us-west-2.compute.amazonaws.com/'
   
   # Facebook/Instagram
   FACEBOOK_APP_ID = '744629489021986'
@@ -64,7 +64,7 @@ module Canvasking
   if Rails.env == "development"
     INSTAGRAM_RE_URL = 'http://localhost:3000'
   elsif Rails.env == "production"
-    INSTAGRAM_RE_URL = 'https://radiant-tundra-25592.herokuapp.com'
+    INSTAGRAM_RE_URL = 'http://ec2-52-37-1-190.us-west-2.compute.amazonaws.com'
   end
   
   # Administrators
