@@ -83,7 +83,7 @@ group :development, :test do
 end
 
 ##### Deployment #####
-gem 'figaro'
+#gem 'figaro'
 gem 'puma'
 group :development do
   gem 'capistrano'

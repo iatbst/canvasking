@@ -3,7 +3,7 @@ lock "3.7.2"
 
 set :application, "canvasking"
 set :repo_url, "git@github.com:iatbst/canvasking.git"
-set :branch, :development
+#set :branch, :development
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp

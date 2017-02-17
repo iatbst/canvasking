@@ -30,8 +30,7 @@ server '52.37.1.190', user: 'deploy', roles: %w{web app db}
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-
-
+set :branch, :development
 
 # Custom SSH Options
 # ==================
