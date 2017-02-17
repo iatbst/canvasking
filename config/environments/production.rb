@@ -80,7 +80,7 @@ Rails.application.configure do
   # Send out test emails with Gmail
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { :host => Canvasking::HEROKU_HOST_URL }
+  config.action_mailer.default_url_options = { :host => Canvasking::WEBSITE_URL }
   config.action_mailer.smtp_settings = {
     address:              'smtp.gmail.com',
     port:                 587,

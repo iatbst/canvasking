@@ -54,7 +54,7 @@ module Canvasking
   GAMIL_TEST_USER_PW = 'agarienforce'
   
   # Heroku
-  HEROKU_HOST_URL = 'https://radiant-tundra-25592.herokuapp.com/'
+  # HEROKU_HOST_URL = 'https://radiant-tundra-25592.herokuapp.com/'
   # This will be replaced with real web url
   WEBSITE_URL = 'http://ec2-52-37-1-190.us-west-2.compute.amazonaws.com/'
   
