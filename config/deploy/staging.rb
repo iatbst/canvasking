@@ -31,6 +31,7 @@ server '52.37.1.190', user: 'deploy', roles: %w{web app db}
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
 set :branch, :development
+set :puma_env, fetch(:rack_env, :staging)
 
 # Custom SSH Options
 # ==================
