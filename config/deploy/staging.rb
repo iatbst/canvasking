@@ -60,3 +60,34 @@ set :rails_env, :staging
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
+
+
+desc "Clone DB from production to staging"
+task :sync_staging_db_with_production do
+  on roles(:db) do
+    # copy sql dump file from prod to staging
+    database_backups_path = "/home/deploy/database_backups"
+    prod_host = "ec2-52-40-234-37.us-west-2.compute.amazonaws.com"
+    sql_file = "canvasking_production_1.sql"
+    scp_cmd = "scp deploy@#{prod_host}:#{database_backups_path}/#{sql_file} #{database_backups_path}"
+    run "#{scp_cmd}"
+    
+    # drop db in staging
+    dbname = 'canvasking_staging'
+    run "psql -U postgres",
+        :data => <<-"PSQL"
+           REVOKE CONNECT ON DATABASE #{dbname} FROM public;
+           ALTER DATABASE #{dbname} CONNECTION LIMIT 0;
+           SELECT pg_terminate_backend(pid)
+             FROM pg_stat_activity
+             WHERE pid <> pg_backend_pid()
+             AND datname='#{dbname}';
+           DROP DATABASE #{dbname};
+        PSQL
+     
+     # restore db from dump file
+     restore_cmd = "psql -d #{dbname} -f #{database_backups_path}/#{sql_file}"
+     run "#{restore_cmd}"
+   end
+end
+after "deploy:published", "sync_staging_db_with_production"
