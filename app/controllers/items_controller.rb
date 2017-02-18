@@ -43,8 +43,8 @@ class ItemsController < ApplicationController
   def art_filter
     @item = Item.find(params[:id])
     @item.art_filter = false
-    @somatic_realtime_api = Rails.configuration.somatic["api_url"]
-    @somatic_api_key = Rails.configuration.somatic["api_key"]
+    @somatic_realtime_api = ENV["somatic_api_url"]
+    @somatic_api_key = ENV["somatic_api_key"]
     if @item.image.file.nil?
       # Image is not ready on S3
       @filter_image_url = "#{Canvasking::WEBSITE_URL}#{@item.image_tmp_paths['filter']}"

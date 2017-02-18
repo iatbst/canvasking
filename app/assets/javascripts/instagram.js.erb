@@ -13,7 +13,7 @@ $(window).on('load', function() {
             popupLeft = (window.screen.width - popupWidth) / 2,
             popupTop = (window.screen.height - popupHeight) / 2;
         //the url needs to point to instagram_auth.php
-        var auth_url = "https://api.instagram.com/oauth/authorize/?client_id=<%= Canvasking::INSTAGRAM_APP_ID %>&redirect_uri=<%= Canvasking::INSTAGRAM_RE_URL %>&response_type=token"
+        var auth_url = "https://api.instagram.com/oauth/authorize/?client_id=<%= ENV["instagram_app_id"] %>&redirect_uri=<%= ENV["instagram_re_url"] %>&response_type=token"
 
         var popup = window.open('/upload_images_from_instagram', '', 'width=' + popupWidth + ',height=' + popupHeight + ',left=' + popupLeft + ',top=' + popupTop + '');
 
@@ -101,8 +101,8 @@ $(window).on('load', function() {
 
     function load_images_from_instagram() {
         authenticateInstagram(
-            '<%= Canvasking::INSTAGRAM_APP_ID %>', //instagram client ID
-            '<%= Canvasking::INSTAGRAM_RE_URL %>', //instagram redirect URI
+            '<%= ENV["instagram_app_id"] %>', //instagram client ID
+            '<%= ENV["instagram_re_url"] %>', //instagram redirect URI
             login_callback //optional - a callback function
         );
         return false;
