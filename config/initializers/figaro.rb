@@ -1,0 +1,3 @@
+require 'figaro'
+
+Figaro.load
