@@ -54,3 +54,11 @@ set :puma_workers, 0
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true
 set :puma_preload_app, false
+
+# Restart sidekiq after deployment
+task :restart_sidekiq do
+  on roles(:worker) do
+    execute :service, "sidekiq restart"
+  end
+end
+after "deploy:published", "restart_sidekiq"
