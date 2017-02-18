@@ -58,7 +58,7 @@ set :puma_preload_app, false
 # Restart sidekiq after deployment
 task :restart_sidekiq do
   on roles(:worker) do
-    execute :service, "sidekiq restart"
+    execute "sudo service sidekiq restart"
   end
 end
 after "deploy:published", "restart_sidekiq"
