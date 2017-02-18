@@ -33,3 +33,6 @@
 
 # Ignore credentials, like aws or somatic etc
 # config/*.yml
+
+# Ignore application configuration
+/config/application.yml

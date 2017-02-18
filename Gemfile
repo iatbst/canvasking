@@ -59,6 +59,9 @@ gem 'pry'
 # Payment: Stripe
 gem 'stripe'
 
+# Secret management
+gem 'figaro'
+
 # Process outgoing email: embed the styles
 gem 'premailer-rails'
 
@@ -83,7 +86,6 @@ group :development, :test do
 end
 
 ##### Deployment #####
-#gem 'figaro'
 gem 'puma'
 group :development do
   gem 'capistrano'
