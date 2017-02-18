@@ -62,7 +62,7 @@ Thank you for your order from CANVASKING. Once your package ships we will send a
 						<% if get_image_url(item, "overview").include?('https://') %>
 							<%= image_tag get_image_url(item, "overview"), class:"overview_image image_shadow_in_item #{add_frame_and_mat_class(item, 'email')}" %>
 						<% else %>
-							<%= image_tag Canvasking::WEBSITE_URL + get_image_url(item, "overview"), class:"overview_image image_shadow_in_item #{add_frame_and_mat_class(item, 'email')}" %>
+							<%= image_tag ENV["website_url"] + get_image_url(item, "overview"), class:"overview_image image_shadow_in_item #{add_frame_and_mat_class(item, 'email')}" %>
 						<% end %>
 					</div>
 

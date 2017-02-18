@@ -30,9 +30,9 @@ module Canvasking
     
   end
   
-  ###################
-  #  The Constants  #
-  ###################
+  ############################################################################
+  #  The Constants: All sensative data are stored in application.yml         #
+  ############################################################################
   # Images
   IMAGE_ORIGINAL_SIZE_LIMIT = 3000
   IMAGE_CROP_SIZE = 450
@@ -45,35 +45,11 @@ module Canvasking
   
   IMAGE_TMP_CACHE_TIME = 24 # Cache time to store image in tmp folder: 24 hours now
   
-  # Stripe
-  STRIPE_PUBLISH_KEY_TEST = 'pk_test_86PXfTHcS3DHW58QnF6kGP5Q'
-  STRIPE_SECRET_KEY_TEST = 'sk_test_En5i3qV5z1Rm7JU0z1r3ppoR'
   
   # EMail
   GMAIL_TEST_USER = 'agarienforcement@gmail.com'
   GAMIL_TEST_USER_PW = 'agarienforce'
   
-  # Heroku
-  # HEROKU_HOST_URL = 'https://radiant-tundra-25592.herokuapp.com/'
-  # This will be replaced with real web url
-  # WEBSITE_URL = 'http://ec2-52-37-1-190.us-west-2.compute.amazonaws.com/'
-  
-  # Facebook/Instagram
-  FACEBOOK_APP_ID = '744629489021986'
-  INSTAGRAM_APP_ID = 'adca74ff860d43d18d264082283df380'
-  if Rails.env == "development"
-    # development is used for local develop
-    INSTAGRAM_RE_URL = 'http://localhost:3000'
-    WEBSITE_URL = 'http://localhost:3000'
-  elsif Rails.env == "production"
-    # production is used only for production env
-    INSTAGRAM_RE_URL = 'http://ec2-52-37-1-190.us-west-2.compute.amazonaws.com'
-    WEBSITE_URL = 'http://ec2-52-37-1-190.us-west-2.compute.amazonaws.com/'
-  elsif Rails.env == "staging"
-    # staging is used only for staging env
-    INSTAGRAM_RE_URL = 'http://ec2-52-37-1-190.us-west-2.compute.amazonaws.com'
-    WEBSITE_URL = 'http://ec2-52-37-1-190.us-west-2.compute.amazonaws.com/'
-  end
   
   # Administrators
   ADMINISTRATORS = ['iatbst@gmail.com']
