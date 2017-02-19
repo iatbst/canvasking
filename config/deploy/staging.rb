@@ -68,26 +68,29 @@ task :sync_staging_db_with_production do
     # copy sql dump file from prod to staging
     database_backups_path = "/home/deploy/database_backups"
     prod_host = "ec2-52-40-234-37.us-west-2.compute.amazonaws.com"
-    sql_file = "canvasking_production_1.sql"
+    sql_file = "canvasking_production_current.sql"
     scp_cmd = "scp deploy@#{prod_host}:#{database_backups_path}/#{sql_file} #{database_backups_path}"
-    run "#{scp_cmd}"
+    execute "#{scp_cmd}"
     
     # drop db in staging
-    dbname = 'canvasking_staging'
-    run "psql -U postgres",
-        :data => <<-"PSQL"
-           REVOKE CONNECT ON DATABASE #{dbname} FROM public;
-           ALTER DATABASE #{dbname} CONNECTION LIMIT 0;
-           SELECT pg_terminate_backend(pid)
-             FROM pg_stat_activity
-             WHERE pid <> pg_backend_pid()
-             AND datname='#{dbname}';
-           DROP DATABASE #{dbname};
-        PSQL
-     
-     # restore db from dump file
-     restore_cmd = "psql -d #{dbname} -f #{database_backups_path}/#{sql_file}"
-     run "#{restore_cmd}"
+    db_name = 'canvasking_staging'
+    db_user = 'deploy'
+    execute "echo \"SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='canvasking_staging'; DROP DATABASE #{db_name}\; CREATE DATABASE #{db_name}\" | psql -d postgres"
+    
+    # execute "psql -d postgres",
+        # :data => <<-"PSQL"
+           # REVOKE CONNECT ON DATABASE #{db_name} FROM public;
+           # ALTER DATABASE #{db_name} CONNECTION LIMIT 0;
+           # SELECT pg_terminate_backend(pid)
+             # FROM pg_stat_activity
+             # WHERE pid <> pg_backend_pid()
+             # AND datname='#{db_name}';
+           # DROP DATABASE #{db_name};
+        # PSQL
+      
+     # # restore db from dump file
+     restore_cmd = "psql -d #{db_name} -f #{database_backups_path}/#{sql_file}"
+     execute "#{restore_cmd}"
    end
 end
-after "deploy:published", "sync_staging_db_with_production"
+before "deploy:migrate", "sync_staging_db_with_production"
