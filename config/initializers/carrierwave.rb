@@ -3,7 +3,7 @@ require 'carrierwave/orm/activerecord'
 
 CarrierWave.configure do |config|
   config.storage = :fog
-  config.asset_host = "https://s3-#{Canvasking::S3_REGION}.amazonaws.com/#{Canvasking::S3_IMAGE_BUCKET}"
+  config.asset_host = "https://#{Canvasking::S3_IMAGE_BUCKET}.s3.amazonaws.com"
   config.fog_credentials = {
     provider:              'AWS',                         # required
     aws_access_key_id:     ENV["aws_access_key_id"],                        # required
