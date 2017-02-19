@@ -60,3 +60,19 @@ set :rails_env, :production
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
+
+desc "Backup production db before deployment"
+task :backup_production_db do
+  on roles(:db) do
+    # copy sql dump file from prod to staging
+    database_backups_path = "/home/deploy/database_backups"
+    dbname = "canvasking_production"
+    timestamp = Time.now.to_s.split(' ')[0..1].join('-').split(':').join('-')
+    current_file = "canvasking_production_current.sql"
+    version_file = "canvasking_production_#{timestamp}.sql"
+    dump_cmd = "pg_dump #{dbname} > #{database_backups_path}/versions/#{version_file}"
+    ln_cmd = "ln -s #{database_backups_path}/versions/#{version_file} #{database_backups_path}/#{current_file}"
+    execute "#{dump_cmd};#{ln_cmd}" 
+   end
+end
+before "deploy:migrate", "backup_production_db"
