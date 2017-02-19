@@ -76,21 +76,10 @@ task :sync_staging_db_with_production do
     db_name = 'canvasking_staging'
     db_user = 'deploy'
     execute "echo \"SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='canvasking_staging'; DROP DATABASE #{db_name}\; CREATE DATABASE #{db_name}\" | psql -d postgres"
-    
-    # execute "psql -d postgres",
-        # :data => <<-"PSQL"
-           # REVOKE CONNECT ON DATABASE #{db_name} FROM public;
-           # ALTER DATABASE #{db_name} CONNECTION LIMIT 0;
-           # SELECT pg_terminate_backend(pid)
-             # FROM pg_stat_activity
-             # WHERE pid <> pg_backend_pid()
-             # AND datname='#{db_name}';
-           # DROP DATABASE #{db_name};
-        # PSQL
       
-     # # restore db from dump file
-     restore_cmd = "psql -d #{db_name} -f #{database_backups_path}/#{sql_file}"
-     execute "#{restore_cmd}"
+    # restore db from dump file
+    restore_cmd = "psql -d #{db_name} -f #{database_backups_path}/#{sql_file}"
+    execute "#{restore_cmd}"
    end
 end
 before "deploy:migrate", "sync_staging_db_with_production"

@@ -71,7 +71,7 @@ task :backup_production_db do
     current_file = "canvasking_production_current.sql"
     version_file = "canvasking_production_#{timestamp}.sql"
     dump_cmd = "pg_dump #{dbname} > #{database_backups_path}/versions/#{version_file}"
-    ln_cmd = "ln -s #{database_backups_path}/versions/#{version_file} #{database_backups_path}/#{current_file}"
+    ln_cmd = "ln -fs #{database_backups_path}/versions/#{version_file} #{database_backups_path}/#{current_file}"
     execute "#{dump_cmd};#{ln_cmd}" 
    end
 end
