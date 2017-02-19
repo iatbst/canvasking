@@ -47,7 +47,7 @@ class ItemsController < ApplicationController
     @somatic_api_key = ENV["somatic_api_key"]
     if @item.image.file.nil?
       # Image is not ready on S3
-      @filter_image_url = "#{Canvasking::WEBSITE_URL}#{@item.image_tmp_paths['filter']}"
+      @filter_image_url = "#{ENV['website_url']}#{@item.image_tmp_paths['filter']}"
     elsif !@item.image_tmp_paths.empty? && @item.image_tmp_paths['origin'].include?('https://')
       # Special Case: this is dup item which cloned from old item, to avoid recreating image,
       # dup image save original image urls to it's image_tmp_paths/art_image_tmp_paths fields
