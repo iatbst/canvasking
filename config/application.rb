@@ -53,10 +53,13 @@ module Canvasking
   # S3 buckets
   if Rails.env == "development"
     S3_IMAGE_BUCKET = "canvasking-user-upload-images"
+    S3_REGION = "us-west-2"
   elsif Rails.env == "production"
     S3_IMAGE_BUCKET = "canvasking-user-upload-images-production"
+    S3_REGION = "us-east-1"
   elsif Rails.env == "staging"
     S3_IMAGE_BUCKET = "canvasking-user-upload-images-stage"
+    S3_REGION = "us-east-1"
   end
   
   # Administrators
