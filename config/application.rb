@@ -50,6 +50,14 @@ module Canvasking
   GMAIL_TEST_USER = 'agarienforcement@gmail.com'
   GAMIL_TEST_USER_PW = 'agarienforce'
   
+  # S3 buckets
+  if Rails.env == "development"
+    S3_IMAGE_BUCKET = "canvasking-user-upload-images"
+  elsif Rails.env == "production"
+    S3_IMAGE_BUCKET = "canvasking-user-upload-images-production"
+  elsif Rails.env == "staging"
+    S3_IMAGE_BUCKET = "canvasking-user-upload-images-stage"
+  end
   
   # Administrators
   ADMINISTRATORS = ['iatbst@gmail.com']
