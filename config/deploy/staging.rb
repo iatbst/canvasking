@@ -7,7 +7,7 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-server '52.37.1.190', user: 'deploy', roles: %w{web app db worker}
+server '52.37.1.190', user: 'deploy', roles: %w{web app db worker s3}
 
 # role-based syntax
 # ==================
@@ -61,6 +61,16 @@ set :rails_env, :staging
 #     # password: "please use keys"
 #   }
 
+desc "Sync S3 from production to staging"
+task :sync_staging_s3_with_production do
+  on roles(:s3) do
+    prod_bucket = "canvasking-user-upload-images-production"
+    stage_bucket = "canvasking-user-upload-images-stage"
+    aws_sync_cmd = "aws s3 sync s3://#{prod_bucket} s3://#{stage_bucket} --delete"
+    execute "#{aws_sync_cmd}"
+  end
+end
+after "deploy:finished", "sync_staging_s3_with_production"
 
 desc "Clone DB from production to staging"
 task :sync_staging_db_with_production do
