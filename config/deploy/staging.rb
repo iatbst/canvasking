@@ -66,7 +66,7 @@ task :sync_staging_s3_with_production do
   on roles(:s3) do
     prod_bucket = "canvasking-user-upload-images-production"
     stage_bucket = "canvasking-user-upload-images-stage"
-    aws_sync_cmd = "aws s3 sync s3://#{prod_bucket} s3://#{stage_bucket} --delete"
+    aws_sync_cmd = "aws s3 sync s3://#{prod_bucket} s3://#{stage_bucket} --delete --acl public-read"
     execute "#{aws_sync_cmd}"
   end
 end
