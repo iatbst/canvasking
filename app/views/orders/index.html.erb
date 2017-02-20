@@ -31,17 +31,18 @@
     		</div>
    	<% end %>
    	 
-	<div class="row" style="margin-bottom: 50px; <% if @feedback_submitted.nil? %><%= "display: none" %><% end %>">
-		<div class="col-md-1">
-			<img src="/order/order_complete.png" id="order_complete_icon"/>
-		</div>
-		<div class="col-md-11">
-			<h2 class="no_bold">Congratulations ! Your order is confirmed.</h2>
-			<h4 class="no_bold">We are sending you a confirmation email.
-				Thank you for shopping with us.</h4>
-		</div>
-	</div>
+   	<% if @orders.empty? %>
 
+			<div align="center">
+				<%= image_tag '/order/order_empty.png' %>
+				<h3>You don't have any orders yet .</h3><br />
+				<%= button_to 'ORDER  NOW : )', new_item_path, method: :get, class:"btn btn-primary btn-lg blue_button" %>
+			</div>
+			
+   	<% end %>
+	
+
+	
 	<% @orders.each do |order| %>
 	<div class="row" style="margin-top: 20px">
 		<div class="panel panel-default">
