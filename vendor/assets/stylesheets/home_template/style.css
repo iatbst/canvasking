@@ -122,11 +122,12 @@ hr {
 
 /* home section */
 #home {
-  background: url('/images/home_template/home-bg.jpg') 50% 0 repeat-y;
+  margin-top: 50px;
+  background: url('/welcome/front_page_final.jpg') 50% 0 repeat-y;
   -webkit-background-size: cover;
   background-size: cover;
   background-position: center;
-  color: #ffffff;
+  color: black;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
