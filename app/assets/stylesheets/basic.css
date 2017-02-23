@@ -56,7 +56,10 @@
 
 .four_box {
 	background-color: white;
-	height: 300px;
+	max-height: 200px;
+	max-width: 500px;
+	width: 500px;
+	height: 200px;
 	border-radius: 5px;
 }
 
@@ -117,8 +120,8 @@ span.form_error {
 .how_it_works_image{
     height: auto; 
     width: auto; 
-    max-width: 170px; 
-    max-height: 170px;	
+    max-width: 150px; 
+    max-height: 150px;	
 }
 
 .how_it_works_num{
