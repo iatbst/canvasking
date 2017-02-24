@@ -4,11 +4,8 @@
   box-shadow: 10px 10px 5px #888888;
   padding: 25px;
   border:20px solid transparent;
-  /* border image */
-  -moz-border-image:url(/items/frame_black.png) 30 30 stretch; /* Old Firefox */
-  -webkit-border-image:url(/items/frame_black.png) 30 30 stretch;  /* Safari and Chrome */
-  -o-border-image:url(/items/frame_black.png) 30 30 stretch; /* Opera */
-  border-image:url(/items/frame_black.png) 30 30 stretch; 
+
+
   width:auto;
   height: auto;
   max-width: 250px;
@@ -16,10 +13,27 @@
  
 }
 
+.test_image {
+	
+  box-shadow: 10px 10px 5px #888888;
+  padding: 25px;
+  border:20px solid transparent;
+  /* border image */
+  -moz-border-image:url(/items/frame_black.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_black.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_black.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_black.png) 30 30 stretch; 
+  width:auto;
+  height: auto;
+  max-width: 500px;
+  max-height: 500px;
+ 
+}
+
 </style>
 
 <section id="play" class="parallax-section">
-	<div class="container" style="height: 600px">
+	<div class="container" style="height: 850px">
 		<div class="row" align="center" style="margin-top: 50px">
 			<h3 class="no_bold">
 				PLAY AROUND WITH OUR IMAGE ART FILTER
@@ -28,30 +42,162 @@
 		
 		<div class="row" style="margin-top: 50px">
 			
-			<div class="col-md-6" align="center">
+			<div class="col-md-6" align="center" style="margin-top: 50px">
 
 				<!--  Upload Photo From Computer -->
-			
 				<form method="post">
-					<input type="hidden" name="_method" value="patch" />
-					<%= hidden_field_tag :image_upload, true %>
-					<span class="fileinput-button">
-						<%= image_tag '/welcome/upload_button_1.png', class: "test_image_upload_button"%>
-						<input id="fileupload" type="file" name="item[image]" data-url="/items/" multiple>
-					</span>
+					<div class="fileinput-button">
+						<%= image_tag '/welcome/upload_button_1.png', class: "test_image_upload_button", id: "test_image"%>
+						<input id="fileupload" type="file" name="item[image]" data-url="/welcome/image_upload" multiple>
+					</div>
 				</form>
-		
+				
+				<button class="btn btn-primary btn-lg" onclick="submit();" id="use_this_style" style="display: none; margin-top: 50px">Build This Style</button>
 				
 			</div>
-			<div class="col-md-6">
 			
+			<!-- Art Filters -->
+			<div class="col-md-6" align="center" style="margin-top: 22px">
+				
+				<%= form_for :item, :html=> { id: 'order_form', class: 'edit_item'} do |f| %>
+				
+				<input type="hidden" name="_method" value="patch" />
+				<!-- 1 row -->
+				<div class="row" style="margin-top: 0px">
+					<div class="col-md-4">
+						<label>
+							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;"%>
+							<%= image_tag '/items/no_effects.jpg', size: "170x113", class: "clickable", id: "no_effects" %>
+						</label>
+					</div>
+					<div class="col-md-4">
+						<label>
+							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_LnL71DkK" %>
+							<%= image_tag '/items/abstract-thumb.jpg', size: "170x113", class: "style_option clickable", id: "LnL71DkK" %>
+						</label>
+					</div>
+					<div class="col-md-4">
+						<label>
+							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_2kRl49ZW" %>
+							<%= image_tag '/items/expressionist-thumb.jpg', size: "170x113", class: "style_option clickable", id: "2kRl49ZW" %>
+						</label>
+					</div>
+				</div>
+				
+				<!-- 2 row -->
+				<div class="row" style="margin-top: 20px">
+					<div class="col-md-4">
+						<label>
+							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_LnL7j7kK" %>
+							<%= image_tag '/items/nature-patterns-thumb.jpg', size: "170x113", class: "style_option clickable", id: "LnL7j7kK" %>
+						</label>
+					</div>
+					<div class="col-md-4">
+						<label>
+							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_oEG3P0ER" %>
+							<%= image_tag '/items/oil-painting-thumb.jpg', size: "170x113", class: "style_option clickable", id: "oEG3P0ER" %>
+						</label>
+					</div>
+					<div class="col-md-4">
+						<label>
+							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_zZP0evZ0" %>
+							<%= image_tag '/items/engraving-thumb.jpg', size: "170x113", class: "style_option clickable", id: "zZP0evZ0" %>
+						</label>
+					</div>
+				</div>
+	
+				<!-- 3 row -->
+				<div class="row" style="margin-top: 20px">
+					<div class="col-md-4">
+						<label>
+							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_yE72lBZm" %>
+							<%= image_tag '/items/composition_thumb_web.jpg', size: "170x113", class: "style_option clickable", id: "yE72lBZm" %>
+						</label>
+					</div>
+					<div class="col-md-4">
+						<label>
+							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_gZDA63Ex" %>
+							<%= image_tag '/items/pseudo_thumb_web.jpg', size: "170x113", class: "style_option clickable", id: "gZDA63Ex" %>
+						</label>
+					</div>
+					<div class="col-md-4">
+						<label>
+							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_zZP0RvZ0" %>
+							<%= image_tag '/items/candy_thumb_web.jpg', size: "170x113", class: "style_option clickable", id: "zZP0RvZ0" %>
+						</label>
+					</div>
+				</div>
+
+				<!-- 4 row -->
+				<%= hidden_field_tag :art_filterred, true %>
+				<%= f.submit id: "art_style_options", style: "display: none" %>
+			
+				<% end %>
 			</div>
 		</div>
+		
+	
 		
 
 	</div>
 </section>
 
 <script>
+$(function () {
+    $('#fileupload').fileupload({
+    	
+        dataType: 'json',
+        
+        done: function (e, data) {     		
+ 				//alert(data.result.image_url);	
+				$('#test_image').attr('src', data.result.image_url);
+				$('#test_image').removeClass('test_image_upload_button');
+				$('#test_image').addClass('test_image');
+				$('#no_effects').attr('value', data.result.image_url);
+				$('#order_form').attr('action', '/items/' + data.result.item_id);
+        }
+    });
+});
+
+
+
+	$('.style_option').click(function() {
+		var style_id = $(this).attr('id');
+		var url = '<%= @somatic_realtime_api %>?id=' + style_id + 
+				  '&api_key=' + '<%= @somatic_api_key %>' + 
+				  '&--input=' + $('#test_image').attr('src');
+
+		var newImage = new Image();
+		var loadingSrc = '/loading.gif';
+		$('#test_image').attr('src', loadingSrc);
+		$('#test_image').addClass("loading");
+		$('#test_image').removeClass("test_image");
+		$('#use_this_style').hide();
+		newImage.onload = function() {
+    			$('#test_image').attr('src', newImage.src);
+    			$('#test_image').removeClass("loading");
+    			$('#use_this_style').show();
+    			$('#use_this_style').removeAttr('disabled');
+    			$('#test_image').addClass("test_image");
+		};
+		newImage.src = url;
+		
+		$('#radio_' + style_id).attr('value', url);	
+	}); 
+	
+	$('#no_effects').click(function(){
+		$('#test_image').attr('src', $('#no_effects').attr('value'));
+		$('#use_this_style').attr('disabled', 'disabled');
+	});
+	
+	
+	function submit(){
+		$('#art_style_options').click();
+	}
+	
+	$('#use_this_style').click(function () {
+    		$("div#divLoading").addClass('show');
+	});
+
 
 </script>

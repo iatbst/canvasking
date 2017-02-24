@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   get '/upload_images_from_instagram' => 'items#empty_page'
   post '/orders/apply_coupon'
   get '/orders/remove_coupon'
+  post '/welcome/image_upload'
   
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
