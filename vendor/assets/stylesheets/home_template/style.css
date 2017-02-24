@@ -179,6 +179,11 @@ hr {
 }
 
 /* menu section */
+#menu {
+	height: 650px;
+	background-color: white;
+}
+
 #menu h4 {
 	line-height: 1.5;
 }

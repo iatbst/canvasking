@@ -1,0 +1,57 @@
+<style>
+
+.test_image_upload_button{
+  box-shadow: 10px 10px 5px #888888;
+  padding: 25px;
+  border:20px solid transparent;
+  /* border image */
+  -moz-border-image:url(/items/frame_black.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_black.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_black.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_black.png) 30 30 stretch; 
+  width:auto;
+  height: auto;
+  max-width: 250px;
+  max-height: 250px;
+ 
+}
+
+</style>
+
+<section id="play" class="parallax-section">
+	<div class="container" style="height: 600px">
+		<div class="row" align="center" style="margin-top: 50px">
+			<h3 class="no_bold">
+				PLAY AROUND WITH OUR IMAGE ART FILTER
+			</h3>
+		</div>
+		
+		<div class="row" style="margin-top: 50px">
+			
+			<div class="col-md-6" align="center">
+
+				<!--  Upload Photo From Computer -->
+			
+				<form method="post">
+					<input type="hidden" name="_method" value="patch" />
+					<%= hidden_field_tag :image_upload, true %>
+					<span class="fileinput-button">
+						<%= image_tag '/welcome/upload_button_1.png', class: "test_image_upload_button"%>
+						<input id="fileupload" type="file" name="item[image]" data-url="/items/" multiple>
+					</span>
+				</form>
+		
+				
+			</div>
+			<div class="col-md-6">
+			
+			</div>
+		</div>
+		
+
+	</div>
+</section>
+
+<script>
+
+</script>
