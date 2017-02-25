@@ -15,7 +15,7 @@ class WelcomeController < ApplicationController
 
     # get image ratio
     h_w_ratio = get_image_ratio(item)
-    #item.update_attribute('image_h_w_ratio', h_w_ratio)
+    item.update_attribute('image_h_w_ratio', h_w_ratio)
     
     # Create worker to remove tmp file later
     origin_tmp_file_path = "#{Rails.root}/public#{item.image_tmp_paths['origin']}"
