@@ -15,11 +15,11 @@ class WelcomeController < ApplicationController
 
     # get image ratio
     h_w_ratio = get_image_ratio(item)
-    item.update_attribute('image_h_w_ratio', h_w_ratio)
+    #item.update_attribute('image_h_w_ratio', h_w_ratio)
     
     # Create worker to remove tmp file later
     origin_tmp_file_path = "#{Rails.root}/public#{item.image_tmp_paths['origin']}"
-    TmpImageRemoveWorker.perform_in(Canvasking::IMAGE_TMP_CACHE_TIME.hours, origin_tmp_file_path, item.id, 'image', force=true)
+    #TmpImageRemoveWorker.perform_in(Canvasking::IMAGE_TMP_CACHE_TIME.hours, origin_tmp_file_path, item.id, 'image', force=true)
       
     # In development, save images to S3; In prod/staging, S3 store is delayed until 
     # button `Order A Canvas On This Style` clicked
@@ -32,6 +32,7 @@ class WelcomeController < ApplicationController
                     'image_url'=> item.image_tmp_paths['overview'] }    
     
     end
+    
   end
 
   private

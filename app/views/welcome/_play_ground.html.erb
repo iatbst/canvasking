@@ -193,8 +193,12 @@ $(function () {
         dataType: 'json',
         
         done: function (e, data) {   
-        	    $('#test_image').attr('src', data.result.image_url);  		
-				$('#no_effects').attr('value', data.result.image_url);
+        	    $('#test_image').attr('src', data.result.image_url);  
+        	    <% if Rails.env == "development" %>		
+        	    	$('#no_effects').attr('value', data.result.image_url);
+        	    <% else %>
+        	    	$('#no_effects').attr('value', <%= @website_url %> + data.result.image_url);
+        	    <% end %>
 				$('#order_form').attr('action', '/items/' + data.result.item_id);
 				$('#test_image').addClass('test_image');
  				$('#test_image').removeClass('loading_icon');
