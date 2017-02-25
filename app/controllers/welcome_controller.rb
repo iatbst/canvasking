@@ -16,14 +16,22 @@ class WelcomeController < ApplicationController
     # get image ratio
     h_w_ratio = get_image_ratio(item)
     item.update_attribute('image_h_w_ratio', h_w_ratio)
+    
+    # Create worker to remove tmp file later
+    origin_tmp_file_path = "#{Rails.root}/public#{item.image_tmp_paths['origin']}"
+    TmpImageRemoveWorker.perform_in(Canvasking::IMAGE_TMP_CACHE_TIME.hours, origin_tmp_file_path, item.id, 'image', force=true)
       
-    # TODO: No need to store to S3, this is for test purpose, remove this block after implementation
-    item.save
-    render json: {'status'=> 'SUCCESS','item_id'=> item.id,
+    # In development, save images to S3; In prod/staging, S3 store is delayed until 
+    # button `Order A Canvas On This Style` clicked
+    if Rails.env == "development"
+      item.save
+      render json: {'status'=> 'SUCCESS','item_id'=> item.id,
                     'image_url'=> item.image.overview.url }
-                       
-    # render json: {'status'=> 'SUCCESS','item_id'=> item.id,
-                    # 'image_url'=> item.image_tmp_paths['cart'] }
+    else
+      render json: {'status'=> 'SUCCESS','item_id'=> item.id,
+                    'image_url'=> item.image_tmp_paths['overview'] }    
+    
+    end
   end
 
   private
@@ -32,11 +40,6 @@ class WelcomeController < ApplicationController
     params.require(:item).permit(:image)
   end
 
-  def get_image_ratio(item)
-      file_path = "#{Rails.root}/public#{item.image_tmp_paths['cart']}" 
-      image = MiniMagick::Image.open(file_path)
-      return image.height.to_f/image.width.to_f
-  end
   
   def prepare_tmp_image_paths(item, col)
     paths = {}
@@ -55,5 +58,10 @@ class WelcomeController < ApplicationController
     end
     item.update_column(col, paths)
   end
-  
+
+  def get_image_ratio(item)
+      file_path = "#{Rails.root}/public#{item.image_tmp_paths['cart']}" 
+      image = MiniMagick::Image.open(file_path)
+      return image.height.to_f/image.width.to_f
+  end  
 end

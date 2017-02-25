@@ -172,6 +172,7 @@
 				</div>
 
 				<!-- 4 row -->
+				<%= hidden_field_tag :upload_from_welcome_page, true %>
 				<%= hidden_field_tag :art_filterred, true %>
 				<%= f.submit id: "art_style_options", style: "display: none" %>
 			
@@ -193,20 +194,21 @@ $(function () {
         
         done: function (e, data) {   
         	    $('#test_image').attr('src', data.result.image_url);  		
- 				$('#test_image').removeClass('loading_icon');
-				$('#test_image').removeClass('test_image_upload_button');
 				$('#no_effects').attr('value', data.result.image_url);
 				$('#order_form').attr('action', '/items/' + data.result.item_id);
 				$('#test_image').addClass('test_image');
+ 				$('#test_image').removeClass('loading_icon');
+				$('#test_image').removeClass('test_image_upload_button');
 				$('#choose_another_image').show();
         },
         
-    	progressall: function (e, data) {
+    	add: function (e, data) {
  			$('#test_image').attr('src', '/loading.gif');
  			$('#test_image').removeClass('test_image_upload_button');
  			$('#test_image').removeClass('test_image');
  			$('#test_image').addClass('loading_icon');
  			$('#choose_another_image').hide();
+ 			data.submit();
     	}
     	
     });

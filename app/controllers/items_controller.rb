@@ -121,6 +121,20 @@ class ItemsController < ApplicationController
 
     # Image processed by art filter
     elsif params[:art_filterred]
+      
+      # Two cases: upload from welcome play around section, or from usual build routine
+      # This is the case from welcome page, when normal image S3 store is delayed
+      if params[:upload_from_welcome_page]
+            
+            # In development, new upload images from welcome page are stored on S3 ( local file can't be processed by Somatic API)
+            # In Production / Staging, new upload image from welcome page are temp stored on Disk, only upload to S3 when use click button
+            # `Order A Canvas On This Style`
+            if Rails.env != "development"
+              origin_tmp_file_path = "#{Rails.root}/public#{@item.image_tmp_paths['origin']}"
+              ImageUploadWorker.perform_async(origin_tmp_file_path, @item.id, 'image')              
+            end
+      end
+      
       # remove old art image if necessary
       @item.update_attribute('art_filter', true)
       @item.attributes = item_params
@@ -129,7 +143,7 @@ class ItemsController < ApplicationController
       prepare_tmp_image_paths(@item, 'art_image_tmp_paths')
       update_tmp_file_names(@item)
       
-      # Upload images to S3
+      # Upload Art images to S3
       origin_tmp_file_path = "#{Rails.root}/public#{@item.art_image_tmp_paths['origin']}"
       ImageUploadWorker.perform_async(origin_tmp_file_path, @item.id, 'art_image')
       TmpImageRemoveWorker.perform_in(Canvasking::IMAGE_TMP_CACHE_TIME.hours, origin_tmp_file_path, @item.id, 'art_image')
@@ -429,5 +443,6 @@ class ItemsController < ApplicationController
       file.write pricing_obj.to_yaml
     end 
   end
+
   
 end

@@ -1,12 +1,14 @@
 class TmpImageRemoveWorker
   include Sidekiq::Worker
 
-  def perform(image_file_path, item_id, field)
+  def perform(image_file_path, item_id, field, force=false)
     item = Item.find(item_id)
     
     # Clear tmp files on /Upload/tmp after image uploaded 10 min later
-    if (field == 'image' && !item.image.file.nil?) || \
-       (field == 'art_image' && !item.art_image.file.nil?)
+    # Normally if files are not in remote S3 for any reasons, local files should not be removed for backup
+    # purpose, unless `force` is `true`
+    if (field == 'image' && (!item.image.file.nil?) || force) || \
+       (field == 'art_image' && (!item.art_image.file.nil? || force))
        folder = image_file_path.split('/')
        folder.pop()
        folder_path = folder.join('/')
