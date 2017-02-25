@@ -172,6 +172,8 @@
 				</div>
 
 				<!-- 4 row -->
+				<%= hidden_field_tag :image_h, 1, id: "image_h" %>
+				<%= hidden_field_tag :image_w, 1, id: "image_w" %>
 				<%= hidden_field_tag :upload_from_welcome_page, true %>
 				<%= hidden_field_tag :art_filterred, true %>
 				<%= f.submit id: "art_style_options", style: "display: none" %>
@@ -267,6 +269,10 @@ $(function () {
 	
 	
 	function submit(){
+		//update image_h and image_w
+		$('#image_h').attr('value', $('#test_image').height());
+		$('#image_w').attr('value', $('#test_image').width());
+		
 		$('#art_style_options').click();
 	}
 	

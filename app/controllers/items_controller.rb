@@ -125,6 +125,8 @@ class ItemsController < ApplicationController
       # Two cases: upload from welcome play around section, or from usual build routine
       # This is the case from welcome page, when normal image S3 store is delayed
       if params[:upload_from_welcome_page]
+            h_w_ratio = params[:image_h].to_f/params[:image_w].to_f
+            @item.update_attribute('image_h_w_ratio', h_w_ratio)
             
             # In development, new upload images from welcome page are stored on S3 ( local file can't be processed by Somatic API)
             # In Production / Staging, new upload image from welcome page are temp stored on Disk, only upload to S3 when use click button

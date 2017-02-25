@@ -9,16 +9,13 @@ class WelcomeController < ApplicationController
 
   def image_upload
     item = Item.new
-    
-    # get image ratio
-    item.image_h_w_ratio = get_image_ratio(item)   
     item.save
     item.attributes = image_params
     prepare_tmp_image_paths(item, 'image_tmp_paths')
     
     # Create worker to remove tmp file later
     origin_tmp_file_path = "#{Rails.root}/public#{item.image_tmp_paths['origin']}"
-    TmpImageRemoveWorker.perform_in(Canvasking::IMAGE_TMP_CACHE_TIME.hours, origin_tmp_file_path, item.id, 'image', force=true)
+    #TmpImageRemoveWorker.perform_in(Canvasking::IMAGE_TMP_CACHE_TIME.hours, origin_tmp_file_path, item.id, 'image', force=true)
       
     # In development, save images to S3; In prod/staging, S3 store is delayed until 
     # button `Order A Canvas On This Style` clicked
@@ -59,9 +56,4 @@ class WelcomeController < ApplicationController
     item.update_column(col, paths)
   end
 
-  def get_image_ratio(item)
-      file_path = "#{Rails.root}/public#{item.image_tmp_paths['cart']}" 
-      image = MiniMagick::Image.open(file_path)
-      return image.height.to_f/image.width.to_f
-  end  
 end
