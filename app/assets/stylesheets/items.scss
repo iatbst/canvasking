@@ -104,8 +104,8 @@
     width: auto; 
     max-width: 500px; 
     max-height: 500px;
-    border-style: outset;
-    border-width: 10px;
+    //border-style: outset;
+    //border-width: 10px;
 }
 
 .depth_options_image{
@@ -123,6 +123,22 @@
 
 .image_frame_mat_in_item {
   padding: 25px;
+}
+
+.image_canvas_border_in_item {
+  border:20px solid transparent;
+  /* border image */
+  -moz-border-image:url(/canvas_border.png) 10 10 stretch; /* Old Firefox */
+  -webkit-border-image:url(/canvas_border.png) 0 0 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/canvas_border.png) 0 0 stretch; /* Opera */
+  //border-image:url(/canvas_border.png) 10 0 0 10 stretch; 
+  //border-image-outset: 0px;
+  //border-image: url(/canvas_border.png) 5 0 0 5 / 5px 0px 0px 5px stretch stretch;
+  border-image-source: url(/canvas_border.png);
+  border-image-slice: 10 0 0 10;
+  border-image-repeat: stretch;
+  //border-image-width: 10px 0px 0px 10px;
+  border-image-outset: 0x;
 }
 
 .image_black_frame_in_item {

@@ -74,7 +74,7 @@
 		
 		<div class="row" style="margin-top: 0px">
 			
-			<div class="col-md-6" align="center" style="margin-top: 50px">
+			<div class="col-md-6" align="center" style="margin-top: 70px">
 
 				<!--  Upload Photo From Computer -->
 				<form method="post">
@@ -94,6 +94,11 @@
 			<!-- Art Filters -->
 			<div class="col-md-6" align="center" style="margin-top: 25px">
 				
+				<div class=row>
+					<h4 style="margin-left: 10px; color: grey;">Choose Art Style</h4>
+					<hr style="width: 95%" />
+				</div>
+			
 				<%= form_for :item, :html=> { id: 'order_form', class: 'edit_item'} do |f| %>
 				
 				<input type="hidden" name="_method" value="patch" />
