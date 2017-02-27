@@ -16,15 +16,13 @@
 <%= render 'play_ground' %>
 
 <!-- get started section -->
-<section id="contact" class="parallax-section">
+<section id="get_started" class="parallax-section" style="height: 300px">
 	<div class="container">
-		<div class="row">
-			<div class="col-md-offset-1 col-md-10 col-sm-12 text-center">
-				<h1 class="heading">Ready to build your own art ?</h1>
-			</div>
+		<div class="row" align="center" style="margin-top: 50px">
+			<h1>Ready to build your own art ?</h1>
 		</div>
 		<div class="row" align="center">
-			<button class="btn btn-primary btn-lg">Get Started</button>
+			<%= button_to 'GET START', new_item_path, class:"btn btn-primary btn-lg", method:"get", id:"get_started_button" %>
 		</div>
 	</div>
 </section>
