@@ -1,47 +1,131 @@
+
+<style>
+.carousel-indicators {
+  bottom:-60px;
+  color: black;
+}
+
+.carousel-indicators li {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin: 10px;
+    text-indent: 0;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    background-color: #ffffff;   
+}
+.carousel-indicators .active {
+    width: 15px;
+    height: 15px;
+    margin: 10px;
+    background-color: #EF9223;
+}
+
+.carousel-control {
+    z-index: 10;
+    top: 2%;
+    width: 30px; // no more gray thing
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+.carousel-control.left,
+.carousel-control.right { background: none; margin-top: -100px}
+
+.carousel-control.left { left: -10px; }
+.carousel-control.right { right: -10px; }
+
+
+</style>
+
 <section id="products" class="parallax-section">
 	<div class="container">
 		<div class="row" align="center">
 				<h2 style="color: grey;font-weight: bolder">What kind of products we make for your photos</h2>
 		</div>
-		
-		<div class="row" style="margin-top: 50px">
-			<div class="col-md-6" align="right" style="margin-right: 0px">
-				<img src="/welcome/golden_gate_bridge_5.png" class="product_image_in_welcome" style="margin-right: -15px">
-			</div>
-			
-			<div class="col-md-6" align="left" style="margin-left: 0px">
-				<img src="/welcome/single_canvas_background.jpg" class="product_image_in_welcome" style="margin-left: -16px">
-			</div>
-		</div>
-		<div class="row" align="center">
-			<h4>Non-Framed Canvas</h4>
-		</div>
 
-		<div class="row" style="margin-top: 50px">
-			<div class="col-md-6" align="right" style="margin-right: 0px">
-				<img src="/welcome/product_framed_canvas.png" class="product_image_in_welcome" style="margin-right: -15px">
+
+		<!-- Image Slider -->
+		<div class="row" style="height: 450px; margin-top: 50px">
+			<div class="col-md-10 col-md-offset-1">
+				<div id="carousel-example-generic" class="carousel slide" data-interval="5000" data-ride="carousel">
+					<!-- Indicators -->
+					<ol class="carousel-indicators">
+						<li data-target="#carousel-example-generic" data-slide-to="0" class="active" ></li>
+						<li data-target="#carousel-example-generic" data-slide-to="1" ></li>
+						<li data-target="#carousel-example-generic" data-slide-to="2" ></li>
+					</ol>
+					
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner" role="listbox">
+						<div class="item active">
+							<div class="row">
+								<div class="col-md-6" align="right" style="margin-right: 0px">
+									<img src="/welcome/golden_gate_bridge_5.png" class="product_image_in_welcome" style="margin-right: -15px">
+								</div>
+							
+								<div class="col-md-6" align="left" style="margin-left: 0px">
+									<img src="/welcome/single_canvas_background.jpg" class="product_image_in_welcome" style="margin-left: -16px">
+								</div>
+							</div>
+							<div class="row">
+								<h4 style="color: black; font-weight: bolder">Non-Framed Canvas</h4>
+							</div>
+						</div>
+
+						<div class="item">
+							<div class="row">
+								<div class="col-md-6" align="right" style="margin-right: 0px">
+									<img src="/welcome/product_framed_canvas.png" class="product_image_in_welcome" style="margin-right: -15px">
+								</div>
+							
+								<div class="col-md-6" align="left" style="margin-left: 0px">
+									<img src="/welcome/framed_canvas_background.jpg" class="product_image_in_welcome" style="margin-left: -16px">
+								</div>
+							</div>
+							<div class="row">
+								<h4 style="color: black; font-weight: bolder">Framed Canvas</h4>
+							</div>
+						</div>
+
+						<div class="item">
+							<div class="row">
+								<div class="col-md-6" align="right" style="margin-right: 0px">
+									<img src="/welcome/cute_dog.png" class="product_image_in_welcome" style="margin-right: -15px">
+								</div>
+								
+								<div class="col-md-6" align="left" style="margin-left: 0px">
+									<img src="/welcome/welcome_product_frame.jpg" class="product_image_in_welcome" style="margin-left: -16px">
+								</div>
+							</div>
+							<div>
+								<h4 style="color: black; font-weight: bolder">Framed Print</h4>
+							</div>
+						</div>
+
+					</div>
+					
+					  <!-- Controls -->
+					  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+					    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="font-size: 40px"></span>
+					    <span class="sr-only">Previous</span>
+					  </a>
+					  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+					    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true" style="font-size: 40px"></span>
+					    <span class="sr-only">Next</span>
+					  </a>
+
+
+				</div>
 			</div>
-			
-			<div class="col-md-6" align="left" style="margin-left: 0px">
-				<img src="/welcome/framed_canvas_background.jpg" class="product_image_in_welcome" style="margin-left: -16px">
-			</div>
-		</div>
-		<div class="row" align="center">
-			<h4>Framed Canvas</h4>
+
 		</div>
 		
-		<div class="row" style="margin-top: 50px">
-			<div class="col-md-6" align="right" style="margin-right: 0px">
-				<img src="/welcome/cute_dog.png" class="product_image_in_welcome" style="margin-right: -15px">
-			</div>
-			
-			<div class="col-md-6" align="left" style="margin-left: 0px">
-				<img src="/welcome/welcome_product_frame.jpg" class="product_image_in_welcome" style="margin-left: -16px">
-			</div>
-		</div>
-		<div class="row" align="center">
-			<h4>Framed Print</h4>
-		</div>
+		
+		
+		
+		
+
 		
 
 	</div>
