@@ -471,6 +471,8 @@
 		$('#add_to_cart_button').removeAttr('disabled');
 		$('#summary_and_submit').css('border-color', 'black');
 		$('#summary_and_submit_div').css('opacity', 1);
+		$('#ready_to_cart_banner').fadeIn(1500).delay(2000).fadeOut(1500);
+		$('#ready_to_cart_banner').removeAttr('id');
 	}
 	function is_product_checked(){
 		return 	($('#product_single_canvas_radio').is(':checked') 
