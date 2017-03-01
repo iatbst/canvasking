@@ -1,6 +1,15 @@
 
 <style>
 
+#nav_pricing_menu, 
+#nav_inspiration_menu, 
+#nav_cart_menu, 
+#nav_orders_menu, 
+#nav_setting_menu,
+#nav_signup_menu,
+#nav_login_menu {
+	color: white;
+}
 
 #nav_pricing_menu:hover, 
 #nav_inspiration_menu:hover, 
@@ -19,10 +28,18 @@
   
   font-weight: bold;
 }
+
+#navbar {
+	background-color: black;
+}
+
+#navbar > a {
+	color: white;
+}
 </style>
 
 <!-- navigation section -->
-<section class="navbar navbar-default " role="navigation">
+<section class="navbar navbar-default " role="navigation" id="navbar">
 	<div class="container">
 		<div class="navbar-header">
 			<button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -84,11 +101,10 @@
 						<% end %>
 					</li>
 					<li>
-						<% if controller_name == "registrations" %>
-							<%= link_to "SETTINGS", edit_user_registration_path, style:"color: #EF9223", id:"nav_setting_menu"%>
-						<% else %>
-							<%= link_to "SETTINGS", edit_user_registration_path, id:"nav_setting_menu"%>
-						<% end %>
+							<a href="<%= edit_user_registration_path %>" id="nav_setting_menu" style="<% if controller_name == "registrations" %>color: #EF9223<% end %>">
+								<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+								ACCOUNT
+							</a>
 					</li>
 				<% end %>
 			</ul>
