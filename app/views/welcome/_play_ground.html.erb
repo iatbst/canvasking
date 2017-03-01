@@ -79,7 +79,7 @@
 				<!--  Upload Photo From Computer -->
 				<form method="post">
 					<div class="fileinput-button">
-						<%= image_tag '/welcome/upload_button_1.png', class: "test_image_upload_button", id: "test_image"%>
+						<%= image_tag '/welcome/upload_button_1.png', class: "test_image_upload_button upload_blink", id: "test_image"%>
 						<input id="fileupload" type="file" name="item[image]" data-url="/welcome/image_upload" multiple>
 					</div>
 					<h4 class="no_bold" style="color: #ef9223;display: none" id="upload_image_reminder">Please Click Above Icon To Upload Image First</h4>
@@ -87,7 +87,7 @@
 				</form>
 				
 				
-				<button class="btn btn-primary btn-lg" onclick="submit();" id="use_this_style" style="display: none; margin-top: 10px">Order A Canvas On This Style</button>
+				<button class="btn btn-primary btn-lg" onclick="submit();" id="use_this_style" style="display: none; margin-top: 10px">Order A Product On This Style</button>
 				
 			</div>
 			
@@ -216,6 +216,7 @@ $(function () {
     	add: function (e, data) {
  			$('#test_image').attr('src', '/loading.gif');
  			$('#test_image').removeClass('test_image_upload_button');
+ 			$('#test_image').removeClass('upload_blink');
  			$('#test_image').removeClass('test_image');
  			$('#test_image').addClass('loading_icon');
  			$('#choose_another_image').hide();

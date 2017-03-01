@@ -35,3 +35,11 @@
   margin-top: 50px;
   
 }
+
+.upload_blink {
+  animation: upload_blinker 3s linear infinite;
+}
+
+@keyframes upload_blinker {  
+  50% { opacity: 0.2; }
+}
