@@ -1,9 +1,9 @@
 <style>
 
 #banner {
-  background: url('/welcome/half_and_half_bridge.jpg') 100% 0 repeat-y;
+  background: url('/welcome/half_and_half_bridge.jpg') 100% 0 repeat-y fixed;
   -webkit-background-size: cover;
-
+  
   background-position: center;
   color: black;
   display: -webkit-box;
@@ -18,21 +18,36 @@
   text-align: center;
 }
 
+#transform_button {
+
+  width: 200px;
+  height: 50px;
+  border-color: #ef9223;
+  border-style: solid;
+  background-color: #ef9223;
+  border-radius: 5px;
+  margin-top: 30px;
+  background: transparent;
+  font-size: 20px;
+  font-weight: bolder;
+  color: #ef9223;
+}
 
 </style>
 
 <section id="banner" class="parallax-section">
 	<div class="container" style="height: 350px">
-		<div class="row" style="margin-top: 100px" align="center">
+		<div class="row" style="margin-top: 70px" align="center">
 
-				<h1 style="color: white">
-					We transform your photos into arts with one click
-				</h1>
-
+				<h2 style="color: white; font-weight: 900">
+				     Transform Your Photos With One Click
+				</h2>
+				<p class="no_bold" style="color: white; margin-top:20px">
+					We provide 10+ art filters to make your photos look like Van Gogh's or Picasso's paintings. Give it a try, You will be supprised .
+				</p>
+				<%= button_to 'Transform Now', new_item_path, class:"btn btn-primary", method:"get", id:"transform_button" %>
 			</div>
 		</div>
-		
-
 	</div>
 </section>
 
