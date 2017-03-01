@@ -166,6 +166,7 @@ hr {
 /* products section */
 #products {
   text-align: center;
+  background-color: white;
 }
 #products h3 {
   font-size: 18px;

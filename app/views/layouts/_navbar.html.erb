@@ -90,7 +90,11 @@
 				</li>
 				<% unless user_signed_in? %>
 					<li><a href="/users/sign_up" id="nav_signup_menu">SIGN UP</a></li>
-					<li><a href="/users/sign_in" id="nav_login_menu">LOGIN</a></li>
+					<li><a href="/users/sign_in" id="nav_login_menu">
+						<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+						&nbsp;LOGIN
+						</a>
+					</li>
 				<% end %>
 				<% if user_signed_in? %>
 					<li>
