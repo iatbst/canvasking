@@ -6,7 +6,13 @@
 				// Add triptych effects if necessary
 				divide_image_to_3('overview_image');
 		}
+		
+
+		<% if @update_image_cropped %>
+			$("body").scrollTop(40);
+		<% end %>
 	});
+
 	
 	$("#art_filter_checkbox").change(function() {
 		if (this.checked) {
@@ -522,5 +528,15 @@
 		$(".twentytwenty-container").twentytwenty();
 		$('.twentytwenty-overlay').hide();
 	});
-	
+
+
+	$(window).on("scroll", function(e) {
+		
+  		if (this.scrollY > 65) {
+    		$('#overview_box').addClass("position_fixed");
+  		} else {
+    		$('#overview_box').removeClass("position_fixed");
+  	}
+
+});
 </script>

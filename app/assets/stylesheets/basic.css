@@ -9,6 +9,62 @@
 	font-family: Courier;
 }
 
+.complete {
+  width: 160px;
+  height: 3px;
+  position: relative;
+  background: #EF9223;
+  margin-left: 20px;
+  margin-top: 0px;
+}
+.complete:after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: absolute;
+  background: #EF9223;
+  bottom: -7.5px;
+  left: -8px;
+  z-index: 100;
+  margin-left: -10px
+}
+.not_complete {
+  width: 160px;
+  height: 3px;
+  position: relative;
+  background: #EF9223;
+  margin-left: 19px;
+  margin-top: 0px;
+}
+.not_complete:after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: absolute;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #EF9223;
+  background: transparent;
+  bottom: -7.5px;
+  left: -8px;
+  z-index: 100;
+  margin-left: -10px;
+}	
+
+.last_dot {
+  width: 160px;
+  height: 3px;
+  position: relative;
+  background: white;
+  margin-left: 19px;
+}	
+
+.progress_text {
+	margin-top: 50px;
+}
+
 .orange_button {
   background-color: #ef9223;
   border-color: #ef9223;
