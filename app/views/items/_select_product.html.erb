@@ -1,10 +1,15 @@
+<style>
+
+
+</style>
+
 <div class="row box" style="margin-top: 30px;<% if hide_products_section?(@edit, @show, params, @save_fail, @item) %>display: none<% end %>" id="select_product_box">
 	<div class="row">
 		<h4 class="no_bold" style="margin-left: 70px; margin-top: 20px; margin-bottom: 20px"> 
 		
 			<span class="glyphicon glyphicon-play blink" id="select_product_arrow" style="<% if !@item.product.nil? || @wizard %>display: none<% end %>"></span>
 			<span style="<% if @item.product.nil? %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_product_done"></span>
-			&nbsp;&nbsp;Available Products	
+			&nbsp;&nbsp;Select Product
 			</h4>
 		
 	</div>
@@ -19,29 +24,31 @@
 			<div class="col-md-4" align="center">
 
 				<label id="product_single_canvas"> 
-					<%= f.radio_button :product_id, Product.find_by_name('single canvas').id, style: "visibility: hidden;", id: "product_single_canvas_radio"%>
-					<%= image_tag '/items/product_canvas_1.png', class: "product_image"%> 
-					<h5 class="no_bold" style="margin-left: 15px">Single Canvas</h5>
+					<%= f.radio_button :product_id, Product.find_by_name('canvas').id, style: "visibility: hidden;", id: "product_single_canvas_radio"%>
+					<%= image_tag '/items/single_canvas.jpg', class: "product_image"%> 
+					<h5 class="no_bold" style="margin-left: 15px">Canvas</h5>
+					
 				</label>
-			</div>
-			
-			<div class="col-md-4" align="center">
-				<label id="product_triptych_canvas"> 
-					<%= f.radio_button :product_id, Product.find_by_name('triptych canvas').id, style: "visibility: hidden;", id: "product_triptych_canvas_radio"%>
-					<%= image_tag '/items/product_canvas_3.png', class: "product_image"%> 
-					<h5 class="no_bold" style="margin-left: 15px">Triptych Canvas</h5>	
-				</label>
-
 			</div>
 
 			<div class="col-md-4" align="center">
 				<label id="product_frame">
-					<%= f.radio_button :product_id, Product.find_by_name('frame').id, style: "visibility: hidden;", id: "product_frame_radio"%>
-					<%= image_tag '/items/product_frame_1.png',class: "product_image"%> 
-					<h5 class="no_bold" style="margin-left: 15px;">Frame</h5>
+					<%= f.radio_button :product_id, Product.find_by_name('framed print').id, style: "visibility: hidden;", id: "product_frame_radio"%>
+					<%= image_tag '/items/framed_prints.jpg',class: "product_image"%> 
+					<h5 class="no_bold" style="margin-left: 15px;">Framed Print</h5>
 				</label>
 
 			</div>
+					
+			<div class="col-md-4" align="center">
+				<label id="product_triptych_canvas"> 
+					<%= f.radio_button :product_id, Product.find_by_name('split canvas').id, style: "visibility: hidden;", id: "product_triptych_canvas_radio"%>
+					<%= image_tag '/items/split_canvas.jpg', class: "product_image"%> 
+					<h5 class="no_bold" style="margin-left: 15px">Split Canvas</h5>	
+				</label>
+
+			</div>
+
 			
 
 	</div>

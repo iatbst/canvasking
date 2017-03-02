@@ -7,9 +7,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Populate Products
-product_single_canvas = Product.create(name: "single canvas")
-product_triptych_canvas = Product.create(name: "triptych canvas")
-product_single_frame = Product.create(name: "frame")
+product_single_canvas = Product.create(name: "canvas")
+product_triptych_canvas = Product.create(name: "split canvas")
+product_single_frame = Product.create(name: "framed print")
 
 # Populate Frames
 Frame.create(name: "black wood")

@@ -25,7 +25,7 @@
 	});
 	
 	$("#product_single_canvas").click(function() {
-		$('#product_choice').text('Single Canvas')
+		$('#product_choice').text('Canvas')
 		
 		// show canvas options
 		if ($('#depth_0').is(':checked')){
@@ -63,8 +63,8 @@
 		var size_price = JSON.parse(size_price_str.replace(/&quot;/g,'"'));
 		$('#item_size').empty();
 		$('#item_size').append($('<option value=""></option>').text('Select Size'));
-		for(var size in size_price['single canvas']){
-			var option = $('<option></option>').attr("value", size).text(size + ' - $' + size_price['single canvas'][size]);
+		for(var size in size_price['canvas']){
+			var option = $('<option></option>').attr("value", size).text(size + ' - $' + size_price['canvas'][size]);
 			$('#item_size').append(option);			
 		}
 		//update option section
@@ -77,7 +77,7 @@
 		$('#frame_options').hide();
 		//$("html, body").animate({ scrollTop: $(document).height() }, 2000);
 		//$('#size_price_options').fadeIn(1000);
-		$('#product_done_label').text('Single canvas');
+		$('#product_done_label').text('Canvas');
 
 		//remove frame and mat
 		$('#overview_image').attr('class','overview_image image_shadow_in_item');	
@@ -91,7 +91,7 @@
 	});
 	
 	$("#product_triptych_canvas").click(function() {
-		$('#product_choice').text('Triptych Canvas');
+		$('#product_choice').text('Split Canvas');
 
 		// show canvas options
 		if ($('#depth_0').is(':checked')){
@@ -123,8 +123,8 @@
 		var size_price = JSON.parse(size_price_str.replace(/&quot;/g,'"'));
 		$('#item_size').empty();
 		$('#item_size').append($('<option value=""></option>').text('Select Size'));
-		for(var size in size_price['triptych canvas']){
-			var option = $('<option></option>').attr("value", size).text(size + ' - $' + size_price['triptych canvas'][size]);
+		for(var size in size_price['split canvas']){
+			var option = $('<option></option>').attr("value", size).text(size + ' - $' + size_price['split canvas'][size]);
 			$('#item_size').append(option);			
 		}
 
@@ -136,7 +136,7 @@
 		}
 		$('#frame_options').hide();
 		//$('#size_price_options').show();
-		$('#product_done_label').text('Triptych canvas');
+		$('#product_done_label').text('Split Canvas');
 		
 		//remove frame and mat
 		$('#overview_image').attr('class','overview_image image_shadow_in_item');
@@ -169,7 +169,7 @@
 	}
 	
 	$("#product_frame").click(function() {
-		$('#product_choice').text('Frame');
+		$('#product_choice').text('Framed Print');
 
 		// show canvas options
 		if ($('#frame_black_wood').is(':checked')){
@@ -197,8 +197,8 @@
 		var size_price = JSON.parse(size_price_str.replace(/&quot;/g,'"'));
 		$('#item_size').empty();
 		$('#item_size').append($('<option value=""></option>').text('Select Size'));
-		for(var size in size_price['frame']){
-			var option = $('<option></option>').attr("value", size).text(size + ' - $' + size_price['frame'][size]);
+		for(var size in size_price['framed print']){
+			var option = $('<option></option>').attr("value", size).text(size + ' - $' + size_price['framed print'][size]);
 			$('#item_size').append(option);			
 		}
 		//update option section
@@ -210,7 +210,7 @@
 		}
 		
 		//$('#size_price_options').show();
-		$('#product_done_label').text('Frame');
+		$('#product_done_label').text('Framed Print');
 		
 		//update image frame, default is black frame border if none is checked
 		if($('#frame_white_wood').is(':checked')){

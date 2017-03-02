@@ -92,4 +92,4 @@ task :sync_staging_db_with_production do
     execute "#{restore_cmd}"
    end
 end
-before "deploy:migrate", "sync_staging_db_with_production"
+#before "deploy:migrate", "sync_staging_db_with_production"
