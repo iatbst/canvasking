@@ -23,7 +23,7 @@
 							<%= "#{h}x#{w}"%>
 						</span>
 						<b>
-							<%= text_field_tag "single_canvas_#{size}", @size_price_obj['single canvas'][size] == 0.0 ? "" : @size_price_obj['single canvas'][size], style: "width: 50px", name: "single canvas[#{size}]"%>
+							<%= text_field_tag "canvas_#{size}", @size_price_obj['canvas'][size] == 0.0 ? "" : @size_price_obj['canvas'][size], style: "width: 50px", name: "canvas[#{size}]"%>
 						 </b>
 					</td>
 				<% end %>

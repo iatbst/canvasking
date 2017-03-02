@@ -26,7 +26,7 @@
 		</thead>
 		
 		<tbody>
-			<% @sizes['frame'].each do |size|%>
+			<% @sizes['framed print'].each do |size|%>
 				<tr>
 					<td align="center" >
 						<h4 class="no_bold">
@@ -34,10 +34,10 @@
 						</h4>
 					</td>
 					<td align="center">
-						<% if @size_price_obj['frame'][size] != 0.0 %>
+						<% if @size_price_obj['framed print'][size] != 0.0 %>
 							<a href="/items/new" style="text-decoration: none; color: black">
 								<div class="item_price">
-									<h4>$<%= @size_price_obj['frame'][size] %></h4>
+									<h4>$<%= @size_price_obj['framed print'][size] %></h4>
 								</div>
 							</a>					
 						<% else %>
@@ -47,10 +47,10 @@
 						<% end %>
 					</td>
 					<td align="center" >
-						<% if @size_price_obj['frame'][size] != 0.0 %>
+						<% if @size_price_obj['framed print'][size] != 0.0 %>
 							<a href="/items/new" style="text-decoration: none; color: black">
 								<div class="item_price">
-									<h4>$<%= @size_price_obj['frame'][size] %></h4>
+									<h4>$<%= @size_price_obj['framed print'][size] %></h4>
 								</div>
 							</a>					
 						<% else %>
@@ -60,10 +60,10 @@
 						<% end %>
 					</td>
 					<td align="center" >
-						<% if @size_price_obj['frame'][size] != 0.0 %>
+						<% if @size_price_obj['framed print'][size] != 0.0 %>
 							<a href="/items/new" style="text-decoration: none; color: black">
 								<div class="item_price">
-									<h4>$<%= @size_price_obj['frame'][size] %></h4>
+									<h4>$<%= @size_price_obj['framed print'][size] %></h4>
 								</div>
 							</a>					
 						<% else %>

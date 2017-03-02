@@ -415,7 +415,7 @@ class ItemsController < ApplicationController
   # This is a test function to fast make random product/size/price matrix and 
   # populate to /business/pricing.yml
   def _make_price_matrix
-    products = ['single canvas', 'triptych canvas', 'frame']
+    products = ['canvas', 'split canvas', 'framed print']
     
     table_size = 17
 

@@ -23,7 +23,7 @@
 							<%= "#{h}x#{w}"%>
 						</span>
 						<b>
-							<%= text_field_tag "frame_#{size}", @size_price_obj['frame'][size] == 0.0 ? "" : @size_price_obj['frame'][size], style: "width: 50px", name: "frame[#{size}]"%>
+							<%= text_field_tag "framed_print_#{size}", @size_price_obj['framed print'][size] == 0.0 ? "" : @size_price_obj['framed print'][size], style: "width: 50px", name: "framed print[#{size}]"%>
 						 </b>
 					</td>
 				<% end %>

@@ -7,7 +7,7 @@ class PricingController < ApplicationController
     @width_list = (8..40).step(2).to_a
     @product_list = []
     Product.all.each {|p| @product_list.push(p.name)}
-    @sizes = {'single canvas'=>     \
+    @sizes = {'canvas'=>     \
                   [ "8\\\"x8\\\"",  \
                     "8\\\"x10\\\"", \
                     "10\\\"x10\\\"", \
@@ -19,7 +19,7 @@ class PricingController < ApplicationController
                     "16\\\"x16\\\"", \
                     "16\\\"x18\\\"", \
                     ],   
-              'frame'=>             \
+              'framed print'=>             \
                   [ "8\\\"x8\\\"",  \
                     "8\\\"x10\\\"", \
                     "10\\\"x10\\\"", \
