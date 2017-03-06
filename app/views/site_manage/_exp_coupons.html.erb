@@ -34,8 +34,8 @@
 						<%= coupon.exp_date.to_s.gsub!('UTC', '') %>
 					</td>
 					<td>
-						<% if coupon.condition['at_least_amount']%>
-							$<%= coupon.condition['at_least_amount'] %>
+						<% if coupon.condition_at_least_amount %>
+							$<%= coupon.condition_at_least_amount %>
 						<% end %>
 					</td>
 					<td>

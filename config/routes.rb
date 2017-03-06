@@ -47,8 +47,13 @@ Rails.application.routes.draw do
   end
   resources :orders
   # resources :coupons
+
+  # Sidekiq UI
+  require 'sidekiq/web'
+  authenticate :user, lambda { |u| u.admin? && Canvasking::ADMINISTRATORS.include?(u.email)} do
+    mount Sidekiq::Web => '/sidekiq'
+  end
   
-  #mount Sidekiq::Web, at: '/sidekiq'
   # Example resource route with options:
   #   resources :products do
   #     member do

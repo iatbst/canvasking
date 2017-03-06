@@ -232,8 +232,11 @@ class SiteManageController < ApplicationController
   end
   
   # WARN: Only Website Administrator could access this controllers
+  # 1 user.admin == true
+  # 2 user.email in Canvasking::ADMINISTRATORS list
+  # Both 1 and 2 condition should met
   def is_admin?
-    unless Canvasking::ADMINISTRATORS.include?(current_user.email)
+    unless Canvasking::ADMINISTRATORS.include?(current_user.email) && current_user.admin
       redirect_to root_path
     end
   end
