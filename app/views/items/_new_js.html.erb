@@ -479,6 +479,7 @@
 		$('#summary_and_submit_div').css('opacity', 1);
 		$('#ready_to_cart_banner').fadeIn(1500).delay(2000).fadeOut(1500);
 		$('#ready_to_cart_banner').removeAttr('id');
+		show_note();
 	}
 	function is_product_checked(){
 		return 	($('#product_single_canvas_radio').is(':checked') 
@@ -537,6 +538,12 @@
   		} else {
     		$('#overview_box').removeClass("position_fixed");
   	}
+	});
 
-});
+
+	function show_note(){	
+		$('#note').slideDown().delay(3000).slideUp();
+		$('#note').removeAttr('id');
+	}
+
 </script>

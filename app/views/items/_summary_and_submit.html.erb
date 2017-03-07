@@ -113,8 +113,10 @@
 			<div class="row" style="height:30px; margin-top: 50px" align="center" >
 				<%= hidden_field_tag :go_to_cart, true %>
 				<% if item_in_cart?(@item) %>
+					<%= hidden_field_tag :save_changes, true %>
 					<%= f.submit 'SAVE CHANGES', class: "btn btn-primary btn-lg orange_button", style:"width: 60%"%>
 				<% else %>
+					<%= hidden_field_tag :add_to_cart, true %>
 					<%= f.submit 'ADD TO CART', class: "btn btn-primary btn-lg grey_button", style:"width: 60%", disabled: "disabled", id: "add_to_cart_button"%>
 				<% end %>
 			</div>

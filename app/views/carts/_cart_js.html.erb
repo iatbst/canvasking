@@ -8,13 +8,24 @@
 		if (<%= image_is_triptych(item) %>){
 			// Add triptych effects if necessary
 			divide_image_to_3('item_' + <%= item.id %>, 'item_' + <%= item.id %> + '_triple');
-		}
-				
-		
+		}	
 		<% end %>
-	
+
+		<% if flash[:add_to_cart] == true %>
+			show_note('add_to_cart_note');
+		<% elsif flash[:save_changes] == true %>
+			show_note('save_changes_note');
+		<% end %>
 	});
 
+	function show_note(id){	
+		$('#' + id).slideDown().delay(1500).slideUp();
+	}
+	
+	$('.note_close_icon').click(function (){
+		$('.note').hide();
+	});
+	
 	function divide_image_to_3(image_id, div_id){
 		$('#' + image_id).hide();
 		$('#' + div_id + '_1').show();

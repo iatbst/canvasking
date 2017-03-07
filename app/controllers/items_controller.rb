@@ -170,7 +170,13 @@ class ItemsController < ApplicationController
         cart.items.push(@item)
         # Update quantity / price
         update_total_price_and_quantity_in_cart
-      
+        
+        if params[:add_to_cart]
+          flash[:add_to_cart] = true
+        elsif params[:save_changes]
+          flash[:save_changes] = true
+        end
+        
         redirect_to cart_path
       else
         # Even it failed, save the correct fields
