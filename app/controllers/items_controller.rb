@@ -190,17 +190,20 @@ class ItemsController < ApplicationController
       
     # Ajex call for +/- image quantity in cart page
     elsif params[:update_quantity]
+      changed = true
       if params[:plus]
         @item.quantity += 1
       elsif params[:minus] && @item.quantity > 1
         @item.quantity -= 1
+      else
+        changed = false
       end
       @item.save!
       
       # update cart price / quantity
       update_total_price_and_quantity_in_cart
       cart = get_current_cart
-      render json: {quantity: @item.quantity, price: cart.price, cart_quantity: cart.quantity}
+      render json: {quantity: @item.quantity, price: cart.price, cart_quantity: cart.quantity, changed: changed}
     end
       
   end
@@ -212,6 +215,8 @@ class ItemsController < ApplicationController
     cart.quantity -= @item.quantity
     @item.destroy
     cart.save!
+    
+    flash[:delete_item] = true
     
     redirect_to cart_path
   end
