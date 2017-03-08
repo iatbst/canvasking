@@ -21,8 +21,16 @@
 .note_close_icon {
 	width: auto;
 	height: auto;
-	max-width: 50px;
-	max-height: 50px;
+	max-width: 30px;
+	max-height: 30px;
+	margin-top: 10px;
+}
+
+.note_ok_icon {
+	width: auto;
+	height: auto;
+	max-width: 55px;
+	max-height: 55px;
 }
 
 .complete:after {
