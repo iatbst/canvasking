@@ -33,6 +33,12 @@
 	max-height: 55px;
 }
 
+.logo_icon {
+	width: auto;
+	height: auto;
+	max-width: 300px;
+	max-height: 300px;
+}
 .complete:after {
   content: '';
   width: 20px;
