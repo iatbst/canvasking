@@ -14,7 +14,7 @@
 	</thead>
 	<tbody>
 			<% @private_coupons.each do |coupon| %>
-				<tr>
+				<tr style="<% if coupon.used %>background-color:lightyellow<% end %>">
 					<td>
 						<%= coupon.code %>
 					</td>
