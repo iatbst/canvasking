@@ -299,7 +299,7 @@ class OrdersController < ApplicationController
       :source => token,
       :description => "Order: #{order.number}"
       )
-    rescue Stripe::CardError => e
+    rescue Exception => e
     # The card has been declined
       return false, e.message
     end

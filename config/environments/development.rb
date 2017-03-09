@@ -39,6 +39,9 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
   
+  # Reset log level
+  config.log_level = :warn
+
   # Send out test emails with Gmail
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
