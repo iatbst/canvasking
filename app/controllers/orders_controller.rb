@@ -36,12 +36,11 @@ class OrdersController < ApplicationController
       @order.number = generate_unique_order_number
       charge_result = charge_money_by_stripe(charge_amount, @order)
 
-      # Charge failed, return back to order new page
+      # Charge failed, return back to order new page with error info
       if charge_result[0] == false
         @order.destroy
-        @charge_error = charge_result[1]
-        prepare_data_for_order_new_page
-        render 'new'
+        flash['charge_error'] = charge_result[1]
+        redirect_to new_order_path(:anchor => "charge_error")
       
       # Both success, Order created !!!
       else
@@ -299,7 +298,7 @@ class OrdersController < ApplicationController
       :source => token,
       :description => "Order: #{order.number}"
       )
-    rescue Exception => e
+    rescue Stripe::CardError => e
     # The card has been declined
       return false, e.message
     end

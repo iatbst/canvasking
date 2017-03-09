@@ -48,11 +48,16 @@ Rails.application.routes.draw do
   resources :orders
   # resources :coupons
 
-  # Sidekiq UI
+  # Any resources need ADMIN authentications
+  # - Sidekiq UI
+  # - exception_logger UI
+  #
   require 'sidekiq/web'
   authenticate :user, lambda { |u| u.admin? && Canvasking::ADMINISTRATORS.include?(u.email)} do
     mount Sidekiq::Web => '/sidekiq'
+    mount ExceptionLogger::Engine => "/exception_logger"
   end
+
   
   # Example resource route with options:
   #   resources :products do

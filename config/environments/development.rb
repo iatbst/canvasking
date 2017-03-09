@@ -40,7 +40,7 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   
   # Reset log level
-  config.log_level = :warn
+  config.log_level = :debug
 
   # Send out test emails with Gmail
   config.action_mailer.perform_deliveries = true

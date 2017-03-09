@@ -87,6 +87,19 @@
 
 .submenu {
 	margin-left: 20px;
+	
+}
+
+.order_sub {
+	<% if action_name != "manage_orders" %>
+		display: none;
+	<% end %>
+}
+
+.coupon_sub {
+	<% if !action_name.include?("coupon") %>
+		display: none;
+	<% end %>
 }
 .mainmenu {
 	font-weight: bolder;
@@ -109,19 +122,22 @@
 		</li>
 		<hr style="width: 100%" />
 		<li>
-			<a  href="<%= site_manage_manage_orders_path %>" style="color: white; font-weight: bolder" >Orders</a>
+			<a  class="mainmenu_link" href="<%= site_manage_manage_orders_path %>" style="color: white; font-weight: bolder" name="order_sub">Orders</a>
 		</li>
-		<li class="submenu">
+		<li class="submenu order_sub">
 			<a href="<%= site_manage_manage_orders_path %>">New Order</a>
 		</li>
-		<li class="submenu">
+		<li class="submenu order_sub">
 			<a  href="<%= site_manage_manage_orders_path %>?active_tab=processing">Processing Order</a>
 		</li>
-		<li class="submenu">
+		<li class="submenu order_sub">
 			<a  href="<%= site_manage_manage_orders_path %>?active_tab=closed">Closed Order</a>
 		</li>
 		<li>
 			<a href="<%= sidekiq_web_path %>" style="color: white; font-weight: bolder" >Jobs</a>
+		</li>
+		<li>
+			<a href="<%= exception_logger_path %>" style="color: white; font-weight: bolder" >Exceptions</a>
 		</li>
 		<li>
 			<a href="<%= site_manage_manage_prices_path %>" style="color: white; font-weight: bolder" >Prices</a>
@@ -130,18 +146,18 @@
 			<a href="<%= site_manage_manage_users_path %>" style="color: white; font-weight: bolder" >Users</a>
 		</li>
 		<li>
-			<a href="<%= site_manage_manage_coupons_path %>" style="color: white; font-weight: bolder" >Coupons</a>
+			<a class="mainmenu_link" href="<%= site_manage_manage_coupons_path %>" style="color: white; font-weight: bolder" name="coupon_sub">Coupons</a>
 		</li>
-		<li class="submenu">
+		<li class="submenu coupon_sub">
 			<a href="<%= site_manage_new_coupon_path %>">Create Coupon</a>
 		</li>
-		<li class="submenu">
+		<li class="submenu coupon_sub">
 			<a href="<%= site_manage_manage_coupons_path %>">Public Coupons</a>
 		</li>
-		<li class="submenu">
+		<li class="submenu coupon_sub">
 			<a  href="<%= site_manage_manage_coupons_path %>?active_tab=private">Private Coupons</a>
 		</li>
-		<li class="submenu">
+		<li class="submenu coupon_sub">
 			<a  href="<%= site_manage_manage_coupons_path %>?active_tab=expired">Expired Coupons</a>
 		</li>
 		<li>
@@ -149,4 +165,5 @@
 		</li>
 	</ul>
 </div>
+
 
