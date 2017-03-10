@@ -65,38 +65,41 @@
 </div>
 
 <script>
+var progress = new LoadingOverlayProgress();
+
 $(function () {
     $('#fileupload').fileupload({
     	
         dataType: 'json',
         
-        done: function (e, data) {     		
-        		// Show Crop Modal
-        		$('.jcrop-active').remove();
-        		if ($('#item_image_cropbox').length == 0){
-        			$('#item_image_cropbox_wrapper').append('<img id="item_image_cropbox" src=""></img>');
-        		}
-        		$('#item_image_cropbox').Jcrop({
-        			setSelect: [0, 0, 450, 450],
+        done: function (e, data) {  		
+        	// Show Crop Modal
+        	$('.jcrop-active').remove();
+        	if ($('#item_image_cropbox').length == 0){
+        		$('#item_image_cropbox_wrapper').append('<img id="item_image_cropbox" src=""></img>');
+        	}
+        	$('#item_image_cropbox').Jcrop({
+        		setSelect: [0, 0, 450, 450],
           		allowSelect: false,
-    			});
-    			$('#item_image_cropbox').attr('src', data.result.crop_image_url);			
+    		});
+    		$('#item_image_cropbox').attr('src', data.result.crop_image_url);			
 			$('#crop_modal').modal('show');
-			$("div#divLoading").removeClass('show');
+			$.LoadingOverlay("hide");
         },
 
+	    progress: function (e, data) {
+	        var count = parseInt(data.loaded / data.total * 100, 10);
+	        progress.Update(count);
+	    },
+	    
         add: function (e, data) {
-            $("div#divLoading").addClass('show');
+        	$('body').addClass('stop-scrolling');
+            $.LoadingOverlay("show", {
+    			custom  : progress.Init()
+			});
+            
             data.submit();
-        },
-        
-    		progressall: function (e, data) {
-        		var progress = parseInt(data.loaded / data.total * 100, 10);
-        		$('#progress .bar').css(
-            		'width',
-            		progress + '%'
-        		);
-    		}
+        }      
     });
 });
 </script>

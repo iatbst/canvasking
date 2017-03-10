@@ -245,6 +245,10 @@ span.form_error {
 	margin-top : -16px;
 }
 
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
 
 .image_black_frame_in_email {
   border:15px solid transparent;
