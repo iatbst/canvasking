@@ -65,12 +65,13 @@
 </div>
 
 <script>
-var progress = new LoadingOverlayProgress();
 
 $(function () {
     $('#fileupload').fileupload({
     	
         dataType: 'json',
+        
+        progressInterval: 10,
         
         done: function (e, data) {  		
         	// Show Crop Modal
@@ -87,18 +88,10 @@ $(function () {
 			$.LoadingOverlay("hide");
         },
 
-	    progress: function (e, data) {
-	        var count = parseInt(data.loaded / data.total * 100, 10);
-	        progress.Update(count);
-	    },
 	    
-        add: function (e, data) {
+        start: function (e, data) {
         	$('body').addClass('stop-scrolling');
-            $.LoadingOverlay("show", {
-    			custom  : progress.Init()
-			});
-            
-            data.submit();
+            $.LoadingOverlay("show");
         }      
     });
 });

@@ -214,15 +214,15 @@ $(function () {
 				$('#choose_another_image').show();
         },
         
-    	add: function (e, data) {
+    	start: function (e, data) {
  			$('#test_image').attr('src', '/loading.gif');
  			$('#test_image').removeClass('test_image_upload_button');
  			$('#test_image').removeClass('upload_blink');
  			$('#test_image').removeClass('test_image');
  			$('#test_image').addClass('loading_icon');
  			$('#choose_another_image').hide();
- 			data.submit();
-    	}
+    	},
+
     	
     });
 });
