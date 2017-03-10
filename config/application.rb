@@ -43,7 +43,7 @@ module Canvasking
   IMAGE_VER_OVERVIEW = 300
   IMAGE_VER_THUMB = 200
   
-  IMAGE_TMP_CACHE_TIME = 24 # Cache time to store image in tmp folder: 24 hours now
+  IMAGE_TMP_CACHE_TIME = 1 # Cache time to store image in tmp folder: 1 hours now
   
   
   # EMail

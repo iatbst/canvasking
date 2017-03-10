@@ -109,8 +109,12 @@ class ItemsController < ApplicationController
               
       # Upload images to S3
       origin_tmp_file_path = "#{Rails.root}/public#{@item.image_tmp_paths['origin']}"
-      ImageUploadWorker.perform_async(origin_tmp_file_path, @item.id, 'image')
-      TmpImageRemoveWorker.perform_in(Canvasking::IMAGE_TMP_CACHE_TIME.hours, origin_tmp_file_path, @item.id, 'image')
+      image_upload_job_id = ImageUploadWorker.perform_async(origin_tmp_file_path, @item.id, 'image')
+      image_remove_job_id = TmpImageRemoveWorker.perform_in(Canvasking::IMAGE_TMP_CACHE_TIME.hours, origin_tmp_file_path, @item.id, 'image')
+      remove_previous_tmp_file(@item, 'image')
+      @item.jobs['image_remove_job_id'] = image_remove_job_id
+      @item.update_column('jobs', @item.jobs)
+      
       @size_price, @size_price_str = prepare_size_price(@item)
       
       @wizard = true
@@ -147,8 +151,11 @@ class ItemsController < ApplicationController
       
       # Upload Art images to S3
       origin_tmp_file_path = "#{Rails.root}/public#{@item.art_image_tmp_paths['origin']}"
-      ImageUploadWorker.perform_async(origin_tmp_file_path, @item.id, 'art_image')
-      TmpImageRemoveWorker.perform_in(Canvasking::IMAGE_TMP_CACHE_TIME.hours, origin_tmp_file_path, @item.id, 'art_image')
+      art_image_upload_job_id = ImageUploadWorker.perform_async(origin_tmp_file_path, @item.id, 'art_image')
+      art_image_remove_job_id = TmpImageRemoveWorker.perform_in(Canvasking::IMAGE_TMP_CACHE_TIME.hours, origin_tmp_file_path, @item.id, 'art_image')
+      remove_previous_tmp_file(@item, 'art_image')
+      @item.jobs['art_image_remove_job_id'] = art_image_remove_job_id
+      @item.update_column('jobs', @item.jobs)
       
       @size_price, @size_price_str = prepare_size_price(@item)
       render 'new'
@@ -213,6 +220,11 @@ class ItemsController < ApplicationController
     cart = get_current_cart
     @item = Item.find(params[:id])
     cart.quantity -= @item.quantity
+    
+    # Remove tmp files if necessary
+    remove_previous_tmp_file(@item, 'image')
+    remove_previous_tmp_file(@item, 'art_image')
+    
     @item.destroy
     cart.save!
     
@@ -457,5 +469,18 @@ class ItemsController < ApplicationController
     end 
   end
 
-  
+  # Run the schedule tmp remove job now
+  def remove_previous_tmp_file(item, image_type)
+    if item.jobs["#{image_type}_remove_job_id"]
+      jid = item.jobs["#{image_type}_remove_job_id"]
+      ss = Sidekiq::ScheduledSet::new
+      job = ss.select {|j| j.jid == jid }
+      job = job[0]
+      if job.reschedule(Time.now)
+        puts "Job #{jid} Re-schedule SUCCESS !"
+      else
+        puts "Job #{jid} Re-schedule FAIL !"
+      end
+    end
+  end
 end
