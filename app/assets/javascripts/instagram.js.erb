@@ -115,7 +115,7 @@ $(window).on('load', function() {
         $(this).parent().css('border-weight', '3px');
 
         $('#instagram_images').modal('hide');
-        $("div#divLoading").addClass('show');
+        $.LoadingOverlay("show");
 
         // and ajax call to server
         $.ajax({
@@ -143,7 +143,7 @@ $(window).on('load', function() {
             });
             $('.jcrop-selection').attr('onclick', 'return false');
             $('#crop_modal').modal('show');
-            $("div#divLoading").removeClass('show');
+            $.LoadingOverlay("hide");
         });
     });
 

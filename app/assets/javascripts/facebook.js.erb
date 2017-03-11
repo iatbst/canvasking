@@ -147,7 +147,7 @@ $(window).on('load', function(){
 		$(this).parent().css('border-weight', '3px');
 		
     		$('#facebook_images').modal('hide');
-    		$("div#divLoading").addClass('show');
+    		$.LoadingOverlay("show");
     		
     		// and ajax call to server
     		$.ajax({
@@ -168,7 +168,7 @@ $(window).on('load', function(){
     				$('#item_image_cropbox').attr('src', data.crop_image_url);			
 				$('.jcrop-selection').click(function(){return false});
 				$('#crop_modal').modal('show');
-				$("div#divLoading").removeClass('show');
+				$.LoadingOverlay("hide");
 		});
 	});	
 	
