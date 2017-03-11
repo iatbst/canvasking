@@ -1,10 +1,312 @@
-/*! Jcrop.js v2.0.0-RC1 - build: 20130914
- *  @copyright 2008-2013 Tapmodo Interactive LLC
+/*! Jcrop.js v2.0.4 - build: 20151117
+ *  @copyright 2008-2015 Tapmodo Interactive LLC
  *  @license Free software under MIT License
  *  @website http://jcrop.org/
  **/
 (function($){
   'use strict';
+
+  // Jcrop constructor
+  var Jcrop = function(element,opt){
+    var _ua = navigator.userAgent.toLowerCase();
+
+    this.opt = $.extend({},Jcrop.defaults,opt || {});
+
+    this.container = $(element);
+
+    this.opt.is_msie = /msie/.test(_ua);
+    this.opt.is_ie_lt9 = /msie [1-8]\./.test(_ua);
+
+    this.container.addClass(this.opt.css_container);
+
+    this.ui = {};
+    this.state = null;
+    this.ui.multi = [];
+    this.ui.selection = null;
+    this.filter = {};
+
+    this.init();
+    this.setOptions(opt);
+    this.applySizeConstraints();
+    this.container.trigger('cropinit',this);
+      
+    // IE<9 doesn't work if mouse events are attached to window
+    if (this.opt.is_ie_lt9)
+      this.opt.dragEventTarget = document.body;
+  };
+
+
+  // Jcrop static functions
+  $.extend(Jcrop,{
+    component: { },
+    filter: { },
+    stage: { },
+    registerComponent: function(name,component){
+      Jcrop.component[name] = component;
+    },
+    registerFilter: function(name,filter){
+      Jcrop.filter[name] = filter;
+    },
+    registerStageType: function(name,stage){
+      Jcrop.stage[name] = stage;
+    },
+    // attach: function(element,opt){{{
+    attach: function(element,opt){
+      var obj = new $.Jcrop(element,opt);
+      return obj;
+    },
+    // }}}
+    // imgCopy: function(imgel){{{
+    imgCopy: function(imgel){
+      var img = new Image;
+      img.src = imgel.src;
+      return img;
+    },
+    // }}}
+    // imageClone: function(imgel){{{
+    imageClone: function(imgel){
+      return $.Jcrop.supportsCanvas?
+        Jcrop.canvasClone(imgel):
+        Jcrop.imgCopy(imgel);
+    },
+    // }}}
+    // canvasClone: function(imgel){{{
+    canvasClone: function(imgel){
+      var canvas = document.createElement('canvas'),
+          ctx = canvas.getContext('2d');
+
+      $(canvas).width(imgel.width).height(imgel.height),
+      canvas.width = imgel.naturalWidth;
+      canvas.height = imgel.naturalHeight;
+      ctx.drawImage(imgel,0,0,imgel.naturalWidth,imgel.naturalHeight);
+      return canvas;
+    },
+    // }}}
+    // propagate: function(plist,config,obj){{{
+    propagate: function(plist,config,obj){
+      for(var i=0,l=plist.length;i<l;i++)
+        if (config.hasOwnProperty(plist[i]))
+          obj[plist[i]] = config[plist[i]];
+    },
+    // }}}
+    // getLargestBox: function(ratio,w,h){{{
+    getLargestBox: function(ratio,w,h){
+      if ((w/h) > ratio)
+        return [ h * ratio, h ];
+          else return [ w, w / ratio ];
+    },
+    // }}}
+    // stageConstructor: function(el,options,callback){{{
+    stageConstructor: function(el,options,callback){
+
+      // Get a priority-ordered list of available stages
+      var stages = [];
+      $.each(Jcrop.stage,function(i,e){
+        stages.push(e);
+      });
+      stages.sort(function(a,b){ return a.priority - b.priority; });
+
+      // Find the first one that supports this element
+      for(var i=0,l=stages.length;i<l;i++){
+        if (stages[i].isSupported(el,options)){
+          stages[i].create(el,options,function(obj,opt){
+            if (typeof callback == 'function') callback(obj,opt);
+          });
+          break;
+        }
+      }
+    },
+    // }}}
+    // supportsColorFade: function(){{{
+    supportsColorFade: function(){
+      return $.fx.step.hasOwnProperty('backgroundColor');
+    },
+    // }}}
+    // wrapFromXywh: function(xywh){{{
+    wrapFromXywh: function(xywh){
+      var b = { x: xywh[0], y: xywh[1], w: xywh[2], h: xywh[3] };
+      b.x2 = b.x + b.w;
+      b.y2 = b.y + b.h;
+      return b;
+    }
+    // }}}
+  });
+
+var AbstractStage = function(){
+};
+
+$.extend(AbstractStage,{
+  isSupported: function(el,o){
+    // @todo: should actually check if it's an HTML element
+    return true;
+  },
+  // A higher priority means less desirable
+  // AbstractStage is the last one we want to use
+  priority: 100,
+  create: function(el,options,callback){
+    var obj = new AbstractStage;
+    obj.element = el;
+    callback.call(this,obj,options);
+  },
+  prototype: {
+    attach: function(core){
+      this.init(core);
+      core.ui.stage = this;
+    },
+    triggerEvent: function(ev){
+      $(this.element).trigger(ev);
+      return this;
+    },
+    getElement: function(){
+      return this.element;
+    }
+  }
+});
+Jcrop.registerStageType('Block',AbstractStage);
+
+
+var ImageStage = function(){
+};
+
+ImageStage.prototype = new AbstractStage();
+
+$.extend(ImageStage,{
+  isSupported: function(el,o){
+    if (el.tagName == 'IMG') return true;
+  },
+  priority: 90,
+  create: function(el,options,callback){
+    $.Jcrop.component.ImageLoader.attach(el,function(w,h){
+      var obj = new ImageStage;
+      obj.element = $(el).wrap('<div />').parent();
+
+      obj.element.width(w).height(h);
+      obj.imgsrc = el;
+
+      if (typeof callback == 'function')
+        callback.call(this,obj,options);
+    });
+  }
+});
+Jcrop.registerStageType('Image',ImageStage);
+
+
+var CanvasStage = function(){
+  this.angle = 0;
+  this.scale = 1;
+  this.scaleMin = 0.2;
+  this.scaleMax = 1.25;
+  this.offset = [0,0];
+};
+
+CanvasStage.prototype = new ImageStage();
+
+$.extend(CanvasStage,{
+  isSupported: function(el,o){
+    if ($.Jcrop.supportsCanvas && (el.tagName == 'IMG')) return true;
+  },
+  priority: 60,
+  create: function(el,options,callback){
+    var $el = $(el);
+    var opt = $.extend({},options);
+    $.Jcrop.component.ImageLoader.attach(el,function(w,h){
+      var obj = new CanvasStage;
+      $el.hide();
+      obj.createCanvas(el,w,h);
+      $el.before(obj.element);
+      obj.imgsrc = el;
+      opt.imgsrc = el;
+
+      if (typeof callback == 'function'){
+        callback(obj,opt);
+        obj.redraw();
+      }
+    });
+  }
+});
+
+$.extend(CanvasStage.prototype,{
+  init: function(core){
+    this.core = core;
+  },
+  // setOffset: function(x,y) {{{
+  setOffset: function(x,y) {
+    this.offset = [x,y];
+    return this;
+  },
+  // }}}
+  // setAngle: function(v) {{{
+  setAngle: function(v) {
+    this.angle = v;
+    return this;
+  },
+  // }}}
+  // setScale: function(v) {{{
+  setScale: function(v) {
+    this.scale = this.boundScale(v);
+    return this;
+  },
+  // }}}
+  boundScale: function(v){
+    if (v<this.scaleMin) v = this.scaleMin;
+    else if (v>this.scaleMax) v = this.scaleMax;
+    return v;
+  },
+  createCanvas: function(img,w,h){
+    this.width = w;
+    this.height = h;
+    this.canvas = document.createElement('canvas');
+    this.canvas.width = w;
+    this.canvas.height = h;
+    this.$canvas = $(this.canvas).width('100%').height('100%');
+    this.context = this.canvas.getContext('2d');
+    this.fillstyle = "rgb(0,0,0)";
+    this.element = this.$canvas.wrap('<div />').parent().width(w).height(h);
+  },
+  triggerEvent: function(ev){
+    this.$canvas.trigger(ev);
+    return this;
+  },
+  // clear: function() {{{
+  clear: function() {
+    this.context.fillStyle = this.fillstyle;
+    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    return this;
+  },
+  // }}}
+  // redraw: function() {{{
+  redraw: function() {
+    // Save the current context
+    this.context.save();
+    this.clear();
+
+    // Translate to the center point of our image
+    this.context.translate(parseInt(this.width * 0.5), parseInt(this.height * 0.5));
+    // Perform the rotation and scaling
+    this.context.translate(this.offset[0]/this.core.opt.xscale,this.offset[1]/this.core.opt.yscale);
+    this.context.rotate(this.angle * (Math.PI/180));
+    this.context.scale(this.scale,this.scale);
+    // Translate back to the top left of our image
+    this.context.translate(-parseInt(this.width * 0.5), -parseInt(this.height * 0.5));
+    // Finally we draw the image
+    this.context.drawImage(this.imgsrc,0,0,this.width,this.height);
+
+    // And restore the updated context
+    this.context.restore();
+    this.$canvas.trigger('cropredraw');
+    return this;
+  },
+  // }}}
+  // setFillStyle: function(v) {{{
+  setFillStyle: function(v) {
+    this.fillstyle = v;
+    return this;
+  }
+  // }}}
+});
+
+Jcrop.registerStageType('Canvas',CanvasStage);
+
 
   /**
    *  BackoffFilter
@@ -41,6 +343,7 @@
       };
     }
   });
+  Jcrop.registerFilter('backoff',BackoffFilter);
 
   /**
    *  ConstrainFilter
@@ -77,6 +380,7 @@
       this.maxy = this.elh + sel.edge.s;
     }
   });
+  Jcrop.registerFilter('constrain',ConstrainFilter);
 
   /**
    *  ExtentFilter
@@ -134,6 +438,8 @@
       };
     }
   });
+  Jcrop.registerFilter('extent',ExtentFilter);
+
 
   /**
    *  GridFilter
@@ -162,6 +468,8 @@
       return n;
     }
   });
+  Jcrop.registerFilter('grid',GridFilter);
+
 
   /**
    *  RatioFilter
@@ -239,6 +547,8 @@
       this.elh = sel.core.container.height();
     }
   });
+  Jcrop.registerFilter('ratio',RatioFilter);
+
 
   /**
    *  RoundFilter
@@ -265,6 +575,8 @@
       return n;
     }
   });
+  Jcrop.registerFilter('round',RoundFilter);
+
 
   /**
    *  ShadeFilter
@@ -387,6 +699,84 @@
       return b;
     }
   });
+  Jcrop.registerFilter('shader',ShadeFilter);
+  
+
+  /**
+   *  CanvasAnimator
+   *  manages smooth cropping animation
+   *
+   *  This object is called internally to manage animation.
+   *  An in-memory div is animated and a progress callback
+   *  is used to update the selection coordinates of the
+   *  visible selection in realtime.
+   */
+  var CanvasAnimator = function(stage){
+    this.stage = stage;
+    this.core = stage.core;
+    this.cloneStagePosition();
+  };
+
+  CanvasAnimator.prototype = {
+
+    cloneStagePosition: function(){
+      var s = this.stage;
+      this.angle = s.angle;
+      this.scale = s.scale;
+      this.offset = s.offset;
+    },
+
+    getElement: function(){
+      var s = this.stage;
+
+      return $('<div />')
+        .css({
+          position: 'absolute',
+          top: s.offset[0]+'px',
+          left: s.offset[1]+'px',
+          width: s.angle+'px',
+          height: s.scale+'px'
+        });
+    },
+
+    animate: function(cb){
+      var t = this;
+
+      this.scale = this.stage.boundScale(this.scale);
+      t.stage.triggerEvent('croprotstart');
+
+      t.getElement().animate({
+        top: t.offset[0]+'px',
+        left: t.offset[1]+'px',
+        width: t.angle+'px',
+        height: t.scale+'px'
+      },{
+        easing: t.core.opt.animEasing,
+        duration: t.core.opt.animDuration,
+        complete: function(){
+          t.stage.triggerEvent('croprotend');
+          (typeof cb == 'function') && cb.call(this);
+        },
+        progress: function(anim){
+          var props = {}, i, tw = anim.tweens;
+
+          for(i=0;i<tw.length;i++){
+            props[tw[i].prop] = tw[i].now; }
+
+          t.stage.setAngle(props.width)
+            .setScale(props.height)
+            .setOffset(props.top,props.left)
+            .redraw();
+        }
+      });
+    }
+
+  };
+  Jcrop.stage.Canvas.prototype.getAnimator = function(){
+    return new CanvasAnimator(this);
+  };
+  Jcrop.registerComponent('CanvasAnimator',CanvasAnimator);
+
 
   /**
    *  CropAnimator
@@ -404,8 +794,8 @@
   };
   // }}}
 
-  $.extend(CropAnimator.prototype,{
-    // getElement: function(){{{
+  CropAnimator.prototype = {
+
     getElement: function(){
       var b = this.selection.get();
 
@@ -418,8 +808,7 @@
           height: b.h+'px'
         });
     },
-    // }}}
-    // animate: function(x,y,w,h,cb){{{
+
     animate: function(x,y,w,h,cb){
       var t = this;
 
@@ -457,8 +846,10 @@
         }
       });
     }
-    // }}}
-  });
+
+  };
+  Jcrop.registerComponent('Animator',CropAnimator);
+
 
   /**
    *  DragState
@@ -494,7 +885,7 @@
   };
   // }}}
 
-  $.extend(DragState.prototype,{
+  DragState.prototype = {
     // getOppositeCornerOffset: function(){{{
     // Calculate relative offset of locked corner
     getOppositeCornerOffset: function(){
@@ -545,7 +936,9 @@
     // endDragEvent: function(e){{{
     endDragEvent: function(e){
       var sel = this.selection;
+      sel.core.container.removeClass('jcrop-dragging');
       sel.element.trigger('cropend',[sel,sel.core.unscale(sel.get())]);
+      sel.focus();
     },
     // }}}
     // createStopHandler: function(){{{
@@ -610,7 +1003,9 @@
       }
     }
     //}}}
-  });
+  };
+  Jcrop.registerComponent('DragState',DragState);
+
 
   /**
    *  EventManager
@@ -619,13 +1014,13 @@
   var EventManager = function(core){
     this.core = core;
   };
-  $.extend(EventManager,{
-    prototype: {
+  EventManager.prototype = {
       on: function(n,cb){ $(this).on(n,cb); },
       off: function(n){ $(this).off(n); },
       trigger: function(n){ $(this).trigger(n); }
-    }
-  });
+  };
+  Jcrop.registerComponent('EventManager',EventManager);
+
 
   /**
    * Image Loader
@@ -682,7 +1077,8 @@
     }
     // }}}
   });
-  // }}}
+  Jcrop.registerComponent('ImageLoader',ImageLoader);
+
 
   /**
    * JcropTouch
@@ -751,7 +1147,7 @@
       shimStageDrag: function(){
         this.core.container
           .addClass('jcrop-touch')
-          .on('touchstart.jcrop.jcrop-stage',this.dragWrap(this.core.ui.stage.startDragHandler()));
+          .on('touchstart.jcrop.jcrop-stage',this.dragWrap(this.core.ui.manager.startDragHandler()));
       },
       // }}}
       // dragWrap: function(cb){{{
@@ -781,6 +1177,8 @@
       // }}}
     }
   });
+  Jcrop.registerComponent('Touch',JcropTouch);
+
 
   /**
    *  KeyWatcher
@@ -845,6 +1243,8 @@
       // }}}
     }
   });
+  Jcrop.registerComponent('Keyboard',KeyWatcher);
+
 
   /**
    * Selection
@@ -895,7 +1295,7 @@
         t.filter = t.core.getDefaultFilters();
 
         t.element = $('<div />').addClass(o.css_selection).data({ selection: t });
-        t.frame = $('<button />').addClass(o.css_button).data('ord','move');
+        t.frame = $('<button />').addClass(o.css_button).data('ord','move').attr('type','button');
         t.element.append(t.frame).appendTo(t.core.container);
 
         // IE background/draggable hack
@@ -908,8 +1308,8 @@
 
         // Bind focus and blur events for this selection
         t.frame.on('focus.jcrop',function(e){
-          t.element.trigger('cropfocus',t);
           t.core.setSelection(t);
+          t.element.trigger('cropfocus',t);
           t.element.addClass('jcrop-focus');
         }).on('blur.jcrop',function(e){
           t.element.removeClass('jcrop-focus');
@@ -1066,18 +1466,13 @@
       // toBack: function(){{{
       toBack: function(){
         this.active = false;
-        this.element
-          .removeClass('jcrop-current')
-          .removeClass('jcrop-focus')
-          .css({zIndex:20});
+        this.element.removeClass('jcrop-current jcrop-focus');
       },
       // }}}
       // toFront: function(){{{
       toFront: function(){
         this.active = true;
-        this.element
-          .addClass('jcrop-current')
-          .css({zIndex:30});
+        this.element.addClass('jcrop-current');
         this.callFilterFunction('refresh');
         this.refresh();
       },
@@ -1173,18 +1568,19 @@
           h = o.handles,
           d = o.dragbars;
 
-        for(i=0; i<b.length; i++)
-          fr.append(t.createElement(o.css_borders,b[i]));
-
         for(i=0; i<d.length; i++)
           fr.append(t.createElement(o.css_dragbars,d[i]));
 
         for(i=0; i<h.length; i++)
           fr.append(t.createElement(o.css_handles,h[i]));
+
+        for(i=0; i<b.length; i++)
+          fr.append(t.createElement(o.css_borders,b[i]));
       }
       //}}}
     }
   });
+  Jcrop.registerComponent('Selection',Selection);
 
 
   /**
@@ -1212,7 +1608,7 @@
       var c = this.core;
 
       // Do nothing if allowSelect is off
-      if (!c.opt.allowSelect) return false;
+      if (!c.opt.allowSelect) return;
 
       // Also do nothing if we can't draw any more selections
       if (c.opt.multi && c.opt.multiMax && (c.ui.multi.length >= c.opt.multiMax)) return false;
@@ -1223,7 +1619,7 @@
       var origy = e.pageY - o.top + this.offset[1];
       var m = c.ui.multi;
 
-      // Determinenewly dragged crop behavior if multi disabled
+      // Determine newly dragged crop behavior if multi disabled
       if (!c.opt.multi) {
         // For multiCleaanup true, remove all existing selections
         if (c.opt.multiCleanup){
@@ -1235,6 +1631,8 @@
           c.removeSelection(c.ui.selection);
         }
       }
+
+      c.container.addClass('jcrop-dragging');
 
       // Create the new selection
       var sel = c.newSelection()
@@ -1251,6 +1649,8 @@
       this.drag(x,y);
       var b = this.sel.get();
 
+      this.core.container.removeClass('jcrop-dragging');
+
       if ((b.w < this.minsize[0]) || (b.h < this.minsize[1]))
         this.core.requestDelete();
 
@@ -1258,6 +1658,8 @@
     }
     // }}}
   });
+  Jcrop.registerComponent('StageDrag',StageDrag);
+
 
   /**
    * StageManager
@@ -1332,55 +1734,245 @@
     }
     // }}}
   });
+  Jcrop.registerComponent('StageManager',StageManager);
 
-  // Jcrop constructor
-  // var Jcrop = function(element,opt){{{
-  var Jcrop = function(element,opt){
-    var _ua = navigator.userAgent.toLowerCase();
 
-    this.opt = $.extend({},Jcrop.defaults,opt || {});
-
-    this.container = $(element);
-
-    this.opt.is_msie = /msie/.test(_ua);
-    this.opt.is_ie_lt9 = /msie [1-8]\./.test(_ua);
-
-    this.container.addClass(this.opt.css_container);
-
-    this.ui = {};
-    this.state = null;
-    this.ui.multi = [];
-    this.ui.selection = null;
-    this.filter = {};
-
-    this.init();
-    this.setOptions(opt);
-    this.applySizeConstraints();
-    this.container.trigger('cropinit',this);
-      
-    // IE<9 doesn't work if mouse events are attached to window
-    if (this.opt.is_ie_lt9)
-      this.opt.dragEventTarget = document.body;
-
-  };
-  // }}}
-
-  // Jcrop component storage
-  Jcrop.component = {
-    Animator: CropAnimator,
-    DragState: DragState,
-    EventManager: EventManager,
-    ImageLoader: ImageLoader,
-    StageManager: StageManager,
-    Selection: Selection,
-    Keyboard: KeyWatcher,
-    Touch: JcropTouch
+  var Thumbnailer = function(){
   };
 
-  // Jcrop static functions
-  $.extend(Jcrop,{
-    //defaults: default settings {{{
+  $.extend(Thumbnailer,{
     defaults: {
+      // Set to a specific Selection object
+      // If this value is set, the preview will only track that Selection
+      selection: null,
+
+      fading: true,
+      fadeDelay: 1000,
+      fadeDuration: 1000,
+      autoHide: false,
+      width: 80,
+      height: 80,
+      _hiding: null
+    },
+
+    prototype: {
+      recopyCanvas: function(){
+        var s = this.core.ui.stage, cxt = s.context;
+        this.context.putImageData(cxt.getImageData(0,0,s.canvas.width,s.canvas.height),0,0);
+      },
+      init: function(core,options){
+        var t = this;
+        this.core = core;
+        $.extend(this,Thumbnailer.defaults,options);
+        t.initEvents();
+        t.refresh();
+        t.insertElements();
+        if (t.selection) {
+          t.renderSelection(t.selection);
+          t.selectionTarget = t.selection.element[0];
+        } else if (t.core.ui.selection) {
+          t.renderSelection(t.core.ui.selection);
+        }
+
+        if (t.core.ui.stage.canvas) {
+          t.context = t.preview[0].getContext('2d');
+          t.core.container.on('cropredraw',function(e){
+            t.recopyCanvas();
+            t.refresh();
+          });
+        }
+      },
+      updateImage: function(imgel){
+        this.preview.remove();
+        this.preview = $($.Jcrop.imageClone(imgel));
+        this.element.append(this.preview);
+        this.refresh();
+        return this;
+      },
+      insertElements: function(){
+        this.preview = $($.Jcrop.imageClone(this.core.ui.stage.imgsrc));
+
+        this.element = $('<div />').addClass('jcrop-thumb')
+          .width(this.width).height(this.height)
+          .append(this.preview)
+          .appendTo(this.core.container);
+      },
+      resize: function(w,h){
+        this.width = w;
+        this.height = h;
+        this.element.width(w).height(h);
+        this.renderCoords(this.last);
+      },
+      refresh: function(){
+        this.cw = (this.core.opt.xscale * this.core.container.width());
+        this.ch = (this.core.opt.yscale * this.core.container.height());
+        if (this.last) {
+          this.renderCoords(this.last);
+        }
+      },
+      renderCoords: function(c){
+        var rx = this.width / c.w;
+        var ry = this.height / c.h;
+
+        this.preview.css({
+          width: Math.round(rx * this.cw) + 'px',
+          height: Math.round(ry * this.ch) + 'px',
+          marginLeft: '-' + Math.round(rx * c.x) + 'px',
+          marginTop: '-' + Math.round(ry * c.y) + 'px'
+        });
+
+        this.last = c;
+        return this;
+      },
+      renderSelection: function(s){
+        return this.renderCoords(s.core.unscale(s.get()));
+      },
+      selectionStart: function(s){
+        this.renderSelection(s);
+      },
+      show: function(){
+        if (this._hiding) clearTimeout(this._hiding);
+
+        if (!this.fading) this.element.stop().css({ opacity: 1 });
+        else this.element.stop().animate({ opacity: 1 },{ duration: 80, queue: false });
+      },
+      hide: function(){
+        var t = this;
+        if (!t.fading) t.element.hide();
+        else t._hiding = setTimeout(function(){
+          t._hiding = null;
+          t.element.stop().animate({ opacity: 0 },{ duration: t.fadeDuration, queue: false });
+        },t.fadeDelay);
+      },
+      initEvents: function(){
+        var t = this;
+        t.core.container.on('croprotstart croprotend cropimage cropstart cropmove cropend',function(e,s,c){
+          if (t.selectionTarget && (t.selectionTarget !== e.target)) return false;
+
+          switch(e.type){
+
+            case 'cropimage':
+              t.updateImage(c);
+              break;
+
+            case 'cropstart':
+              t.selectionStart(s);
+            case 'croprotstart':
+              t.show();
+              break;
+
+            case 'cropend':
+              t.renderCoords(c);
+            case 'croprotend':
+              if (t.autoHide) t.hide();
+              break;
+
+            case 'cropmove':
+              t.renderCoords(c);
+              break;
+          }
+        });
+      }
+    }
+  });
+  Jcrop.registerComponent('Thumbnailer',Thumbnailer);
+
+
+  /**
+   * DialDrag component
+   * This is a little hacky, it was adapted from some previous/old code
+   * Plan to update this API in the future
+   */
+  var DialDrag = function() { };
+
+  DialDrag.prototype = {
+
+    init: function(core,actuator,callback){
+      var that = this;
+
+      if (!actuator) actuator = core.container;
+      this.$btn = $(actuator);
+      this.$targ = $(actuator);
+      this.core = core;
+
+      this.$btn
+        .addClass('dialdrag')
+        .on('mousedown.dialdrag',this.mousedown())
+        .data('dialdrag',this);
+
+      if (!$.isFunction(callback)) callback = function(){ };
+      this.callback = callback;
+      this.ondone = callback;
+    },
+
+    remove: function(){
+      this.$btn
+        .removeClass('dialdrag')
+        .off('.dialdrag')
+        .data('dialdrag',null);
+      return this;
+    },
+
+    setTarget: function(obj){
+      this.$targ = $(obj);
+      return this;
+    },
+
+    getOffset: function(){
+      var targ = this.$targ, pos = targ.offset();
+      return [
+        pos.left + (targ.width()/2),
+        pos.top + (targ.height()/2)
+      ];
+    },
+
+    relMouse: function(e){
+      var x = e.pageX - this.offset[0],
+          y = e.pageY - this.offset[1],
+          ang = Math.atan2(y,x) * (180 / Math.PI),
+          vec = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+      return [ x, y, ang, vec ];
+    },
+
+    mousedown: function(){
+      var that = this;
+
+      function mouseUp(e){
+        $(window).off('.dialdrag');
+        that.ondone.call(that,that.relMouse(e));
+        that.core.container.trigger('croprotend');
+      }
+
+      function mouseMove(e){
+        that.callback.call(that,that.relMouse(e));
+      }
+
+      return function(e) {
+        that.offset = that.getOffset();
+        var rel = that.relMouse(e);
+        that.angleOffset = -that.core.ui.stage.angle+rel[2];
+        that.distOffset = rel[3];
+        that.dragOffset = [rel[0],rel[1]];
+        that.core.container.trigger('croprotstart');
+
+        $(window)
+          .on('mousemove.dialdrag',mouseMove)
+          .on('mouseup.dialdrag',mouseUp);
+
+        that.callback.call(that,that.relMouse(e));
+
+        return false;
+      };
+    }
+    
+  };
+  Jcrop.registerComponent('DialDrag',DialDrag);
+
+
+    /////////////////////////////////
+    // DEFAULT SETTINGS
+
+    Jcrop.defaults = {
 
       // Selection Behavior
       edge: { n: 0, s: 0, e: 0, w: 0 },
@@ -1400,6 +1992,9 @@
       animatorComponent:      Jcrop.component.Animator,
       selectionComponent:     Jcrop.component.Selection,
 
+      // This is a function that is called, which returns a stage object
+      stageConstructor:       Jcrop.stageConstructor,
+
       // Stage Behavior
       allowSelect: true,
       multi: false,
@@ -1416,7 +2011,7 @@
 
       // Startup options
       applyFilters: [ 'constrain', 'extent', 'backoff', 'ratio', 'shader', 'round' ],
-      borders:  [ 'n', 's', 'e', 'w' ],
+      borders:  [ 'e', 'w', 's', 'n' ],
       handles:  [ 'n', 's', 'e', 'w', 'sw', 'ne', 'nw', 'se' ],
       dragbars: [ 'n', 'e', 'w', 's' ],
 
@@ -1448,84 +2043,9 @@
         onChange: 'cropmove',
         onSelect: 'cropend'
       }
-    },
-    //}}}
-    //filter: built-in filter collection {{{
-    filter: {
-      constrain: ConstrainFilter,
-      extent: ExtentFilter,
-      grid: GridFilter,
-      backoff: BackoffFilter,
-      shader: ShadeFilter,
-      ratio: RatioFilter,
-      round: RoundFilter
-    },
-    //}}}
-    // attach: function(element,opt){{{
-    attach: function(element,opt){
-      var obj = new $.Jcrop(element,opt);
-      return obj;
-    },
-    // }}}
-    //supportsCanvas: function(){{{
-    supportsCanvas: function(){
-        var elem = document.createElement('canvas');
-        return !!(elem.getContext && elem.getContext('2d'));
-    },
-    // }}}
-    // imgCopy: function(imgel){{{
-    imgCopy: function(imgel){
-      var img = new Image;
-      img.src = imgel.src;
-      return img;
-    },
-    // }}}
-    // imageClone: function(imgel){{{
-    imageClone: function(imgel){
-      return Jcrop.supportsCanvas()?
-        Jcrop.canvasClone(imgel):
-        Jcrop.imgCopy(imgel);
-    },
-    // }}}
-    // canvasClone: function(imgel){{{
-    canvasClone: function(imgel){
-      var canvas = document.createElement('canvas'),
-          $canvas = $(canvas).width(imgel.width).height(imgel.height),
-          ctx = canvas.getContext('2d');
-      canvas.width = imgel.naturalWidth;
-      canvas.height = imgel.naturalHeight;
-      ctx.drawImage(imgel,0,0,imgel.naturalWidth,imgel.naturalHeight);
-      return $canvas;
-    },
-    // }}}
-    // propagate: function(plist,config,obj){{{
-    propagate: function(plist,config,obj){
-      for(var i=0,l=plist.length;i<l;i++)
-        if (config.hasOwnProperty(plist[i]))
-          obj[plist[i]] = config[plist[i]];
-    },
-    // }}}
-    // getLargestBox: function(ratio,w,h){{{
-    getLargestBox: function(ratio,w,h){
-      if ((w/h) > ratio)
-        return [ h * ratio, h ];
-          else return [ w, w / ratio ];
-    },
-    // }}}
-    // supportsColorFade: function(){{{
-    supportsColorFade: function(){
-      return $.fx.step.hasOwnProperty('backgroundColor');
-    },
-    // }}}
-    // wrapFromXywh: function(xywh){{{
-    wrapFromXywh: function(xywh){
-      var b = { x: xywh[0], y: xywh[1], w: xywh[2], h: xywh[3] };
-      b.x2 = b.x + b.w;
-      b.y2 = b.y + b.h;
-      return b;
-    }
-    // }}}
-  });
+
+    };
+
 
   // Jcrop API methods
   $.extend(Jcrop.prototype,{
@@ -1533,10 +2053,10 @@
     init: function(){
       this.event = new this.opt.eventManagerComponent(this);
       this.ui.keyboard = new this.opt.keyboardComponent(this);
-      this.ui.stage = new this.opt.stagemanagerComponent(this);
+      this.ui.manager = new this.opt.stagemanagerComponent(this);
       this.applyFilters();
 
-      if ($.Jcrop.component.Touch.support())
+      if ($.Jcrop.supportsTouch)
         new $.Jcrop.component.Touch(this);
 
       this.initEvents();
@@ -1545,7 +2065,7 @@
     // applySizeConstraints: function(){{{
     applySizeConstraints: function(){
       var o = this.opt,
-          img = this.opt.imgTarget;
+          img = this.opt.imgsrc;
 
       if (img){
 
@@ -1563,8 +2083,26 @@
         }
           
       }
+
+      if (this.opt.trueSize){
+        var dw = this.opt.trueSize[0];
+        var dh = this.opt.trueSize[1];
+        var cs = this.getContainerSize();
+        this.opt.xscale = dw / cs[0];
+        this.opt.yscale = dh / cs[1];
+      }
     },
     // }}}
+    initComponent: function(name){
+      if (Jcrop.component[name]) {
+        var args = Array.prototype.slice.call(arguments);
+        var obj = new Jcrop.component[name];
+        args.shift();
+        args.unshift(this);
+        obj.init.apply(obj,args);
+        return obj;
+      }
+    },
     // setOptions: function(opt){{{
     setOptions: function(opt,proptype){
 
@@ -1581,7 +2119,8 @@
           this.newSelection();
 
         // Use these values to update the current selection
-        this.ui.multi[0].update(Jcrop.wrapFromXywh(this.opt.setSelect));
+        this.setSelect(this.opt.setSelect);
+
         // Set to null so it doesn't get called again
         this.opt.setSelect = null;
       }
@@ -1592,10 +2131,10 @@
     // }}}
     //destroy: function(){{{
     destroy: function(){
-      if (this.opt.imgTarget) {
-        this.container.before(this.opt.imgTarget);
+      if (this.opt.imgsrc) {
+        this.container.before(this.opt.imgsrc);
         this.container.remove();
-        $(this.opt.imgTarget).removeData('Jcrop');
+        $(this.opt.imgsrc).removeData('Jcrop').show();
       } else {
         // @todo: more elegant destroy() process for non-image containers
         this.container.remove();
@@ -1790,7 +2329,7 @@
     deleteSelection: function(){
       if (this.ui.selection) {
         this.removeSelection(this.ui.selection);
-        this.ui.multi[0].focus();
+        if (this.ui.multi.length) this.ui.multi[0].focus();
         this.ui.selection.refresh();
       }
     },
@@ -1822,6 +2361,11 @@
       };
     },
     //}}}
+    // getContainerSize: function(){{{
+    getContainerSize: function(){
+      return [ this.container.width(), this.container.height() ];
+    },
+    // }}}
     // resizeContainer: function(w,h){{{
     resizeContainer: function(w,h){
       this.container.width(w).height(h);
@@ -1830,7 +2374,7 @@
     // }}}
     // setImage: function(src,cb){{{
     setImage: function(src,cb){
-      var t = this, targ = t.opt.imgTarget;
+      var t = this, targ = t.opt.imgsrc;
 
       if (!targ) return false;
 
@@ -1857,8 +2401,8 @@
   });
 
   // Jcrop jQuery plugin function
-  // $.fn.Jcrop = function(options,callback){{{
   $.fn.Jcrop = function(options,callback){
+    options = options || {};
 
     var first = this.eq(0).data('Jcrop');
     var args = Array.prototype.slice.call(arguments);
@@ -1890,40 +2434,426 @@
       if (exists)
         exists.setOptions(options);
 
-      // Otherwise, if it's an IMG, create a wrapper
-      else if (this.tagName == 'IMG')
+      else {
 
-        $.Jcrop.component.ImageLoader.attach(this,function(w,h){
-          var $wrapper = $t.wrap('<div />').parent();
+        if (!options.stageConstructor)
+          options.stageConstructor = $.Jcrop.stageConstructor;
 
-          $wrapper.width(w).height(h);
+        options.stageConstructor(this,options,function(stage,options){
+          var selection = options.setSelect;
+          if (selection) delete(options.setSelect);
 
-          obj = $.Jcrop.attach($wrapper,$.extend({},options,{
-            imgTarget: t
-          }));
+          var obj = $.Jcrop.attach(stage.element,options);
+
+          if (typeof stage.attach == 'function')
+            stage.attach(obj);
 
           $t.data('Jcrop',obj);
+
+          if (selection) {
+            obj.newSelection();
+            obj.setSelect(selection);
+          }
 
           if (typeof callback == 'function')
             callback.call(obj);
         });
-
-      // Or hope it's a block element, because we're attaching
-      else {
-
-        obj = $.Jcrop.attach(this,options);
-        $t.data('Jcrop',obj);
-
-        if (typeof callback == 'function')
-          callback.call(obj);
       }
 
       return this;
     });
   };
-  // }}}
+
+/* Modernizr 2.7.1 (Custom Build) | MIT & BSD
+ * Build: http://modernizr.com/download/#-csstransforms-canvas-canvastext-draganddrop-inlinesvg-svg-svgclippaths-touch-teststyles-testprop-testallprops-hasevent-prefixes-domprefixes-url_data_uri
+ */
+;
+
+var Modernizr = (function( window, document, undefined ) {
+
+    var version = '2.7.1',
+
+    Modernizr = {},
+
+
+    docElement = document.documentElement,
+
+    mod = 'modernizr',
+    modElem = document.createElement(mod),
+    mStyle = modElem.style,
+
+    inputElem  ,
+
+
+    toString = {}.toString,
+
+    prefixes = ' -webkit- -moz- -o- -ms- '.split(' '),
+
+
+
+    omPrefixes = 'Webkit Moz O ms',
+
+    cssomPrefixes = omPrefixes.split(' '),
+
+    domPrefixes = omPrefixes.toLowerCase().split(' '),
+
+    ns = {'svg': 'http://www.w3.org/2000/svg'},
+
+    tests = {},
+    inputs = {},
+    attrs = {},
+
+    classes = [],
+
+    slice = classes.slice,
+
+    featureName, 
+
+
+    injectElementWithStyles = function( rule, callback, nodes, testnames ) {
+
+      var style, ret, node, docOverflow,
+          div = document.createElement('div'),
+                body = document.body,
+                fakeBody = body || document.createElement('body');
+
+      if ( parseInt(nodes, 10) ) {
+                      while ( nodes-- ) {
+              node = document.createElement('div');
+              node.id = testnames ? testnames[nodes] : mod + (nodes + 1);
+              div.appendChild(node);
+          }
+      }
+
+                style = ['&#173;','<style id="s', mod, '">', rule, '</style>'].join('');
+      div.id = mod;
+          (body ? div : fakeBody).innerHTML += style;
+      fakeBody.appendChild(div);
+      if ( !body ) {
+                fakeBody.style.background = '';
+                fakeBody.style.overflow = 'hidden';
+          docOverflow = docElement.style.overflow;
+          docElement.style.overflow = 'hidden';
+          docElement.appendChild(fakeBody);
+      }
+
+      ret = callback(div, rule);
+        if ( !body ) {
+          fakeBody.parentNode.removeChild(fakeBody);
+          docElement.style.overflow = docOverflow;
+      } else {
+          div.parentNode.removeChild(div);
+      }
+
+      return !!ret;
+
+    },
+
+
+
+    isEventSupported = (function() {
+
+      var TAGNAMES = {
+        'select': 'input', 'change': 'input',
+        'submit': 'form', 'reset': 'form',
+        'error': 'img', 'load': 'img', 'abort': 'img'
+      };
+
+      function isEventSupported( eventName, element ) {
+
+        element = element || document.createElement(TAGNAMES[eventName] || 'div');
+        eventName = 'on' + eventName;
+
+            var isSupported = eventName in element;
+
+        if ( !isSupported ) {
+                if ( !element.setAttribute ) {
+            element = document.createElement('div');
+          }
+          if ( element.setAttribute && element.removeAttribute ) {
+            element.setAttribute(eventName, '');
+            isSupported = is(element[eventName], 'function');
+
+                    if ( !is(element[eventName], 'undefined') ) {
+              element[eventName] = undefined;
+            }
+            element.removeAttribute(eventName);
+          }
+        }
+
+        element = null;
+        return isSupported;
+      }
+      return isEventSupported;
+    })(),
+
+
+    _hasOwnProperty = ({}).hasOwnProperty, hasOwnProp;
+
+    if ( !is(_hasOwnProperty, 'undefined') && !is(_hasOwnProperty.call, 'undefined') ) {
+      hasOwnProp = function (object, property) {
+        return _hasOwnProperty.call(object, property);
+      };
+    }
+    else {
+      hasOwnProp = function (object, property) { 
+        return ((property in object) && is(object.constructor.prototype[property], 'undefined'));
+      };
+    }
+
+
+    if (!Function.prototype.bind) {
+      Function.prototype.bind = function bind(that) {
+
+        var target = this;
+
+        if (typeof target != "function") {
+            throw new TypeError();
+        }
+
+        var args = slice.call(arguments, 1),
+            bound = function () {
+
+            if (this instanceof bound) {
+
+              var F = function(){};
+              F.prototype = target.prototype;
+              var self = new F();
+
+              var result = target.apply(
+                  self,
+                  args.concat(slice.call(arguments))
+              );
+              if (Object(result) === result) {
+                  return result;
+              }
+              return self;
+
+            } else {
+
+              return target.apply(
+                  that,
+                  args.concat(slice.call(arguments))
+              );
+
+            }
+
+        };
+
+        return bound;
+      };
+    }
+
+    function setCss( str ) {
+        mStyle.cssText = str;
+    }
+
+    function setCssAll( str1, str2 ) {
+        return setCss(prefixes.join(str1 + ';') + ( str2 || '' ));
+    }
+
+    function is( obj, type ) {
+        return typeof obj === type;
+    }
+
+    function contains( str, substr ) {
+        return !!~('' + str).indexOf(substr);
+    }
+
+    function testProps( props, prefixed ) {
+        for ( var i in props ) {
+            var prop = props[i];
+            if ( !contains(prop, "-") && mStyle[prop] !== undefined ) {
+                return prefixed == 'pfx' ? prop : true;
+            }
+        }
+        return false;
+    }
+
+    function testDOMProps( props, obj, elem ) {
+        for ( var i in props ) {
+            var item = obj[props[i]];
+            if ( item !== undefined) {
+
+                            if (elem === false) return props[i];
+
+                            if (is(item, 'function')){
+                                return item.bind(elem || obj);
+                }
+
+                            return item;
+            }
+        }
+        return false;
+    }
+
+    function testPropsAll( prop, prefixed, elem ) {
+
+        var ucProp  = prop.charAt(0).toUpperCase() + prop.slice(1),
+            props   = (prop + ' ' + cssomPrefixes.join(ucProp + ' ') + ucProp).split(' ');
+
+            if(is(prefixed, "string") || is(prefixed, "undefined")) {
+          return testProps(props, prefixed);
+
+            } else {
+          props = (prop + ' ' + (domPrefixes).join(ucProp + ' ') + ucProp).split(' ');
+          return testDOMProps(props, prefixed, elem);
+        }
+    }
+
+
+
+    tests['canvas'] = function() {
+        var elem = document.createElement('canvas');
+        return !!(elem.getContext && elem.getContext('2d'));
+    };
+
+    tests['canvastext'] = function() {
+        return !!(Modernizr['canvas'] && is(document.createElement('canvas').getContext('2d').fillText, 'function'));
+    };
+    tests['touch'] = function() {
+        var bool;
+
+        if(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+          bool = true;
+        } else {
+          injectElementWithStyles(['@media (',prefixes.join('touch-enabled),('),mod,')','{#modernizr{top:9px;position:absolute}}'].join(''), function( node ) {
+            bool = node.offsetTop === 9;
+          });
+        }
+
+        return bool;
+    };
+
+    tests['draganddrop'] = function() {
+        var div = document.createElement('div');
+        return ('draggable' in div) || ('ondragstart' in div && 'ondrop' in div);
+    };
+
+
+    tests['csstransforms'] = function() {
+        return !!testPropsAll('transform');
+    };
+
+
+    tests['svg'] = function() {
+        return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
+    };
+
+    tests['inlinesvg'] = function() {
+      var div = document.createElement('div');
+      div.innerHTML = '<svg/>';
+      return (div.firstChild && div.firstChild.namespaceURI) == ns.svg;
+    };
+
+
+
+    tests['svgclippaths'] = function() {
+        return !!document.createElementNS && /SVGClipPath/.test(toString.call(document.createElementNS(ns.svg, 'clipPath')));
+    };
+
+    for ( var feature in tests ) {
+        if ( hasOwnProp(tests, feature) ) {
+                                    featureName  = feature.toLowerCase();
+            Modernizr[featureName] = tests[feature]();
+
+            classes.push((Modernizr[featureName] ? '' : 'no-') + featureName);
+        }
+    }
+
+
+
+     Modernizr.addTest = function ( feature, test ) {
+       if ( typeof feature == 'object' ) {
+         for ( var key in feature ) {
+           if ( hasOwnProp( feature, key ) ) {
+             Modernizr.addTest( key, feature[ key ] );
+           }
+         }
+       } else {
+
+         feature = feature.toLowerCase();
+
+         if ( Modernizr[feature] !== undefined ) {
+                                              return Modernizr;
+         }
+
+         test = typeof test == 'function' ? test() : test;
+
+         if (typeof enableClasses !== "undefined" && enableClasses) {
+           docElement.className += ' ' + (test ? '' : 'no-') + feature;
+         }
+         Modernizr[feature] = test;
+
+       }
+
+       return Modernizr; 
+     };
+
+
+    setCss('');
+    modElem = inputElem = null;
+
+
+    Modernizr._version      = version;
+
+    Modernizr._prefixes     = prefixes;
+    Modernizr._domPrefixes  = domPrefixes;
+    Modernizr._cssomPrefixes  = cssomPrefixes;
+
+
+    Modernizr.hasEvent      = isEventSupported;
+
+    Modernizr.testProp      = function(prop){
+        return testProps([prop]);
+    };
+
+    Modernizr.testAllProps  = testPropsAll;
+
+
+    Modernizr.testStyles    = injectElementWithStyles;
+    return Modernizr;
+
+})(window, window.document);
+// data uri test.
+// https://github.com/Modernizr/Modernizr/issues/14
+
+// This test is asynchronous. Watch out.
+
+
+// in IE7 in HTTPS this can cause a Mixed Content security popup. 
+//  github.com/Modernizr/Modernizr/issues/362
+// To avoid that you can create a new iframe and inject this.. perhaps..
+
+
+(function(){
+
+  var datauri = new Image();
+
+
+  datauri.onerror = function() {
+      Modernizr.addTest('datauri', function () { return false; });
+  };  
+  datauri.onload = function() {
+      Modernizr.addTest('datauri', function () { return (datauri.width == 1 && datauri.height == 1); });
+  };
+
+  datauri.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+
+})();
+;
 
   // Attach to jQuery object
   $.Jcrop = Jcrop;
+
+  $.Jcrop.supportsCanvas = Modernizr.canvas;
+  $.Jcrop.supportsCanvasText = Modernizr.canvastext;
+  $.Jcrop.supportsDragAndDrop = Modernizr.draganddrop;
+  $.Jcrop.supportsDataURI = Modernizr.datauri;
+  $.Jcrop.supportsSVG = Modernizr.svg;
+  $.Jcrop.supportsInlineSVG = Modernizr.inlinesvg;
+  $.Jcrop.supportsSVGClipPaths = Modernizr.svgclippaths;
+  $.Jcrop.supportsCSSTransforms = Modernizr.csstransforms;
+  $.Jcrop.supportsTouch = Modernizr.touch;
 
 })(jQuery);
