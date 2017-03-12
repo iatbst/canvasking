@@ -7,7 +7,7 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-server '52.37.1.190', user: 'deploy', roles: %w{web app db worker s3}
+server Canvasking::STAGING_PUB_IP, user: 'deploy', roles: %w{web app db worker s3}
 
 # role-based syntax
 # ==================

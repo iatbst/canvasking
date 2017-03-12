@@ -62,6 +62,10 @@ module Canvasking
     S3_REGION = "us-east-1"
   end
   
+  # EC2
+  STAGING_PUB_IP = '52.37.1.190'
+  PRODUCTION_PUB_IP = '35.164.209.22'
+  
   # Administrators
   ADMINISTRATORS = ['iatbst@gmail.com']
   
