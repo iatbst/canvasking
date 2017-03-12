@@ -476,7 +476,7 @@ class ItemsController < ApplicationController
       ss = Sidekiq::ScheduledSet::new
       job = ss.select {|j| j.jid == jid }
       job = job[0]
-      if job.reschedule(Time.now)
+      if job && job.reschedule(Time.now)
         puts "Job #{jid} Re-schedule SUCCESS !"
       else
         puts "Job #{jid} Re-schedule FAIL !"
