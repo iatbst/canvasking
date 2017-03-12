@@ -79,7 +79,7 @@ task :sync_staging_db_with_production do
   on roles(:db) do
     # copy sql dump file from prod to staging
     database_backups_path = "/home/deploy/database_backups"
-    prod_host = "ec2-52-40-234-37.us-west-2.compute.amazonaws.com"
+    prod_host = Canvasking::PRODUCTION_PUB_IP
     sql_file = "canvasking_production_current.sql"
     scp_cmd = "scp deploy@#{prod_host}:#{database_backups_path}/#{sql_file} #{database_backups_path}"
     execute "#{scp_cmd}"
