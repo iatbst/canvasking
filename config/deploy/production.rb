@@ -64,7 +64,7 @@ set :rails_env, :production
 desc "Backup production db before deployment"
 task :backup_production_db do
   on roles(:db) do
-    # copy sql dump file from prod to staging
+    # store latest db in backups folder
     database_backups_path = "/home/deploy/database_backups"
     dbname = "canvasking_production"
     timestamp = Time.now.to_s.split(' ')[0..1].join('-').split(':').join('-')
