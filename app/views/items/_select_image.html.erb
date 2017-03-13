@@ -14,6 +14,11 @@
 }
 	
 </style>
+
+<div id="_progress">
+    <div class="bar" style="width: 0%;"></div>
+</div>
+
 <div class="row box" id="select_image_box" style="<% if hide_image_upload_section?(@new, @show, @save_fail, @item) %>display:none<% end %>">
 	<div class="row">
 		<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px" id="image_upload_label">
@@ -65,6 +70,7 @@
 </div>
 
 <script>
+var progress = new LoadingOverlayProgress();
 
 $(function () {
     $('#fileupload').fileupload({
@@ -88,10 +94,23 @@ $(function () {
 			$.LoadingOverlay("hide");
         },
 
+	    progress: function (e, data) {
+	        var count = parseInt(data.loaded / data.total * 100, 10);
+	        //console.log(count);
+	        //alert(count + '_' + data.loaded + '_' + data.total);
+	        progress.Update(count);
+	        //debugger;
+	        $('#_progress .bar').css(
+            	'width',
+            	count + '%'
+        	);
+	    },
 	    
         start: function (e, data) {
         	$('body').addClass('stop-scrolling');
-            $.LoadingOverlay("show");
+            $.LoadingOverlay("show", {
+    			custom  : progress.Init()
+			});
         }      
     });
 });
