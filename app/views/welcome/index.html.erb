@@ -8,7 +8,7 @@
 <!-- how it works section -->
 <%= render 'how_it_works' %>
 
-<%= render 'transform_banner' %>
+<%= render 'quality_banner' %>
 
 <!-- product section -->
 <%= render 'products' %>
@@ -19,18 +19,7 @@
 <%= render 'play_ground' %>
 
 <!-- get started section -->
-<section id="get_started" class="parallax-section" style="height: 300px">
-	<div class="container">
-		<div class="row" align="center" style="margin-top: 50px">
-			<h1>Ready to build your own art ?</h1>
-		</div>
-		<div class="row" align="center">
-			<%= button_to 'GET START', new_item_path, class:"btn btn-primary btn-lg", method:"get", id:"get_started_button" %>
-		</div>
-	</div>
-</section>
-
-<!-- footer section -->
+<%= render 'last_banner' %>
 
 
 <!-- copyright section -->

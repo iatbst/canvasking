@@ -1,0 +1,55 @@
+<style>
+
+#last_banner {
+  background: url('/welcome/last_banner1.jpg') 100% 0 repeat-y;
+  -webkit-background-size: cover;
+  
+  background-position: center;
+  color: black;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+ 
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 350px;
+  text-align: center;
+}
+
+#get_started_button {
+
+
+	  
+  width: 400px;
+  height: 50px;
+  border-color: #ef9223;
+  color: #ef9223;
+  border-width: 3px;
+  border-style: solid;
+  background: transparent;
+  border-radius: 25px;
+  margin-top: 50px;
+}
+
+
+</style>
+
+<section id="last_banner" class="parallax-section">
+	<div class="container">
+		<div class="row" align="center" style="margin-top: 50px">
+			<h1 style="color: white">Ready to build your own art ?</h1>
+		</div>
+		<div class="row" align="center">
+			<%= button_to 'GET START', new_item_path, class:"btn btn-primary btn-lg", method:"get", id:"get_started_button" %>
+		</div>
+	</div>
+</section>
+
+<script>
+
+		$(".twentytwenty-container-bridge").twentytwenty();
+		$('.twentytwenty-overlay').hide();
+		$('.twentytwenty-handle').hide();
+</script>
