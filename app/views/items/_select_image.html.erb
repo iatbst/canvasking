@@ -93,7 +93,9 @@ $(function () {
 			$('#crop_modal').modal('show');
 			$.LoadingOverlay("hide");
         },
-
+       
+		progressInterval: 10,
+		
 	    progress: function (e, data) {
 	        var count = parseInt(data.loaded / data.total * 100, 10);
 	        //console.log(count);
