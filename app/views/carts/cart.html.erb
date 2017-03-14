@@ -54,22 +54,31 @@
 	.progress_text {
 		margin-top: 50px;
 	}
+	
+	.order_button {
+		width: 300px;
+	}
+	
+	.order_button:hover {
+		background: #EF9223;
+		border-color: #EF9223;
+	}
 </style>
 
 <%= render "layouts/navbar" %>
 
 <%= render 'notes' %>
 
-<div class="container" style="margin-top:50px; margin-bottom: 100px" >
+<div class="container" style="margin-top:50px; margin-bottom: 105px" >
 
 	
 
 		<% if @cart.items.count == 0 %>
 		<div align="center" style="margin-top: 20px">
 			<%= image_tag '/cart/empty_cart.png' %>
-			<h3>Oops...Your Cart is still empty. Let's fill it ^_^</h3>
+			<h3 style="font-weight: 200">Oops...Your Cart is still empty. Let's fill it ^_^</h3>
 			<br />
-			<%= button_to 'Get Started', new_item_path, method: :get, class:"btn btn-primary btn-lg blue_button" %>
+			<%= button_to 'Get Started', new_item_path, method: :get, class:"btn btn-primary btn-lg order_button" %>
 		</div>
 		<% else %>
 
