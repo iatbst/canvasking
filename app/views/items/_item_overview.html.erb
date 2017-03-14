@@ -4,7 +4,7 @@
 		<% if image_is_uploaded(@item) %>
 				<%= image_tag get_image_url(@item, "overview"), class: "overview_image image_shadow_in_item #{add_frame_and_mat_class(@item, 'item')}", id: "overview_image", onerror: "imgError(this);"%>
 		<% else %>
-			<i class="fa fa-picture-o " aria-hidden="true" style="font-size: 300px; color: lightgrey"></i>
+			<i class="fa fa-picture-o " aria-hidden="true" style="font-size: 300px; color: lightgrey; opacity: 0.5"></i>
 		<% end %>
 		<div>
 			<div class="triptych_1" >			

@@ -19,3 +19,37 @@
 #product {
     text-transform:capitalize;
 }
+
+/* home section */
+#price_header {
+  margin-top: -20px;
+  background: url('/pricing/price_header_pic.jpg') 100%;
+  opacity: 0.4;
+  -webkit-background-size: cover;
+  
+  background-position: center;
+  color: black;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+ 
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 45vh;
+ 
+}
+#price_header h1 {
+  font-size: 20px;
+  letter-spacing: 8px;
+  font-style: normal;
+  padding-top: 10px;
+}
+
+#price_header_image {
+  width: auto;
+  height: auto;
+  max-width: 300px;
+  max-height: 300px;
+}
