@@ -55,7 +55,7 @@ set :puma_worker_timeout, nil
 set :puma_init_active_record, true
 set :puma_preload_app, false
 
-# Restart sidekiq after deployment
+# Start sidekiq after deployment if not running
 task :start_sidekiq do
   on roles(:worker) do
     status = capture 'service sidekiq status'
