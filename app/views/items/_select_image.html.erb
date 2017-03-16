@@ -18,13 +18,19 @@
   border-color: #EF9223;
   color: white;
 }
+
+i.fa-facebook-square:hover {
+  color: #3b5998;
+  font-size: 45px;
+}
+
 </style>
 
 
 
 <div class="row box" id="select_image_box" style="<% if hide_image_upload_section?(@new, @show, @save_fail, @item) %>display:none<% end %>">
 	<div class="row">
-		<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px" id="image_upload_label">
+		<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; font-weight: 200" id="image_upload_label">
 			<% if @show_image_wizard_arrow %>
 				<span class="glyphicon glyphicon-play blink" id="select_image_arrow">&nbsp;</span>
 			<% end %>
@@ -45,7 +51,7 @@
 			<%= hidden_field_tag :image_upload, true %>
 			<span class="btn btn-default fileinput-button orange_button_round">
 				<span class="glyphicon glyphicon-open"></span>
-				<span id="upload_button_label">Upload From Comupter</span>
+				<span id="upload_button_label" style="font-weight: 400">Upload From Comupter</span>
 				<input id="fileupload" type="file" name="item[image]" data-url="/items/<%= @item.id %>" multiple>
 			</span>
 		</form>
@@ -53,17 +59,16 @@
 		</div>
 		
 		<div class="col-md-3" align="left" style="margin-left: 10px;margin-top: 0px">
-			<h4 class="no_bold" style="margin-top: 10px">or from </h4>
+			<h4 class="no_bold" style="margin-top: 10px; font-weight: 300">or from </h4>
 		</div>
 		
 		<!--  Upload Photo From Facebook/Instagram -->
 		<div class="col-md-1" align="center" style="margin-right: 10px; margin-top: 0px; cursor: pointer">
-			<%= image_tag '/items/facebook_icon.png', class: "facebook_icon", id: "facebook_upload_button", value: @item.id %>
-			
+			<i class="fa fa-facebook-square" aria-hidden="true" style="font-size: 40px; color: lightgrey" id="facebook_upload_button" value="<%= @item.id %>"></i>
 		</div>
 		<div class="col-md-1" align="center" style="margin-top: 0px; cursor: pointer">
 			
-			<%= image_tag '/items/instagram_icon.png', class: "facebook_icon", id: "instagram_upload_button", value: @item.id %>
+			<i class="fa fa-instagram" aria-hidden="true" style="font-size: 42px; color: lightgrey" id="instagram_upload_button" value="<%= @item.id %>"></i>
 		</div>
 		
 		
@@ -116,4 +121,24 @@ $(function () {
         }      
     });
 });
+
+
+
+$(document).on('mouseenter', ".fa-facebook-square", function() { 
+    $(this).css('color', '#3b5998');
+    $(this).css('font-size', '42px');
+}).on('mouseleave', ".fa-facebook-square", function() { 
+    $(this).css('color', 'lightgrey');
+    $(this).css('font-size', '40px');
+});
+
+$(document).on('mouseenter', ".fa-instagram", function() { 
+    $(this).css('color', '#ef9223');
+    $(this).css('font-size', '43px');
+}).on('mouseleave', ".fa-instagram", function() { 
+    $(this).css('color', 'lightgrey');
+    $(this).css('font-size', '42px');
+});
+
+
 </script>
