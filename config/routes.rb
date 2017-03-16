@@ -58,6 +58,9 @@ Rails.application.routes.draw do
     mount ExceptionLogger::Engine => "/exception_logger"
   end
 
+  # Controller: about
+  get 'about/privacy_policy'
+  get 'about/terms_of_use'
   
   # Example resource route with options:
   #   resources :products do
