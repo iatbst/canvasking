@@ -7,36 +7,39 @@
 		</h4>	
 	</div>
 	
-	<div class="row" style="margin-bottom: 20px">
+	<div class="row" style="margin-bottom: 0px">
 		<div class="col-md-5">
 			
 				<p class="no_bold" style="margin-left: 25px; margin-bottom: 50px; margin-top: 30px">
 					We provide 10+ art filters to make your photos look like Van Gogh's or Picasso's paintings. Give it a try, You will be supprised !
 				</p>
-			
-			<div class="row">
-				
-				<%= button_tag "SUPPRISE ME !", :type => 'button', id: 'art_filter_apply_button', style: 'margin-left: 40px; width: 250px;', :class => "btn btn-primary", :onclick => "location.href = '#{art_filter_item_path(@item)}'" %>
-				
-					<br /><br />
-				<%= button_tag "NOT THIS TIME", :type => 'button', style: 'margin-left: 40px; width: 250px; color: white; background-color: grey', :class => "btn btn-primary", :onclick => "not_interested_for_art_filter();" , id: "not_interested_button"%>
-				
-				
 	
-			
-			</div>
 		</div>
 		
 		<div class="col-md-7" align="center">
 			
-			<div class="twentytwenty-container" style="margin-left: 40px; margin-top: 30px">
+			<div class="twentytwenty-container" style="margin-left: 40px; margin-top: 10px">
 				<%= image_tag '/welcome/sunflower_after.jpg', id:"image_1", class:"thumb_image " %>
 				<%= image_tag '/welcome/sunflower_before.jpg', class:"thumb_image"%>
 			</div>
 		</div>
 	
 	</div>
+
+			<div class="row" style="margin-bottom: 20px">
+				
+				<div class="col-md-6">
+					<%= button_tag raw("<i class=\"fa fa-paint-brush\" aria-hidden=\"true\" style=\"font-size: 20px; font-weight: bolder\">&nbspChoose Art Filter</i>"), :type => 'button', id: 'art_filter_apply_button', style: 'margin-left: 40px; width: 220px;', :class => "btn btn-primary", :onclick => "location.href = '#{art_filter_item_path(@item)}'" %>
+				</div>
+				
+				<div class="col-md-6">
+					<%= button_tag raw("<i class=\"fa\" aria-hidden=\"true\" style=\"font-size: 20px; font-weight: bolder\">&nbspSkip Filter</i>"), :type => 'button', style: 'margin-left: 40px; width: 220px; color: white; background-color: lightgrey; margin-left: 10px', :class => "btn btn-primary", :onclick => "not_interested_for_art_filter();" , id: "not_interested_button"%>
+				</div>
+				
 	
+			
+			</div>
+				
 
 </div>
 
