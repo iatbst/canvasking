@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "agarienforcement@gmail.com"
+  default from: ENV['order_email']
   layout 'mailer'
 end
