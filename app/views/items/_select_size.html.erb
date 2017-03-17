@@ -1,6 +1,6 @@
 <div class="row box" id="size_price_options" style="<% if @item.size %>border-color: black;<% end %>margin-top: 30px;<% if hide_size_section?(@edit, @show, @save_fail, params, @item) %>display: none<% end %>">
 	<div class="row">
-		<h4 class="no_bold" style="margin-left: 70px; margin-top: 20px; margin-bottom: 20px"> 
+		<h4 class="no_bold" style="margin-left: 70px; margin-top: 20px; margin-bottom: 20px; font-weight: 300"> 
 			
 			<span class="glyphicon glyphicon-play blink" id="select_size_arrow" style="display: none"></span>
 			<span style="<% if @item.size.nil? %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_size_done"></span>

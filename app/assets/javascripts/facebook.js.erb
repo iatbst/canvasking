@@ -35,7 +35,7 @@ $(window).on('load', function(){
 				$('#albums').append('<button class="btn btn-default btn-lg facebook_album_button" \
 		    						data-toggle="collapse"	\
 		    						data-target="#collapse_photos_of_you"	\
-		    						style="width: 100%">Photos Of You ( ' + photos.data.length + ' ) ' + '</button>'); 
+		    						style="width: 100%;text-align:left"><i class="fa fa-folder-o" style="font-size: 25px" aria-hidden="true"></i> &nbsp;&nbsp;<span style="margin-left: 350px">Photos Of You ( ' + photos.data.length + ' ) </span>' + '</button>'); 
 		    						 			
  				$('#albums').append('<div class="collapse" id="collapse_photos_of_you"><div id="photos_of_you" class="container"></div></div>');
 		    	  
@@ -81,7 +81,7 @@ $(window).on('load', function(){
 		    $('#albums').append('<button class="btn btn-default btn-lg facebook_album_button" \
 		    						data-toggle="collapse"	\
 		    						data-target="#collapse_' + album.id + '"	\
-		    						style="width: 100%">' + album.name + ' ( ' + album.count + ' ) ' + '</button>');
+		    						style="width: 100%; text-align:left"><i class="fa fa-folder-o" style="font-size: 25px; margin-left: 0px" aria-hidden="true"></i> &nbsp;&nbsp;<span style="margin-left: 350px">' + album.name + ' ( ' + album.count + ' )</span> ' + '</button>');
 		    	
 		    	$('#albums').append('<div class="collapse" id="collapse_' + album.id + '"><div id="' + album.id +'" class="container"></div></div>');			
 			
@@ -137,7 +137,12 @@ $(window).on('load', function(){
 	}
 	
 	$('body').on('click', '.facebook_album_button', function(){
+		var this_status = $(this).attr('aria-expanded');
 		$('.collapse').collapse('hide');
+		$('i.fa-folder-open-o').addClass('fa-folder-o').removeClass('fa-folder-open-o');
+		if ( this_status == "false" || this_status == null ) {
+			$(this).find('i.fa-folder-o').addClass('fa-folder-open-o').removeClass('fa-folder-o');
+		}			
 	});
 	
 	$('body').on('click','img.facebook_image_width, img.facebook_image_height', function() {

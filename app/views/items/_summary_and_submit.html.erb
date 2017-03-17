@@ -24,7 +24,7 @@
 }
 </style>
 
-<div class="row" id="ready_to_cart_banner" style="margin-top: 40px; margin-bottom: 40px; margin-left: 5px; display: none">
+<div class="row" id="ready_to_cart_banner_" style="margin-top: 40px; margin-bottom: 40px; margin-left: 5px; display: none">
 	<div class="col-md-1" align="center">
 		<img src="/order/order_complete.png" id="order_complete_icon"/>
 	</div>
@@ -36,18 +36,19 @@
 	</div>
 </div>
 
-<div class="row box" id="summary_and_submit" style="<% if item_in_cart?(@item) %> border-color: black;<% end %>margin-top: 30px; height: 370px">
+<div class="row box" id="summary_and_submit" style="<% if item_in_cart?(@item) %> border-color: black;<% end %>margin-top: 30px; height: 390px">
 	<div style="<% if !item_in_cart?(@item) %>opacity: 0.4;<% end %>" id="summary_and_submit_div">
 	<div class="row" align="center">
-		<h3>
+		<h3 style="font-weight: 600; margin-top: 40px">
 			SUMMARY
 		</h3>
 	</div>
-	<hr style="width: 70%; border-color: black"/>
+	<hr style="width: 70%; border-color: black; margin-top: 0px"/>
 	<div class="row" style="height:120px; margin-top: 20px" >
 
 		<div class="col-md-5 col-md-offset-4">
 			<br />
+			<div style="margin-left: 25px">
 			<h4 class="no_bold" id="product_choice"> 
 				<% if !@item.product.nil? %>
 					<%= "#{@item.product.name.capitalize}" %>
@@ -103,7 +104,7 @@
 			<h4 class="no_bold"> 
 				Subtotal: <b id="price_choice"><%= "$#{@item.price}" %></b>
 			</h4>		
-		
+			</div>
 
 		</div>
 	</div>
@@ -117,7 +118,10 @@
 					<%= f.submit 'SAVE CHANGES', class: "btn btn-primary btn-lg orange_button", style:"width: 60%"%>
 				<% else %>
 					<%= hidden_field_tag :add_to_cart, true %>
-					<%= f.submit 'ADD TO CART', class: "btn btn-primary btn-lg grey_button", style:"width: 60%", disabled: "disabled", id: "add_to_cart_button"%>
+					<%= f.button :submit, class: "btn btn-primary btn-lg grey_button", style:"width: 60%", disabled: "disabled", id: "add_to_cart_button" do %>
+						ADD TO CART &nbsp; &nbsp;<span class="glyphicon glyphicon-shopping-cart"></span>
+					<% end %>
+					
 				<% end %>
 			</div>
 	

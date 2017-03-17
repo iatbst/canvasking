@@ -21,12 +21,16 @@
 			$('#size_compare_image').attr('src', '<%= get_image_url(@item, "overview", {"no_effect" => true}) %>');
 			$('#select_filter_done_collapse').hide();
 			$('#select_filter_skip_collapse').show();
+			$('#art_effect_applied').hide();
+			$('#no_art_effects').show();
 		} else {
 			//use art filter
 			$('#overview_image').attr('src', '<%= get_image_url(@item, "overview", {"art_effect" => true}) %>');
 			$('#size_compare_image').attr('src', '<%= get_image_url(@item, "overview", {"art_effect" => true}) %>')
 			$('#select_filter_skip_collapse').hide();
 			$('#select_filter_done_collapse').show();
+			$('#art_effect_applied').show();
+			$('#no_art_effects').hide();
 		}
 	});
 	
@@ -83,7 +87,7 @@
 		$('#frame_options').hide();
 		//$("html, body").animate({ scrollTop: $(document).height() }, 2000);
 		//$('#size_price_options').fadeIn(1000);
-		$('#product_done_label').text('Canvas');
+		$('#product_done_label').text('CANVAS');
 
 		//remove frame and mat
 		$('#overview_image').attr('class','overview_image image_shadow_in_item');	
@@ -142,7 +146,7 @@
 		}
 		$('#frame_options').hide();
 		//$('#size_price_options').show();
-		$('#product_done_label').text('Split Canvas');
+		$('#product_done_label').text('SPLIT CANVAS');
 		
 		//remove frame and mat
 		$('#overview_image').attr('class','overview_image image_shadow_in_item');
@@ -216,7 +220,7 @@
 		}
 		
 		//$('#size_price_options').show();
-		$('#product_done_label').text('Framed Print');
+		$('#product_done_label').text('FRAMED PRINT');
 		
 		//update image frame, default is black frame border if none is checked
 		if($('#frame_white_wood').is(':checked')){
@@ -546,4 +550,8 @@
 		$('#note').removeAttr('id');
 	}
 
+	$('#not_interested_button').click(function (){
+		$('#no_art_effects').show();
+		$('#art_effect_applied').hide();
+	});
 </script>

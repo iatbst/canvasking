@@ -220,6 +220,18 @@ label > input.radio_hide {/* HIDE RADIO */
     padding: 5px;
   }
 
+  label:hover h5 {/* (RADIO CHECKED) IMAGE STYLES */
+    color: #EF9223;
+  }
+  
+  label:checked h5 {
+    color: #EF9223;
+  }
+
+  label > input:checked + h5 {
+    color: #EF9223;
+  }
+  
   label > input:checked + img {/* (RADIO CHECKED) IMAGE STYLES */
     border: 2px solid #ef9223;
     border-radius: 5px;
@@ -235,4 +247,10 @@ label > input.radio_hide {/* HIDE RADIO */
   color: black;
   border-radius: 0px;
   font-weight: bold;
+}
+
+
+.facebook_image_grid:hover,
+.instagram_image_grid:hover {
+  border: 2px solid #ef9223; 
 }
