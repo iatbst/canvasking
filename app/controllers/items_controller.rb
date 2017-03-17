@@ -158,6 +158,8 @@ class ItemsController < ApplicationController
       @item.update_column('jobs', @item.jobs)
       
       @size_price, @size_price_str = prepare_size_price(@item)
+      @art_effects = true
+      
       render 'new'
                        
     # Item added to cart or edit items in cart

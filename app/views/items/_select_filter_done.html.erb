@@ -1,12 +1,21 @@
 <div class="row box" style="border-color: black;<% if hide_filter_done_section?(@new, params) %>display:none<% end %>; margin-top: 30px" id="select_filter_collapse_box">
 				<div class="col-md-6" align="left">
-					<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px" id="art_effect_text">
+					<h4 class="no_bold" style="margin-left: 40px; margin-top: 20px; margin-bottom: 20px;font-weight: 300;" id="art_effect_text">
 						<span style="<% if !@item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_filter_done_collapse"></span>
 						<span style="color:#ef9223;<% if @item.art_filter %>display: none<% end %>" class="glyphicon glyphicon-ban-circle" id="select_filter_skip_collapse"></span>
-						&nbsp;&nbsp;Apply Art Filter
+						&nbsp;
+						
+							<span id="art_effect_applied" style="<% if !@item.art_filter %>display: none<% end %>">
+								ART EFFECT APPLIED
+							</span>
+					
+							<span id="no_art_effects" style="<% if @item.art_filter %>display: none<% end %>">
+								NO ART EFFECTS
+							</span>
+						
 					</h4>
 						<% if art_image_is_uploaded(@item) && @item.art_image_tmp_paths['new_image_uploaded'].nil? %>
-						<label class="no_bold" style="margin-left: 40px;">
+						<label class="no_bold" style="margin-left: 40px; color: grey; font-weight: 200">
 							<% if (!@item.art_image.file.nil? || !@item.art_image_tmp_paths.empty?) && @item.art_image_tmp_paths['new_image_uploaded'].nil? %>
 								SKIP ART EFFECTS
 								<%= f.check_box :art_filter, {id: "art_filter_checkbox", }, false, true %>	
