@@ -1,6 +1,6 @@
 <p>
 Hello <%= @user.name %>,<br /><br />
-Thank you for your order from CANVASKING. Once your package ships we will send an email with a link to track your order. You can check the status of your order by <u><%= link_to 'logging into your account', root_url + order_path(@order) %></u>. If you have any questions about your order please contact us at support@canvasking.com or call us Monday - Friday, 8am - 5pm EDT.
+Thank you for your order from MagicPhotoPrints.Com. Once your package ships we will send an email with a link to track your order. You can check the status of your order by <u><%= link_to 'logging into your account', root_url + order_path(@order) %></u>. If you have any questions about your order please contact us at <%= ENV['support_email'] %>.
 <br /><br /> Your order confirmation is below. Thank you again for your business.<br />
 </p>
 

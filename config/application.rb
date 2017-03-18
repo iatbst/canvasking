@@ -47,8 +47,8 @@ module Canvasking
   
   
   # EMail
-  GMAIL_TEST_USER = 'agarienforcement@gmail.com'
-  GAMIL_TEST_USER_PW = 'agarienforce'
+  # GMAIL_TEST_USER = 'agarienforcement@gmail.com'
+  # GAMIL_TEST_USER_PW = 'agarienforce'
   
   # S3 buckets
   if Rails.env == "development"

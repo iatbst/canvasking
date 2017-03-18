@@ -74,7 +74,7 @@ class OrdersController < ApplicationController
 
         # Empty Cart !
         clear_cart
-        
+            
         # Send out order confirm email
         OrderMailer.order_confirm(current_user, @order).deliver_later
       
