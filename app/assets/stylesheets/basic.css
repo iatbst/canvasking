@@ -280,3 +280,9 @@ span.form_error {
 .image_frame_mat_in_email {
   padding: 15px;
 }
+
+
+html, body {
+  height: 100%;
+}
+
