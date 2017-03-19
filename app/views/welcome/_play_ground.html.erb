@@ -62,11 +62,13 @@
  
 }
 
+
+
 </style>
 
 
 <section id="play" class="parallax-section">
-	<div class="container" style="height: 820px">
+	<div class="contain" style="height: 750px">
 		<div class="row" align="center" style="margin-top: 50px">
 			<h4 style="font-weight: bolder; color: grey ">
 				PLAY AROUND WITH OUR PHOTO ART FILTERS
@@ -93,7 +95,7 @@
 			</div>
 			
 			<!-- Art Filters -->
-			<div class="col-md-6" align="center" style="margin-top: 25px">
+			<div class="col-md-6" align="center" style="margin-top: 25px; margin-left: -50px">
 				
 				<div class=row>
 					<h4 style="margin-left: 10px; color: grey;">Choose Art Style</h4>
@@ -103,79 +105,11 @@
 				<%= form_for :item, :html=> { id: 'order_form', class: 'edit_item'} do |f| %>
 				
 				<input type="hidden" name="_method" value="patch" />
-				<!-- 1 row -->
-				<div class="row" style="margin-top: 0px">
-					<div class="col-md-4">
-						<label>
-							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;"%>
-							<%= image_tag '/items/no_effects.jpg', size: "170x113", class: "clickable", id: "no_effects" %>
-						</label>
-					</div>
-					<div class="col-md-4">
-						<label>
-							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_LnL71DkK" %>
-							<%= image_tag '/items/abstract-thumb.jpg', size: "170x113", class: "style_option clickable", id: "LnL71DkK" %>
-							<span class="glyphicon glyphicon-heart-empty" id="LnL71DkK_chosen"></span>
-						</label>
-					</div>
-					<div class="col-md-4">
-						<label>
-							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_2kRl49ZW" %>
-							<%= image_tag '/items/expressionist-thumb.jpg', size: "170x113", class: "style_option clickable", id: "2kRl49ZW" %>
-							<span class="glyphicon glyphicon-heart-empty" id="2kRl49ZW_chosen" ></span>
-						</label>
-					</div>
-				</div>
-				
-				<!-- 2 row -->
-				<div class="row" style="margin-top: 20px">
-					<div class="col-md-4">
-						<label>
-							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_LnL7j7kK" %>
-							<%= image_tag '/items/nature-patterns-thumb.jpg', size: "170x113", class: "style_option clickable", id: "LnL7j7kK" %>
-							<span class="glyphicon glyphicon-heart-empty" id="LnL7j7kK_chosen"></span>
-						</label>
-					</div>
-					<div class="col-md-4">
-						<label>
-							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_oEG3P0ER" %>
-							<%= image_tag '/items/oil-painting-thumb.jpg', size: "170x113", class: "style_option clickable", id: "oEG3P0ER" %>
-							<span class="glyphicon glyphicon-heart-empty" id="oEG3P0ER_chosen"></span>
-						</label>
-					</div>
-					<div class="col-md-4">
-						<label>
-							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_zZP0evZ0" %>
-							<%= image_tag '/items/engraving-thumb.jpg', size: "170x113", class: "style_option clickable", id: "zZP0evZ0" %>
-							<span class="glyphicon glyphicon-heart-empty" id="zZP0evZ0_chosen"></span>
-						</label>
-					</div>
-				</div>
-	
-				<!-- 3 row -->
-				<div class="row" style="margin-top: 20px">
-					<div class="col-md-4">
-						<label>
-							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_yE72lBZm" %>
-							<%= image_tag '/items/composition_thumb_web.jpg', size: "170x113", class: "style_option clickable", id: "yE72lBZm" %>
-							<span class="glyphicon glyphicon-heart-empty" id="yE72lBZm_chosen"></span>
-						</label>
-					</div>
-					<div class="col-md-4">
-						<label>
-							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_gZDA63Ex" %>
-							<%= image_tag '/items/pseudo_thumb_web.jpg', size: "170x113", class: "style_option clickable", id: "gZDA63Ex" %>
-							<span class="glyphicon glyphicon-heart-empty" id="gZDA63Ex_chosen"></span>
-						</label>
-					</div>
-					<div class="col-md-4">
-						<label>
-							<%= f.radio_button :somatic_url, "#", style: "visibility: hidden;", id:"radio_zZP0RvZ0" %>
-							<%= image_tag '/items/candy_thumb_web.jpg', size: "170x113", class: "style_option clickable", id: "zZP0RvZ0" %>
-							<span class="glyphicon glyphicon-heart-empty" id="zZP0RvZ0_chosen"></span>
-						</label>
-					</div>
-				</div>
+
+				<!-- Art Effects Carousel -->
+				<%= render partial: 'art_filters_carousel',  locals:{f: f} %>
+		
+			
 
 				<!-- 4 row -->
 				<%= hidden_field_tag :image_h, 1, id: "image_h" %>
@@ -221,6 +155,7 @@ $(function () {
  			$('#test_image').removeClass('test_image');
  			$('#test_image').addClass('loading_icon');
  			$('#choose_another_image').hide();
+ 			$('#use_this_style').hide();
     	},
 
     	
@@ -289,7 +224,6 @@ $(function () {
 
 	function choose_another_image(){
 		$('#fileupload').click();
-		$('#use_this_style').hide();
 		$('.glyphicon-heart-empty').hide();
 	}
 
