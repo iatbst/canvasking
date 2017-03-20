@@ -17,7 +17,7 @@
 					<%= h %>
 				</td>
 				<% @width_list.each do |w| %>
-					<td style="width: 100%">
+					<td style="width: 100%; <% if Canvasking::CANVAS_BASE_PRICES.has_key?("#{h}x#{w}") || Canvasking::CANVAS_BASE_PRICES.has_key?("#{w}x#{h}")%>background: lightyellow;<% end %>">
 						<% size = "#{h}\\\"x#{w}\\\""%>
 						<span style="color: grey">
 							<%= "#{h}x#{w}"%>

@@ -74,4 +74,36 @@ module Canvasking
   TAOBAO_SHIPPING_DETAIL_URL = 'https://detail.i56.taobao.com/trace/trace_detail.htm'
   TAOBAO_ORDER_QUERY_INTERVAL = 3600
   ORDER_CLOSED_WAITING_TIME = 3600*24*30 # wait 30 days after customer received product, before marking order status to CLOSED
+
+  # Product Base Prices
+  # - Currency: RMB
+  # - Canvas price: https://item.taobao.com/item.htm?spm=a1z10.5-c.w4002-9476290978.51.xWbvhX&id=525855989381
+  CANVAS_BASE_PRICES = {
+      '12x12' => 17.50,
+      '12x16' => 23.10,
+      '12x24' => 35.00,
+      '12x36' => 47.60,
+      '16x16' => 30.80,
+      '16x20' => 39.20,
+      '16x24' => 42.00,
+      '16x32' => 52.50,
+      '20x20' => 43.40,
+      '20x24' => 52.50,
+      '20x28' => 56.00,
+      '20x32' => 64.40,
+      '20x36' => 72.10,
+      '20x40' => 87.50,
+      '24x24' => 58.10,
+      '24x28' => 67.20,
+      '24x32' => 77.00,
+      '24x36' => 94.50,
+      '24x40' => 105.00,
+      '28x28' => 78.40,
+      '28x36' => 109.90,
+      '28x40' => 137.20,
+      '32x32' => 112.00,
+      '32x40' => 156.80,    
+   }
+    
+    
 end
