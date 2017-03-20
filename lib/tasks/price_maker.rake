@@ -91,6 +91,7 @@ namespace :price_maker do
           
           # Final price
           price *= 1.5
+          
           pricing_obj[product][size] = price.round(2)
           w += 2
         end
