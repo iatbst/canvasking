@@ -296,7 +296,7 @@
 		$('#attr1_choice').text('1.5" deep canvas wrap');
 		$('#final_price').text('$' + canvas_depth_1_5_price);
 		$('#attr1_price').text( '$' + canvas_depth_1_5_add_price);
-		$('#select_depth_price').text('( + $' + canvas_depth_1_5_add_price + ' )');
+		$('#select_depth_price').text('( $' + canvas_depth_1_5_add_price + ' )');
 		// Clear Frame Options
 		clear_canvas_frame();
 		// Clear label color
@@ -354,7 +354,7 @@
 		$('#attr2_choice').text('Black Outer Frame');
 		$('#final_price').text('$' + canvas_frame_price);
 		$('#attr2_price').text( '$' + canvas_frame_add_price);
-		$('#select_outer_frame_price').text('( + $' + canvas_frame_add_price + ' )');
+		$('#select_outer_frame_price').text('( $' + canvas_frame_add_price + ' )');
 		// Clear Depth Options
 		clear_canvas_depth();
 		// Clear label color
@@ -366,7 +366,7 @@
 		$('#attr2_choice').text('White Outer Frame');
 		$('#final_price').text('$' + canvas_frame_price);
 		$('#attr2_price').text( '$' + canvas_frame_add_price);
-		$('#select_outer_frame_price').text('( + $' + canvas_frame_add_price + ' )');
+		$('#select_outer_frame_price').text('( $' + canvas_frame_add_price + ' )');
 		// Clear Depth Options
 		clear_canvas_depth();
 		// Clear label color
@@ -378,7 +378,7 @@
 		$('#attr2_choice').text('Brown Outer Frame');
 		$('#final_price').text('$' + canvas_frame_price);
 		$('#attr2_price').text( '$' + canvas_frame_add_price);
-		$('#select_outer_frame_price').text('( + $' + canvas_frame_add_price + ' )');
+		$('#select_outer_frame_price').text('( $' + canvas_frame_add_price + ' )');
 		// Clear Depth Options
 		clear_canvas_depth();
 		// Clear label color
@@ -582,13 +582,13 @@
 					
 				}
 				if ($('#depth_1_5').is(':checked')){
-					$('#select_depth_price').text('( + $' + canvas_depth_1_5_add_price + ' )');
+					$('#select_depth_price').text('( $' + canvas_depth_1_5_add_price + ' )');
 					$('#attr1_price').text( '$' + canvas_depth_1_5_add_price);
 					$('#final_price').text('$' + canvas_depth_1_5_price);
 				}
 				
 				if ($('#canvas_frame_black').is(':checked') || $('#canvas_frame_white').is(':checked') || $('#canvas_frame_brown').is(':checked')){
-					$('#select_outer_frame_price').text('( + $' + canvas_frame_add_price + ' )');
+					$('#select_outer_frame_price').text('( $' + canvas_frame_add_price + ' )');
 					$('#attr2_price').text( '$' + canvas_frame_add_price);
 					$('#final_price').text('$' + canvas_frame_price);
 				}
