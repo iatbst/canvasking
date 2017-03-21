@@ -88,11 +88,8 @@
 			$('#item_size').append(option);			
 		}
 		//update option section
-		if (is_canvas_depth_checked() || is_canvas_frame_checked()){
-			$('#canvas_options').show();
-		} else {
-			$('#section_placeholder_options').show();
-		}
+		$('#section_placeholder_options').show();
+		
 		
 		$('#frame_options').hide();
 		//$("html, body").animate({ scrollTop: $(document).height() }, 2000);
@@ -454,7 +451,33 @@
 			$('#size_price_options').fadeIn(1000);
 			$('#select_product_collapse_box').show();
 			$('#select_product_box').hide();
+			
 		});
+
+		$('#product_single_canvas_radio').click(function (){
+		    clear_canvas_options();
+		});
+		
+		function clear_canvas_options(){
+			$('#select_size_price').text('');
+			$('#select_depth_price').text('');
+			$('#select_outer_frame_price').text('');
+
+			$('#canvas_depth_0_price').text('Save $');
+			$('#canvas_depth_1_5_price').text('$');
+			$('#canvas_frame_black_price').text('$');
+			$('#canvas_frame_white_price').text('$');
+			$('#canvas_frame_brown_price').text('$');
+
+			$('#final_price').text('');
+			$('#base_price').text('');			
+			$('#attr1_price').text('');	
+			$('#attr2_price').text('');	
+			
+			$('#canvas_options').hide();
+			$('#section_placeholder_options').show();
+			
+		}
 		
 		$('#item_size').change(function (){
 			
@@ -467,6 +490,7 @@
 			
 			$('#select_size_arrow').hide();
 			$('#select_size_done').show();
+			$('#canvas_options').show();
 			
 			// show compare images and adjust relative canvas size
 			$('#size_compare_background_image').show();
