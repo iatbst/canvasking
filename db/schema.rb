@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170320231328) do
+ActiveRecord::Schema.define(version: 20170321181543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,8 +77,6 @@ ActiveRecord::Schema.define(version: 20170320231328) do
     t.integer  "quantity",                                     default: 1
     t.datetime "created_at",                                                   null: false
     t.datetime "updated_at",                                                   null: false
-    t.decimal  "depth"
-    t.string   "border"
     t.integer  "cart_id"
     t.integer  "order_id"
     t.string   "size"
@@ -88,12 +86,9 @@ ActiveRecord::Schema.define(version: 20170320231328) do
     t.string   "art_model_id"
     t.integer  "frame_id"
     t.decimal  "mat"
-    t.string   "image_tmp"
-    t.string   "image_overview_tmp"
     t.hstore   "image_tmp_paths",                              default: {}
     t.hstore   "art_image_tmp_paths",                          default: {}
     t.decimal  "image_h_w_ratio"
-    t.integer  "clone_of"
     t.boolean  "received",                                     default: false
     t.integer  "rate"
     t.hstore   "jobs",                                         default: {}

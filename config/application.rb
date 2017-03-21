@@ -75,7 +75,7 @@ module Canvasking
   TAOBAO_ORDER_QUERY_INTERVAL = 3600
   ORDER_CLOSED_WAITING_TIME = 3600*24*30 # wait 30 days after customer received product, before marking order status to CLOSED
 
-  # Product Base Prices
+  # Product Prices
   # - Currency: RMB
   # - Canvas price: https://item.taobao.com/item.htm?spm=a1z10.5-c.w4002-9476290978.51.xWbvhX&id=525855989381
   CANVAS_BASE_PRICES = {
@@ -104,6 +104,9 @@ module Canvasking
       '32x32' => 112.00,
       '32x40' => 156.80,    
    }
-    
+   # - Canvas Options Prices
+   CANVAS_ROLL_DISCOUNT = 0.1
+   CANVAS_DEPTH_1_5_ADD = 0.1
+   CANVAS_FRAME_ADD =     0.4
     
 end

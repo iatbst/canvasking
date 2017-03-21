@@ -10,8 +10,8 @@ class Item < ActiveRecord::Base
   # Validations
   validates :product_id, presence: {message: "Please choose a product"}, if: :image_is_uploaded?
   validates :size, presence: {message: "Please choose a size"}, if: :product_is_selected?
-  validates :depth, presence: {message: "Please choose a depth"}, if: :canvas_is_selected?
-  validates :border, presence: {message: "Please choose a border style"}, if: :canvas_is_selected?
+  validates :canvas_depth, presence: {message: "Please choose a depth"}, if: :canvas_is_selected?
+  validates :canvas_frame, presence: {message: "Please choose a frame or no frame"}, if: :canvas_is_selected?
   validates :image, presence: {message: "Please upload a image"}, if: :image_is_not_uploaded?
   validates :frame_id, presence: {message: "Please choose a frame"}, if: :frame_is_selected?
   validates :mat, presence: {message: "Please choose a mat"}, if: :frame_is_selected?

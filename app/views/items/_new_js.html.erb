@@ -546,12 +546,12 @@
 				
 				// Update Canvas Options Price for: canvas_depth and canvas_frame
 				base_price = parseFloat($("#item_size option:selected").text().split(' ')[2].split('$')[1]);
-				canvas_depth_0_price = (base_price*0.9).toFixed(2);
-				canvas_depth_0_save_price = (base_price*0.1).toFixed(2);
-				canvas_depth_1_5_price = (base_price*1.1).toFixed(2);
-				canvas_depth_1_5_add_price = (base_price*0.1).toFixed(2);
-				canvas_frame_price = (base_price*1.3).toFixed(2);
-				canvas_frame_add_price = (base_price*0.3).toFixed(2);
+				canvas_depth_0_price = (base_price*(1 - <%= Canvasking::CANVAS_ROLL_DISCOUNT %>)).toFixed(2);
+				canvas_depth_0_save_price = (base_price*<%= Canvasking::CANVAS_ROLL_DISCOUNT %>).toFixed(2);
+				canvas_depth_1_5_price = (base_price*(1 + <%= Canvasking::CANVAS_DEPTH_1_5_ADD %>)).toFixed(2);
+				canvas_depth_1_5_add_price = (base_price*<%= Canvasking::CANVAS_DEPTH_1_5_ADD %>).toFixed(2);
+				canvas_frame_price = (base_price*(1 + <%= Canvasking::CANVAS_FRAME_ADD %>)).toFixed(2);
+				canvas_frame_add_price = (base_price*<%= Canvasking::CANVAS_FRAME_ADD %>).toFixed(2);
 				
 				$('#canvas_depth_0_price').text('Save $' + canvas_depth_0_save_price);
 				$('#canvas_depth_1_5_price').text('Only $' + canvas_depth_1_5_add_price);

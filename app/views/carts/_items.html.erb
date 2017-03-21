@@ -21,30 +21,30 @@
 				
 				</div>
 
-				<div class="col-md-3" >
-					<br />
-					<br />
+				<div class="col-md-3" style="font-size: 18px; font-weight: 300">
 					<br />
 
-					Type: <%= item.product.name %>
+
+					Product: <%= item.product.name.capitalize %>
 					<br />
-					Size: <%= item.size %>
+					Size: <%= item.size.split('x').join(' x ') %>
 					<br />
 					<% if item.product.name.include?('canvas')%>
-					Depth: <%= item.depth %>
-					<br />
-					Border: <%= item.border %>
+						Depth: <%= "#{item.canvas_depth}\"" %>
+						<br />
+						Outer Frame: <%= item.canvas_frame %>
 					<% else %>
-					Frame: <%= Frame.find(item.frame_id).name %>
+						Frame: <%= Frame.find(item.frame_id).name %>
 					<br />
 					Mat: <%= "#{item.mat}\"".gsub("0.0\"", "No") %>
 					<% end %>
-
+					
+	
 				</div>
-
+				
 			</div>
 
-			<div class="row">
+			<div class="row" style="font-size: 18px; font-weight: 300" >
 				<div class="col-md-6"></div>
 				<div class="col-md-3">
 					<b> $<%= item.price %></b>
