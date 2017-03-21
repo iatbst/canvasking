@@ -36,15 +36,15 @@
 	</div>
 </div>
 
-<div class="row box" id="summary_and_submit" style="<% if item_in_cart?(@item) %> border-color: black;<% end %>margin-top: 30px; height: 390px">
+<div class="row box" id="summary_and_submit" style="<% if item_in_cart?(@item) %> border-color: black;<% end %>margin-top: 30px; height: 450px">
 	<div style="<% if !item_in_cart?(@item) %>opacity: 0.4;<% end %>" id="summary_and_submit_div">
 	<div class="row" align="center">
 		<h3 style="font-weight: 600; margin-top: 40px">
 			SUMMARY
 		</h3>
 	</div>
-	<hr style="width: 70%; border-color: black; margin-top: 0px"/>
-	<div class="row" style="height:120px; margin-top: 20px" >
+	<hr style="width: 63%; border-color: black; margin-top: 0px"/>
+	<div class="row" style=" margin-top: 20px; height: 270px" >
 
 		<div class="row">
 			<br />
@@ -53,7 +53,8 @@
 			<!-- Row 1 Product -->
 			<div class="row">
 				<div class="col-md-5 col-md-offset-2">
-					<h4 class="no_bold" id="product_choice"> 
+				
+					<h4 style="font-weight: 300" id="product_choice"> 
 					<% if !@item.product.nil? %>
 					<%= "#{@item.product.name.capitalize}" %>
 					<% end %> 
@@ -66,21 +67,21 @@
 			<!-- Row 2 Size -->
 			<div class="row">
 				<div class="col-md-5 col-md-offset-2">
-					<h4 class="no_bold" id="size_choice"> 
+					<h4 style="font-weight: 300" id="size_choice"> 
 						<% if !@item.size.nil? && !@item.size.empty? %>
 							<%= "#{@item.size.split('x').join(' x ')} ( H x W )" %>
 						<% end %> 
 					</h4>
 				</div>
 				<div class="col-md-2">
-					<h4 id="base_price" ></h4>
+					<h4 id="base_price" style="font-weight: 300"></h4>
 				</div>
 			</div>
 			
 			<!-- Row 3 Attr 1 -->
 			<div class="row">
 				<div class="col-md-5 col-md-offset-2">
-					<h4 class="no_bold" id="attr1_choice"> 
+					<h4 style="font-weight: 300" id="attr1_choice"> 
 						<% if !@item.product.nil? && @item.product.name.include?("canvas") %>
 							<% if !@item.canvas_depth.nil? %>
 								<% if @item.canvas_depth == "Rolled" %>
@@ -102,14 +103,14 @@
 					</h4>
 				</div>
 				<div class="col-md-2">
-					<h4 id="attr1_price"></h4>
+					<h4 id="attr1_price" style="font-weight: 300"></h4>
 				</div>
 			</div>			
 		
 			<!-- Row 4 Attr 2 -->
 			<div class="row">
 				<div class="col-md-5 col-md-offset-2">
-					<h4 class="no_bold" id="attr2_choice"> 
+					<h4 style="font-weight: 300" id="attr2_choice"> 
 						<% if !@item.product.nil? && @item.product.name.include?("canvas") %>
 							<% if !@item.canvas_frame.nil? %>
 								<%= "#{@item.canvas_frame.capitalize} Outer Frame" %>
@@ -126,14 +127,16 @@
 					</h4>
 				</div>
 				<div class="col-md-2">
-					<h4 id="attr2_price"></h4>
+					<h4 id="attr2_price" style="font-weight: 300"></h4>
 				</div>
 			</div>
+			
+			<hr style="border-color: black;width: 60%; margin-left: 110px; margin-bottom: 20px; margin-top: 0px;"/>
 			
 			<!-- Row 5 Total Price -->
 			<div class="row">
 				<div class="col-md-5 col-md-offset-2">
-					<h4 class="no_bold"> 
+					<h4 style="font-weight: 900"> 
 						Subtotal: 
 					</h4>		
 				</div>
@@ -151,7 +154,7 @@
 
 
 	
-			<div class="row" style="height:30px; margin-top: 50px" align="center" >
+			<div class="row" style="height:30px; margin-top: 0px" align="center" >
 				<%= hidden_field_tag :go_to_cart, true %>
 				<% if item_in_cart?(@item) %>
 					<%= hidden_field_tag :save_changes, true %>

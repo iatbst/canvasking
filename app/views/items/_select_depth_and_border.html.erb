@@ -1,3 +1,17 @@
+<style>
+
+.depth_0_label,
+.depth_0_75_label,
+.depth_1_5_label,
+.canvas_frame_none_label,
+.canvas_frame_black_label,
+.canvas_frame_white_label,
+.canvas_frame_brown_label
+ {
+	font-weight: 300;
+}
+
+</style>
 <div class="row box" id="canvas_options" style="<% if @item.canvas_depth && @item.canvas_frame %>border-color:black;<% end %>margin-top: 30px; <% if hide_canvas_options_section?(@item, @update_image_cropped) %>display: none<% end %>">
 
 	<div class="container-fluid" style="padding-right: 30px">
