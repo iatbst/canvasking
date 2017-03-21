@@ -1,12 +1,12 @@
 <script>
-	// Global Variables
-	var base_price = null;
-	var canvas_depth_0_price = null;
-	var canvas_depth_0_save_price = null;
-	var canvas_depth_1_5_price = null;
-	var canvas_depth_1_5_add_price = null;
-	var canvas_frame_price = null;
-	var canvas_frame_add_price = null;
+	// Global Variables: update from option_prices
+	var base_price = <%= @item.option_prices['base_price'].nil? ? "null": @item.option_prices['base_price'] %>;
+	var canvas_depth_0_price = <%= @item.option_prices['canvas_depth_0_price'].nil? ? "null": @item.option_prices['canvas_depth_0_price']%>;
+	var canvas_depth_0_save_price = <%= @item.option_prices['canvas_depth_0_save'].nil? ? "null": @item.option_prices['canvas_depth_0_save'] %>;
+	var canvas_depth_1_5_price = <%= @item.option_prices['canvas_depth_1_5_price'].nil? ? "null" : @item.option_prices['canvas_depth_1_5_price'] %>;
+	var canvas_depth_1_5_add_price = <%= @item.option_prices['canvas_depth_1_5_add'].nil? ? "null" : @item.option_prices['canvas_depth_1_5_add'] %>;
+	var canvas_frame_price = <%= @item.option_prices['canvas_frame_price'].nil? ? "null" : @item.option_prices['canvas_frame_price'] %>;
+	var canvas_frame_add_price = <%= @item.option_prices['canvas_frame_add'].nil? ? "null" :  @item.option_prices['canvas_frame_add'] %>;
 	
 	$( window ).on( "load", function(){
 		// Add frame effects if necessary
@@ -16,9 +16,25 @@
 		}
 		
 
-		<% if @update_image_cropped %>
-			//$("body").scrollTop(40);
-		<% end %>
+		// Change Lable Colors
+		if ($('#depth_0').is(':checked')){
+			$('.depth_0_label').css('color', '#ef9223');
+		} else if ($('#depth_0_75').is(':checked')) {
+			$('.depth_0_75_label').css('color', '#ef9223');
+		} else if ($('#depth_1_5').is(':checked')) {
+			$('.depth_1_5_label').css('color', '#ef9223');
+		}
+		
+		if ($('#canvas_frame_none').is(':checked')){
+			$('.canvas_frame_none_label').css('color', '#ef9223');
+		} else if ($('#canvas_frame_black').is(':checked')) {
+			$('.canvas_frame_black_label').css('color', '#ef9223');
+		} else if ($('#canvas_frame_white').is(':checked')) {
+			$('.canvas_frame_white_label').css('color', '#ef9223');
+		} else if ($('#canvas_frame_brown').is(':checked')) {
+			$('.canvas_frame_brown_label').css('color', '#ef9223');
+		} 
+		
 	});
 
 	

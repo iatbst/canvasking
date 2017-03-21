@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321181543) do
+ActiveRecord::Schema.define(version: 20170321190901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 20170321181543) do
     t.hstore   "jobs",                                         default: {}
     t.string   "canvas_frame"
     t.string   "canvas_depth"
+    t.hstore   "option_prices",                                default: {}
   end
 
   add_index "items", ["cart_id"], name: "index_items_on_cart_id", using: :btree

@@ -30,7 +30,7 @@
 					Size: <%= item.size.split('x').join(' x ') %>
 					<br />
 					<% if item.product.name.include?('canvas')%>
-						Depth: <%= "#{item.canvas_depth}\"" %>
+						Depth: <%= item.canvas_depth.include?('.') ? "#{item.canvas_depth}\"" : "#{item.canvas_depth}" %>
 						<br />
 						Outer Frame: <%= item.canvas_frame %>
 					<% else %>

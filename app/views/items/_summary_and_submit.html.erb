@@ -74,7 +74,9 @@
 					</h4>
 				</div>
 				<div class="col-md-2">
-					<h4 id="base_price" style="font-weight: 300"></h4>
+					<h4 id="base_price" style="font-weight: 300">
+						$<%= @item.option_prices["base_price"] %>
+					</h4>
 				</div>
 			</div>
 			
@@ -103,7 +105,17 @@
 					</h4>
 				</div>
 				<div class="col-md-2">
-					<h4 id="attr1_price" style="font-weight: 300"></h4>
+					<h4 id="attr1_price" style="font-weight: 300">
+						<% if @item.product && @item.product.name == 'canvas' %>
+							<% if @item.canvas_depth == 'Rolled' %>
+								-$<%= @item.option_prices['canvas_depth_0_save']%>
+							<% elsif @item.canvas_depth == '1.5' %>
+								$<%= @item.option_prices['canvas_depth_1_5_add']%>
+							<% end %>
+						<% else %>
+						
+						<% end %>
+					</h4>
 				</div>
 			</div>			
 		
@@ -127,7 +139,15 @@
 					</h4>
 				</div>
 				<div class="col-md-2">
-					<h4 id="attr2_price" style="font-weight: 300"></h4>
+					<h4 id="attr2_price" style="font-weight: 300">
+						<% if @item.product && @item.product.name == 'canvas' %>
+							<% if @item.canvas_frame != 'No' %>
+								$<%= @item.option_prices['canvas_frame_add']%>
+							<% end %>
+						<% else %>
+						
+						<% end %>
+					</h4>
 				</div>
 			</div>
 			

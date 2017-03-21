@@ -37,6 +37,7 @@ class ItemsController < ApplicationController
     @size_price, @size_price_str = prepare_size_price(@item)
     
     @edit = true
+    
     render 'new'
   end
   
@@ -250,16 +251,26 @@ class ItemsController < ApplicationController
       product = item.product.name
       # get base price first
       size_prices = YAML.load(File.read(Rails.root.join('business','pricing.yml')).gsub!("\\", ""))
-      price = size_prices[product][item.size].to_f
+      base_price = size_prices[product][item.size].to_f
+      price = base_price
       # calculate options price
       if product == "canvas"
         if item.canvas_depth == "Rolled"
           price = (price*(1 - Canvasking::CANVAS_ROLL_DISCOUNT)).round(2)
         elsif item.canvas_depth == "1.5"
           price = (price*(1 + Canvasking::CANVAS_DEPTH_1_5_ADD)).round(2)
-        elsif item.canvas_frame != "None"
+        elsif item.canvas_frame != "No"
           price = (price*(1 + Canvasking::CANVAS_FRAME_ADD)).round(2)
         end
+        option_prices = {}
+        option_prices[:base_price] = base_price 
+        option_prices[:canvas_depth_0_save] = (base_price*(Canvasking::CANVAS_ROLL_DISCOUNT)).round(2)
+        option_prices[:canvas_depth_0_price] = (base_price*(1 - Canvasking::CANVAS_ROLL_DISCOUNT)).round(2)
+        option_prices[:canvas_depth_1_5_add] = (base_price*(Canvasking::CANVAS_DEPTH_1_5_ADD)).round(2)
+        option_prices[:canvas_depth_1_5_price] = (base_price*(1 + Canvasking::CANVAS_DEPTH_1_5_ADD)).round(2)
+        option_prices[:canvas_frame_add] = (base_price*(Canvasking::CANVAS_FRAME_ADD)).round(2)
+        option_prices[:canvas_frame_price] = (base_price*(1 + Canvasking::CANVAS_FRAME_ADD)).round(2)
+        item.update_column('option_prices', option_prices)
       else
         # TODO: Other productions
       end
@@ -499,4 +510,6 @@ class ItemsController < ApplicationController
       end
     end
   end
+  
+  
 end
