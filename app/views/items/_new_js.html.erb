@@ -1,4 +1,12 @@
 <script>
+	// Global Variables
+	var base_price = null;
+	var canvas_depth_0_price = null;
+	var canvas_depth_0_save_price = null;
+	var canvas_depth_1_5_price = null;
+	var canvas_depth_1_5_add_price = null;
+	var canvas_frame_price = null;
+	var canvas_frame_add_price = null;
 	
 	$( window ).on( "load", function(){
 		// Add frame effects if necessary
@@ -47,24 +55,26 @@
 		} else if ($('#depth_2_5').is(':checked')) {
 			$('#attr1_choice').text('2.5" deep canvas wrap');
 		} else {
-			$('#attr1_choice').text('Depth: ---')
+			$('#attr1_choice').text('0.75" deep canvas wrap')
 		}
 		
-		if ($('#border_photo').is(':checked')){
-			$('#attr2_choice').text('Photo Border')
-		} else if ($('#border_black').is(':checked')) {
-			$('#attr2_choice').text('Black Border')
-		} else if ($('#border_white').is(':checked')) {
-			$('#attr2_choice').text('White Border')
+		if ($('#canvas_frame_none').is(':checked')){
+			$('#attr2_choice').text('No Outer Frame')
+		} else if ($('#canvas_frame_black').is(':checked')) {
+			$('#attr2_choice').text('Black Outer Frame')
+		} else if ($('#canvas_frame_white').is(':checked')) {
+			$('#attr2_choice').text('White Outer Frame')
+		} else if ($('#canvas_frame_brown').is(':checked')) {
+			$('#attr2_choice').text('Brown Outer Frame')
 		} else {
-			$('#attr2_choice').text('Border: ---')
+			$('#attr2_choice').text('No Outer Frame')
 		}
 		$('#size_choice').text('')
-		$('#price_choice').text('')
+		$('#final_price').text('')
 			
 		
-		$('#border_choice').show();
-		$('#depth_choice').show();
+		$('#attr2_choice').show();
+		$('#attr1_choice').show();
 		$('#frame_choice').hide();
 		$('#mat_choice').hide();
 		
@@ -78,7 +88,7 @@
 			$('#item_size').append(option);			
 		}
 		//update option section
-		if (is_canvas_depth_checked() || is_canvas_border_checked()){
+		if (is_canvas_depth_checked() || is_canvas_frame_checked()){
 			$('#canvas_options').show();
 		} else {
 			$('#section_placeholder_options').show();
@@ -116,17 +126,17 @@
 			$('#attr1_choice').text('Depth: ---')
 		}
 		
-		if ($('#border_photo').is(':checked')){
+		if ($('#canvas_frame_none').is(':checked')){
 			$('#attr2_choice').text('Photo Border')
-		} else if ($('#border_black').is(':checked')) {
+		} else if ($('#canvas_frame_black').is(':checked')) {
 			$('#attr2_choice').text('Black Border')
-		} else if ($('#border_white').is(':checked')) {
+		} else if ($('#canvas_frame_white').is(':checked')) {
 			$('#attr2_choice').text('White Border')
 		} else {
 			$('#attr2_choice').text('Border: ---')
 		}
 		$('#size_choice').text('')
-		$('#price_choice').text('')
+		$('#final_price').text('')
 			
 		//update price table
 		var size_price_str = '<%= @size_price_str %>'
@@ -139,7 +149,7 @@
 		}
 
 		//update option section
-		if (is_canvas_depth_checked() || is_canvas_border_checked()){
+		if (is_canvas_depth_checked() || is_canvas_frame_checked()){
 			$('#canvas_options').show();
 		} else {
 			$('#section_placeholder_options').show();
@@ -200,7 +210,7 @@
 			$('#attr2_choice').text('Mat: ---')
 		}
 		$('#size_choice').text('')
-		$('#price_choice').text('')
+		$('#final_price').text('')
 				
 		//update price table
 		var size_price_str = '<%= @size_price_str %>'
@@ -242,38 +252,127 @@
 		$('.triptych_3').hide();
 	});
 	
-	$("#item_size").change(function() {
-		$('#size_choice').text('Size: ' + this.value);
-		$('#price_choice').text($("#item_size option:selected").text().split(' ')[2]);
-	});
+	// $("#item_size").change(function() {
+		// $('#size_choice').text('Size: ' + this.value);
+		// $('#final_price').text($("#item_size option:selected").text().split(' ')[2]);
+	// });
 
 
 	$("#depth_0").click(function() {
-		$('#attr1_choice').text('Rolled. No frame.')
+		$('#attr1_choice').text('Rolled. No frame.');
+		$('#final_price').text('$' + canvas_depth_0_price);
+		$('#attr1_price').text( '-$' + canvas_depth_0_save_price);
+		$('#select_depth_price').text('( Save $' + canvas_depth_0_save_price + ' )');
+		// Clear Frame Options
+		clear_canvas_frame();
+		// Clear label color
+		clear_canvas_depth_label_color();
+		$('.depth_0_label').css('color', '#ef9223');
 	});
 
 	$("#depth_0_75").click(function() {
-		$('#attr1_choice').text('0.75" deep canvas wrap')
+		$('#attr1_choice').text('0.75" deep canvas wrap');
+		$('#final_price').text('$' + base_price);
+		$('#attr1_price').text('');
+		$('#select_depth_price').text('');
+		clear_canvas_depth_label_color();
+		$('.depth_0_75_label').css('color', '#ef9223');
 	});
 
 	$("#depth_1_5").click(function() {
-		$('#attr1_choice').text('1.5" deep canvas wrap')
+		$('#attr1_choice').text('1.5" deep canvas wrap');
+		$('#final_price').text('$' + canvas_depth_1_5_price);
+		$('#attr1_price').text( '+$' + canvas_depth_1_5_add_price);
+		$('#select_depth_price').text('( + $' + canvas_depth_1_5_add_price + ' )');
+		// Clear Frame Options
+		clear_canvas_frame();
+		// Clear label color
+		clear_canvas_depth_label_color();
+		$('.depth_1_5_label').css('color', '#ef9223');
 	});
 
-	$("#depth_2_5").click(function() {
-		$('#attr1_choice').text('2.5" deep canvas wrap')
-	});
-	$("#border_photo").click(function() {
-		$('#attr2_choice').text('Photo Border')
+	function clear_canvas_frame(){
+		if (is_canvas_frame_checked()) {
+			$('#canvas_frame_none').prop('checked', true);
+			$('#attr2_choice').text('No Outer Frame');
+			$('#attr2_price').text( '');
+			$('#select_outer_frame_price').text('');
+			clear_canvas_frame_label_color();
+			$('.canvas_frame_none_label').css('color', '#ef9223');			
+		}
+	}
+	function clear_canvas_depth(){
+		if (is_canvas_depth_checked()) {
+			$('#depth_0_75').prop('checked', true);
+			$('#attr1_choice').text('0.75" deep canvas wrap');
+			$('#attr1_price').text( '');
+			$('#select_depth_price').text('');
+			clear_canvas_depth_label_color();
+			$('.depth_0_75_label').css('color', '#ef9223');	
+		}
+	}
+	
+	function clear_canvas_depth_label_color(){
+		$('.depth_0_75_label').css('color', 'black');
+		$('.depth_1_5_label').css('color', 'black');
+		$('.depth_0_label').css('color', 'black');
+	}
+
+	function clear_canvas_frame_label_color(){
+		$('.canvas_frame_none_label').css('color', 'black');
+		$('.canvas_frame_black_label').css('color', 'black');
+		$('.canvas_frame_white_label').css('color', 'black');
+		$('.canvas_frame_brown_label').css('color', 'black');
+	}
+	
+	$("#canvas_frame_none").click(function() {
+		$('#attr2_choice').text('No Outer Frame');
+		$('#attr2_price').text( '');
+		if ($('#depth_0_75').is(':checked') || !is_canvas_depth_checked()){
+			$('#final_price').text('$' + base_price);	
+		}
+		$('#select_outer_frame_price').text('');
+		// Clear label color
+		clear_canvas_frame_label_color();
+		$('.canvas_frame_none_label').css('color', '#ef9223');
 	});
 
-	$("#border_black").click(function() {
-		$('#attr2_choice').text('Black Border')
+	$("#canvas_frame_black").click(function() {
+		$('#attr2_choice').text('Black Outer Frame');
+		$('#final_price').text('$' + canvas_frame_price);
+		$('#attr2_price').text( '+$' + canvas_frame_add_price);
+		$('#select_outer_frame_price').text('( + $' + canvas_frame_add_price + ' )');
+		// Clear Depth Options
+		clear_canvas_depth();
+		// Clear label color
+		clear_canvas_frame_label_color();
+		$('.canvas_frame_black_label').css('color', '#ef9223');
 	});
 
-	$("#border_white").click(function() {
-		$('#attr2_choice').text('White Border')
+	$("#canvas_frame_white").click(function() {
+		$('#attr2_choice').text('White Outer Frame');
+		$('#final_price').text('$' + canvas_frame_price);
+		$('#attr2_price').text( '+$' + canvas_frame_add_price);
+		$('#select_outer_frame_price').text('( + $' + canvas_frame_add_price + ' )');
+		// Clear Depth Options
+		clear_canvas_depth();
+		// Clear label color
+		clear_canvas_frame_label_color();
+		$('.canvas_frame_white_label').css('color', '#ef9223');
 	});
+
+	$("#canvas_frame_brown").click(function() {
+		$('#attr2_choice').text('Brown Outer Frame');
+		$('#final_price').text('$' + canvas_frame_price);
+		$('#attr2_price').text( '+$' + canvas_frame_add_price);
+		$('#select_outer_frame_price').text('( + $' + canvas_frame_add_price + ' )');
+		// Clear Depth Options
+		clear_canvas_depth();
+		// Clear label color
+		clear_canvas_frame_label_color();
+		$('.canvas_frame_brown_label').css('color', '#ef9223');
+	});
+	
 
 	$("#frame_black_wood").click(function() {
 		$('#attr1_choice').text('Frame: black wood');
@@ -347,7 +446,7 @@
 			$('#select_frame_options_frame_arrow').hide();
 			$('#select_frame_options_mat_arrow').hide();
 			$('#select_canvas_options_depth_arrow').hide();
-			$('#select_canvas_options_border_arrow').hide();
+			$('#select_canvas_frame_arrow').hide();
 			$('#select_size_arrow').show();
 			$('#select_size_done').hide();	
 			$('#select_product_done').show();
@@ -358,6 +457,14 @@
 		});
 		
 		$('#item_size').change(function (){
+			
+			// Update price and size in summary
+			$('#size_choice').text('Size: ' + this.value);
+			var price = $("#item_size option:selected").text().split(' ')[2]
+			$('#final_price').text(price);
+			$('#base_price').text(price);
+			$('#select_size_price').text(' ( ' + price + ' )');
+			
 			$('#select_size_arrow').hide();
 			$('#select_size_done').show();
 			
@@ -413,10 +520,43 @@
 				$('#canvas_options').fadeIn(1000);
 				$('#frame_options').hide();
 				
+				// Update Canvas Options Price for: canvas_depth and canvas_frame
+				base_price = parseFloat($("#item_size option:selected").text().split(' ')[2].split('$')[1]);
+				canvas_depth_0_price = (base_price*0.9).toFixed(2);
+				canvas_depth_0_save_price = (base_price*0.1).toFixed(2);
+				canvas_depth_1_5_price = (base_price*1.1).toFixed(2);
+				canvas_depth_1_5_add_price = (base_price*0.1).toFixed(2);
+				canvas_frame_price = (base_price*1.3).toFixed(2);
+				canvas_frame_add_price = (base_price*0.3).toFixed(2);
+				
+				$('#canvas_depth_0_price').text('Save $' + canvas_depth_0_save_price);
+				$('#canvas_depth_1_5_price').text('$' + canvas_depth_1_5_add_price);
+				$('#canvas_frame_black_price').text('$' + canvas_frame_add_price);
+				$('#canvas_frame_white_price').text('$' + canvas_frame_add_price);
+				$('#canvas_frame_brown_price').text('$' + canvas_frame_add_price);
+				
+				if ($('#depth_0').is(':checked')){
+					$('#select_depth_price').text('( Save $' + canvas_depth_0_save_price + ' )');
+					$('#attr1_price').text( '-$' + canvas_depth_0_save_price);	
+					$('#final_price').text('$' + canvas_depth_0_price);
+					
+				}
+				if ($('#depth_1_5').is(':checked')){
+					$('#select_depth_price').text('( + $' + canvas_depth_1_5_add_price + ' )');
+					$('#attr1_price').text( '+$' + canvas_depth_1_5_add_price);
+					$('#final_price').text('$' + canvas_depth_1_5_price);
+				}
+				
+				if ($('#canvas_frame_black').is(':checked') || $('#canvas_frame_white').is(':checked') || $('#canvas_frame_brown').is(':checked')){
+					$('#select_outer_frame_price').text('( + $' + canvas_frame_add_price + ' )');
+					$('#attr2_price').text( '+$' + canvas_frame_add_price);
+					$('#final_price').text('$' + canvas_frame_price);
+				}
+				
 				if (!is_canvas_depth_checked()){
 					$('#select_canvas_options_depth_arrow').show();
-				} else if (!is_canvas_border_checked()) {
-					$('#select_canvas_options_border_arrow').show();
+				} else if (!is_canvas_frame_checked()) {
+					$('#select_canvas_frame_arrow').show();
 				} else {
 					// ready to add to cart
 					
@@ -429,8 +569,8 @@
 		$('.depth_options').click(function(){
 			$('#select_canvas_options_depth_arrow').hide();
 			$('#select_depth_done').show();
-			if (!is_canvas_border_checked()){
-				$('#select_canvas_options_border_arrow').show();
+			if (!is_canvas_frame_checked()){
+				$('#select_canvas_frame_arrow').show();
 			} else {
 				// wizard process is done
 				add_to_cart_is_ready();
@@ -438,9 +578,9 @@
 			}
 		});
 
-		$('.border_options').click(function(){
-			$('#select_canvas_options_border_arrow').hide();
-			$('#select_border_done').show();
+		$('.canvas_frame_options').click(function(){
+			$('#select_canvas_frame_arrow').hide();
+			$('#select_canvas_frame_done').show();
 			if (!is_canvas_depth_checked()){
 				$('#select_canvas_options_depth_arrow').show();
 			} else {
@@ -498,10 +638,11 @@
 				|| $('#depth_2_5').is(':checked'));
 	}
 		
-	function is_canvas_border_checked(){
-		return 	($('#border_photo').is(':checked') 
-				|| $('#border_black').is(':checked') 
-				|| $('#border_white').is(':checked'));
+	function is_canvas_frame_checked(){
+		return 	($('#canvas_frame_none').is(':checked') 
+				|| $('#canvas_frame_black').is(':checked')
+				|| $('#canvas_frame_brown').is(':checked')  
+				|| $('#canvas_frame_white').is(':checked'));
 	}
 	
 	function is_frame_frame_checked(){

@@ -48,6 +48,8 @@ namespace :price_maker do
   task :canvas_run do
     products = [
                 'canvas',
+                'canvas_depth',
+                
                 'framed print',
               ]
               

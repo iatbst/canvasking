@@ -1,12 +1,12 @@
-<div class="row box" id="canvas_options" style="<% if @item.depth && @item.border %>border-color:black;<% end %>margin-top: 30px; <% if hide_canvas_options_section?(@item, @update_image_cropped) %>display: none<% end %>">
+<div class="row box" id="canvas_options" style="<% if @item.canvas_depth && @item.canvas_frame %>border-color:black;<% end %>margin-top: 30px; <% if hide_canvas_options_section?(@item, @update_image_cropped) %>display: none<% end %>">
 
-
+	<div class="container-fluid" style="padding-right: 30px">
 		<div class="row">
 			<h4 class="no_bold" style="margin-left: 60px; margin-top: 20px; margin-bottom: 0px; font-weight: 300"> 		
 		
 			<span class="glyphicon glyphicon-play blink" id="select_canvas_options_depth_arrow" style="display: none"></span>
 			<span style="<% if @item.depth.nil? %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_depth_done"></span>
-			&nbsp;&nbsp;Select Depth
+			&nbsp;&nbsp;Select Depth <span id="select_depth_price" style="color: #EF9223"></span>
 			
 			</h4>
 		</div>
@@ -15,45 +15,41 @@
 		<h6 id="depth_error" style="color: red" ><%= @item.errors[:depth][0] %></h6>
 		<% end %>
 		
-		<div class="row" style="margin-left: 10px">
+		<div class="row" style="margin-left: 0px">
 
-			<div class="col-md-2" align="center">
+			<div class="col-md-3" align="center">
 
 				<label class="depth_options" > 
 					
-					<%= f.radio_button :depth, "0.0",  style:"visibility: hidden;", id: "depth_0" %>
+					<%= f.radio_button :canvas_depth, "Rolled",  style:"visibility: hidden;", id: "depth_0" %>
 					<%= image_tag '/canvas_depth_0.jpeg', class: "depth_options_image"%> 
-					<h5 style="margin-left: 30px"> Rolled</h5> 
+					<h5 class="depth_0_label"> Rolled</h5> 
+					<h5 id="canvas_depth_0_price" class="depth_0_label"></h5>
 				</label>
 			</div>
 			
-			<div class="col-md-2 col-md-offset-1" align="center">
+			<div class="col-md-3" align="center">
 				<label class="depth_options" > 
 					 
-					<%= f.radio_button :depth, "0.75", style:"visibility: hidden;", id: "depth_0_75" %>
+					<%= f.radio_button :canvas_depth, "0.75", style:"visibility: hidden;", id: "depth_0_75" %>
 					<%= image_tag '/canvas_depth_0.75.jpeg', class: "depth_options_image"%>
-					<h5 style="margin-left: 30px"> 0.75" </h5> 
+					<h5 class="depth_0_75_label"> 0.75" </h5> 
+					<h5 id="canvas_depth_0_75_price" class="depth_0_75_label">No Extra Fee</h5>
 				</label>
 
 			</div>
 			
-			<div class="col-md-2 col-md-offset-1" align="center">
+			<div class="col-md-3" align="center">
 				<label class="depth_options" > 
 			
-					<%= f.radio_button :depth, "1.5",  style:"visibility: hidden;", id: "depth_1_5"%>
+					<%= f.radio_button :canvas_depth, "1.5",  style:"visibility: hidden;", id: "depth_1_5"%>
 					<%= image_tag '/canvas_depth_1.5.jpeg', class: "depth_options_image"%>
-					<h5 style="margin-left: 30px"> 1.5" </h5>	
+					<h5 class="depth_1_5_label"> 1.5" </h5>	
+					<h5 id="canvas_depth_1_5_price" class="depth_1_5_label"></h5>
 				</label>
 			</div>
 			
-			<div class="col-md-2 col-md-offset-1" align="center">
-				<label class="depth_options"> 
-			
-					<%= f.radio_button :depth, "2.5",  style:"visibility: hidden;", id: "depth_2_5"%> 
-					<%= image_tag '/canvas_depth_2.5.jpeg', class: "depth_options_image"%> 
-					<h5 style="margin-left: 30px"> 2.5" </h5>
-				</label>
-			</div>
+
 
 		</div>
 
@@ -62,9 +58,9 @@
 		<div class="row">
 			<h4 class="no_bold" style="margin-left: 60px; margin-top: 0px; font-weight: 300"> 		
 		
-			<span class="glyphicon glyphicon-play blink" id="select_canvas_options_border_arrow" style="display: none"></span>
-			<span style="<% if @item.border.nil? %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_border_done"></span>
-			&nbsp;&nbsp;Select Border
+			<span class="glyphicon glyphicon-play blink" id="select_canvas_frame_arrow" style="display: none"></span>
+			<span style="<% if @item.canvas_frame.nil? %>display: none<% end %>" class="glyphicon glyphicon-ok ok_color" id="select_canvas_frame_done"></span>
+			&nbsp;&nbsp;Select Outer Frame <span id="select_outer_frame_price" style="color: #EF9223"></span>
 	
 			</h4>
 		</div>
@@ -73,34 +69,48 @@
 		<h6 id="border_error" style="color: red" ><%= @item.errors[:border][0] %></h6>
 		<% end %>
 		
-		<div class="row" style="margin-left: 10px">
-			<div class="col-md-2">
+		
+		<div class="row" style="margin-left: 0px">
+			<div class="col-md-3">
 
-				<label class="border_options" > 
+				<label class="canvas_frame_options" align="center" > 
 					
-					<%= f.radio_button :border, "photo",  style:"visibility: hidden;", id: "border_photo"%>
+					<%= f.radio_button :canvas_frame, "no outer frame",  style:"visibility: hidden;", id: "canvas_frame_none"%>
 					<%= image_tag '/canvas_border_photo.jpeg', class: "depth_options_image"%>
-					<h5 style="margin-left: 30px"> Photo</h5>
+					<h5 class="canvas_frame_none_label">No Frame</h5>
+					<h5 id="canvas_frame_0_price" class="canvas_frame_none_label">No Extra Fee</h5>
 				</label>
 			</div>
-			<div class="col-md-2 col-md-offset-1">
+			<div class="col-md-3">
 
-				<label class="border_options" > 
-					<%= f.radio_button :border, "black",  style:"visibility: hidden;", id: "border_black"%>
+				<label class="canvas_frame_options" align="center" > 
+					<%= f.radio_button :canvas_frame, "black",  style:"visibility: hidden;", id: "canvas_frame_black"%>
 					<%= image_tag '/canvas_border_black.jpeg', class: "depth_options_image"%>
-					<h5 style="margin-left: 30px"> Black </h5> 
+					<h5 class="canvas_frame_black_label"> Black </h5>
+					<h5 id="canvas_frame_black_price" class="canvas_frame_black_label"></h5>
 				</label>
 			</div>
-			<div class="col-md-2 col-md-offset-1">
+			<div class="col-md-3">
 
-				<label class="border_options" > 
-					<%= f.radio_button :border, "white", style:"visibility: hidden;", id: "border_white"%>
+				<label class="canvas_frame_options" align="center" > 
+					<%= f.radio_button :canvas_frame, "white", style:"visibility: hidden;", id: "canvas_frame_white"%>
 					<%= image_tag '/canvas_border_white.jpeg', class: "depth_options_image"%>
-					<h5 style="margin-left: 30px"> White </h5> 
+					<h5 class="canvas_frame_white_label"> White </h5>
+					<h5 id="canvas_frame_white_price" class="canvas_frame_white_label"></h5> 
 				</label>
 			</div>
-		</div>
-	
+			<div class="col-md-3">
+
+				<label class="canvas_frame_options" align="center" > 
+					<%= f.radio_button :canvas_frame, "brown", style:"visibility: hidden;", id: "canvas_frame_brown"%>
+					<%= image_tag '/canvas_border_white.jpeg', class: "depth_options_image"%>
+					<h5 class="canvas_frame_brown_label"> Brown</h5> 
+					<h5 id="canvas_frame_brown_price" class="canvas_frame_brown_label"></h5>
+				</label>
+			</div>
+		
+		</div>	
+	</div>
 </div>
 
 <script>
@@ -120,7 +130,7 @@ $( ".depth_options" ).click(function() {
   }
 });
 
-$( ".border_options" ).click(function() {
+$( ".canvas_frame_options" ).click(function() {
   if ( $('#border_error').length ){
   	$('#border_error').remove();
   	var error_num = parseInt($('#error_number').text());
