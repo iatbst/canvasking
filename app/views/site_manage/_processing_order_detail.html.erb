@@ -71,9 +71,9 @@
 						Size: <%= item.size %>
 						<br />
 						<% if item.product.name.include?('canvas')%>
-							Depth: <%= item.depth %>
+							Depth: <%= item.canvas_depth %>
 							<br />
-							Border: <%= item.border %>								
+							Outer Frame: <%= item.canvas_frame %>								
 						<% else %>
 							Frame: <%= Frame.find(item.frame_id).name %>
 							<br />

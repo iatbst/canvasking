@@ -11,6 +11,14 @@
 	font-weight: 300;
 }
 
+.canvas_options_image_border {
+
+	border-style: solid; 
+	border-width:1px; 
+	border-color: grey;
+	border-radius: 5px;
+}
+
 </style>
 <div class="row box" id="canvas_options" style="<% if @item.canvas_depth && @item.canvas_frame %>border-color:black;<% end %>margin-top: 30px; <% if hide_canvas_options_section?(@item, @update_image_cropped) %>display: none<% end %>">
 
@@ -36,7 +44,7 @@
 				<label class="depth_options" > 
 					
 					<%= f.radio_button :canvas_depth, "Rolled",  style:"visibility: hidden;", id: "depth_0" %>
-					<%= image_tag '/canvas_depth_0.jpeg', class: "depth_options_image"%> 
+					<%= image_tag '/items/canvas_depth_0.png', class: "depth_options_image canvas_options_image_border"%> 
 					<h5 class="depth_0_label"> Rolled</h5> 
 					<h5 id="canvas_depth_0_price" class="depth_0_label">
 						<% if @item.option_prices["canvas_depth_0_save"] %>
@@ -50,7 +58,7 @@
 				<label class="depth_options" > 
 					 
 					<%= f.radio_button :canvas_depth, "0.75", style:"visibility: hidden;", id: "depth_0_75" %>
-					<%= image_tag '/canvas_depth_0.75.jpeg', class: "depth_options_image"%>
+					<%= image_tag '/items/canvas_depth_0_75.png', class: "depth_options_image canvas_options_image_border"%>
 					<h5 class="depth_0_75_label"> 0.75" </h5> 
 					<h5 id="canvas_depth_0_75_price" class="depth_0_75_label">No Extra Fee</h5>
 				</label>
@@ -61,7 +69,7 @@
 				<label class="depth_options" > 
 			
 					<%= f.radio_button :canvas_depth, "1.5",  style:"visibility: hidden;", id: "depth_1_5"%>
-					<%= image_tag '/canvas_depth_1.5.jpeg', class: "depth_options_image"%>
+					<%= image_tag '/items/canvas_depth_1_5.png', class: "depth_options_image canvas_options_image_border"%>
 					<h5 class="depth_1_5_label"> 1.5" </h5>	
 					<h5 id="canvas_depth_1_5_price" class="depth_1_5_label">
 						<% if @item.option_prices["canvas_depth_1_5_add"] %>
@@ -98,7 +106,7 @@
 				<label class="canvas_frame_options" align="center" > 
 					
 					<%= f.radio_button :canvas_frame, "No",  style:"visibility: hidden;", id: "canvas_frame_none"%>
-					<%= image_tag '/canvas_border_photo.jpeg', class: "depth_options_image"%>
+					<%= image_tag '/items/canvas_frame_none.jpg', class: "depth_options_image canvas_options_image_border"%>
 					<h5 class="canvas_frame_none_label">No Frame</h5>
 					<h5 id="canvas_frame_0_price" class="canvas_frame_none_label">No Extra Fee</h5>
 				</label>
@@ -107,7 +115,7 @@
 
 				<label class="canvas_frame_options" align="center" > 
 					<%= f.radio_button :canvas_frame, "black",  style:"visibility: hidden;", id: "canvas_frame_black"%>
-					<%= image_tag '/canvas_border_black.jpeg', class: "depth_options_image"%>
+					<%= image_tag '/items/canvas_frame_black.jpg', class: "depth_options_image canvas_options_image_border"%>
 					<h5 class="canvas_frame_black_label"> Black </h5>
 					<h5 id="canvas_frame_black_price" class="canvas_frame_black_label">
 						<% if @item.option_prices["canvas_frame_add"] %>
@@ -120,7 +128,7 @@
 
 				<label class="canvas_frame_options" align="center" > 
 					<%= f.radio_button :canvas_frame, "white", style:"visibility: hidden;", id: "canvas_frame_white"%>
-					<%= image_tag '/canvas_border_white.jpeg', class: "depth_options_image"%>
+					<%= image_tag '/items/canvas_frame_white.jpg', class: "depth_options_image canvas_options_image_border"%>
 					<h5 class="canvas_frame_white_label"> White </h5>
 					<h5 id="canvas_frame_white_price" class="canvas_frame_white_label">
 						<% if @item.option_prices["canvas_frame_add"] %>
@@ -133,7 +141,7 @@
 
 				<label class="canvas_frame_options" align="center" > 
 					<%= f.radio_button :canvas_frame, "brown", style:"visibility: hidden;", id: "canvas_frame_brown"%>
-					<%= image_tag '/canvas_border_white.jpeg', class: "depth_options_image"%>
+					<%= image_tag '/items/canvas_frame_brown.jpg', class: "depth_options_image canvas_options_image_border"%>
 					<h5 class="canvas_frame_brown_label"> Brown</h5> 
 					<h5 id="canvas_frame_brown_price" class="canvas_frame_brown_label">
 						<% if @item.option_prices["canvas_frame_add"] %>
