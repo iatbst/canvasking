@@ -48,8 +48,6 @@ namespace :price_maker do
   task :canvas_run do
     products = [
                 'canvas',
-                'canvas_depth',
-                
                 'framed print',
               ]
               
@@ -57,11 +55,11 @@ namespace :price_maker do
     table_size = 15
     
     # Dollar to RMB rate
-    dollar_rate = 6.9
+    dollar_rate = Canvasking::DOLLAR_RATE
     # This is a average price: 2 ~ 2.5 kg; 83 + 22*3 = 149RMB; ~ 22 Dollar
-    shipment_fee = 22
+    # Need to improve !
+    shipment_fee = Canvasking::SHIPMENT_FEE
     # Current gross profit rate 50%
-    profit_rate = 1.5
     base_prices = Canvasking::CANVAS_BASE_PRICES
     
     pricing_obj = {}
@@ -92,7 +90,7 @@ namespace :price_maker do
           price += shipment_fee
           
           # Final price
-          price *= 1.5
+          price *= Canvasking::PROFIT_RATE
           
           pricing_obj[product][size] = price.round(2)
           w += 2

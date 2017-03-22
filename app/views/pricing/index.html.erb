@@ -71,16 +71,19 @@
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active product_tab">
     	<a href="#canvas_price_table" aria-controls="home" role="tab" data-toggle="tab" align="center" style="color: #EF9223">
-    		<%= image_tag '/pricing/canvas_icon.png', class: "depth_options_image"%>
+    		<%= image_tag '/items/single_canvas.jpg', class: "depth_options_image"%>
     		<h4>CANVAS</h4>
     	</a>
     </li>
+    <!-- Temp Remove Frame-->
+    <% if false %>
     <li role="presentation" class="product_tab">
-    	<a href="#frame_price_table" aria-controls="profile" role="tab" data-toggle="tab" align="center" style="color: grey">
+    	<a href="#frame_price_table" aria-controls="profile" role="tab" data-toggle="tab" align="center" style="color: grey" disabled="disabled">
     		<%= image_tag '/pricing/frame_icon.png', class: "depth_options_image"%>
     		<h4>FRAME</h4>
     	</a>
     </li>
+    <% end %>
   </ul>
 
   <!-- Tab panes -->

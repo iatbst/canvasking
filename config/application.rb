@@ -78,6 +78,9 @@ module Canvasking
   # Product Prices
   # - Currency: RMB
   # - Canvas price: https://item.taobao.com/item.htm?spm=a1z10.5-c.w4002-9476290978.51.xWbvhX&id=525855989381
+  DOLLAR_RATE = 6.9
+  SHIPMENT_FEE = 22
+  PROFIT_RATE = 1.5
   CANVAS_BASE_PRICES = {
       '12x12' => 17.50,
       '12x16' => 23.10,
@@ -107,6 +110,7 @@ module Canvasking
    # - Canvas Options Prices
    CANVAS_ROLL_DISCOUNT = 0.1
    CANVAS_DEPTH_1_5_ADD = 0.1
-   CANVAS_FRAME_ADD =     0.4
+   CANVAS_FRAME_ADD = 0.75
+
     
 end
