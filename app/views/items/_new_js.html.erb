@@ -112,15 +112,15 @@
 		//$('#size_price_options').fadeIn(1000);
 		$('#product_done_label').text('CANVAS');
 
-		//remove frame and mat
-		$('#overview_image').attr('class','overview_image image_shadow_in_item');	
-		$('#overview_image').css('padding', '0px');
-
-		//hide triptych and show overview_image
-		$('#overview_image').show();
-		$('.triptych_1').hide();
-		$('.triptych_2').hide();
-		$('.triptych_3').hide();	
+		// //remove frame and mat
+		// $('#overview_image').attr('class','overview_image image_shadow_in_item');	
+		// $('#overview_image').css('padding', '0px');
+// 
+		// //hide triptych and show overview_image
+		// $('#overview_image').show();
+		// $('.triptych_1').hide();
+		// $('.triptych_2').hide();
+		// $('.triptych_3').hide();	
 	});
 	
 	$("#product_triptych_canvas_ready").click(function() {
@@ -281,6 +281,8 @@
 		// Clear label color
 		clear_canvas_depth_label_color();
 		$('.depth_0_label').css('color', '#ef9223');
+		// Remove frame
+		remove_frame();
 	});
 
 	$("#depth_0_75").click(function() {
@@ -302,6 +304,8 @@
 		// Clear label color
 		clear_canvas_depth_label_color();
 		$('.depth_1_5_label').css('color', '#ef9223');
+		// Clear frame
+		remove_frame();
 	});
 
 	function clear_canvas_frame(){
@@ -348,6 +352,8 @@
 		// Clear label color
 		clear_canvas_frame_label_color();
 		$('.canvas_frame_none_label').css('color', '#ef9223');
+		// Clear frame
+		remove_frame();
 	});
 
 	$("#canvas_frame_black").click(function() {
@@ -360,6 +366,8 @@
 		// Clear label color
 		clear_canvas_frame_label_color();
 		$('.canvas_frame_black_label').css('color', '#ef9223');
+		$('#overview_image').attr('class','overview_image image_shadow_in_item');
+		$('#overview_image').addClass('image_black_frame_in_item');
 	});
 
 	$("#canvas_frame_white").click(function() {
@@ -372,6 +380,9 @@
 		// Clear label color
 		clear_canvas_frame_label_color();
 		$('.canvas_frame_white_label').css('color', '#ef9223');
+		// Add frame
+		$('#overview_image').attr('class','overview_image image_shadow_in_item');
+		$('#overview_image').addClass('image_white_frame_in_item');
 	});
 
 	$("#canvas_frame_brown").click(function() {
@@ -384,9 +395,17 @@
 		// Clear label color
 		clear_canvas_frame_label_color();
 		$('.canvas_frame_brown_label').css('color', '#ef9223');
+		// Add frame
+		$('#overview_image').attr('class','overview_image image_shadow_in_item');
+		$('#overview_image').addClass('image_brown_frame_in_item');
 	});
 	
-
+	function remove_frame(){
+		$('#overview_image').removeClass('image_black_frame_in_item');
+		$('#overview_image').removeClass('image_white_frame_in_item');
+		$('#overview_image').removeClass('image_brown_frame_in_item');
+	}
+	
 	$("#frame_black_wood").click(function() {
 		$('#attr1_choice').text('Frame: black wood');
 		//add frame

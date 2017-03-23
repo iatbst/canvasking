@@ -77,7 +77,7 @@
 						<div class="row">
 							<div class="col-md-3 col-md-offset-1">
 								<br />
-								<%= image_tag get_image_url(item, "thumb"), class: "thumb_image image_shadow_in_order_index #{add_frame_and_mat_class(item, 'order_index')}", id: "item_#{item.id}" %>
+								<%= image_tag get_image_url(item, "thumb"), class: "thumb_image image_shadow_in_order_index #{add_frame_class(item, 'order_index')}", id: "item_#{item.id}" %>
 								<div>
 									<div class="triptych_1_in_order_index image_shadow_in_order_index" id="item_<%= item.id%>_triple_1"></div>
 									<div class="triptych_2_in_order_index image_shadow_in_order_index"  id="item_<%= item.id%>_triple_2" style="margin-left: 5px; margin-right: 5px"></div>

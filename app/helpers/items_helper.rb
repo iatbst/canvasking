@@ -67,7 +67,11 @@ module ItemsHelper
   def image_is_framed(item)
     !item.product.nil? && item.product.name.include?('frame')
   end
-  
+ 
+  def canvas_is_framed(item)
+    !item.product.nil? && item.product.name.include?('canvas') && item.canvas_frame != "No"
+  end
+   
   def image_is_framed_with_type(item, type)
      image_is_framed(item) && !item.frame_id.nil? && Frame.find(item.frame_id).name.include?(type)
   end
@@ -80,6 +84,7 @@ module ItemsHelper
     !item.product.nil? && item.product.name.include?('triptych')
   end
   
+  # Saved for Frame
   def add_frame_and_mat_class(item, page)
     classes = ""
     if image_is_framed(item)
@@ -94,6 +99,22 @@ module ItemsHelper
       if image_is_matted(item)
         classes += " image_frame_mat_in_#{page}"
       end
+    end
+    
+    return classes
+  end
+
+  def add_frame_class(item, page)
+    classes = ""
+    if canvas_is_framed(item)
+      if item.canvas_frame == 'Black'
+        classes += "image_black_frame_in_#{page}"
+      elsif item.canvas_frame == 'White'
+        classes += "image_white_frame_in_#{page}"
+      else
+        classes += "image_brown_frame_in_#{page}"
+      end
+      
     end
     
     return classes
