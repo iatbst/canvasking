@@ -263,12 +263,14 @@ class OrdersController < ApplicationController
     @countries = {}
     @country_select_list = []
     Country.all.each do |country|
-      # prepare for country select list
-      @country_select_list.push([country.name, country.id])
-      
-      @countries[country.name] = []
-      country.states.each do |state|
-        @countries[country.name].push([state.name, state.id])
+      if Canvasking::SHIPPING_COUNTRIES.include?(country.name)
+        # prepare for country select list
+        @country_select_list.push([country.name, country.id])
+        
+        @countries[country.name] = []
+        country.states.each do |state|
+          @countries[country.name].push([state.name, state.id])
+        end
       end
     end
   end

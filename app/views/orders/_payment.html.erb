@@ -1,3 +1,31 @@
+<style>
+
+.stripe_logos {
+	width: auto;
+	height: auto;
+	max-width: 400px;
+	max-height: 400px;
+	background: white;
+}
+
+
+/* Placeholder Color*/
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #909;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #909;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #909;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #909;
+}
+
+</style>
 <h3>Payment Method</h3>
 <hr style="width: 550px; margin-left: 1px; border-width: 1px; border-color:#E2E2E2;"/>
 
@@ -7,36 +35,52 @@
 	<!-- Stripe for Payment -->	
 	<div class="row" style="margin-left: 10px; margin-top: 20px">
 		<div class="form-group col-lg-7 has-feedback has-feedback-left" style="width: 95%">
-			<label> <span>Card Number</span></label>	
+			<label> 
+				<span style="font-weight: 300; font-size: 18px; margin-left: 2px">
+					Card Number
+				</span>
+			</label>	
 			<input type="text" size="20" data-stripe="number" class="form-control input-lg" placeholder="1234 5678 9012 3456">
+
 		</div>
 	</div>
 
 	<div class="row" style="margin-left: 25px; margin-top: 10px">
-		<label><span>Expiration Date</span></label><br />
+		<label><span style="font-weight: 300; font-size: 18px; margin-left: 2px">
+			Expiration Date
+		</span></label><br />
 	</div>
 	
 	<div class="row" style="margin-left: 10px">
 		<div class="form-group col-xs-3">
-			<span>Month</span>
-			<input type="text" data-stripe="exp_month" class="form-control input-lg" placeholder="01">
+			<span style="font-weight: 300; font-size: 15px; margin-left: 2px">Month</span>
+			<input type="text" data-stripe="exp_month" class="form-control input-lg" placeholder="MM">
 		</div>
 		<div class="form-group col-xs-3">
-			<span>Year</span>
-			<input type="text" size="2" data-stripe="exp_year" class="form-control input-lg" placeholder="19">
+			<span style="font-weight: 300; font-size: 15px; margin-left: 2px">Year</span>
+			<input type="text" size="2" data-stripe="exp_year" class="form-control input-lg" placeholder="YY">
 		</div>
 		
 		<div class="form-group col-xs-3" style="margin-left: 40px">
-			<span>CVC Code</span>
-			<input type="text" size="4" data-stripe="cvc" class="form-control input-lg" placeholder="666">
+			<span style="font-weight: 300; font-size: 15px; margin-left: 2px">CVC Code</span>
+			<input type="text" size="4" data-stripe="cvc" class="form-control input-lg" placeholder="123">
 		</div>
 	</div>
 	<div class="row" align="center">
-		<%= image_tag "/credit_cards_stripe.png"%>
+		<%= image_tag "/order/stripe_logos.jpg", class: "stripe_logos"%>
 	</div>
 
 </div>
 
+<p style="font-size: 15px">
+* MagicPhotoPrints.Com do NOT hold your credit card and billing informations. <br />
+* All transactions are processed securely by <a href="https://stripe.com/docs/security" target="_blank"><u>Stripe</u></a>
+<br />
+<br />
+<span style="color: green; font-size: 18px">
+<i class="fa fa-lock" aria-hidden="true" style="color: green"></i> 
+	Secure Connection. 128-Bit Encryption
+</span>
+</p>
+
 <h4><a name="charge_error" style="color: red"><%= flash['charge_error'] %></a></h4>
-
-

@@ -11,13 +11,6 @@
 	font-weight: 300;
 }
 
-.canvas_options_image_border {
-
-	border-style: solid; 
-	border-width:1px; 
-	border-color: grey;
-	border-radius: 5px;
-}
 
 </style>
 <div class="row box" id="canvas_options" style="<% if @item.canvas_depth && @item.canvas_frame %>border-color:black;<% end %>margin-top: 30px; <% if hide_canvas_options_section?(@item, @update_image_cropped) %>display: none<% end %>">

@@ -12,12 +12,16 @@
 
 #use_this_style{
   
-  background-color: #709BC5;
-  border-color: #709BC5;
-  color: white;
-  border-radius: 0px;
+  background: transparent;
+  border-color: green;
+  color: green;
+  border-radius: 5px;
   font-weight: bold;
-  
+}
+
+#use_this_style:hover {
+  background: green;
+  color: white;
 }
 
 .loading_icon {
@@ -48,8 +52,8 @@
 .test_image {
 	
   box-shadow: 10px 10px 5px #888888;
-  padding: 25px;
-  border:15px solid transparent;
+  padding: 3px;
+  border:7px solid transparent;
   /* border image */
   -moz-border-image:url(/items/frame_black.png) 30 30 stretch; /* Old Firefox */
   -webkit-border-image:url(/items/frame_black.png) 30 30 stretch;  /* Safari and Chrome */
@@ -68,7 +72,7 @@
 
 
 <section id="play" class="parallax-section">
-	<div class="container-fluid" style="height: 750px">
+	<div class="container-fluid" style="height: 800px">
 		<div class="row" align="center" style="margin-top: 50px">
 			<h4 style="font-weight: bolder; color: grey ">
 				PLAY AROUND WITH OUR PHOTO ART FILTERS
@@ -86,11 +90,11 @@
 						<input id="fileupload" type="file" name="item[image]" data-url="/welcome/image_upload" multiple>
 					</div>
 					<h4 class="no_bold" style="color: #ef9223;display: none" id="upload_image_reminder">Please Click Above Icon To Upload Image First</h4>
-					<h5 id="choose_another_image" style="cursor: pointer; display: none" onclick="choose_another_image();"><u>Choose Another Image</u></h5>
+					<h5 id="choose_another_image" style="cursor: pointer; display: none; font-weight: 300;" onclick="choose_another_image();"><u>Choose Another Image</u></h5>
 				</form>
 				
 				
-				<button class="btn btn-primary btn-lg" onclick="submit();" id="use_this_style" style="display: none; margin-top: 10px">Order A Product On This Style</button>
+				<button class="btn btn-primary btn-lg" onclick="submit();" id="use_this_style" style="display: none; margin-top: 10px">Order This Product</button>
 				
 			</div>
 			

@@ -286,7 +286,11 @@ span.form_error {
 }
 
 
-html, body {
-  height: 100%;
-}
 
+.canvas_options_image_border {
+
+	border-style: solid; 
+	border-width:1px; 
+	border-color: grey;
+	border-radius: 5px;
+}
