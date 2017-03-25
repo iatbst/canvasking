@@ -1,6 +1,6 @@
 <table class="table table-striped">
 		<thead>
-			<tr>
+			<tr >
 				<td align="center" >
 					<h4 style="margin-top: 50px">
 						SIZE
@@ -10,20 +10,20 @@
 					</h5>
 				</td>
 				<td align="center">
-					<%= image_tag '/canvas_depth_0.jpeg', class: "depth_options_image"%> 
+					<%= image_tag '/items/canvas_depth_0.png', class: "depth_options_image canvas_options_image_border"%> 
 					<h5 style="color:#EF9223"> ROLLED</h5> 
 				</td>
 				<td align="center">
-					<%= image_tag '/canvas_depth_0.75.jpeg', class: "depth_options_image"%>
+					<%= image_tag '/items/canvas_depth_0_75.png', class: "depth_options_image canvas_options_image_border"%>
 					<h5 style="color:#EF9223"> 0.75" DEEP</h5> 					
 				</td>
 				<td align="center">
-					<%= image_tag '/canvas_depth_1.5.jpeg', class: "depth_options_image"%>
+					<%= image_tag '/items/canvas_depth_1_5.png', class: "depth_options_image canvas_options_image_border"%>
 					<h5 style="color:#EF9223"> 1.5" DEEP</h5>
 				</td>
 				<td align="center">
-					<%= image_tag '/canvas_depth_2.5.jpeg', class: "depth_options_image"%> 
-					<h5 style="color:#EF9223"> 2.5" DEEP</h5>
+					<%= image_tag '/items/canvas_frame_black.jpg', class: "depth_options_image canvas_options_image_border"%> 
+					<h5 style="color:#EF9223"> OUTER FRAME</h5>
 				</td>
 				
 			</tr>
@@ -37,11 +37,13 @@
 							<%= size.gsub("\\", "").split('x').join(' x ') %>
 						</h4>
 					</td>
+					
+					<!-- Rolled -->
 					<td align="center">
 						<% if @size_price_obj['canvas'][size] != 0.0 %>
 							<a href="/items/new" style="text-decoration: none; color: black">
 								<div class="item_price">
-									<h4>$<%= @size_price_obj['canvas'][size] %></h4>
+									<h4>$<%= (@size_price_obj['canvas'][size].to_f*(1 - Canvasking::CANVAS_ROLL_DISCOUNT)).round(2) %></h4>
 								</div>
 							</a>					
 						<% else %>
@@ -50,6 +52,8 @@
 								</div>								
 						<% end %>
 					</td>
+					
+					<!-- 0.75" -->
 					<td align="center" >
 						<% if @size_price_obj['canvas'][size] != 0.0 %>
 							<a href="/items/new" style="text-decoration: none; color: black">
@@ -63,11 +67,13 @@
 								</div>								
 						<% end %>
 					</td>
+					
+					<!-- 1.5" -->
 					<td align="center" >
 						<% if @size_price_obj['canvas'][size] != 0.0 %>
 							<a href="/items/new" style="text-decoration: none; color: black">
 								<div class="item_price">
-									<h4>$<%= @size_price_obj['canvas'][size] %></h4>
+									<h4>$<%= (@size_price_obj['canvas'][size].to_f*(1 + Canvasking::CANVAS_DEPTH_1_5_ADD)).round(2) %></h4>
 								</div>
 							</a>					
 						<% else %>
@@ -76,11 +82,13 @@
 								</div>								
 						<% end %>
 					</td>
+					
+					<!-- Outer Frame -->
 					<td align="center" >
 						<% if @size_price_obj['canvas'][size] != 0.0 %>
 							<a href="/items/new" style="text-decoration: none; color: black">
 								<div class="item_price">
-									<h4>$<%= @size_price_obj['canvas'][size] %></h4>
+									<h4>$<%= (@size_price_obj['canvas'][size].to_f*(1 + Canvasking::CANVAS_FRAME_ADD)).round(2) %></h4>
 								</div>
 							</a>					
 						<% else %>

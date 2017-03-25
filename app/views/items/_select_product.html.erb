@@ -1,5 +1,25 @@
 <style>
 
+.coming_soon_product_icon {
+	width: auto;
+	height: auto;
+	max-width: 100px;
+	max-height: 100px;
+	
+    z-index: 3;
+    position: absolute;
+    top: 22px;
+    left: 55px;
+    
+    opacity: 1.0;
+	
+}
+
+.coming_soon_product {
+	opacity: 0.3;
+}
+
+
 
 </style>
 
@@ -15,7 +35,7 @@
 	</div>
 	
 	<% if @item.errors[:product_id] %>
-	<h6 id="product_error" style="color: red; margin-left: 20px"><%= @item.errors[:product_id][0] %></h6>
+		<h6 id="product_error" style="color: red; margin-left: 20px"><%= @item.errors[:product_id][0] %></h6>
 	<% end %>
 	
 	
@@ -25,26 +45,34 @@
 
 				<label id="product_single_canvas"> 
 					<%= f.radio_button :product_id, Product.find_by_name('canvas').id, style: "visibility: hidden;", id: "product_single_canvas_radio"%>
-					<%= image_tag '/items/single_canvas.jpg', class: "product_image"%> 
-					<h5 class="no_bold" style="margin-left: 15px">Canvas</h5>
+					<%= image_tag '/items/single_canvas.jpg', class: "product_image product_image_ready"%> 
+					<h5 class="no_bold ready_product_label" style="margin-left: 15px">Canvas</h5>
 					
 				</label>
 			</div>
 
 			<div class="col-md-4" align="center">
-				<label id="product_frame">
-					<%= f.radio_button :product_id, Product.find_by_name('framed print').id, style: "visibility: hidden;", id: "product_frame_radio"%>
+				<label id="product_frame" class="coming_soon_product">
+					<!-- Comming soon -->
+					<% if false %>
+						<%= f.radio_button :product_id, Product.find_by_name('framed print').id, style: "visibility: hidden;", id: "product_frame_radio" %>
+					<% end %>
 					<%= image_tag '/items/framed_prints.jpg',class: "product_image"%> 
 					<h5 class="no_bold" style="margin-left: 15px;">Framed Print</h5>
+					<%= image_tag '/items/coming_soon_icon.jpg', class: "coming_soon_product_icon" %>
 				</label>
 
 			</div>
 					
 			<div class="col-md-4" align="center">
-				<label id="product_triptych_canvas"> 
-					<%= f.radio_button :product_id, Product.find_by_name('split canvas').id, style: "visibility: hidden;", id: "product_triptych_canvas_radio"%>
+				<label id="product_triptych_canvas" class="coming_soon_product"> 
+					<!-- Comming soon -->
+					<% if false %>
+						<%= f.radio_button :product_id, Product.find_by_name('split canvas').id, style: "visibility: hidden;", id: "product_triptych_canvas_radio"%>
+					<% end %>
 					<%= image_tag '/items/split_canvas.jpg', class: "product_image"%> 
 					<h5 class="no_bold" style="margin-left: 15px">Split Canvas</h5>	
+					<%= image_tag '/items/coming_soon_icon.jpg', class: "coming_soon_product_icon" %>
 				</label>
 
 			</div>
@@ -56,7 +84,7 @@
 
 <script>
 
-$( "#product_canvas, #product_frame" ).click(function() {
+$( "#product_single_canvas" ).click(function() {
   if ( $('#product_error').length ){
   	$('#product_error').remove();
   	var error_num = parseInt($('#error_number').text());
@@ -70,4 +98,10 @@ $( "#product_canvas, #product_frame" ).click(function() {
   	}
   }
 });
+
+$('.product_image_ready').click(function (){
+	$('.ready_product_label').css("color", "black");
+	$(this).next().css( "color", "#ef9223" );
+});
+
 </script>

@@ -315,6 +315,7 @@ footer .fa {
   top: 0;
   position: relative;
   padding: 0;
+  
 }
 .social-icon li a:hover {
   background: #F6D76B;
@@ -325,10 +326,13 @@ footer .fa {
 #copyright {
   background: #343434;
   color: #ffffff;
-  padding-top: 30px;
-  padding-bottom: 15px;
+  padding-top: 20px;
+  padding-bottom: 10px;
   text-align: center;
+  height: 60px;
+  width: 100%;  
 }
+
 #copyright p {
   color: #ffffff;
 }

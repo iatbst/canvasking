@@ -125,7 +125,7 @@
 					<div class="col-md-9">
 						<br />
 					
-						<%= image_tag get_image_url(item, "overview"), class: "overview_image image_shadow_in_order_show #{add_frame_and_mat_class(item, 'order_show')}", id: "item_#{item.id}" %>
+						<%= image_tag get_image_url(item, "overview"), class: "overview_image image_shadow_in_order_show #{add_frame_class(item, 'order_show')}", id: "item_#{item.id}" %>
 								<div>
 									<div class="triptych_1_in_order_show image_shadow_in_order_show" id="item_<%= item.id%>_triple_1"></div>
 									<div class="triptych_2_in_order_show image_shadow_in_order_show"  id="item_<%= item.id%>_triple_2" style="margin-left: 8px; margin-right: 8px"></div>
@@ -142,9 +142,9 @@
 						Size: <%= item.size %>
 						<br />
 						<% if item.product.name.include?('canvas')%>
-							Depth: <%= item.depth %>
+							Depth: <%= item.canvas_depth %>
 							<br />
-							Border: <%= item.border %>								
+							Outer Frame: <%= item.canvas_frame %>								
 						<% else %>
 							Frame: <%= Frame.find(item.frame_id).name %>
 							<br />

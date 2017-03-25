@@ -132,6 +132,12 @@
     border-width: 10px;
 }
 
+.filter_demo_image {
+    height: auto;
+    width: auto;
+    max-height: 200px;
+    max-width: 200px;
+}
 .depth_options_image{
 
     height: auto; 
@@ -150,7 +156,8 @@
 }
 
 .image_black_frame_in_item {
-  border:20px solid transparent;
+  border:7px solid transparent;
+  padding: 3px;
   /* border image */
   -moz-border-image:url(/items/frame_black.png) 30 30 stretch; /* Old Firefox */
   -webkit-border-image:url(/items/frame_black.png) 30 30 stretch;  /* Safari and Chrome */
@@ -159,7 +166,8 @@
 }
 
 .image_white_frame_in_item {
-  border:20px solid transparent;
+  border:7px solid transparent;
+  padding: 3px;
   /* border image */
   -moz-border-image:url(/items/frame_white.png) 30 30 stretch; /* Old Firefox */
   -webkit-border-image:url(/items/frame_white.png) 30 30 stretch;  /* Safari and Chrome */
@@ -167,7 +175,9 @@
   border-image:url(/items/frame_white.png) 30 30 stretch; 
 }
 .image_brown_frame_in_item {
-  border:20px solid transparent;
+  border:7px solid transparent;
+  padding: 3px;
+  
   /* border image */
   -moz-border-image:url(/items/frame_brown.png) 30 30 stretch; /* Old Firefox */
   -webkit-border-image:url(/items/frame_brown.png) 30 30 stretch;  /* Safari and Chrome */
@@ -220,7 +230,7 @@ label > input.radio_hide {/* HIDE RADIO */
     padding: 5px;
   }
 
-  label:hover h5 {/* (RADIO CHECKED) IMAGE STYLES */
+  label:hover h5.ready_product_label {/* (RADIO CHECKED) IMAGE STYLES */
     color: #EF9223;
   }
   

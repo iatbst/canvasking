@@ -60,9 +60,9 @@ Thank you for your order from MagicPhotoPrints.Com. Once your package ships we w
 					<div class="col-md-9">
 						<br />
 						<% if get_image_url(item, "overview").include?('https://') %>
-							<%= image_tag get_image_url(item, "overview"), class:"overview_image image_shadow_in_item #{add_frame_and_mat_class(item, 'email')}" %>
+							<%= image_tag get_image_url(item, "overview"), class:"email_image image_shadow_in_item #{add_frame_class(item, 'email')}" %>
 						<% else %>
-							<%= image_tag ENV["website_url"] + get_image_url(item, "overview"), class:"overview_image image_shadow_in_item #{add_frame_and_mat_class(item, 'email')}" %>
+							<%= image_tag ENV["website_url"] + get_image_url(item, "overview"), class:"email_image image_shadow_in_item #{add_frame_class(item, 'email')}" %>
 						<% end %>
 					</div>
 
@@ -70,13 +70,13 @@ Thank you for your order from MagicPhotoPrints.Com. Once your package ships we w
 						<br />
 						
 						
-						Type: <%= item.product.name %>
+						Product: <%= item.product.name %>
 						<br />
 						Size: <%= item.size %>
 						<br />
-						Depth: <%= item.depth %>
+						Depth: <%= item.canvas_depth %>
 						<br />
-						Border: <%= item.border %>
+						Outer Frame: <%= item.canvas_frame %>
 						
 
 					</div>

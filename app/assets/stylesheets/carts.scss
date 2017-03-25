@@ -58,6 +58,12 @@
     width: auto; 
     max-width: 450px; 
     max-height: 450px;
+    border-style: outset;
+    border-width: 10px;  
+}
+
+.cart_image_canvas {
+
 }
 
 .image_frame_mat_in_cart {
@@ -65,7 +71,8 @@
 }
 
 .image_black_frame_in_cart {
-  border:20px solid transparent;
+  border:5px solid transparent;
+  padding: 2px;
   /* border image */
   -moz-border-image:url(/items/frame_black.png) 30 30 stretch; /* Old Firefox */
   -webkit-border-image:url(/items/frame_black.png) 30 30 stretch;  /* Safari and Chrome */
@@ -74,7 +81,8 @@
 }
 
 .image_white_frame_in_cart {
-  border:20px solid transparent;
+  border:5px solid transparent;
+  padding: 2px;
   /* border image */
   -moz-border-image:url(/items/frame_white.png) 30 30 stretch; /* Old Firefox */
   -webkit-border-image:url(/items/frame_white.png) 30 30 stretch;  /* Safari and Chrome */
@@ -82,7 +90,8 @@
   border-image:url(/items/frame_white.png) 30 30 stretch; 
 }
 .image_brown_frame_in_cart {
-  border:20px solid transparent;
+  border:5px solid transparent;
+  padding: 2px;
   /* border image */
   -moz-border-image:url(/items/frame_brown.png) 30 30 stretch; /* Old Firefox */
   -webkit-border-image:url(/items/frame_brown.png) 30 30 stretch;  /* Safari and Chrome */

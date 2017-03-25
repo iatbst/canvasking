@@ -3,7 +3,7 @@
 
 	<div class="row" style="margin-bottom: 20px">
 
-		<% @cart.items.sort_by { |obj| obj.created_at }.reverse.each_with_index do |item, ix| %>
+		<% @cart.items.sort_by { |obj| obj.updated_at }.reverse.each_with_index do |item, ix| %>
 
 		<div class="container">
 			<div class="row">
@@ -11,7 +11,7 @@
 					<br />
 					
 					<a data-method="get" style="color: black" href="/items/<%= item.id %>/edit"> 		
-						<%= image_tag get_image_url(item, "cart"), class: "cart_image image_shadow_in_cart #{add_frame_and_mat_class(item, 'cart')}", id: "item_#{item.id}" %>	
+						<%= image_tag get_image_url(item, "cart"), class: "cart_image cart_image_canvas image_shadow_in_cart #{add_frame_class(item, 'cart')}", id: "item_#{item.id}" %>	
 					<div>
 						<div class="triptych_1_in_cart image_shadow" id="item_<%= item.id%>_triple_1"></div>
 						<div class="triptych_2_in_cart image_shadow"  id="item_<%= item.id%>_triple_2" style="margin-left: 12px; margin-right: 12px"></div>
@@ -21,30 +21,30 @@
 				
 				</div>
 
-				<div class="col-md-3" >
-					<br />
-					<br />
+				<div class="col-md-3" style="font-size: 18px; font-weight: 300">
 					<br />
 
-					Type: <%= item.product.name %>
+
+					Product: <%= item.product.name.capitalize %>
 					<br />
-					Size: <%= item.size %>
+					Size: <%= item.size.split('x').join(' x ') %>
 					<br />
 					<% if item.product.name.include?('canvas')%>
-					Depth: <%= item.depth %>
-					<br />
-					Border: <%= item.border %>
+						Depth: <%= item.canvas_depth.include?('.') ? "#{item.canvas_depth}\"" : "#{item.canvas_depth}" %>
+						<br />
+						Outer Frame: <%= item.canvas_frame %>
 					<% else %>
-					Frame: <%= Frame.find(item.frame_id).name %>
+						Frame: <%= Frame.find(item.frame_id).name %>
 					<br />
 					Mat: <%= "#{item.mat}\"".gsub("0.0\"", "No") %>
 					<% end %>
-
+					
+	
 				</div>
-
+				
 			</div>
 
-			<div class="row">
+			<div class="row" style="font-size: 18px; font-weight: 300" >
 				<div class="col-md-6"></div>
 				<div class="col-md-3">
 					<b> $<%= item.price %></b>

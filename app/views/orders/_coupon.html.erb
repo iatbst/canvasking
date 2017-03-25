@@ -1,10 +1,6 @@
 <h3>Apply Coupon</h3>
 <hr style="width: 550px; margin-left: 1px; border-width: 1px; border-color:#E2E2E2;"/>
 
-<div class="row" style="margin-left: 10px; margin-top: -10px">
-	<a href="#">Need a coupon code ?</a>
-</div>
-<br />
 
 <!-- Coupon Validations -->
 <div class="row" style="margin-left: -10px; margin-bottom: 0px">
@@ -21,7 +17,7 @@
 <div class="row" style="margin-top: 0px; margin-left: 10px; margin-bottom: 80px">
 	<h5 style="color: grey" id="coupon_applied">
 		<% if @cart.coupon %>
-			<span class="glyphicon glyphicon-ok" style="color: #709BC5"></span><%= " #{@cart.coupon.description} ( #{@cart.coupon.code} ) " %><a onclick="remove_coupon();" style="color: black; cursor: pointer; text-decoration: underline;">remove</a>
+			<span class="glyphicon glyphicon-ok" style="color: green"></span><%= " #{@cart.coupon.description} ( #{@cart.coupon.code} ) " %><a onclick="remove_coupon();" style="color: black; cursor: pointer; text-decoration: underline;">remove</a>
 		<% end %>
 	</h5>
 </div>
@@ -42,13 +38,14 @@
 				if (result['error']){
 					$('#coupon_error_msg').text(result['error']);
 				} else {
-					// update price in summary
-					$('#coupon_saving').text('Coupon save: ' + '-$' + result['saving']);
+					// update price in summary	
+					$('#coupon_saving').show();
+					$('#coupon_saving_value').text('-$' + result['saving']);
 					$('#total_price').text('$' + result['discount_price']);
 					
 					// append coupon 
 					var remove_html = '<a onclick="remove_coupon();" style="color: black; cursor: pointer; text-decoration: underline;">remove</a>';
-					$('#coupon_applied').append('<span class="glyphicon glyphicon-ok" style="color: #709BC5"></span> ' + result['desc'] + ' ( ' + code + ' ) ' + remove_html);
+					$('#coupon_applied').append('<span class="glyphicon glyphicon-ok" style="color: green"></span> ' + result['desc'] + ' ( ' + code + ' ) ' + remove_html);
 					
 				}
 				
@@ -70,7 +67,7 @@
 					$('#coupon_error_msg').text(result['error']);
 				} else {
 					// update price in summary
-					$('#coupon_saving').text('');
+					$('#coupon_saving').hide();
 					$('#total_price').text('$' + result['price']);
 					
 					// remove coupon 

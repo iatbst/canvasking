@@ -36,82 +36,159 @@
 	</div>
 </div>
 
-<div class="row box" id="summary_and_submit" style="<% if item_in_cart?(@item) %> border-color: black;<% end %>margin-top: 30px; height: 390px">
+<div class="row box" id="summary_and_submit" style="<% if item_in_cart?(@item) %> border-color: black;<% end %>margin-top: 30px; height: 450px">
 	<div style="<% if !item_in_cart?(@item) %>opacity: 0.4;<% end %>" id="summary_and_submit_div">
 	<div class="row" align="center">
 		<h3 style="font-weight: 600; margin-top: 40px">
 			SUMMARY
 		</h3>
 	</div>
-	<hr style="width: 70%; border-color: black; margin-top: 0px"/>
-	<div class="row" style="height:120px; margin-top: 20px" >
+	<hr style="width: 63%; border-color: black; margin-top: 0px"/>
+	<div class="row" style=" margin-top: 20px; height: 270px" >
 
-		<div class="col-md-5 col-md-offset-4">
+		<div class="row">
 			<br />
 			<div style="margin-left: 25px">
-			<h4 class="no_bold" id="product_choice"> 
-				<% if !@item.product.nil? %>
+			
+			<!-- Row 1 Product -->
+			<div class="row">
+				<div class="col-md-5 col-md-offset-2">
+				
+					<h4 style="font-weight: 300" id="product_choice"> 
+					<% if !@item.product.nil? %>
 					<%= "#{@item.product.name.capitalize}" %>
-				<% end %> 
-			</h4>
-	
-			<h4 class="no_bold" id="size_choice"> 
-				<% if !@item.size.nil? && !@item.size.empty? %>
-					<%= "#{@item.size.split('x').join(' x ')} ( H x W )" %>
-				<% end %> 
-			</h4>
-		
+					<% end %> 
+					</h4>
+				</div>
+				<div class="col-md-2">
+				</div>
+			</div>
 			
-			<h4 class="no_bold" id="attr1_choice"> 
-				<% if !@item.product.nil? && @item.product.name.include?("canvas") %>
-					<% if !@item.depth.nil? %>
-						<% if @item.depth.to_i == 0 %>
-							<%= "Rolled. No frame." %>
+			<!-- Row 2 Size -->
+			<div class="row">
+				<div class="col-md-5 col-md-offset-2">
+					<h4 style="font-weight: 300" id="size_choice"> 
+						<% if !@item.size.nil? && !@item.size.empty? %>
+							<%= "#{@item.size.split('x').join(' x ')} ( H x W )" %>
+						<% end %> 
+					</h4>
+				</div>
+				<div class="col-md-2">
+					<h4 id="base_price" style="font-weight: 300">
+						$<%= @item.option_prices["base_price"] %>
+					</h4>
+				</div>
+			</div>
+			
+			<!-- Row 3 Attr 1 -->
+			<div class="row">
+				<div class="col-md-5 col-md-offset-2">
+					<h4 style="font-weight: 300" id="attr1_choice"> 
+						<% if !@item.product.nil? && @item.product.name.include?("canvas") %>
+							<% if !@item.canvas_depth.nil? %>
+								<% if @item.canvas_depth == "Rolled" %>
+									<%= "Rolled. No frame." %>
+								<% else %>
+									<%= "#{@item.canvas_depth}\" deep canvas wrap" %>
+								<% end %>
+		
+							<% else %>
+								<%= "Depth: ---" %>
+							<% end %>
+						<% elsif !@item.product.nil? && @item.product.name.include?("frame") %>
+							<% if !@item.frame_id.nil? %>
+								<%= "Frame: #{Frame.find(@item.frame_id).name}" %>
+							<% else %>
+								<%= "Frame: ---" %>
+							<% end %>
+						<% end %> 
+					</h4>
+				</div>
+				<div class="col-md-2">
+					<h4 id="attr1_price" style="font-weight: 300">
+						<% if @item.product && @item.product.name == 'canvas' %>
+							<% if @item.canvas_depth == 'Rolled' %>
+								-$<%= @item.option_prices['canvas_depth_0_save']%>
+							<% elsif @item.canvas_depth == '1.5' %>
+								$<%= @item.option_prices['canvas_depth_1_5_add']%>
+							<% end %>
 						<% else %>
-							<%= "#{@item.depth}\" deep canvas wrap" %>
+						
 						<% end %>
-
-					<% else %>
-						<%= "Depth: ---" %>
-					<% end %>
-				<% elsif !@item.product.nil? && @item.product.name.include?("frame") %>
-					<% if !@item.frame_id.nil? %>
-						<%= "Frame: #{Frame.find(@item.frame_id).name}" %>
-					<% else %>
-						<%= "Frame: ---" %>
-					<% end %>
-				<% end %> 
-			</h4>
-			
+					</h4>
+				</div>
+			</div>			
 		
-			
-			<h4 class="no_bold" id="attr2_choice"> 
-				<% if !@item.product.nil? && @item.product.name.include?("canvas") %>
-					<% if !@item.border.nil? %>
-						<%= "#{@item.border.capitalize} Border" %>
-					<% else %>
-						<%= "Border: ---" %>
-					<% end %>
-				<% elsif !@item.product.nil? && @item.product.name.include?("frame") %>
-					<% if !@item.mat.nil? %>
-						<%= "Mat: #{@item.mat}\"".gsub("0.0\"", "No") %>
-					<% else %>
-						<%= "Mat: ---" %>
-					<% end %>
-				<% end %>  
-			</h4>
-			<br />
-			<h4 class="no_bold"> 
-				Subtotal: <b id="price_choice"><%= "$#{@item.price}" %></b>
-			</h4>		
+			<!-- Row 4 Attr 2 -->
+			<div class="row">
+				<div class="col-md-5 col-md-offset-2">
+					<h4 style="font-weight: 300" id="attr2_choice"> 
+						<% if !@item.product.nil? && @item.product.name.include?("canvas") %>
+							<% if !@item.canvas_frame.nil? %>
+								<%= "#{@item.canvas_frame.capitalize} Outer Frame" %>
+							<% else %>
+								<%= "Frame: ---" %>
+							<% end %>
+						<% elsif !@item.product.nil? && @item.product.name.include?("frame") %>
+							<% if !@item.mat.nil? %>
+								<%= "Mat: #{@item.mat}\"".gsub("0.0\"", "No") %>
+							<% else %>
+								<%= "Mat: ---" %>
+							<% end %>
+						<% end %>  
+					</h4>
+				</div>
+				<div class="col-md-2">
+					<h4 id="attr2_price" style="font-weight: 300">
+						<% if @item.product && @item.product.name == 'canvas' %>
+							<% if @item.canvas_frame != 'No' %>
+								$<%= @item.option_prices['canvas_frame_add']%>
+							<% end %>
+						<% else %>
+						
+						<% end %>
+					</h4>
+				</div>
 			</div>
 
+			<!-- Row 5 Shipping -->
+			<div class="row">
+				<div class="col-md-5 col-md-offset-2">
+					<h4 style="font-weight: 300"> 
+						Shipping
+					</h4>
+				</div>
+				<div class="col-md-2">
+					<h4 id="base_price" style="font-weight: 500; color: green">
+						FREE
+					</h4>
+				</div>
+			</div>
+						
+			<hr style="border-color: black;width: 60%; margin-left: 110px; margin-bottom: 20px; margin-top: 0px;"/>
+			
+			<!-- Row 6 Total Price -->
+			<div class="row">
+				<div class="col-md-5 col-md-offset-2">
+					<h4 style="font-weight: 900"> 
+						Subtotal: 
+					</h4>		
+				</div>
+				<div class="col-md-2">
+					<h4 id="attr2_price">
+						<b id="final_price"><%= "$#{@item.price}" %></b>
+					</h4>
+				</div>
+			</div>
+		
 		</div>
+		</div>
+
 	</div>
 
 
 	
-			<div class="row" style="height:30px; margin-top: 50px" align="center" >
+			<div class="row" style="height:30px; margin-top: 0px" align="center" >
 				<%= hidden_field_tag :go_to_cart, true %>
 				<% if item_in_cart?(@item) %>
 					<%= hidden_field_tag :save_changes, true %>

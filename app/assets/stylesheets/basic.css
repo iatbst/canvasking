@@ -175,6 +175,8 @@ span.form_error {
     width: auto; 
     max-width: 200px; 
     max-height: 200px;	
+    border-style: outset;
+    border-width: 5px;  
 }
 .crop_image {
     height: auto; 
@@ -252,31 +254,43 @@ span.form_error {
 
 /* test */
 .image_black_frame_in_email {
-  border:15px solid transparent;
-  /* border image */
-  -moz-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_black.png) 30 30 stretch; /* Old Firefox */
-  -webkit-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_black.png) 30 30 stretch;  /* Safari and Chrome */
-  -o-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_black.png) 30 30 stretch; /* Opera */
-  border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_black.png) 30 30 stretch; 
+  border-style: solid;
+  border-width: 7;
+  border-color: black;
+  padding: 3px;
+ 
 }
 
 .image_white_frame_in_email {
-  border:15px solid transparent;
-  /* border image */
-  -moz-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_white.png) 30 30 stretch; /* Old Firefox */
-  -webkit-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_white.png) 30 30 stretch;  /* Safari and Chrome */
-  -o-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_white.png) 30 30 stretch; /* Opera */
-  border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_white.png) 30 30 stretch; 
+  border-style: solid;
+  border-width: 7;
+  border-color: #e9e5e4;
+  padding: 3px;
 }
 .image_brown_frame_in_email {
-  border:15px solid transparent;
-  /* border image */
-  -moz-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_brown.png) 30 30 stretch; /* Old Firefox */
-  -webkit-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_brown.png) 30 30 stretch;  /* Safari and Chrome */
-  -o-border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_brown.png) 30 30 stretch; /* Opera */
-  border-image:url(https://arcane-sands-61757.herokuapp.com/items/frame_brown.png) 30 30 stretch; 
+  border-style: solid;
+  border-width: 7;
+  border-color: #b48152;
+  padding: 3px;
+}
+
+.email_image {
+    height: auto; 
+    width: auto; 
+    max-width: 500px; 
+    max-height: 500px;
 }
 
 .image_frame_mat_in_email {
   padding: 15px;
+}
+
+
+
+.canvas_options_image_border {
+
+	border-style: solid; 
+	border-width:1px; 
+	border-color: grey;
+	border-radius: 5px;
 }

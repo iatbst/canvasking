@@ -1,15 +1,24 @@
+<style>
+.usps_dhl_logos {
+	width: auto;
+	height: auto;
+	max-width: 150px;
+	max-height: 150px;
+}
+</style>
 <h3>Shipping Address</h3>
 <hr style="width: 550px; margin-left: 1px; border-width: 1px; border-color:#E2E2E2;"/>
 
 <div class="row">
-	<div class="col-md-1">
-		<%= image_tag '/dhl_logo_sm.png' %>
+	<div class="col-md-3">
+		<%= image_tag '/order/usps_dhl_logos.png', class: "usps_dhl_logos"%>
 	</div>
-	<div class="col-md-8" style="margin-left: 10px">
-		<em style="color: grey"> Most shipments will be sent out via DHL. If you are outside the U.S. or Canada, please contact us for a shipping quote. </em>
+	<div class="col-md-8" style="margin-left: -30px">
+		<em style="color: grey"> Most shipments will be sent out via DHL or USPS. If you are <br />outside the U.S. , please contact us for a shipping quote. </em>
 	</div>
 </div>
 
+	
 <!-- Shipping Validations -->
 <% if @order.errors.any? %>
 <div id="error_explanation">
