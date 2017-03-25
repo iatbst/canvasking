@@ -286,6 +286,9 @@ span.form_error {
 }
 
 
+html, body {
+  height: 100%;
+}
 
 .canvas_options_image_border {
 
