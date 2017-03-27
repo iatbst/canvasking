@@ -35,8 +35,8 @@
 						Outer Frame: <%= item.canvas_frame %>
 					<% else %>
 						Frame: <%= Frame.find(item.frame_id).name %>
-					<br />
-					Mat: <%= "#{item.mat}\"".gsub("0.0\"", "No") %>
+						<br />
+						Mat: <%= "#{item.mat}\"".gsub("0.0\"", "No") %>
 					<% end %>
 					
 	
