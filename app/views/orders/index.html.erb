@@ -21,7 +21,18 @@
 
 </style>
 
-<div class="container" style="margin-top: 100px" >
+<div id="item_messages_note" style="display: none" class="note">
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1">
+			<h3 style="margin-top: 0px"><img src='/thin_check_icon.png'  class="note_ok_icon" />&nbsp;Thanks for your feedbacks !</h2>
+		</div>
+		<div class="col-md-1">
+			<img src='/note_close_icon.ico'  class="note_close_icon" style="cursor: pointer"/>
+		</div>
+	</div>
+</div>
+
+<div class="container" style="margin-top: 100px; margin-bottom: 50px; min-height: 100%;" >
 	
 	<% if flash[:feedback] %>
 		<div class="row box" style="border-color: green; border-width: 2px" align="center">
@@ -85,7 +96,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-6">
+							<div class="col-md-6" style="font-weight: 300">
 								<br />
 								<ul class="fa-ul">
 									<li>

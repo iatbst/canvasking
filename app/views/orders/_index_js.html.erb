@@ -12,8 +12,18 @@
 
 			<% end %>
 		<% end %>
+
+		// Show notes
+		<% if flash[:item_messages_note] == true %>
+			show_note('item_messages_note');
+		<% end %>
+		
 	});
 
+	function show_note(id){	
+		$('#' + id).slideDown().delay(1500).slideUp();
+	}
+	
 	function divide_image_to_3(image_id, div_id) {
 		$('#' + image_id).hide();
 		$('#' + div_id + '_1').show();
