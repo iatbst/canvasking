@@ -289,7 +289,7 @@ class OrdersController < ApplicationController
   def charge_money_by_stripe(amount, order)
     # Set your secret key: remember to change this to your live secret key in production
     # See your keys here: https://dashboard.stripe.com/account/apikeys
-    Stripe.api_key = ENV["stripe_secret_key_test"]
+    Stripe.api_key = ENV["stripe_secret_key"]
 
     # Get the credit card details submitted by the form
     token = params[:stripeToken]

@@ -5,14 +5,14 @@ class ItemMessagesController < ApplicationController
 
     @message = @item.item_messages.create(message_params)
     @item.update(item_params)
-    flash[:feedback] = "Thanks for your feedbacks !"
+    flash[:item_messages_note] = true
     if !@item.rate.nil?
       if @item.rate > 4
-        flash[:rate] = "We feel so great today you like our product :)"
+        flash[:item_messages_note_content] = "We feel so great today you like our product :)"
       elsif @item.rate == 3
-        flash[:rate] = "We will improve our product for you !"
+        flash[:item_messages_note_content] = "We will improve our product for you !"
       else
-        flash[:rate] = "We feel sorry to let you down, please send us on support@canvasking.com for replacement or refund."
+        flash[:item_messages_note_content] = "We feel sorry to let you down, please send us on support@canvasking.com for replacement or refund."
       end
     end
     
