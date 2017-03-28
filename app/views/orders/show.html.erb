@@ -90,7 +90,9 @@
 		<div class="col-md-6">
 			<br />
 			<h4>Payment Method</h4>
-			VISA &nbsp;**** &nbsp;4369
+			<%= @order.payment_info['brand'] ? @order.payment_info['brand'].upcase : nil %>
+			&nbsp;**** &nbsp;
+			<%= @order.payment_info['last4'] %>
 		</div>
 		<div class="col-md-3" style="margin-bottom: 20px">
 			<br />

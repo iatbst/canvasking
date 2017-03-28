@@ -310,6 +310,12 @@ class OrdersController < ApplicationController
       :source => token,
       :description => "Order: #{order.number}"
       )
+      
+      # fill in payment info
+      order.payment_info['last4'] = charge.source.last4
+      order.payment_info['brand'] = charge.source.brand
+      order.save!
+      
     rescue Stripe::CardError => e
     # The card has been declined
       return false, e.message
