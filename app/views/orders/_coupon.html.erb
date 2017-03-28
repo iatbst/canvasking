@@ -40,6 +40,12 @@
 				} else {
 					// update price in summary	
 					$('#coupon_saving').show();
+					$('#original_price').text('$' + result['price']);
+					if (parseInt(result['item_count']) > 1 ) {
+						$('#item_count').text(result['item_count'] + ' Items');
+					} else {
+						$('#item_count').text(result['item_count'] + ' Item');
+					}					
 					$('#coupon_saving_value').text('-$' + result['saving']);
 					$('#total_price').text('$' + result['discount_price']);
 					
@@ -69,7 +75,13 @@
 					// update price in summary
 					$('#coupon_saving').hide();
 					$('#total_price').text('$' + result['price']);
-					
+					$('#original_price').text('$' + result['price']);
+					if (parseInt(result['item_count']) > 1 ) {
+						$('#item_count').text(result['item_count'] + ' Items');
+					} else {
+						$('#item_count').text(result['item_count'] + ' Item');
+					}	
+										
 					// remove coupon 
 					$('#coupon_applied').html('');
 				}

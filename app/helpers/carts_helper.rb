@@ -1,8 +1,12 @@
 module CartsHelper
     
+    include OrdersHelper
+    
     # IMPORTANT: Anytime items changed in current cart, this function should be invoked
     # eg, items add,remove, edit quantity etc
     def update_total_price_and_quantity_in_cart
+      
+      # update price and quantity
       cart = get_current_cart
       price = 0
       quantity = 0
@@ -12,6 +16,12 @@ module CartsHelper
       end
       cart.price = price
       cart.quantity = quantity
+      
+      # update coupon price if necessary
+      if cart.coupon_id
+        cart.discount_price = calculate_discount_price(cart.price, cart.coupon)
+      end
+      
       cart.save!      
     end
     
@@ -45,6 +55,11 @@ module CartsHelper
        cart.save!
     end
     
+    def empty_cart?
+       cart = get_current_cart
+       return cart.quantity == 0 && cart.price == 0
+    end
+      
     def get_current_cart
       if user_signed_in?
         # If user signed in, get the user cart

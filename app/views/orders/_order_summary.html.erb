@@ -7,16 +7,18 @@
 
 		<div class="row" style="margin-left: 10px">
 			<div class="col-md-5 col-md-offset-2" align="left">
-				<h4 class="no_bold"><%= @cart.quantity %>
-				<% if @cart.quantity > 1 %>
-				<%= "Item".pluralize %>
-				<% else %>
-				<%= "Item" %>
-				<% end %> </h4>
+				<h4 class="no_bold" id="item_count">
+					<%= @cart.quantity %>
+					<% if @cart.quantity > 1 %>
+						<%= "Item".pluralize %>
+					<% else %>
+						<%= "Item" %>
+					<% end %> 
+				</h4>
 			</div>
 
 			<div class="col-md-4" align="left">
-				<h4> $<%= @cart.price %> </h4>
+				<h4 id="original_price"> $<%= @cart.price %> </h4>
 
 			</div>
 
@@ -70,9 +72,9 @@
 	<hr style="width: 70%" />
 	<div class="row" align="center" style="height:50px;" >
 		<% if @cart.coupon %>
-		<h3 class="no_bold">Total: <b id="total_price">$<%= @cart.discount_price + @shipping_cost + @tax %></b></h3>
+			<h3 class="no_bold">Total: <b id="total_price">$<%= @cart.discount_price + @shipping_cost + @tax %></b></h3>
 		<% else %>
-		<h3 class="no_bold">Total: <b id="total_price">$<%= @cart.price + @shipping_cost + @tax %></b></h3>
+			<h3 class="no_bold">Total: <b id="total_price">$<%= @cart.price + @shipping_cost + @tax %></b></h3>
 		<% end %>
 
 	</div>
