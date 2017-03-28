@@ -1,0 +1,106 @@
+
+
+<% orders.each do |order| %>
+	<div class="row" style="margin-top: 20px">
+		<div class="panel panel-default">
+			<!-- Default panel contents -->
+			<div class="panel-heading">
+				<div class="container" >
+					<div class="row">
+						<div class="col-md-2">
+							<h5> Order Placed </h5> <%= order.created_at.strftime("%b.%d %Y") %>
+						</div>
+						<div class="col-md-2">
+							<h5>TOTAL:</h5>$<%= order.total_price %>
+						</div>
+						<div class="col-md-2">
+							<h5>SHIP TO:</h5>
+							<%= order.shipping_full_name %>
+						</div>
+						<div class="col-md-5" align="right">
+							<h5>Order # <%= order.number %></h5>
+							<%= link_to 'Order Detail', order_path(order) %>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Table -->
+			<table class="table">
+				<tbody>
+					<% order.items.each do |item| %>
+					<tr>
+						<td>
+						<div class="row">
+							<div class="col-md-3 col-md-offset-1">
+								<br />
+								<%= image_tag get_image_url(item, "thumb"), class: "thumb_image image_shadow_in_order_index #{add_frame_class(item, 'order_index')}", id: "item_#{item.id}" %>
+								<div>
+									<div class="triptych_1_in_order_index image_shadow_in_order_index" id="item_<%= item.id%>_triple_1"></div>
+									<div class="triptych_2_in_order_index image_shadow_in_order_index"  id="item_<%= item.id%>_triple_2" style="margin-left: 5px; margin-right: 5px"></div>
+									<div class="triptych_3_in_order_index image_shadow_in_order_index" id="item_<%= item.id%>_triple_3"></div>
+								</div>
+							</div>
+
+							<div class="col-md-6" style="font-weight: 300">
+								<br />
+								<ul class="fa-ul">
+									<li>
+										Product: <%= item.product.name %>
+									</li>
+									<li>
+										Size: <%= item.size %>
+									</li>
+									<% if item.product.name.include?('canvas')%>
+									<li>
+										Depth: <%= item.canvas_depth %>
+									</li>
+									<li>
+										Outer Frame: <%= item.canvas_frame %>
+									</li>
+
+									<% else %>
+									<li>
+										Frame: <%= Frame.find(item.frame_id).name %>
+									</li>
+									<li>
+										Mat: <%= "#{item.mat}\"".gsub("0.0\"", "No") %>
+									</li>
+									<% end %>
+
+									<br />
+									Quantity:<b> <%= item.quantity %></b>
+									<br />
+									Price:<b> $<%= item.price %></b>
+									<br />
+									<br />
+									
+									
+								</ul>
+
+							</div>
+
+							<div class="col-md-2">
+								<br />
+								
+								<br />
+								
+								<button type="button" class="btn btn-default btn-sm orange_style" data-toggle="modal" data-target="#leave_us_messages_<%= item.id %>" style="width: 90%">
+									Leave Us Messages
+								</button>
+								<%= render partial: 'leave_us_message', locals: {item: item}%>
+								<br />
+								
+							</div>
+
+						</div></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+
+		</div>
+
+	</div>
+
+	<% end %>

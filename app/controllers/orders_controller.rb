@@ -15,7 +15,9 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @orders = current_user.orders.sort_by { |obj| obj.created_at }.reverse
+    #@orders = current_user.orders.sort_by { |obj| obj.created_at }.reverse
+    @open_orders = current_user.orders.where('status = ? OR status = ?', 'new', 'processing').sort_by { |obj| obj.created_at }.reverse
+    @history_orders = current_user.orders.where(status: 'closed').sort_by { |obj| obj.created_at }.reverse
   end
 
   def create
