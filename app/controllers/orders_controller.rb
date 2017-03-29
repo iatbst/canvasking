@@ -4,14 +4,20 @@ class OrdersController < ApplicationController
   
   before_action :authenticate_user!
   def new
+    # If empty cart
+    if empty_cart?
+      redirect_to cart_path
+    end
+           
     @order = Order.new
     prepare_data_for_order_new_page
-    update_coupon_in_cart
-    
+    remove_coupon_in_cart
   end
 
   def index
-    @orders = current_user.orders.sort_by { |obj| obj.created_at }.reverse
+    #@orders = current_user.orders.sort_by { |obj| obj.created_at }.reverse
+    @open_orders = current_user.orders.where('status = ? OR status = ?', 'new', 'processing').sort_by { |obj| obj.created_at }.reverse
+    @history_orders = current_user.orders.where(status: 'closed').sort_by { |obj| obj.created_at }.reverse
   end
 
   def create
@@ -25,9 +31,13 @@ class OrdersController < ApplicationController
 
     # Shipping form validation success, try to charge
     if @order.valid?
-      cart = get_current_cart
+      
+      # Re-calculate Price !!! This step is very important to charge 
+      # correct amount
+      update_total_price_and_quantity_in_cart
       
       # CHARGE MONEY: Stripe process money amount as cents
+      cart = get_current_cart
       if cart.coupon
         charge_amount = (cart.discount_price*100).to_i
       else
@@ -151,7 +161,12 @@ class OrdersController < ApplicationController
       cart.discount_price = calculate_discount_price(cart.price, coupon)
       cart.save
       
-      render json: {'discount_price'=> cart.discount_price, 'code'=>code, 'desc'=>coupon.description, 'saving'=> cart.price - cart.discount_price }
+      render json: {'discount_price'=> cart.discount_price, 
+                    'code'=>code, 
+                    'desc'=>coupon.description, 
+                    'saving'=> cart.price - cart.discount_price,
+                    'price'=>cart.price,
+                    'item_count'=>cart.quantity }
       
     else
       # Invalid Coupon code
@@ -166,7 +181,8 @@ class OrdersController < ApplicationController
     cart.coupon_id = nil
  
     if cart.save
-      render json: {'price'=> cart.price }
+      render json: {'price'=> cart.price,
+                    'item_count'=>cart.quantity }
     else
       render json: {'error'=> "Can't remove this coupon."}
     end
@@ -220,13 +236,6 @@ class OrdersController < ApplicationController
     end
   end
   
-  def calculate_discount_price(price, coupon)
-    if coupon.discount_by_val
-      return price - coupon.discount_val
-    else
-      return (price*((100 - coupon.discount_ptg).to_f/100.to_f)).round(2)
-    end  
-  end
   
   def generate_unique_order_number
     # Find a unique one
@@ -242,12 +251,11 @@ class OrdersController < ApplicationController
   def order_params
     params.require(:order).permit(:shipping_full_name, :shipping_address_1, :shipping_address_2, :shipping_city, :country_id, :state_id, :shipping_zip, :shipping_phone)
   end
-
-  def update_coupon_in_cart
-    # coupon need to update every time user checkout, in case, eg coupon expire, not meet coupon condition
+  
+  # Remove coupon every time user re-checkout
+  def remove_coupon_in_cart
     cart = get_current_cart
-    coupon = cart.coupon
-    if coupon && ( !coupon_is_valid(coupon.code) || !coupon_is_applicable(coupon.code, cart))
+    if cart.coupon
       cart.coupon = nil
       cart.discount_price = nil
       cart.save
@@ -302,6 +310,12 @@ class OrdersController < ApplicationController
       :source => token,
       :description => "Order: #{order.number}"
       )
+      
+      # fill in payment info
+      order.payment_info['last4'] = charge.source.last4
+      order.payment_info['brand'] = charge.source.brand
+      order.save!
+      
     rescue Stripe::CardError => e
     # The card has been declined
       return false, e.message

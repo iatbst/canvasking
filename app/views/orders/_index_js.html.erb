@@ -2,7 +2,7 @@
 
 	$( window ).on( "load", function(){
 
-		<% @orders.each do |order| %>
+		<% (@open_orders + @history_orders).each do |order| %>
 			<% order.items.each do |item| %>
 			// Add frame effects if necessary
 			if (<%= image_is_triptych(item) %>){
@@ -20,6 +20,11 @@
 		
 	});
 
+	$('li.order_tab > a').click( function () {
+		$('li.order_tab > a').css('color', 'grey');
+		$(this).css('color', '#EF9223');		
+	});
+	
 	function show_note(id){	
 		$('#' + id).slideDown().delay(1500).slideUp();
 	}

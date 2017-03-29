@@ -28,6 +28,8 @@ module Canvasking
       html_tag
     }
     
+    config.exceptions_app = self.routes
+    
   end
   
   ############################################################################
@@ -76,7 +78,8 @@ module Canvasking
   TAOBAO_ORDER_DETAIL_URL = 'https://trade.taobao.com/trade/detail/trade_order_detail.htm'
   TAOBAO_SHIPPING_DETAIL_URL = 'https://detail.i56.taobao.com/trace/trace_detail.htm'
   TAOBAO_ORDER_QUERY_INTERVAL = 3600
-  ORDER_CLOSED_WAITING_TIME = 3600*24*30 # wait 30 days after customer received product, before marking order status to CLOSED
+  ORDER_CLOSED_WAITING_TIME = 60
+  #ORDER_CLOSED_WAITING_TIME = 3600*24*30 # wait 30 days after customer received product, before marking order status to CLOSED
 
   # Product Prices
   # - Currency: RMB

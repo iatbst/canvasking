@@ -112,7 +112,7 @@ class SiteManageController < ApplicationController
   def update_order_status
     @processing_orders = Order.where(status: 'processing', processing_status: 5)
     @processing_orders.each do | order|
-      if (order.order_recv_date - Time.now) > Canvasking::ORDER_CLOSED_WAITING_TIME
+      if ( Time.now - order.order_recv_date ) > Canvasking::ORDER_CLOSED_WAITING_TIME
         order.status = 'closed'
         order.save
       end

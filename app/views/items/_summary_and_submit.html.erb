@@ -54,7 +54,7 @@
 			<div class="row">
 				<div class="col-md-5 col-md-offset-2">
 				
-					<h4 style="font-weight: 300" id="product_choice"> 
+					<h4 style="font-weight: 300; margin-left: 50px" id="product_choice"> 
 					<% if !@item.product.nil? %>
 					<%= "#{@item.product.name.capitalize}" %>
 					<% end %> 
@@ -67,7 +67,7 @@
 			<!-- Row 2 Size -->
 			<div class="row">
 				<div class="col-md-5 col-md-offset-2">
-					<h4 style="font-weight: 300" id="size_choice"> 
+					<h4 style="font-weight: 300; margin-left: 50px" id="size_choice"> 
 						<% if !@item.size.nil? && !@item.size.empty? %>
 							<%= "#{@item.size.split('x').join(' x ')} ( H x W )" %>
 						<% end %> 
@@ -83,7 +83,7 @@
 			<!-- Row 3 Attr 1 -->
 			<div class="row">
 				<div class="col-md-5 col-md-offset-2">
-					<h4 style="font-weight: 300" id="attr1_choice"> 
+					<h4 style="font-weight: 300; margin-left: 50px" id="attr1_choice"> 
 						<% if !@item.product.nil? && @item.product.name.include?("canvas") %>
 							<% if !@item.canvas_depth.nil? %>
 								<% if @item.canvas_depth == "Rolled" %>
@@ -122,7 +122,7 @@
 			<!-- Row 4 Attr 2 -->
 			<div class="row">
 				<div class="col-md-5 col-md-offset-2">
-					<h4 style="font-weight: 300" id="attr2_choice"> 
+					<h4 style="font-weight: 300; margin-left: 50px" id="attr2_choice"> 
 						<% if !@item.product.nil? && @item.product.name.include?("canvas") %>
 							<% if !@item.canvas_frame.nil? %>
 								<%= "#{@item.canvas_frame.capitalize} Outer Frame" %>
@@ -154,7 +154,7 @@
 			<!-- Row 5 Shipping -->
 			<div class="row">
 				<div class="col-md-5 col-md-offset-2">
-					<h4 style="font-weight: 300"> 
+					<h4 style="font-weight: 300; margin-left: 50px"> 
 						Shipping
 					</h4>
 				</div>
@@ -170,7 +170,7 @@
 			<!-- Row 6 Total Price -->
 			<div class="row">
 				<div class="col-md-5 col-md-offset-2">
-					<h4 style="font-weight: 900"> 
+					<h4 style="font-weight: 900; margin-left: 50px"> 
 						Subtotal: 
 					</h4>		
 				</div>
