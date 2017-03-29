@@ -22,6 +22,7 @@
 	});
 	
 	$('#place_order').click(function () {
-    		$("div#divLoading").addClass('show');
+    		$('body').addClass('stop-scrolling');
+            $.LoadingOverlay("show");
 	});
 </script>
