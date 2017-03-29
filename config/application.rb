@@ -28,6 +28,8 @@ module Canvasking
       html_tag
     }
     
+    config.exceptions_app = self.routes
+    
   end
   
   ############################################################################
