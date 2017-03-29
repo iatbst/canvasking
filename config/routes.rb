@@ -63,6 +63,8 @@ Rails.application.routes.draw do
   get 'about/terms_of_use'
   
   get '/404', :to => 'application#page_not_found'
+  get '/500', :to => 'application#internal_server_error'
+  get '/503', :to => 'application#service_unavailable'
   
   # Example resource route with options:
   #   resources :products do

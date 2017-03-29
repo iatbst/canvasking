@@ -2,6 +2,9 @@ class PricingController < ApplicationController
   include PricingHelper
   
   def index
+    #test
+    raise Exception
+    
     @size_price_obj = read_size_price_table
     @height_list = (12..40).step(2).to_a
     @width_list = (12..40).step(2).to_a
