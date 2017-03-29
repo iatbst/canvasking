@@ -41,8 +41,6 @@ Rails.application.configure do
   
   # Reset log level
   config.log_level = :debug
-
-  config.exceptions_app = self.routes
   
   # Send out test emails with Gmail
   config.action_mailer.perform_deliveries = true
