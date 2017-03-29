@@ -2765,7 +2765,7 @@ hr {
   position: relative;
   min-height: 100vh;
   text-align: center;
-  background: #000 url(../img/bg.jpg) no-repeat center;
+  background: #000 url(../img/signup.jpg) no-repeat center;
   background-size: cover;
 }
 .left-side header {
