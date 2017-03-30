@@ -40,9 +40,21 @@
 
 		</div>
 
+		
 		<div class="col-md-9 col-md-offset-1" style="">
+
+			<% if @coupons.empty? %>
+				<div align="center">
+					<%= image_tag '/user_manage/no_coupon.png' %>
+						<h3>You don't have any private coupon yet .</h3><br />
+					<%= button_to 'ORDER  WITHOUT COUPON', new_item_path, method: :get, class:"btn btn-primary btn-lg blue_button" %>
+				</div>
+			<% else %>
+		
+			
+			
 			<div class="row" style="margin-left: 1px">
-				<h3> All My Coupons</h3>
+				<h3> My Private Coupons</h3>
 			</div>
 
 			<div style="margin-top: 20px; margin-bottom: 50px">
@@ -103,6 +115,9 @@
 					<%= button_to 'USE COUPON', new_item_path, class:"btn btn-primary btn-lg", method:"get", id:"use_coupon_button" %>
 				</div>
 			</div>
+			
+			
+			<% end %>
 		</div>
 	</div>
 </div>
