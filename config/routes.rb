@@ -17,7 +17,8 @@ Rails.application.routes.draw do
   get 'pricing/index'
   get 'pricing/query_price'
 
-  devise_for :users, :controllers => { :sessions => "custom_sessions", :registrations => 'registrations' }
+  devise_for :users, :controllers => { :sessions => "custom_sessions", :registrations => "custom_registrations"}
+  
   get 'welcome/index'
 
   # The priority is based upon order of creation: first created -> highest priority.

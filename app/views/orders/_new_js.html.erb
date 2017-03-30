@@ -25,4 +25,18 @@
     		$('body').addClass('stop-scrolling');
             $.LoadingOverlay("show");
 	});
+
+	$( window ).on( "load", function(){
+
+		<% if flash[:login] == true %>
+			show_note('login_note');
+		<% elsif flash[:signup] == true %>
+			show_note('signup_note');
+		<% end %>
+	});
+		
+		
+	function show_note(id){	
+		$('#' + id).slideDown().delay(1500).slideUp();
+	}
 </script>

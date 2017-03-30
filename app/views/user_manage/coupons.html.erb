@@ -67,8 +67,8 @@
 							<th>
 								Description
 							</th>
-							<th>
-								Expiration Date
+							<th style="width: 150px">
+								Expiration
 							</th>
 							<th>
 							
@@ -94,11 +94,11 @@
 								</td>
 								<td style="padding: 15px">
 									<% if coupon.used %>
-										<b style="color:red">USED</h3>
+										<span style="color:red">USED</h3>
 									<% elsif Time.now > coupon.exp_date %>
-										<b style="color:red">EXPIRED</h3>
+										<span style="color:red">EXPIRED</h3>
 									<% else %>
-										<b style="color:green">AVAILABLE</h3>
+										<span style="color:green">AVAILABLE</h3>
 									<% end %>
 								</td>
 
