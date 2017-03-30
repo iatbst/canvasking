@@ -29,7 +29,8 @@
 			// Re-enable submission
 			
 			// stop loading icon
-			$("div#divLoading").removeClass('show');
+			$('body').removeClass('stop-scrolling');
+			$.LoadingOverlay("hide");
 		} else {// Token was created!
 
 			// Get the token ID:
