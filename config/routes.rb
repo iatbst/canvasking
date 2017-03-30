@@ -67,6 +67,10 @@ Rails.application.routes.draw do
   get '/500', :to => 'application#internal_server_error'
   get '/503', :to => 'application#service_unavailable'
   
+  # user_manage
+  get 'user_manage/index'
+  get 'user_manage/coupons'
+  
   # Example resource route with options:
   #   resources :products do
   #     member do
