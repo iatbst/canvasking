@@ -1,0 +1,104 @@
+
+<style>
+
+#marketing_banner {
+	height: 30px;
+	background: #EF9223;
+	border-color: #EF9223;
+	border-radius: 0px;
+	opacity: 1;
+}
+	
+</style>
+
+
+
+<!-- navigation section -->
+<section class="navbar navbar-default " role="navigation" id="marketing_banner">
+	<div class="container">
+		
+		<div class="row" align="center" id="public_coupon">
+			<span style="color: white; font-size: 17px;" >
+				Grand Openning Sale - 
+				<b style="color: green">35%</b>
+				off for all products with coupon code: 
+				<b>
+					MAGICPHOTOPRINTS
+				</b>
+			</span>
+		</div>
+		<div class="row" align="center" id="private_coupon" style="display: none;">
+			<span style="color: white; font-size: 17px;" >
+				You have a exclusive NEW CUSTOMER coupon - 
+				<b style="color: green">40%</b>
+				off for all products 
+				<a href="/user_manage/coupons" style="color: black">
+					<u>
+						HERE
+					</u>
+				</a>
+			</span>
+				
+		</div>
+	</div>
+</section>
+
+<script>
+
+<% if user_signed_in? && coupon_is_valid(current_user.email) %>
+
+	$(function() {
+	
+	  var timer = setInterval( show_marketing_banner, 10000);
+	
+	  function show_marketing_banner() {
+	  	if ($('#public_coupon').is(":visible") ){
+	  		$('#public_coupon').fadeOut(1000, function(){
+	  			$('#private_coupon').fadeIn(1000);
+	  		});
+	  	} else {
+	  		$('#private_coupon').fadeOut(1000, function(){
+	  			$('#public_coupon').fadeIn(1000); 
+	  		});		
+	  	}
+	
+	  }
+	
+	});
+<% end %>
+
+	var original_second_margin_top = null;
+	var update_second_margin_top = null;
+	
+	// different page may different on diff
+	<% if controller_name.include?('cart') %>
+		var diff = 30;
+	<% elsif controller_name.include?('order') %>
+		var diff = 25;
+	<% elsif controller_name.include?('user') %>
+		var diff = 25;
+	<% else %>
+		var diff = 45;
+	<% end %>
+	
+	$(window).on("scroll", function(e) {
+		if ( original_second_margin_top == null ){
+			original_second_margin_top = $('#navbar').next().css('margin-top');
+		}
+		
+		if ( update_second_margin_top == null ){
+			update_second_margin_top = (parseInt(original_second_margin_top) + diff) + 'px';			
+		}
+		
+  		if (this.scrollY > 23) {
+    		$('#navbar').addClass("navbar_position_fixed");
+    		$('#navbar').next().css('margin-top', update_second_margin_top);
+  		} else {
+    		$('#navbar').removeClass("navbar_position_fixed");
+    		$('#navbar').next().css('margin-top', original_second_margin_top);
+  	}
+	});
+	
+
+
+</script>
