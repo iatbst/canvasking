@@ -56,9 +56,9 @@
 	}
 </style>
 
-<%= render "layouts/navbar" %>
+<%= render "layouts/navbar_no_banner" %>
 
-<div class="container" style="margin-top: 50px; margin-bottom: 20px" >
+<div class="container" style="margin-top: 50px; margin-bottom: 100px; min-height: 100%" >
 	<div class="" style="margin-bottom: 50px; <% if @new_order_complete.nil? %><%= "display: none" %><% end %>">
 
 		<div class="col-md-12" align="center" style="margin-top: 20px;margin-bottom: 20px">
@@ -68,6 +68,15 @@
 			Thank you for shopping with us.</h4>
 		</div>
 	</div>
+	
+	<div style="<% if @new_order_complete %><%= "display: none" %><% end %>">
+		<a href="/user_manage/orders" style="font-size: 25px; color: grey; font-weight: 300">
+			<i class="fa fa-arrow-left" aria-hidden="true"></i> All My Orders
+		</a>
+		<br />
+	</div>
+
+	
 	<h3 class="no_bold">Order # <%= @order.number %></h3>
 	
 	<div class="row box" style="font-size: 18px; font-weight: 300; margin-bottom: 50px" >
@@ -90,6 +99,7 @@
 		<div class="col-md-6">
 			<br />
 			<h4>Payment Method</h4>
+			<i class="fa fa-credit-card" aria-hidden="true"></i>&nbsp;
 			<%= @order.payment_info['brand'] ? @order.payment_info['brand'].upcase : nil %>
 			&nbsp;**** &nbsp;
 			<%= @order.payment_info['last4'] %>

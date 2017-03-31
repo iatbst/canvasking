@@ -8,24 +8,47 @@
     font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 .carousel-control.carousel-art-filters.left {
+	position: relative;
 	background: none; 
-	margin-top: -30px;
-	left: -63px;
-	right: -120px;	
+	top: -200px;
+	left: -50px;
+	
 }
 
 .carousel-control.carousel-art-filters.right { 
+	position: relative;
 	background: none; 
-	margin-top: -30px;
-	left: 590px;
-	right: -120px;
+	top: -200px;
+	left: 640px;
+
+}
+
+/*  For FireFox */
+@-moz-document url-prefix() {
+
+.carousel-control.carousel-art-filters.left {
+	position: relative;
+	background: none; 
+	top: -200px;
+	left: -350px;
+	
+}
+
+.carousel-control.carousel-art-filters.right { 
+	position: relative;
+	background: none; 
+	top: -200px;
+	left: 330px;
+
 }
 
 
+}
+
 </style>
 		<!-- Image Slider -->
-		<div class="row" style="height: 450px; margin-top: 0px">
-			<div class="col-md-10 col-md-offset-1">
+		<div class="row" style="height: 450px; margin-left: 0px; margin-top: 0px; width: 600px">
+			
 				<div id="carousel-art-filter-generic" class="carousel slide" data-interval="false" >
 					<!-- Indicators -->
 					<ol class="carousel-indicators">
@@ -51,6 +74,7 @@
 
 					</div>
 					
+				
 					  <!-- Controls -->
 					  <a class="left carousel-control carousel-art-filters" href="#carousel-art-filter-generic" role="button" data-slide="prev">
 					    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="font-size: 40px; color: lightgrey"></span>
@@ -63,6 +87,6 @@
 
 
 				</div>
-			</div>
+			
 
 		</div>

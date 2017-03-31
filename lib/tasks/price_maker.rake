@@ -44,6 +44,11 @@ namespace :price_maker do
   # populate price for CANVAS to /business/pricing.yml
   # According to price here: 
   #  https://item.taobao.com/item.htm?spm=a1z10.5-c.w4002-9476290978.51.xWbvhX&id=525855989381
+  # - Cost = P1 + P2
+  #  - P1: taobao price
+  #  - P2: taobao shipping
+  # - BASE_PRICE = Cost*Profit_rate
+  # - FINAL_PRICE = BASE_PRICE/Marketing_rate
   desc "Populate price table for canvas"
   task :canvas_run do
     products = [
@@ -87,10 +92,14 @@ namespace :price_maker do
           end
           
           # Add shipment fee
+          # TODO: shipping fee should be scaled with weight
           price += shipment_fee
           
-          # Final price
+          # Base price
           price *= Canvasking::PROFIT_RATE
+          
+          # Final price
+          price = price.to_f/Canvasking::MARKETING_RATE
           
           pricing_obj[product][size] = price.round(2)
           w += 2

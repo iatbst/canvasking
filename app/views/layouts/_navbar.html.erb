@@ -29,17 +29,28 @@
   font-weight: bold;
 }
 
-#navbar {
-	background-color: black;
+.navbar-with-market-banner {
+	background-color: black;	
+	width: 100%;
+	z-index: 1000;
+	margin-top: -45px;
+	border-color: black;
+	border-radius: 0px;
 }
+
 
 #navbar > a {
 	color: white;
 }
+
+.navbar_position_fixed {
+	position: fixed;
+	top: 45px;
+}
 </style>
 
 <!-- navigation section -->
-<section class="navbar navbar-default " role="navigation" id="navbar">
+<section class="navbar navbar-default navbar-with-market-banner" role="navigation" id="navbar" >
 	<div class="container">
 		<div class="navbar-header">
 			
@@ -48,13 +59,13 @@
 			</a>
 			
 		</div>
-		<div class="collapse navbar-collapse" style="margin-right: 1px">
+		<div class="collapse navbar-collapse" style="margin-right: 1px; font-weight: 900;">
 			<ul class="nav navbar-nav navbar-right">
 				<li>
 
 					<%= button_to 'GET START', new_item_path, style:"margin-top: 10px;", class:"btn btn-warning btn-sm", method:"get", id:"nav_start_menu" %>
 				</li>
-				<li>
+				<li style="display: none">
 					<%= link_to 'INSPIRATION', new_item_path, method:"get", id:"nav_inspiration_menu" %>
 				</li>
 				<li>
@@ -97,13 +108,6 @@
 				<% end %>
 				<% if user_signed_in? %>
 					<li>
-						<% if controller_name == "orders" %>
-							<%= link_to "MY ORDERS", orders_path, style:"color: #EF9223", id:"nav_orders_menu"%>
-						<% else %>
-							<%= link_to "MY ORDERS", orders_path, id:"nav_orders_menu"%>
-						<% end %>
-					</li>
-					<li>
 							<a href="<%= edit_user_registration_path %>" id="nav_setting_menu" style="<% if controller_name == "registrations" %>color: #EF9223<% end %>">
 								<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 								ACCOUNT
@@ -114,3 +118,5 @@
 		</div>
 	</div>
 </section>
+
+

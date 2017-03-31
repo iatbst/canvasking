@@ -87,6 +87,7 @@ module Canvasking
   DOLLAR_RATE = 6.9
   SHIPMENT_FEE = 22
   PROFIT_RATE = 1.5
+  MARKETING_RATE = 0.65
   CANVAS_BASE_PRICES = {
       '12x12' => 17.50,
       '12x16' => 23.10,

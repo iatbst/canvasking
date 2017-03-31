@@ -5,8 +5,8 @@ class PricingController < ApplicationController
     @size_price_obj = read_size_price_table
     @height_list = (12..40).step(2).to_a
     @width_list = (12..40).step(2).to_a
-    @product_list = []
-    Product.all.each {|p| @product_list.push(p.name)}
+    @product_list = ['canvas']
+    #Product.all.each {|p| @product_list.push(p.name)}
     @sizes = {'canvas'=>     
                   [  
                     "12\\\"x12\\\"", 

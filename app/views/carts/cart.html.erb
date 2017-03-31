@@ -63,11 +63,18 @@
 		background: #EF9223;
 		border-color: #EF9223;
 	}
+	
+	.cart_position_fixed {
+    	position: fixed;
+    	top: 80px;  
+	}
 </style>
+<!-- marketing banner -->
+<%= render 'layouts/marketing_banner' %>
 
 <%= render "layouts/navbar" %>
 
-<%= render 'notes' %>
+
 
 <div class="container" style="margin-top:50px; margin-bottom: 50px; min-height: 100%;" >
 
@@ -122,3 +129,5 @@
 <%= render "layouts/footer" %>
 
 <%= render 'cart_js' %>
+
+<%= render 'notes' %>

@@ -18,6 +18,12 @@
     			$('#skip').css('margin-top', '0px');
     			$('#use_this_style').removeAttr('disabled');
 		};
+		// Process Failed cases
+		// case 1: 500 image url unaccessable
+		// case 2: 503 internal server error: somatic is down
+		newImage.onerror = function() {
+			$('#error_modal').modal('show');
+		}
 		newImage.src = url;
 		
 		$('#radio_' + style_id).attr('value', url);	

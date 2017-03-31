@@ -1,4 +1,4 @@
-<!-- CSS  -->
+<!-- CSS (TBD bug: can't rely on assets pipeline only ) -->
 <link rel="stylesheet" href="/signup_template/css/set1.css">
 <link rel="stylesheet" href="/signup_template/css/style.css">
 
@@ -6,18 +6,13 @@
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-6 left-side">
-        <header>
-          <span>Need an account?</span>
-          <h3>Canvas Build Simple</h3>
-          </ br>
-          </ br>
-          </ br>
-          	<h4>Join today for exclusive rewards and $15 off your first order</h4>
-          </ br>
-          </ br>
-          </ br>
- 			<h4>Customized online and delivered to your door</h4>
+      <div class="col-md-6 left-side" style="">
+        <header style="margin-top: 150px">
+          <h4 style="font-weight: 600;font-size: 33px">Transform your photos to ARTs on the wall</h4>
+			
+          	<h4 style="font-weight: 300;font-size: 22px;margin-top: 50px">Join today for exclusive discount - <b style="color: #EF9223">40%</b> off your first order</h4>
+		
+ 			<h4 style="font-weight: 300;font-size: 22px">Customized online and delivered to your door</h4>
         </header>
       </div>
       <div class="col-md-6 right-side">
@@ -26,7 +21,7 @@
   <%= devise_error_messages! %>
 
   <span class="input input--hoshi">
-  	<%= f.email_field :email , class: "input__field input__field--hoshi" %>
+  	<%= f.email_field :email , class: "input__field input__field--hoshi", autofocus: true %>
     <label class="input__label input__label--hoshi input__label--hoshi-color-3" for="email">
          <span class="input__label-content input__label-content--hoshi">E-mail</span>
     </label>
@@ -65,7 +60,7 @@
 <% end %>
         
         
-        <ul class="social list-inline">
+        <ul class="social list-inline" style="display: none">
           <li><a href="#">Facebook</a></li>
           <li><a href="#">Twitter</a></li>
           <li><a href="#">Linkedin</a></li>

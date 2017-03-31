@@ -17,7 +17,8 @@ Rails.application.routes.draw do
   get 'pricing/index'
   get 'pricing/query_price'
 
-  devise_for :users, :controllers => { :sessions => "custom_sessions", :registrations => 'registrations' }
+  devise_for :users, :controllers => { :sessions => "custom_sessions", :registrations => "custom_registrations"}
+  
   get 'welcome/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -66,6 +67,11 @@ Rails.application.routes.draw do
   get '/404', :to => 'application#page_not_found'
   get '/500', :to => 'application#internal_server_error'
   get '/503', :to => 'application#service_unavailable'
+  
+  # user_manage
+  get 'user_manage/index'
+  get 'user_manage/coupons'
+  get 'user_manage/orders'
   
   # Example resource route with options:
   #   resources :products do

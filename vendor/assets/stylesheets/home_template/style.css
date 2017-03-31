@@ -106,6 +106,7 @@ hr {
   box-shadow: 0px 2px 8px 0px rgba(50, 50, 50, 0.04);
   border: none;
   margin-bottom: 0;
+
 }
 .navbar-brand, .navbar-nav li a {
   line-height: 28px;
@@ -124,7 +125,7 @@ hr {
 /* home section */
 #home {
   margin-top: -20px;
-  background: url('/welcome/front_page_final.jpg') 100% 0 repeat-y;
+  background: url('/welcome/front_page_final_1.jpg') 100% 0 repeat-y;
   -webkit-background-size: cover;
   
   background-position: center;
