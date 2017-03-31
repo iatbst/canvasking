@@ -1,0 +1,104 @@
+<!-- Leave Us Messages Modal -->
+<div class="modal fade" id="leave_us_messages_<%= item.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+    
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+			<div class="row" >
+				<div class="col-md-11 col-md-offset-1">
+				
+				<%= form_for([item, item.item_messages.build]) do |f| %>
+					  <div class="form-group" align="left">
+					   	<%= f.fields_for :item, style:"margin-left: 100px" do |fi| %>
+					  		<h4 class="no_bold">
+					  			1. Do you received this product?
+					  		</h4>
+					  		<br />
+					  		<%= fi.label "Yes" %>
+					  		<% if item.received %>
+					  			<%= fi.radio_button :received, true, style:"margin-right: 20px", checked: true %>
+					  		<% else %>
+					  			<%= fi.radio_button :received, true, style:"margin-right: 20px"%>
+					  		<% end %>
+					  		<%= fi.label "No" %>
+					  		<% if item.received %>
+					  			<%= fi.radio_button :received, false %>
+					  		<% else %>
+					  			<%= fi.radio_button :received, false, checked: true %>
+					  		<% end %>
+					  	<% end %>
+					  </div>
+					 
+					  <div id="item_id"></div>
+					  
+					  <div class="form-group">
+					   	<%= f.fields_for :item do |fi| %>
+					  		<h4 class="no_bold">
+					  			2. How do you feel about this product?
+					  		</h4>
+					  		<br />
+					  		<%= fi.label "Awful" %>
+					  		<% if item.rate == 1 %>
+					  			<%= fi.radio_button :rate, 1, style:"margin-right: 20px", checked: true %>
+					  		<% else %>
+					  			<%= fi.radio_button :rate, 1, style:"margin-right: 20px"%>
+					  		<% end %>
+					  		
+					  		<%= fi.label "Poor" %>
+					  		<% if item.rate == 2 %>
+					  			<%= fi.radio_button :rate, 2, style:"margin-right: 20px", checked: true %>
+					  		<% else %>
+					  			<%= fi.radio_button :rate, 2, style:"margin-right: 20px"%>
+					  		<% end %>
+					  		
+					  		<%= fi.label "Fair" %>
+					  		<% if item.rate == 3 %>
+					  			<%= fi.radio_button :rate, 3, style:"margin-right: 20px", checked: true %>
+					  		<% else %>
+					  			<%= fi.radio_button :rate, 3, style:"margin-right: 20px"%>
+					  		<% end %>
+					  		
+					  		<%= fi.label "Good" %>
+					  		<% if item.rate == 4 %>
+					  			<%= fi.radio_button :rate, 4, style:"margin-right: 20px", checked: true %>
+					  		<% else %>
+					  			<%= fi.radio_button :rate, 4, style:"margin-right: 20px"%>
+					  		<% end %>
+					  		
+					  		<%= fi.label "Excellent" %>
+					  		<% if item.rate == 5 %>
+					  			<%= fi.radio_button :rate, 5, style:"margin-right: 20px", checked: true %>
+					  		<% else %>
+					  			<%= fi.radio_button :rate, 5, style:"margin-right: 20px"%>
+					  		<% end %>
+					  	<% end %>
+					  </div>
+					  
+					  <div class="form-group">
+					    <%= f.label "Leave us a message" %><br>
+					    <%= f.text_area :message , class:"form-control input-lg", style: "width: 500px;height:200px"%>
+					  </div>
+						
+					  <%= hidden_field_tag :feedback_submitted, true %>
+					  <p>
+					  	<%= f.submit 'Submit', class: "btn btn-primary"%>
+					   
+					  </p>
+				<% end %>
+				</div>
+			</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="divLoading">
+</div>
+
+
