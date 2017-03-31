@@ -1,5 +1,5 @@
 class CustomRegistrationsController < Devise::RegistrationsController
-  
+  before_filter :configure_permitted_parameters
   include CartsHelper
   
   def create
@@ -13,7 +13,18 @@ class CustomRegistrationsController < Devise::RegistrationsController
     
     flash[:signup] = true
   end
+  
+  protected
 
+  # Stay edit page after update
+  def after_update_path_for(resource)
+    edit_user_registration_path(resource)
+  end  
+  
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+  end  
+  
   private
   
   def create_new_user_coupon(user_email)
