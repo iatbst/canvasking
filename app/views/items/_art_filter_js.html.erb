@@ -5,7 +5,7 @@
 		var style_id = $(this).attr('id');
 		var url = '<%= @somatic_realtime_api %>?id=' + style_id + 
 				  '&api_key=' + '<%= @somatic_api_key %>' + 
-				  '&--input=' + '<%= @filter_image_url %>';
+				  '&--input=' + '<%= @filter_image_url %>' + '&time=' + new Date();
 
 		var newImage = new Image();
 		var loadingSrc = '/loading.gif';
