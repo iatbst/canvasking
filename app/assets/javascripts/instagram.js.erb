@@ -1,3 +1,4 @@
+// instagram integration
 $(window).on('load', function() {
 	
 	// test
@@ -9,8 +10,8 @@ $(window).on('load', function() {
     
     var authenticateInstagram = function(instagramClientId, instagramRedirectUri, callback) {
         //the pop-up window size, change if you want
-        var popupWidth = 400,
-            popupHeight = 230,
+        var popupWidth = 600,
+            popupHeight = 400,
             popupLeft = (window.screen.width - popupWidth) / 2,
             popupTop = (window.screen.height - popupHeight) / 2;
         //the url needs to point to instagram_auth.php
