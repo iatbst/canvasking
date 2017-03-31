@@ -1,25 +1,58 @@
+<style>
 
+.left_menu {
+	color: black;
+}
+
+.left_menu:hover {
+	color: #EF9223;
+	
+}
+
+.chosen_menu {
+	color: #EF9223;
+}
+</style>
 			<div>
 				<h3> Account </h3>
 			</div>
 			<hr style="margin-left: 0px" />
 
 			<div style="margin-left: 20px">
+				
 				<h4 class="no_bold">
-					<%= link_to 'Profile', edit_user_registration_path, style: "color: black" %>
+					<% if controller_name.include?('registration') %>
+						<%= link_to 'Profile', edit_user_registration_path, class: "left_menu", style:"color: #ef9223" %>
+					<% else %>
+						<%= link_to 'Profile', edit_user_registration_path, class: "left_menu" %>
+					<% end %>
 				</h4>
 			</div>
 
-
 			<div style="margin-left: 20px">
 				<h4 class="no_bold">
-					<%= link_to 'My Coupons', user_manage_coupons_path, style: "color: black" %>
+					<% if action_name.include?('order') %>
+						<%= link_to 'Orders',user_manage_orders_path, class: "left_menu", style:"color: #ef9223", id: "orders_menu" %>
+					<% else %>
+						<%= link_to 'Orders',user_manage_orders_path, class: "left_menu", id: "orders_menu"%>
+					<% end %>
+					
+				</h4>
+			</div>
+			
+			<div style="margin-left: 20px">
+				<h4 class="no_bold" >
+					<% if action_name.include?('coupon') %>
+						<%= link_to 'Coupons', user_manage_coupons_path, class: "left_menu", style:"color: #ef9223" %>
+					<% else %>
+						<%= link_to 'Coupons', user_manage_coupons_path, class: "left_menu" %>
+					<% end %>
 				</h4>
 			</div>
 			
 			<div style="margin-left: 20px">
 				<h4 class="no_bold">
-					<%= link_to 'Sign Out', destroy_user_session_path, :method => :delete, style: "color: black" %>
+					<%= link_to 'Sign Out', destroy_user_session_path, :method => :delete, class: "left_menu" %>
 				</h4>
 			</div>
 
@@ -33,5 +66,16 @@
 			</div>
 
 			<div style="margin-left: 20px">
-				<h4 class="no_bold"> FAQ </h4>
+				<!-- TODO -->
+				<h4 class="no_bold"> 
+					FAQ 
+				</h4>
 			</div>
+
+<script>
+	
+	$('#orders_menu').click(function (){
+		$.LoadingOverlay("show");
+	});
+	
+</script>

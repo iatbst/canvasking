@@ -71,6 +71,7 @@ Rails.application.routes.draw do
   # user_manage
   get 'user_manage/index'
   get 'user_manage/coupons'
+  get 'user_manage/orders'
   
   # Example resource route with options:
   #   resources :products do

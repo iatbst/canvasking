@@ -11,4 +11,10 @@ class UserManageController < ApplicationController
   def coupons
     @coupons = current_user.coupons.where(:coupons => { :public => false }).sort_by {|c| c.created_at}.reverse
   end
+  
+  # show user orders
+  def orders
+    @open_orders = current_user.orders.where('status = ? OR status = ?', 'new', 'processing').sort_by { |obj| obj.created_at }.reverse
+    @history_orders = current_user.orders.where(status: 'closed').sort_by { |obj| obj.created_at }.reverse    
+  end
 end
