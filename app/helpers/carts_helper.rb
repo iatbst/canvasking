@@ -47,6 +47,11 @@ module CartsHelper
     
     def clear_cart
        cart = get_current_cart
+       # specify this item belongs to the user
+       cart.items.each do |item|
+         item.user_id = current_user.id
+         item.save
+       end
        cart.items.clear
        cart.quantity = 0
        cart.price = 0

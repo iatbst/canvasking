@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170328215005) do
+ActiveRecord::Schema.define(version: 20170401002103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,12 +95,14 @@ ActiveRecord::Schema.define(version: 20170328215005) do
     t.string   "canvas_frame"
     t.string   "canvas_depth"
     t.hstore   "option_prices",                                default: {}
+    t.integer  "user_id"
   end
 
   add_index "items", ["cart_id"], name: "index_items_on_cart_id", using: :btree
   add_index "items", ["frame_id"], name: "index_items_on_frame_id", using: :btree
   add_index "items", ["order_id"], name: "index_items_on_order_id", using: :btree
   add_index "items", ["product_id"], name: "index_items_on_product_id", using: :btree
+  add_index "items", ["user_id"], name: "index_items_on_user_id", using: :btree
 
   create_table "logged_exceptions", force: :cascade do |t|
     t.string   "exception_class"
@@ -203,6 +205,7 @@ ActiveRecord::Schema.define(version: 20170328215005) do
   add_foreign_key "items", "frames"
   add_foreign_key "items", "orders"
   add_foreign_key "items", "products"
+  add_foreign_key "items", "users"
   add_foreign_key "orders", "countries"
   add_foreign_key "orders", "coupons"
   add_foreign_key "orders", "states"

@@ -23,7 +23,13 @@ class ItemsController < ApplicationController
   end
   
   def show
-    @item = Item.find(params[:id])
+    @item = Item.find(params[:id]) 
+    # forbid user access other user's item, item will belong to user after order placed
+    if (@item.cart_id && @item.cart_id != get_current_cart.id) ||
+       (@item.user_id && @item.user_id != current_user.id )
+      redirect_to root_path and return
+    end
+    
     @size_price, @size_price_str = prepare_size_price(@item)
     
     # for wizard guide
@@ -34,6 +40,12 @@ class ItemsController < ApplicationController
   
   def edit
     @item = Item.find(params[:id])
+    # forbid user access other user's item, item will belong to user after order placed
+    if (@item.cart_id && @item.cart_id != get_current_cart.id) ||
+       (@item.user_id && @item.user_id != current_user.id )
+      redirect_to root_path and return
+    end
+    
     @size_price, @size_price_str = prepare_size_price(@item)
     
     @edit = true
@@ -238,7 +250,7 @@ class ItemsController < ApplicationController
   
   # This is a temp empty page: for instagram images upload purpose
   def empty_page
-    
+      
   end
   
   
