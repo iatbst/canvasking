@@ -2,6 +2,7 @@ class SiteManageController < ApplicationController
   before_action :authenticate_user!
   before_action :is_admin?
   include PricingHelper
+  include SiteManageHelper
   
   ################  Orders ######################
   
@@ -17,7 +18,9 @@ class SiteManageController < ApplicationController
   #  5. product reached             #
   ###################################
   def dashboard
-    
+    @user_count = User.count
+    @order_count = Order.count
+    @payment_count = calculate_total_payments
   end
   
   def manage_orders

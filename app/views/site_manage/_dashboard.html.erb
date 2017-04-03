@@ -1,0 +1,58 @@
+<style>
+
+.dashboard_box {
+	border-radius: 10px;
+	color: grey;
+	cursor: pointer;
+}
+
+.active_box {
+	color: #EF9223;
+	border-color: #EF9223;
+}
+</style>
+
+<div class="row" style="margin-top: 50px">
+
+<div class="col-md-4">
+	<div class="box dashboard_box active_box" style="width: 300px; height: 200px" align="center">
+		<h3>
+			Users
+		</h3>
+		<h1 style="font-size: 80px">
+			<%= @user_count %>
+		</h1>
+	</div>
+
+</div>
+
+<div class="col-md-4">
+	<div class="box dashboard_box" style="width: 300px; height: 200px" align="center">
+		<h3>
+			Orders
+		</h3>
+		<h1 style="font-size: 80px">
+			<%= @order_count %>
+		</h1>	
+	</div>
+</div>
+
+<div class="col-md-4">
+	<div class="box dashboard_box" style="width: 300px; height: 200px" align="center">
+		<h3>
+			Payments
+		</h3>	
+		<h1 style="font-size: 80px">
+			$<%= @payment_count.to_i %>
+		</h1>
+	</div>
+</div>
+
+</div>
+
+
+<div style="margin-top: 50px">
+	<%= render 'dashboard_user' %>
+	<%= render 'dashboard_order' %>
+	<%= render 'dashboard_payment' %>
+</div>
