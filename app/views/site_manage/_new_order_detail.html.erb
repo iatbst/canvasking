@@ -84,13 +84,17 @@
 						Subtotal: $<b><%= item.price*item.quantity %></b>						
 
 					</div>
+					
+					<br />
 					<div class="col-md-4">
+					<% if item.art_filter %>
+							<br />
+							<%= link_to 'Download Art Image', get_image_url(item, 'origin'), type: 'button', target: '_blank', class: 'btn btn-warning', style: "width: 200px"%>
+					<% end %>
 						<br />
-						<% if (item.art_filter && (!item.art_image.file.nil? || File.exist?("#{Rails.root}/public#{item.art_image_tmp_paths['origin']}"))) || (!item.art_filter && (!item.image.file.nil? || File.exist?("#{Rails.root}/public#{item.image_tmp_paths['origin']}"))) %>
-							<%= link_to 'Download Image', get_image_url(item, 'origin'), type: 'button', target: '_blank', class: 'btn btn-primary'%>
-						<% else %>
-							<button class="btn btn-primary" disabled="disabled">Download Image</button>
-						<% end %>
+						<br />
+						<%= link_to 'Download Image', get_normal_image_url(item, 'origin'), type: 'button', target: '_blank', class: 'btn btn-primary', style: "width: 200px"%>
+
 					</div>
 	
 		</div>

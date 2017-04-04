@@ -85,8 +85,14 @@
 
 					</div>
 					<div class="col-md-4">
+					<% if item.art_filter %>
 						<br />
-						<%= link_to 'Download Image', get_image_url(item, 'origin'), type: 'button', target: '_blank', class: 'btn btn-primary'%>
+						<%= link_to 'Download Art Image', get_image_url(item, 'origin'), type: 'button', target: '_blank', class: 'btn btn-warning', style: "width: 200px"%>
+					<% end %>
+						<br />
+						<br />
+						<%= link_to 'Download Image', get_normal_image_url(item, 'origin'), type: 'button', target: '_blank', class: 'btn btn-primary', style: "width: 200px"%>
+
 					</div>
 	
 		</div>
