@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170404010532) do
+ActiveRecord::Schema.define(version: 20170404025230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(version: 20170404010532) do
     t.integer  "visit_id"
     t.integer  "user_id"
     t.string   "name"
-    t.jsonb    "properties"
     t.datetime "time"
+    t.json     "properties"
   end
 
   add_index "ahoy_events", ["name", "time"], name: "index_ahoy_events_on_name_and_time", using: :btree
