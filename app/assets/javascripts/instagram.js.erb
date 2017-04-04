@@ -51,7 +51,8 @@ $(window).on('load', function() {
             dataType: 'jsonp',
             type: 'GET',
             data: {
-                access_token: accessToken
+                access_token: accessToken,
+                count: <%= Canvasking::INSTAGRAM_PHOTO_COUNT %>,
             },
 
             success: function(photos) {

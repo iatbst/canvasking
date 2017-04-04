@@ -37,16 +37,16 @@ module Canvasking
   ############################################################################
   # Images
   IMAGE_ORIGINAL_SIZE_LIMIT = 3000
-  IMAGE_CROP_SIZE = 450
-  
+  IMAGE_CROP_SIZE = 450  
   IMAGE_VER_ORI = 3000
   IMAGE_VER_CART = 450
   IMAGE_VER_CROP = 450
   IMAGE_VER_OVERVIEW = 300
   IMAGE_VER_THUMB = 200
-  
   IMAGE_TMP_CACHE_TIME = 1 # Cache time to store image in tmp folder: 1 hours now
   
+  # Facebook/Image uplad
+  INSTAGRAM_PHOTO_COUNT = 100
   
   # EMail
   # GMAIL_TEST_USER = 'agarienforcement@gmail.com'
