@@ -56,6 +56,11 @@ gem "fog-aws"
 # Debugging
 gem 'pry'
 
+# Dashboard chart
+gem 'chartkick'
+gem 'groupdate'
+gem 'ahoy_matey'
+
 # Payment: Stripe
 gem 'stripe'
 
