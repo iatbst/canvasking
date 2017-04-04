@@ -1,13 +1,21 @@
 
 
 
-<div class="row" style="width: 100%;">
+<div class="row" style="width: 100%;" id="dashboard_user">
 
 	<div>
-		<h3 style="margin-left: 20px">
-			User Sign Up
+		<h3 style="margin-left: 20px; color: #EF9223">
+			Registrations
 		</h3>
 		<%= column_chart User.group_by_day(:created_at).count %>
 	</div>
+	
 
+	<div>
+		<h3 style="margin-left: 20px; color: #EF9223">
+			Visits
+		</h3>
+		<%= column_chart Visit.group_by_day(:started_at).count %>
+	</div>
+		
 </div>

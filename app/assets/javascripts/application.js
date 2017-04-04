@@ -15,6 +15,7 @@
 // require turbolinks
 //= require highcharts
 //= require chartkick
+//= require ahoy
 //= require jcrop_template/js/Jcrop.min
 //= require file_upload_template/js/fileinput.min
 //= require twentytwenty_template/jquery.event.move

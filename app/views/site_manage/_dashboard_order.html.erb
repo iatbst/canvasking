@@ -1,6 +1,12 @@
 
 
 
-<div class="row box" style="width: 100%; height: 500px; display: none">
+<div class="row" style="width: 100%;" id="dashboard_order">
 	
+		<div>
+			<h3 style="margin-left: 20px; color: #EF9223">
+				Orders
+			</h3>
+			<%= column_chart Order.group_by_day(:created_at).count %>
+		</div>
 </div>
