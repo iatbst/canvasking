@@ -29,8 +29,11 @@
 		</div>
 		<div class="col-md-4">
 			<br />
-			<h5>Payment Method</h5>
-			VISA &nbsp;**** &nbsp;4369
+			<h4>Payment Method</h4>
+			<i class="fa fa-credit-card" aria-hidden="true"></i>&nbsp;
+			<%= @order.payment_info['brand'] ? @order.payment_info['brand'].upcase : nil %>
+			&nbsp;**** &nbsp;
+			<%= @order.payment_info['last4'] %>
 		</div>
 		<div class="col-md-4">
 			<br />
