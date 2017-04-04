@@ -1,6 +1,13 @@
 
 
 
-<div class="row box" style="width: 100%; height: 500px">
-	
+<div class="row" style="width: 100%;">
+
+	<div>
+		<h3 style="margin-left: 20px">
+			User Sign Up
+		</h3>
+		<%= column_chart User.group_by_day(:created_at).count %>
+	</div>
+
 </div>
