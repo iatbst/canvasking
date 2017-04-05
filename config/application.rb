@@ -46,7 +46,7 @@ module Canvasking
   IMAGE_TMP_CACHE_TIME = 1 # Cache time to store image in tmp folder: 1 hours now
   
   # Facebook/Image uplad
-  INSTAGRAM_PHOTO_COUNT = 100
+  INSTAGRAM_PHOTO_COUNT = 20
   
   # EMail
   # GMAIL_TEST_USER = 'agarienforcement@gmail.com'

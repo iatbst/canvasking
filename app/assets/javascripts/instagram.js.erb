@@ -1,12 +1,19 @@
+// Global
+var maxID = null; //used for next fetch
+var accessToken = null; //the access token is required to make any endpoint calls, http://instagram.com/developer/endpoints/
+var row_base = 0;
+var fetch_count = <%= Canvasking::INSTAGRAM_PHOTO_COUNT %>;
+
+
 // instagram integration
 $(window).on('load', function() {
 	
-	// test
     $('#instagram_upload_button').click(function() {
+    	$.LoadingOverlay("show"); // in case multiple click
         load_images_from_instagram();
+        $.LoadingOverlay("hide");
     });
 
-    var accessToken = null; //the access token is required to make any endpoint calls, http://instagram.com/developer/endpoints/
     
     var authenticateInstagram = function(instagramClientId, instagramRedirectUri, callback) {
         //the pop-up window size, change if you want
@@ -43,7 +50,8 @@ $(window).on('load', function() {
         }
     };
 
-    function login_callback() {
+	function fetch_photos() {
+
         var get_images_url = "https://api.instagram.com/v1/users/self/media/recent";
 
         $.ajax({
@@ -52,19 +60,22 @@ $(window).on('load', function() {
             type: 'GET',
             data: {
                 access_token: accessToken,
-                count: <%= Canvasking::INSTAGRAM_PHOTO_COUNT %>,
+                count: fetch_count,
+                max_id: maxID,
             },
 
             success: function(photos) {
 
                 // display modal
                 open_instagram_modal();
-
+				
+			
+				
                 // Build the grid system for images
                 if (photos && photos.data && photos.data.length) {
                     for (var j = 0; j < photos.data.length; j++) {
                         var photo = photos.data[j];
-                        var row_num = parseInt(j / 5);
+                        var row_num = parseInt(j / 5) + row_base;
                         var row_id = "my_instagram_images_" + row_num;
                         if (j % 5 == 0) {
                             $('#my_instagram_images').append('<div class="row" id="' + row_id + '"></div>');
@@ -84,20 +95,33 @@ $(window).on('load', function() {
 		          								 class="instagram_image" id="' + large_image_url + '"></img>');
                     }
                 }
-
+      
+                
+                // Save the maxID and row_base for next fetch
+                maxID = photos.data[photos.data.length - 1].id;
+                row_base += fetch_count/5;
             },
 
             error: function(data) {
                 console.log(data);
             }
         });
-
+        
+	}
+	
+    function login_callback() {
+    	
+		fetch_photos();
         $('#instagram_upload_button').off();
         $('#instagram_upload_button').click(function() {
             open_instagram_modal();
         });
     }
 
+	$('#load_more').click(function (){
+		fetch_photos();
+	});
+	
     function open_instagram_modal() {
         $('#instagram_images').modal('show');
     }
@@ -111,6 +135,8 @@ $(window).on('load', function() {
         return false;
     }
 
+	
+	// Pick the image to upload
     $('body').on('click', 'img.instagram_image', function() {
         $('.instagram_image_grid').css('border-color', '');
         $('.instagram_image_grid').css('border-weight', '');

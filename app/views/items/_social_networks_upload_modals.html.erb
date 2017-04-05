@@ -1,3 +1,35 @@
+<style>
+
+#load_more {
+	width: 50%;
+	background: white;
+	border-style: solid;
+	border-color: #EF9223;
+	color: #EF9223;
+	border-radius: 5px;
+	font-weight: 900;
+}
+
+#cancel_button {
+	width: 50%;
+	background: white;
+	border-style: solid;
+	border-color: grey;
+	color: grey;
+	border-radius: 5px;
+	font-weight: 900;
+}
+
+#load_more:hover {
+	background: #EF9223;
+	color: white;
+}
+
+#cancel_button:hover {
+	background: grey;
+	color: white;	
+}
+</style>
 <!-- Instagram upload Modal -->
 <div class="modal fade" id="instagram_images" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document" style="width: 1000px">
@@ -15,7 +47,14 @@
         	
       </div>
       <div class="modal-footer">
-      			<button type="button" class="btn btn-default" data-dismiss="modal">Skip</button>
+      	<div class="row" align="center">
+      		<div class="col-md-6" align="center">
+      			<button type="button" class="btn btn-primary" id="load_more" style="width: 50%;">LOAD MORE</button>
+      		</div>
+      		<div class="col-md-6" align="center">
+      			<button type="button" class="btn btn-default" id="cancel_button" data-dismiss="modal" style="width: 50%">CANCEL</button>
+      		</div>
+      	</div>
       </div>
     </div>
   </div>
