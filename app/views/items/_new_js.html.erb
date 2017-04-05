@@ -354,6 +354,9 @@
 		$('.canvas_frame_none_label').css('color', '#ef9223');
 		// Clear frame
 		remove_frame();
+		// Hide depth option
+		$('.depth_section').fadeIn(1000);
+		$('.canvas_frame_section').hide();
 	});
 
 	$("#canvas_frame_black").click(function() {
@@ -368,6 +371,9 @@
 		$('.canvas_frame_black_label').css('color', '#ef9223');
 		$('#overview_image').attr('class','overview_image image_shadow_in_item');
 		$('#overview_image').addClass('image_black_frame_in_item');
+		// Hide depth option
+		$('.depth_section').fadeOut(1000);
+		$('.canvas_frame_section').show();
 	});
 
 	$("#canvas_frame_white").click(function() {
@@ -383,6 +389,9 @@
 		// Add frame
 		$('#overview_image').attr('class','overview_image image_shadow_in_item');
 		$('#overview_image').addClass('image_white_frame_in_item');
+		// Hide depth option
+		$('.depth_section').fadeOut(1000);
+		$('.canvas_frame_section').show();
 	});
 
 	$("#canvas_frame_brown").click(function() {
@@ -398,6 +407,9 @@
 		// Add frame
 		$('#overview_image').attr('class','overview_image image_shadow_in_item');
 		$('#overview_image').addClass('image_brown_frame_in_item');
+		// Hide depth option
+		$('.depth_section').fadeOut(1000);
+		$('.canvas_frame_section').show();
 	});
 	
 	function remove_frame(){
