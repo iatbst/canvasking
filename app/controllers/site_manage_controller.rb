@@ -56,7 +56,7 @@ class SiteManageController < ApplicationController
       
       @order.oem_info['oem_order_number'] = params[:order][:oem_order_number]
       @order.oem_info['oem_order_detail_url'] = generate_order_detail_url(params[:order][:oem_order_number])
-      #@order.oem_info['oem_shipping_detail_url'] = generate_shipping_detail_url(params[:order][:oem_order_number])
+      @order.oem_info['oem_shipping_detail_url'] = generate_shipping_detail_url(params[:order][:oem_order_number], @order)
       @order.notes = params[:order][:notes]
       @order.status = 'processing'
       @order.processing_status = 1 # order placed
@@ -254,8 +254,14 @@ class SiteManageController < ApplicationController
     return "#{Canvasking::TAOBAO_ORDER_DETAIL_URL}?biz_order_id=#{order_number}"
   end
 
-  # Deprecated : Not working ! TAOBAO_USER_ID always change
-  def generate_shipping_detail_url(order_number)
-    return "#{Canvasking::TAOBAO_SHIPPING_DETAIL_URL}?tId=#{order_number}&userId=#{Canvasking::TAOBAO_USER_ID}"
+  # Need to refactor in future !!!
+  def generate_shipping_detail_url(order_number, order)
+    item = order.items[0]
+    if item.canvas_frame == 'No'
+      oem_id = Canvasking::TAOBAO_OEM_2_ID # No outer frame
+    else
+      oem_id = Canvasking::TAOBAO_OEM_1_ID # Outer frame
+    end
+    return "#{Canvasking::TAOBAO_SHIPPING_DETAIL_URL}?tId=#{order_number}&userId=#{oem_id}"
   end 
 end

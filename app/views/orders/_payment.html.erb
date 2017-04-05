@@ -8,6 +8,12 @@
 	background: white;
 }
 
+.ssl_secure_logo {
+	width: auto;
+	height: auto;
+	max-width: 120px;
+	max-height: 120px;	
+}
 
 /* Placeholder Color*/
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
@@ -72,15 +78,29 @@
 
 </div>
 
+<br />
+
+<div class="row">
+
+<div class="col-md-2">
+<img src="/order/SSL_Secure.png" class="ssl_secure_logo" >
+</div>
+
+<div class="col-md-10">
 <p style="font-size: 15px">
-* MagicPhotoPrints.Com do NOT hold your credit card and billing informations. <br />
-* All transactions are processed securely by <a href="https://stripe.com/docs/security" target="_blank"><u>Stripe</u></a>
+* MagicPhotoPrints.Com <b>DO NOT</b> hold your payment informations <br />
+* All transactions are processed securely by <a href="https://stripe.com/docs/security" target="_blank"><u>Stripe</u></a> <br />
+* Https secure connection. NO personal informations leaked
 <br />
 <br />
-<span style="color: green; font-size: 18px">
-<i class="fa fa-lock" aria-hidden="true" style="color: green"></i> 
-	Secure Connection. 128-Bit Encryption
-</span>
 </p>
+
+</div>
+
+</div>
+
+
+
+
 
 <h4><a name="charge_error" style="color: red"><%= flash['charge_error'] %></a></h4>
