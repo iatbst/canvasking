@@ -9,17 +9,17 @@
 				<div class="container" >
 					<div class="row">
 						<div class="col-md-2">
-							<h5> Order Placed </h5> <%= order.created_at.strftime("%b.%d %Y") %>
+							<h5 style="font-weight: 900"> Order Placed </h5> <%= order.created_at.strftime("%b.%d %Y") %>
 						</div>
 						<div class="col-md-2">
-							<h5>TOTAL:</h5>$<%= order.total_price %>
+							<h5 style="font-weight: 900">TOTAL</h5>$<%= order.total_price %>
 						</div>
 						<div class="col-md-2">
-							<h5>SHIP TO:</h5>
+							<h5 style="font-weight: 900">SHIP TO</h5>
 							<%= order.shipping_full_name %>
 						</div>
 						<div class="col-md-5" align="right">
-							<h5>Order # <%= order.number %></h5>
+							<h5 style="font-weight: 900">Order # <%= order.number %></h5>
 							<%= link_to 'Order Detail', order_path(order) %>
 						</div>
 					</div>
@@ -72,7 +72,7 @@
 									<br />
 									Quantity:<b> <%= item.quantity %></b>
 									<br />
-									Price:<b> $<%= item.price %></b>
+									Subtotal:<b> $<%= item.price %></b>
 									<br />
 									<br />
 									

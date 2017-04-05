@@ -39,4 +39,13 @@
 	function show_note(id){	
 		$('#' + id).slideDown().delay(1500).slideUp();
 	}
+
+	$(window).on("scroll", function(e) {
+		
+  		if (this.scrollY > 65) {
+    		$('#summary_box').addClass("order_summary_position_fixed");
+  		} else {
+    		$('#summary_box').removeClass("order_summary_position_fixed");
+  	}
+  	});
 </script>

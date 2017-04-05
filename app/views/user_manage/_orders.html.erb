@@ -9,17 +9,22 @@
 			
 					<div class="row">
 						<div class="col-md-3">
-							<h5> Order Placed </h5> <%= order.created_at.strftime("%b.%d %Y") %>
+							<h5 style="font-weight: 900"> Order Placed </h5> <%= order.created_at.strftime("%b.%d %Y") %>
 						</div>
-						<div class="col-md-3">
-							<h5>TOTAL:</h5>$<%= order.total_price %>
+						<div class="col-md-4">
+							<h5 style="font-weight: 900">TOTAL</h5>
+							$<%= order.total_price %>
+							<% if !order.coupon_id.nil? %>
+							
+								<span style="color: green">( Coupon Saving: $<%= (order.before_price.to_f - order.discount_price.to_f).round(2) %> )</span>
+							<% end %>
 						</div>
-						<div class="col-md-3">
-							<h5>SHIP TO:</h5>
+						<div class="col-md-2">
+							<h5 style="font-weight: 900">SHIP TO</h5>
 							<%= order.shipping_full_name %>
 						</div>
 						<div class="col-md-3" align="right">
-							<h5>Order # <%= order.number %></h5>
+							<h5 style="font-weight: 900">Order # <%= order.number %></h5>
 							<%= link_to 'Order Detail', order_path(order) %>
 						</div>
 					</div>
@@ -72,7 +77,7 @@
 									<br />
 									Quantity:<b> <%= item.quantity %></b>
 									<br />
-									Price:<b> $<%= item.price %></b>
+									Subtotal:<b> $<%= item.price %></b>
 									<br />
 									<br />
 									
