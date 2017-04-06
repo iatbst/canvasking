@@ -1,184 +1,202 @@
-$(window).on('load', function(){
+// Global variable to save key:val => album.id : after
+var paging = {};
 
-  $('#facebook_upload_button').click(function (){
-  		load_images_from_facebook();
-  });
+$(window).on('load', function() {
 
-  
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '<%= ENV["facebook_app_id"] %>',
-      xfbml      : true,
-      version    : 'v2.8'
+    $('#facebook_upload_button').click(function() {
+        load_images_from_facebook();
     });
-    FB.AppEvents.logPageView();
-  };
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-   
-	// Only works after `FB.init` is called
-	function load_images_from_facebook() {
-  		FB.login(function(){
-  		
-  		// display modal
-  		$('#facebook_images').modal('show');
-  		
-  		// get photos of you
-  		FB.api('/me/photos?fields=picture,album,images', function(photos) {
 
-				$('#albums').append('<button class="btn btn-default btn-lg facebook_album_button" \
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId: '<%= ENV["facebook_app_id"] %>',
+            xfbml: true,
+            version: 'v2.8'
+        });
+        FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    // Only works after `FB.init` is called
+    function load_images_from_facebook() {
+        FB.login(function() {
+
+            // display modal
+            $('#facebook_images').modal('show');
+
+            // get photos of you
+            $('#albums').append('<button class="btn btn-default btn-lg facebook_album_button" \
 		    						data-toggle="collapse"	\
 		    						data-target="#collapse_photos_of_you"	\
-		    						style="width: 100%;text-align:left"><i class="fa fa-folder-o" style="font-size: 25px" aria-hidden="true"></i> &nbsp;&nbsp;<span style="margin-left: 350px">Photos Of You ( ' + photos.data.length + ' ) </span>' + '</button>'); 
-		    						 			
- 				$('#albums').append('<div class="collapse" id="collapse_photos_of_you"><div id="photos_of_you" class="container"></div></div>');
-		    	  
-		    	   
-		    	  	// Build the grid system for images
-		    	  if (photos && photos.data && photos.data.length){
-		    	  	for (var j=0; j<photos.data.length; j++){
-		    	  		var photo = photos.data[j];
-		    	  		var row_num = parseInt(j/5);
-		    	  		var row_id = "photos_of_you_" + row_num;
-		    	  		if (j%5 == 0) {
-		    	  			$('#photos_of_you').append('<div class="row" id="' + row_id + '"></div>');
-		    	  		}
-		    	  		$('#' + row_id).append('<div class="col-md-2 box facebook_image_grid" align="center" id="' + photo.id + '"></div>');
-		    	  
-		    	  	}
-		    	  }
-		    	  
-		      if (photos && photos.data && photos.data.length){
-		        for (var j=0; j<photos.data.length; j++){
-		          var photo = photos.data[j];
-		          photo.images.sort(function(a, b) { return b.width - a.width;})
-		          var large_image_url = photo.images[0].source
-		          if (photo.images[0].width > photo.images[0].height){
-		          	var image_class = "facebook_image_width";
-		          } else {
-		          	var image_class = "facebook_image_height";
-		          }
-		          // photo.picture contain the link to picture          
-		          $('#' + photo.id).append('<img src="' + photo.picture + '" \
-		          								 class="' + image_class + '" id="' + large_image_url + '"></img>');
-		        }
-		      }
-		       		
-  		});
-  		
-  		// get all albums
-		FB.api('/me/albums?fields=id,name,count', function(response) {
-		  
-		  for (var i=0; i<response.data.length; i++) {
-		    var album = response.data[i];
-		 
-		    $('#albums').append('<button class="btn btn-default btn-lg facebook_album_button" \
+		    						style="width: 100%;text-align:left"><i class="fa fa-folder-o" style="font-size: 25px" aria-hidden="true"></i> &nbsp;&nbsp;<span style="margin-left: 350px">Photos of You</span>' + '</button>');
+
+            $('#albums').append('<div class="collapse" id="collapse_photos_of_you"><div id="me" class="container"></div></div>');
+            fetch_album_images('me', true);  
+            
+            // get all albums
+            FB.api('/me/albums?fields=id,name,count', function(response) {
+
+                for (var i = 0; i < response.data.length; i++) {
+                    var album = response.data[i];
+
+                    $('#albums').append('<button class="btn btn-default btn-lg facebook_album_button" \
 		    						data-toggle="collapse"	\
 		    						data-target="#collapse_' + album.id + '"	\
 		    						style="width: 100%; text-align:left"><i class="fa fa-folder-o" style="font-size: 25px; margin-left: 0px" aria-hidden="true"></i> &nbsp;&nbsp;<span style="margin-left: 350px">' + album.name + ' ( ' + album.count + ' )</span> ' + '</button>');
-		    	
-		    	$('#albums').append('<div class="collapse" id="collapse_' + album.id + '"><div id="' + album.id +'" class="container"></div></div>');			
-			
-			
-		    FB.api('/'+album.id+'/photos?fields=picture,album,images', function(photos){
-		    	 
-		    	  // Build the grid system for images
-		    	  if (photos && photos.data && photos.data.length){
-		    	  	for (var j=0; j<photos.data.length; j++){
-		    	  		var photo = photos.data[j];
-		    	  		var row_num = parseInt(j/5);
-		    	  		var row_id = photo.album.id + "_" + row_num;
-		    	  		if (j%5 == 0) {
-		    	  			$('#' + photo.album.id).append('<div class="row" id="' + row_id + '"></div>');
-		    	  		}
-		    	  		$('#' + row_id).append('<div class="col-md-2 box facebook_image_grid" align="center" id="' + photo.id + '"></div>');
-		    	  
-		    	  	}
-		    	  }
-		    	  
-		      if (photos && photos.data && photos.data.length){
-		        for (var j=0; j<photos.data.length; j++){
-		          var photo = photos.data[j];
-		          photo.images.sort(function(a, b) { return b.width - a.width;})
-		          var large_image_url = photo.images[0].source
-		          // photo.picture contain the link to picture 
-		          if (photo.images[0].width > photo.images[0].height){
-		          	var image_class = "facebook_image_width";
-		          } else {
-		          	var image_class = "facebook_image_height";
-		          }
-		          // photo.picture contain the link to picture          
-		          $('#' + photo.id).append('<img src="' + photo.picture + '" \
-		          								 class="' + image_class + '" id="' + large_image_url + '"></img>');         
-		        }
-		      }
-		    });
-		
-		  }
 
-			  
-		  
-		});
-  			
-  			
-  		}, {scope: ['user_photos']});
-  		
-  		// Next time no need to fetch images again
-  		$('#facebook_upload_button').off();
-   		$('#facebook_upload_button').click(function (){
-  			open_facebook_modal();
-  		});
-	}
+                    $('#albums').append('<div class="collapse" id="collapse_' + album.id + '"><div id="' + album.id + '" class="container"></div></div>');
+
+					 
+					fetch_album_images(album.id, true);
+
+                }
+
+
+
+            });
+
+
+        }, {
+            scope: ['user_photos']
+        });
+
+        // Next time no need to fetch images again
+        $('#facebook_upload_button').off();
+        $('#facebook_upload_button').click(function() {
+            open_facebook_modal();
+        });
+    }	
 	
-	$('body').on('click', '.facebook_album_button', function(){
-		var this_status = $(this).attr('aria-expanded');
+    $('body').on('click', '.facebook_album_button', function() {
+        var this_status = $(this).attr('aria-expanded');
+        $('.collapse').collapse('hide');
+        $('i.fa-folder-open-o').addClass('fa-folder-o').removeClass('fa-folder-open-o');
+        if (this_status == "false" || this_status == null) {
+            $(this).find('i.fa-folder-o').addClass('fa-folder-open-o').removeClass('fa-folder-o');
+        }
+    });
+
+	$('.fb_close_album').click(function (){
 		$('.collapse').collapse('hide');
-		$('i.fa-folder-open-o').addClass('fa-folder-o').removeClass('fa-folder-open-o');
-		if ( this_status == "false" || this_status == null ) {
-			$(this).find('i.fa-folder-o').addClass('fa-folder-open-o').removeClass('fa-folder-o');
-		}			
 	});
 	
-	$('body').on('click','img.facebook_image_width, img.facebook_image_height', function() {
-		$('.facebook_image_grid').css('border-color', '');
-		$('.facebook_image_grid').css('border-weight', '');
-		$(this).parent().css('border-color', 'red');
-		$(this).parent().css('border-weight', '3px');
-		
-    		$('#facebook_images').modal('hide');
-    		$.LoadingOverlay("show");
-    		
-    		// and ajax call to server
-    		$.ajax({
-  				url: "/items/" + $('#facebook_upload_button').attr('value'),
-  				data: {'image_upload': true, 'upload_from_facebook': true, 'facebook_image_url': $(this).attr('id')},
-  				dataType: 'json',
-  				type: 'patch',
-			}).done(function(data) {
-        			// Show Crop Modal
-        			$('.jcrop-active').remove();
-        			if ($('#item_image_cropbox').length == 0){
-        				$('#item_image_cropbox_wrapper').append('<img id="item_image_cropbox" src=""></img>');
-        			}
-        			$('#item_image_cropbox').Jcrop({
-        				setSelect: [0, 0, 450, 450],
-          			allowSelect: false,
-    				});
-    				$('#item_image_cropbox').attr('src', data.crop_image_url);			
-				$('.jcrop-selection').click(function(){return false});
-				$('#crop_modal').modal('show');
-				$.LoadingOverlay("hide");
-		});
-	});	
-	
-	function open_facebook_modal() {
-		$('#facebook_images').modal('show');
+    $('body').on('click', 'img.facebook_image_width, img.facebook_image_height', function() {
+        $('.facebook_image_grid').css('border-color', '');
+        $('.facebook_image_grid').css('border-weight', '');
+        $(this).parent().css('border-color', 'red');
+        $(this).parent().css('border-weight', '3px');
+
+        $('#facebook_images').modal('hide');
+        $.LoadingOverlay("show");
+
+        // and ajax call to server
+        $.ajax({
+            url: "/items/" + $('#facebook_upload_button').attr('value'),
+            data: {
+                'image_upload': true,
+                'upload_from_facebook': true,
+                'facebook_image_url': $(this).attr('id')
+            },
+            dataType: 'json',
+            type: 'patch',
+        }).done(function(data) {
+            // Show Crop Modal
+            $('.jcrop-active').remove();
+            if ($('#item_image_cropbox').length == 0) {
+                $('#item_image_cropbox_wrapper').append('<img id="item_image_cropbox" src=""></img>');
+            }
+            $('#item_image_cropbox').Jcrop({
+                setSelect: [0, 0, 450, 450],
+                allowSelect: false,
+            });
+            $('#item_image_cropbox').attr('src', data.crop_image_url);
+            $('.jcrop-selection').click(function() {
+                return false
+            });
+            $('#crop_modal').modal('show');
+            $.LoadingOverlay("hide");
+        });
+    });
+
+    function open_facebook_modal() {
+        $('#facebook_images').modal('show');
+    }
+
+});
+
+function load_more(album_id){
+	fetch_album_images(album_id, false);
+}
+
+	function fetch_album_images(album_id, first_fetch){
+					if (paging[album_id]) {
+						var api = '/' + album_id + '/photos?fields=picture,images&after=' + paging[album_id]
+					} else {
+						var api = '/' + album_id + '/photos?fields=picture,images'
+					}
+                    FB.api(api, function(photos) {
+						
+                        
+                        if (photos.paging) {
+                        	paging[album_id] = photos.paging.cursors.after;
+                        }
+                        
+                        
+                        var row_base = $('#' + album_id + ' > div').length
+
+                        if (first_fetch) {
+                          	$('#' + album_id).append('<div class="row" id="' + album_id + '_load_more_row" ><button id="' + album_id + '_load_more" class="btn btn-default fb_album_load_more" value="' + album_id + '" onclick="load_more(\'' + album_id + '\');">LOAD MORE</button><button class="btn btn-default fb_close_album" onclick="close_all_albums();">CLOSE</button></div>');	
+                        }
+                        
+                            
+                        // Build the grid system for images
+                        if (photos && photos.data && photos.data.length) {
+                            for (var j = 0; j < photos.data.length; j++) {
+                                var photo = photos.data[j];
+                                var row_num = parseInt(j / 5) + row_base;
+                                var row_id = album_id + "_" + row_num;
+                                if (j % 5 == 0) {
+                                	$('<div class="row" id="' + row_id + '"></div>').insertBefore('#' + album_id + '_load_more_row');
+                                    //$('#' + album_id).append('<div class="row" id="' + row_id + '"></div>');
+                                }
+                                $('#' + row_id).append('<div class="col-md-2 box facebook_image_grid" align="center" id="' + album_id + '_' + photo.id + '"></div>');
+
+                            }
+ 
+                        }
+
+                        if (photos && photos.data && photos.data.length) {
+                            for (var j = 0; j < photos.data.length; j++) {
+                                var photo = photos.data[j];
+                                photo.images.sort(function(a, b) {
+                                    return b.width - a.width;
+                                })
+                                var large_image_url = photo.images[0].source
+                                // photo.picture contain the link to picture 
+                                if (photo.images[0].width > photo.images[0].height) {
+                                    var image_class = "facebook_image_width";
+                                } else {
+                                    var image_class = "facebook_image_height";
+                                }
+                                // photo.picture contain the link to picture          
+                                $('#' + album_id + '_' + photo.id).append('<img src="' + photo.picture + '" \
+		          								 class="' + image_class + '" id="' + large_image_url + '"></img>');
+                            }
+                        }
+                    });
 	}
 	
-});
+function close_all_albums(){
+	$('.collapse').collapse('hide');
+}
