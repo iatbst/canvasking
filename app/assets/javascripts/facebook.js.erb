@@ -141,9 +141,9 @@ function load_more(album_id){
 
 	function fetch_album_images(album_id, first_fetch){
 					if (paging[album_id]) {
-						var api = '/' + album_id + '/photos?fields=picture,album,images&after=' + paging[album_id]
+						var api = '/' + album_id + '/photos?fields=picture,images&after=' + paging[album_id]
 					} else {
-						var api = '/' + album_id + '/photos?fields=picture,album,images'
+						var api = '/' + album_id + '/photos?fields=picture,images'
 					}
                     FB.api(api, function(photos) {
 						
@@ -156,8 +156,9 @@ function load_more(album_id){
                         var row_base = $('#' + album_id + ' > div').length
 
                         if (first_fetch) {
-                          	$('#' + album_id).append('<div class="row" id="' + album_id + '_load_more_row" ><button id="' + album_id + '_load_more" class="btn btn-default fb_album_load_more" value="' + album_id + '" onclick="load_more(' + album_id + ');">LOAD MORE</button><button class="btn btn-default fb_close_album" onclick="close_all_albums();">CLOSE</button></div>');	
+                          	$('#' + album_id).append('<div class="row" id="' + album_id + '_load_more_row" ><button id="' + album_id + '_load_more" class="btn btn-default fb_album_load_more" value="' + album_id + '" onclick="load_more(\'' + album_id + '\');">LOAD MORE</button><button class="btn btn-default fb_close_album" onclick="close_all_albums();">CLOSE</button></div>');	
                         }
+                        
                             
                         // Build the grid system for images
                         if (photos && photos.data && photos.data.length) {
