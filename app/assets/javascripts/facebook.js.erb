@@ -87,8 +87,9 @@ $(window).on('load', function() {
         }
     });
 
-	$('.fb_close_album').click(function (){
+	$('body').on('click', '.fb_close_album', function() {
 		$('.collapse').collapse('hide');
+		$('i.fa-folder-open-o').addClass('fa-folder-o').removeClass('fa-folder-open-o');
 	});
 	
     $('body').on('click', 'img.facebook_image_width, img.facebook_image_height', function() {

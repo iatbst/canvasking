@@ -1,3 +1,12 @@
+<style>
+
+@-moz-document url-prefix() {
+	.firefox_fix {
+		margin-left: 27px;
+	}
+}
+
+</style>
 <!-- marketing banner -->
 <%= render 'layouts/marketing_banner' %>
 
@@ -67,10 +76,10 @@
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active product_tab">
+    <li role="presentation" class="active product_tab" align="center">
     	<a href="#canvas_price_table" aria-controls="home" role="tab" data-toggle="tab" align="center" style="color: #EF9223">
     		<%= image_tag '/items/single_canvas.jpg', class: "depth_options_image"%>
-    		<h4>CANVAS</h4>
+    		<h4 class="firefox_fix">CANVAS</h4>
     	</a>
     </li>
     <!-- Temp Remove Frame-->
