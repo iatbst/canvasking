@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-  <title>Canvasking</title>
+  <!-- Generate different title for different page -->
+  <title>
+  	<%= generate_title_by_page %>
+  </title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 
-  <meta name="google-site-verification" content="ma8HXOZKIYWTLVv_ka2zUo2hIuj8jk0SX5kOnItnXaM" />
   
   <!--From home template -->
   <meta charset="utf-8">
