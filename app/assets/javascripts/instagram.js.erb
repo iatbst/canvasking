@@ -69,7 +69,9 @@ $(window).on('load', function() {
                 // display modal
                 open_instagram_modal();
 				
-			
+				if (photos.data.length == 0) {
+					$('#no_images_instagram').fadeIn().delay(1000).fadeOut();
+				}
 				
                 // Build the grid system for images
                 if (photos && photos.data && photos.data.length) {
@@ -80,7 +82,7 @@ $(window).on('load', function() {
                         if (j % 5 == 0) {
                             $('#my_instagram_images').append('<div class="row" id="' + row_id + '"></div>');
                         }
-                        $('#' + row_id).append('<div class="col-md-2 box instagram_image_grid" align="center" id="' + photo.id + '"></div>');
+                        $('#' + row_id).append('<div class="col-md-2 instagram_image_grid" align="center" id="' + photo.id + '"></div>');
 
                     }
                 }
@@ -89,7 +91,8 @@ $(window).on('load', function() {
                     for (var j = 0; j < photos.data.length; j++) {
                         var photo = photos.data[j];
                         var large_image_url = photo.images.standard_resolution.url
-                        var thumb_image_url = photo.images.thumbnail.url
+                        var thumb_image_url = photo.images.low_resolution.url
+              
                         // photo.picture contain the link to picture          
                         $('#' + photo.id).append('<img src="' + thumb_image_url + '" \
 		          								 class="instagram_image" id="' + large_image_url + '"></img>');

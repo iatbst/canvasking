@@ -150,13 +150,17 @@ function load_more(album_id){
                         
                         if (photos.paging) {
                         	paging[album_id] = photos.paging.cursors.after;
+                        } 
+                        
+                        if (photos.data.length == 0) {
+                        	$('#no_images_' + album_id).fadeIn().delay(1000).fadeOut();
                         }
                         
                         
                         var row_base = $('#' + album_id + ' > div').length
 
                         if (first_fetch) {
-                          	$('#' + album_id).append('<div class="row" id="' + album_id + '_load_more_row" ><button id="' + album_id + '_load_more" class="btn btn-default fb_album_load_more" value="' + album_id + '" onclick="load_more(\'' + album_id + '\');">LOAD MORE</button><button class="btn btn-default fb_close_album" onclick="close_all_albums();">CLOSE</button></div>');	
+                          	$('#' + album_id).append('<div class="row" id="' + album_id + '_load_more_row" ><div class="row" style="display:none; color: red" id="no_images_' + album_id + '"><span class="no_images_to_load">No more photos in this album.</span></div><div class="row"><button id="' + album_id + '_load_more" class="btn btn-default fb_album_load_more" value="' + album_id + '" onclick="load_more(\'' + album_id + '\');">LOAD MORE</button><button class="btn btn-default fb_close_album" onclick="close_all_albums();">CLOSE</button></div></div>');	
                         }
                         
                             
@@ -170,7 +174,7 @@ function load_more(album_id){
                                 	$('<div class="row" id="' + row_id + '"></div>').insertBefore('#' + album_id + '_load_more_row');
                                     //$('#' + album_id).append('<div class="row" id="' + row_id + '"></div>');
                                 }
-                                $('#' + row_id).append('<div class="col-md-2 box facebook_image_grid" align="center" id="' + album_id + '_' + photo.id + '"></div>');
+                                $('#' + row_id).append('<div class="col-md-2 facebook_image_grid" align="center" id="' + album_id + '_' + photo.id + '"></div>');
 
                             }
  
@@ -183,6 +187,15 @@ function load_more(album_id){
                                     return b.width - a.width;
                                 })
                                 var large_image_url = photo.images[0].source
+                                if (photo.images.length == 1){
+                                	var middle_index = 0
+                                } else {
+                                	var middle_index = Math.ceil(photo.images.length/2)
+                                }
+                
+                                var middle_image_url = photo.images[middle_index].source
+                  
+                                
                                 // photo.picture contain the link to picture 
                                 if (photo.images[0].width > photo.images[0].height) {
                                     var image_class = "facebook_image_width";
@@ -190,7 +203,7 @@ function load_more(album_id){
                                     var image_class = "facebook_image_height";
                                 }
                                 // photo.picture contain the link to picture          
-                                $('#' + album_id + '_' + photo.id).append('<img src="' + photo.picture + '" \
+                                $('#' + album_id + '_' + photo.id).append('<img src="' + middle_image_url + '" \
 		          								 class="' + image_class + '" id="' + large_image_url + '"></img>');
                             }
                         }
