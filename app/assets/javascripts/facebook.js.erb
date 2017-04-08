@@ -55,7 +55,7 @@ $(window).on('load', function() {
 		    						data-target="#collapse_' + album.id + '"	\
 		    						style="width: 100%; text-align:left"><i class="fa fa-folder-o" style="font-size: 25px; margin-left: 0px" aria-hidden="true"></i> &nbsp;&nbsp;<span style="margin-left: 350px">' + album.name + ' ( ' + album.count + ' )</span> ' + '</button>');
 
-                    $('#albums').append('<div class="collapse" id="collapse_' + album.id + '"><div id="' + album.id + '" class="container"></div></div>');
+                    $('#albums').append('<div class="collapse" id="collapse_' + album.id + '"><div id="' + album.id + '" class="container" ></div></div>');
 
 					 
 					fetch_album_images(album.id, true);
@@ -175,7 +175,7 @@ function load_more(album_id){
                                 	$('<div class="row" id="' + row_id + '"></div>').insertBefore('#' + album_id + '_load_more_row');
                                     //$('#' + album_id).append('<div class="row" id="' + row_id + '"></div>');
                                 }
-                                $('#' + row_id).append('<div class="col-md-2 facebook_image_grid" align="center" id="' + album_id + '_' + photo.id + '"></div>');
+                                $('#' + row_id).append('<div class="col-md-2 facebook_image_grid" style="margin-left: -1px;" align="center" id="' + album_id + '_' + photo.id + '"></div>');
 
                             }
  
