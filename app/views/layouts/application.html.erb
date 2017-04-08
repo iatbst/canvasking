@@ -5,17 +5,21 @@
   <title>
   	<%= generate_title_by_page %>
   </title>
+  <!-- Generate different descriptions for different page -->
+  <meta name="description" content="<%= generate_description_by_page %>">
+  
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 
+  
   
   <!--From home template -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="keywords" content="">
-  <meta name="description" content="">
+
   <link href='https://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
   
   <!--From signup template -->
