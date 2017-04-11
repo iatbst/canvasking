@@ -1,3 +1,6 @@
+require "#{Rails.root}/lib/tasks/task_helper"
+include TaskHelper
+
 namespace :price_maker do
 
   # This is a test function to fast make random product/size/price matrix and 
@@ -49,6 +52,7 @@ namespace :price_maker do
   #  - P2: taobao shipping
   # - BASE_PRICE = Cost*Profit_rate
   # - FINAL_PRICE = BASE_PRICE/Marketing_rate
+  # DO NOT FORGET SHIPPING LIMIT RULE OF TAOBAO
   desc "Populate price table for canvas"
   task :canvas_run do
     products = [
@@ -76,6 +80,13 @@ namespace :price_maker do
       
       table_size.times.each do |x|
         table_size.times.each do |y|
+          # Checkpoint for shipping size limit
+          if violate_taobao_shipping_limit(h, w)
+            next
+          end
+          
+          # Calculate shipment cost by size
+          shipment_fee = calculate_taobao_shipping_fee(h, w)/dollar_rate
           size = "#{h}\\\"x#{w}\\\""
           
           # Calculate Price
@@ -96,7 +107,10 @@ namespace :price_maker do
           price += shipment_fee
           
           # Base price
-          price *= Canvasking::PROFIT_RATE
+          #price *= Canvasking::PROFIT_RATE
+          profit_rate = calculate_profit_rate(h, w)
+          price *= profit_rate
+          puts "#{h}x#{w}: #{shipment_fee}, #{profit_rate}"
           
           # Final price
           price = price.to_f/Canvasking::MARKETING_RATE

@@ -138,8 +138,8 @@
 			data: {'product': product, 'height': height, 'width': width},
 			success : function(result) {
 				// Update item quantity on page
-				if (parseInt(result.price) == 0){
-					$('#price').text('SORRY, UNAVAILABLE NOW.');
+				if (parseInt(result.price) == 0 || result.price == null ){
+					$('#price').text('SORRY, SIZE UNAVAILABLE NOW.');
 					$('#product').text('');
 					$('#size').text('');
 					$('#create_button').attr('disabled', 'disabled');
