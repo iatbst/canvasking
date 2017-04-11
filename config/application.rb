@@ -82,6 +82,10 @@ module Canvasking
   #ORDER_CLOSED_WAITING_TIME = 3600*24*30 # wait 30 days after customer received product, before marking order status to CLOSED
   TAOBAO_OEM_1_ID = '1739501216'
   TAOBAO_OEM_2_ID = '142379829'
+  # TaoBao Rule: 
+  # Suppose length > width
+  # length x 3 + width x 2 <= TAOBAO_SHIPPING_LIMIT, otherwise rejected
+  TAOBAO_SHIPPING_LIMIT = 330
 
   # Product Prices
   # - Currency: RMB

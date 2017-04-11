@@ -3,8 +3,8 @@ class PricingController < ApplicationController
   
   def index    
     @size_price_obj = read_size_price_table
-    @height_list = (12..40).step(2).to_a
-    @width_list = (12..40).step(2).to_a
+    @height_list = (12..32).step(2).to_a
+    @width_list = (12..32).step(2).to_a
     @product_list = ['canvas']
     #Product.all.each {|p| @product_list.push(p.name)}
     @sizes = {'canvas'=>     
@@ -13,23 +13,17 @@ class PricingController < ApplicationController
                     "12\\\"x16\\\"", 
                     "12\\\"x20\\\"", 
                     "12\\\"x24\\\"", 
-                    "16\\\"x16\\\"", 
+                    "16\\\"x16\\\"",
+                    "16\\\"x18\\\"", 
                     "16\\\"x20\\\"",
                     "16\\\"x24\\\"", 
-                    "16\\\"x32\\\"", 
+                    "16\\\"x28\\\"", 
                     "20\\\"x20\\\"", 
-                    "20\\\"x26\\\"", 
-                    "20\\\"x32\\\"", 
-                    "20\\\"x38\\\"", 
+                    "20\\\"x24\\\"", 
+                    "20\\\"x28\\\"", 
                     "24\\\"x24\\\"", 
-                    "24\\\"x30\\\"", 
-                    "24\\\"x36\\\"", 
-                    "24\\\"x40\\\"", 
-                    "32\\\"x32\\\"", 
-                    "32\\\"x36\\\"",
-                    "32\\\"x40\\\"",
-                    "36\\\"x36\\\"", 
-                    "36\\\"x40\\\"",  
+                    "24\\\"x26\\\"", 
+                    
                     ],   
               'framed print'=>             \
                   [ "8\\\"x8\\\"",  \
