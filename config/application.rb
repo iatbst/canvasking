@@ -30,6 +30,7 @@ module Canvasking
     
     config.exceptions_app = self.routes
     
+    config.autoload_paths += %W(#{config.root}/lib)
   end
   
   ############################################################################

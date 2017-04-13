@@ -2,8 +2,15 @@ class OrdersController < ApplicationController
   include CartsHelper
   include ItemsHelper
   
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:new, :create, :apply_coupon, :remove_coupon]
   def new
+    # Guest or User
+    if current_user.nil? && params[:guest_check_out].nil?
+      flash[:guest_check_out] = true
+      flash[:notice] = "You need to login or continue as guest for checkout."
+      redirect_to new_user_session_path
+    end
+    
     # If empty cart
     if empty_cart?
       redirect_to cart_path
@@ -51,10 +58,10 @@ class OrdersController < ApplicationController
         flash['charge_error'] = charge_result[1]
         redirect_to new_order_path(:anchor => "charge_error")
       
-      # Both success, Order created !!!
+      # =========== Both success, Order created !!! ===============
       else
         # hook up order with current user
-        @order.user_id = current_user.id
+        @order.user_id = current_user.id if current_user
 
         # hook up order with all the items in the cart
         cart = get_current_cart
@@ -103,7 +110,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     
     # User could only see their own orders
-    if @order.user_id != current_user.id
+    if @order.user_id.nil? || current_user.nil? || @order.user_id != current_user.id
       redirect_to root_path
     end
   end
@@ -170,7 +177,10 @@ class OrdersController < ApplicationController
         return false
       end
     else
-      if coupon.exp_date <= Time.now
+      if current_user.nil?
+        @coupon_error = "You need to login for user coupon."
+        return false        
+      elsif coupon.exp_date <= Time.now
         @coupon_error = "Coupon #{code} is expired."
         return false
       elsif current_user.id != coupon.user.id
@@ -213,7 +223,7 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:shipping_full_name, :shipping_address_1, :shipping_address_2, :shipping_city, :country_id, :state_id, :shipping_zip, :shipping_phone)
+    params.require(:order).permit(:shipping_full_name, :shipping_address_1, :shipping_address_2, :shipping_city, :country_id, :state_id, :shipping_zip, :shipping_phone, :guest_email)
   end
   
   # Remove coupon every time user re-checkout

@@ -29,12 +29,16 @@
 			$('.canvas_frame_none_label').css('color', '#ef9223');
 		} else if ($('#canvas_frame_black').is(':checked')) {
 			$('.canvas_frame_black_label').css('color', '#ef9223');
+			disable_canvas_depth_option();
 		} else if ($('#canvas_frame_white').is(':checked')) {
 			$('.canvas_frame_white_label').css('color', '#ef9223');
+			disable_canvas_depth_option();
 		} else if ($('#canvas_frame_brown').is(':checked')) {
 			$('.canvas_frame_brown_label').css('color', '#ef9223');
+			disable_canvas_depth_option();
 		} 
 		
+
 	});
 
 	
@@ -355,7 +359,7 @@
 		// Clear frame
 		remove_frame();
 		// Hide depth option
-		$('.depth_section').fadeIn(1000);
+		enable_canvas_depth_option();
 		$('.canvas_frame_section').hide();
 	});
 
@@ -372,7 +376,7 @@
 		$('#overview_image').attr('class','overview_image image_shadow_in_item');
 		$('#overview_image').addClass('image_black_frame_in_item');
 		// Hide depth option
-		$('.depth_section').fadeOut(1000);
+		disable_canvas_depth_option();
 		$('.canvas_frame_section').show();
 	});
 
@@ -390,7 +394,7 @@
 		$('#overview_image').attr('class','overview_image image_shadow_in_item');
 		$('#overview_image').addClass('image_white_frame_in_item');
 		// Hide depth option
-		$('.depth_section').fadeOut(1000);
+		disable_canvas_depth_option();
 		$('.canvas_frame_section').show();
 	});
 
@@ -408,10 +412,31 @@
 		$('#overview_image').attr('class','overview_image image_shadow_in_item');
 		$('#overview_image').addClass('image_brown_frame_in_item');
 		// Hide depth option
-		$('.depth_section').fadeOut(1000);
+		disable_canvas_depth_option();
 		$('.canvas_frame_section').show();
 	});
 	
+	function disable_canvas_depth_option(){
+		$('.depth_section').css('opacity', '0.2');
+		$('#depth_0').attr('disabled', 'disabled');
+		$('#depth_1_5').attr('disabled', 'disabled');
+		// default depth 1.2
+		$('#depth_0_75').attr('value', '1.2'); 
+		$('#select_depth_done').removeClass('glyphicon-ok');
+		$('#select_depth_done').addClass('glyphicon-ban-circle');
+		$('#attr1_choice_row').hide();
+	}
+
+	function enable_canvas_depth_option(){
+		$('.depth_section').css('opacity', '1');
+		$('.depth_options').removeAttr('disabled');
+		// standard depth 0.75
+		$('#depth_0_75').attr('value', '0.75'); 
+		$('#select_depth_done').addClass('glyphicon-ok');
+		$('#select_depth_done').removeClass('glyphicon-ban-circle');
+		$('#attr1_choice_row').show();
+	}
+		
 	function remove_frame(){
 		$('#overview_image').removeClass('image_black_frame_in_item');
 		$('#overview_image').removeClass('image_white_frame_in_item');
