@@ -11,11 +11,16 @@
 			<!-- Error Messages： devise_error_messages! not working for login -->
 			<div>
 				<ul>
-				<%- flash.each do |name, msg| -%>
-					<li style="color: red">
-						<%= msg %>
-					</li>
-				<%- end -%>
+					<%- flash.each do |name, msg| -%>
+						<% if name != "guest_check_out" %>
+						<li style="color: red">
+			
+								<%= msg %>
+							
+						</li>
+						<% end %>
+					<%- end -%>
+	
 				</ul>
 			</div>
 			
@@ -34,9 +39,24 @@
 						Remember Me </label>
 				</div>
 			</div>
+			<% if flash[:guest_check_out] %>
+				<%= hidden_field_tag :guest_check_out, true %>
+			<% end %>
 			<div align="center">
 				<%= f.submit "Login Now", type: "submit", class: "btn btn-primary btn-lg", style:"width: 80%; border-color: #ef9223; background-color: #ef9223"  %>
 			</div>
+			<% end %>
+			
+			<!-- Continue As Guest -->
+			<% if flash[:guest_check_out] %>
+				<br />
+				<div align="center" style="margin-top: -20px">
+					<h4>OR</h4>
+					<%= button_to 'Continue As Guest', new_order_path, method: :get, class:"btn btn-primary btn-lg", style:"width: 80%; border-color: #709BC5; background-color: #709BC5", params: { guest_check_out: true} %>
+					
+				</div>
+			<% end %>
+			
 			<div class="row" style="margin-top: 20px; margin-left: 20px">
 
 				<h5 style="font-weight: normal"><%= link_to "Forgot your password?", new_password_path(resource_name) %></h5>
@@ -44,7 +64,7 @@
 			<div align="center" style="margin-top: 40px">
 				<h4 style="font-weight: normal"><u><%= link_to "Join us today !", new_user_registration_path %></u></h4>
 			</div>
-			<% end %>
+			
 
 		</div>
 

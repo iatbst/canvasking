@@ -20,12 +20,6 @@
 
 <br />
 	
-<!-- Shipping Validations -->
-<% if @order.errors.any? %>
-<div id="error_explanation">
-	<h4 class="no_bold" style="color: red"> Please fix following <%= pluralize(@order.errors.count, "issue") %> before continue.</h2>
-</div>
-<% end %>
 
 <div class="row" style="margin-left: 3px; margin-bottom: 80px">
 

@@ -12,4 +12,7 @@ class Order < ActiveRecord::Base
   validates :state_id, presence: {message: "Please select a state."}
   validates :country_id, presence: {message: "Please select a country."}
   validates :shipping_zip, presence: {message: "Please fill in your post zip code."}
+  validates :guest_email, presence: {message: "Please fill in contact email."}
+  
+
 end

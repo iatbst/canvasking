@@ -6,6 +6,7 @@ class OrderMailer < ApplicationMailer
   def order_confirm(user, order)
     @order = order
     @user = user
-    mail(to: user.email, subject: 'Your Order Is Completed, Congratulations !') 
+    email = user ? user.email : order.guest_email
+    mail(to: email, subject: 'Your Order Is Completed, Congratulations !') 
   end
 end
