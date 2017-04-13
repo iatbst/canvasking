@@ -422,6 +422,7 @@
 		$('#depth_1_5').attr('disabled', 'disabled');
 		// default depth 1.2
 		$('#depth_0_75').attr('value', '1.2'); 
+		
 		$('#select_depth_done').removeClass('glyphicon-ok');
 		$('#select_depth_done').addClass('glyphicon-ban-circle');
 		$('#attr1_choice_row').hide();
@@ -432,9 +433,13 @@
 		$('.depth_options').removeAttr('disabled');
 		// standard depth 0.75
 		$('#depth_0_75').attr('value', '0.75'); 
+		$('.depth_0_75_label').css('color', '#ef9223');
+		$('#attr1_choice').text('0.75" deep canvas wrap');
+		$('#depth_0_75').prop('checked', true);
 		$('#select_depth_done').addClass('glyphicon-ok');
 		$('#select_depth_done').removeClass('glyphicon-ban-circle');
 		$('#attr1_choice_row').show();
+		$('#select_canvas_options_depth_arrow').hide();
 	}
 		
 	function remove_frame(){
