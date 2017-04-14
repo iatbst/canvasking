@@ -150,6 +150,16 @@
   border-image:url(/items/frame_black.png) 30 30 stretch; 
 }
 
+.image_black_frame_in_item_in_room {
+  border:3px solid transparent;
+  padding: 1px;
+  /* border image */
+  -moz-border-image:url(/items/frame_black.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_black.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_black.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_black.png) 30 30 stretch; 
+}
+
 .image_white_frame_in_item {
   border:7px solid transparent;
   padding: 3px;
@@ -159,6 +169,17 @@
   -o-border-image:url(/items/frame_white.png) 30 30 stretch; /* Opera */
   border-image:url(/items/frame_white.png) 30 30 stretch; 
 }
+
+.image_white_frame_in_item_in_room {
+  border:3px solid transparent;
+  padding: 1px;
+  /* border image */
+  -moz-border-image:url(/items/frame_white.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_white.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_white.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_white.png) 30 30 stretch; 
+}
+
 .image_brown_frame_in_item {
   border:7px solid transparent;
   padding: 3px;
@@ -170,6 +191,16 @@
   border-image:url(/items/frame_brown.png) 30 30 stretch; 
 }
 
+.image_brown_frame_in_item_in_room {
+  border:3px solid transparent;
+  padding: 1px;
+  
+  /* border image */
+  -moz-border-image:url(/items/frame_brown.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_brown.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_brown.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_brown.png) 30 30 stretch; 
+}
 
 .triptych_1 {
     max-width: 166px; 
