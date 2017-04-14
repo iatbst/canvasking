@@ -58,13 +58,14 @@
 	.room_view_thumb {
 		width: auto;
 		height: auto;
-		max-width: 130px;
-		max-height: 130px;
+		max-width: 110px;
+		max-height: 110px;
 		margin-left: -40px;
 		cursor: pointer;
 		border-style: solid;
 		border-color: lightgrey;
-		border-width: 1px;
+		border-width: 2px;
+		margin-bottom: 5px;
 	}
 
 	.room_view_background {
@@ -84,7 +85,7 @@
 		height: auto;
 		max-width: 200px;
 		max-height: 200px;
-		box-shadow: 2px 2px 2px #888888;
+		box-shadow: 3px 3px 3px #888888;
 	}
 
 	.image_in_book_room {
@@ -96,23 +97,23 @@
 		height: auto;
 		max-width: 200px;
 		max-height: 200px;
-		box-shadow: 2px 2px 2px #888888;
+		box-shadow: 3px 3px 3px #888888;
 	}
 	
 	#original_view_thumb {
 		border-style: solid;
-		border-color: black;
-		border-width: 1px;
+		border-color: #EF9223;
+		border-width: 2px;
 	}
 </style>
 
 <!-- marketing banner -->
 <%= render "layouts/navbar_no_banner" %>
 
-<div class="container" style="margin-top:50px; margin-bottom: 100px; width: 90%" >
+<div class="container" style="margin-top:50px; margin-bottom: 100px; width: 90%; min-height: 100%;" >
 
 	<!-- Progress Bar -->
-	<div class="row" style="margin-left: 100px; margin-top: 0px">
+	<div class="row" style="margin-left: 150px; margin-top: 0px">
 		<div class="col-md-10 col-md-offset-2" style="">
 			<div class="col-md-10 complete"></div>
 			<div class="col-md-10 not_complete"></div>
@@ -120,19 +121,19 @@
 			<div class="col-md-10 not_complete last_dot"></div>
 		</div>
 	</div>
-	<div class="row" style="margin-bottom: 20px; margin-left: 100px; margin-top: 20px">
+	<div class="row" style="margin-bottom: 20px; margin-left: 150px; margin-top: 20px">
 		<div class="col-md-10 col-md-offset-2">
 			<div class="row">
 				<div class="col-md-3" style="margin-left: -30px; font-weight: 900">
 					CUSTOMIZE
 				</div>
-				<div class="col-md-3" style="margin-left: -15px; color: lightgrey">
+				<div class="col-md-3" style="margin-left: -30px; color: lightgrey">
 					CART
 				</div>
-				<div class="col-md-3" style="margin-left: -60px; color: lightgrey">
+				<div class="col-md-3" style="margin-left: -70px; color: lightgrey">
 					CHECKOUT
 				</div>
-				<div class="col-md-3" style="margin-left: -25px; color: lightgrey">
+				<div class="col-md-3" style="margin-left: -45px; color: lightgrey">
 					DONE
 				</div>
 			</div>
@@ -141,18 +142,22 @@
 
 	<div class="row">
 
-		<div class="col-md-1">
+		<div class="col-md-1" style="<% if !image_is_uploaded(@item) %>display: none;<% end %>">
 			<div class="overview_box">
 				<div>
 					<img src="/items/2d_view_thumb.jpg"  class="room_view_thumb" id="original_view_thumb" />
 				</div>
-				<br />
+				
 				<div>
 					<img src="/items/living_room_thumb.jpg"  class="room_view_thumb" id="living_room_view_thumb" />
 				</div>
-				<br />
+				
 				<div>
 					<img src="/items/book_room_thumb.jpg"  class="room_view_thumb" id="book_room_view_thumb" />
+				</div>
+				
+				<div>
+					<img src="/items/kitchen_room_thumb.jpg"  class="room_view_thumb" id="kitchen_room_view_thumb" />
 				</div>
 			</div>
 		</div>

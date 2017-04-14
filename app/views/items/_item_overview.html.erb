@@ -2,8 +2,9 @@
 <div class="row overview_box" align="center" id="overview_box" style="height:550px; width:500px; margin-right:150px;">
 	<div class="row" style="height:500px;">
 		<% if image_is_uploaded(@item) %>
-				<img src="/items/living_room_background.jpg" class="room_view_background " id="living_room_view_background" style="display: none" >
+				<img src="/items/living_room_background_2.jpg" class="room_view_background " id="living_room_view_background" style="display: none" >
 				<img src="/items/book_room_background.jpg" class="room_view_background " id="book_room_view_background" style="display: none" >
+				<img src="/items/kitchen_room_background.jpg" class="room_view_background " id="kitchen_room_view_background" style="display: none" >
 				<%= image_tag get_image_url(@item, "overview"), class: "overview_image image_shadow_in_item #{add_frame_class(@item, 'item')}", id: "overview_image", onerror: "imgError(this);" %>
 				
 		<% else %>
