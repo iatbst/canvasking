@@ -1,8 +1,10 @@
 
-<div class="row" align="center" id="overview_box" style="height:550px; width:500px; margin-right:50px;">
+<div class="row overview_box" align="center" id="overview_box" style="height:550px; width:500px; margin-right:150px;">
 	<div class="row" style="height:500px;">
 		<% if image_is_uploaded(@item) %>
-				<%= image_tag get_image_url(@item, "overview"), class: "overview_image image_shadow_in_item #{add_frame_class(@item, 'item')}", id: "overview_image", onerror: "imgError(this);"%>
+				<img src="/items/living_room.png" class="room_view_background " id="living_room_view_background" style="display: none" >
+				<%= image_tag get_image_url(@item, "overview"), class: "overview_image image_shadow_in_item #{add_frame_class(@item, 'item')}", id: "overview_image", onerror: "imgError(this);" %>
+				
 		<% else %>
 			<i class="fa fa-picture-o " aria-hidden="true" style="font-size: 300px; color: lightgrey; opacity: 0.5"></i>
 		<% end %>
