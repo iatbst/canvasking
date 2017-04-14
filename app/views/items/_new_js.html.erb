@@ -38,7 +38,10 @@
 			disable_canvas_depth_option();
 		} 
 		
-
+		// Adjust image in thumb view position
+		if ($('#room_views').is(':visible')){
+			adjust_image_position_in_thumb();
+		}
 	});
 
 	
@@ -47,6 +50,7 @@
 			//use original image
 			$('#overview_image').attr('src', '<%= get_image_url(@item, "overview", {"no_effect" => true}) %>');
 			$('#size_compare_image').attr('src', '<%= get_image_url(@item, "overview", {"no_effect" => true}) %>');
+			$('.overview_image_in_thumb').attr('src', '<%= get_image_url(@item, "thumb", {"no_effect" => true}) %>');
 			$('#select_filter_done_collapse').hide();
 			$('#select_filter_skip_collapse').show();
 			$('#art_effect_applied').hide();
@@ -55,6 +59,7 @@
 			//use art filter
 			$('#overview_image').attr('src', '<%= get_image_url(@item, "overview", {"art_effect" => true}) %>');
 			$('#size_compare_image').attr('src', '<%= get_image_url(@item, "overview", {"art_effect" => true}) %>')
+			$('.overview_image_in_thumb').attr('src', '<%= get_image_url(@item, "thumb", {"art_effect" => true}) %>');
 			$('#select_filter_skip_collapse').hide();
 			$('#select_filter_done_collapse').show();
 			$('#art_effect_applied').show();
@@ -846,12 +851,12 @@
 		adjust_frame_in_original();
 	}
 	
-	$('#living_room_view_thumb').click(function (){
+	$('.living_room_view_thumb').click(function (){
 		if (!$('#living_room_view_background').is(":visible")){
 			view_image_in_living_room();
 		}
 		$('.room_view_thumb').css('border-color', 'lightgrey');
-		$(this).css('border-color', '#EF9223');
+		$('#living_room_view_thumb').css('border-color', '#EF9223');
 	});
 	
 	function view_image_in_living_room(){
@@ -872,12 +877,12 @@
 		adjust_frame_in_room();
 	}
 
-	$('#book_room_view_thumb').click(function (){
+	$('.book_room_view_thumb').click(function (){
 		if (!$('#book_room_view_background').is(":visible")){
 			view_image_in_book_room();
 		}
 		$('.room_view_thumb').css('border-color', 'lightgrey');
-		$(this).css('border-color', '#EF9223');
+		$('#book_room_view_thumb').css('border-color', '#EF9223');
 	});
 
 	function view_image_in_book_room(){
@@ -898,12 +903,12 @@
 		adjust_frame_in_room();
 	}
 
-	$('#kitchen_room_view_thumb').click(function (){
+	$('.kitchen_room_view_thumb').click(function (){
 		if (!$('#kitchen_room_view_background').is(":visible")){
 			view_image_in_kitchen_room();
 		}
 		$('.room_view_thumb').css('border-color', 'lightgrey');
-		$(this).css('border-color', '#EF9223');
+		$('#kitchen_room_view_thumb').css('border-color', '#EF9223');
 	});
 
 	function view_image_in_kitchen_room(){
@@ -993,7 +998,29 @@
 			$('#overview_image').css('max-width', parseInt(width) + 'px');
 		}
 	}
-		
+	
+	function adjust_image_position_in_thumb(){
+		var height = $('#overview_image_in_living_room_thumb').height();
+		var width = $('#overview_image_in_living_room_thumb').width();
+		// living room
+		var top = 25;
+		var left = 30;
+		$('#overview_image_in_living_room_thumb').css('top', top + 'px');
+		$('#overview_image_in_living_room_thumb').css('left', left + 'px');
+
+		// book room
+		top = 20;
+		left = (110 - parseInt(width))/2;
+		$('#overview_image_in_book_room_thumb').css('top', top + 'px');
+		$('#overview_image_in_book_room_thumb').css('left', left + 'px');
+
+		// kitchen room
+		top = 20;
+		left = (90 - parseInt(width))/2;
+		$('#overview_image_in_kitchen_room_thumb').css('top', top + 'px');
+		$('#overview_image_in_kitchen_room_thumb').css('left', left + 'px');		
+	}
+	
 	$('#not_interested_button').click(function (){
 		$('#no_art_effects').show();
 		$('#art_effect_applied').hide();

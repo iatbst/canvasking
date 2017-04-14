@@ -87,7 +87,23 @@
 		max-height: 200px;
 		box-shadow: 3px 3px 3px #888888;
 	}
-
+	
+	.overview_image_in_thumb{
+		width: auto;
+		height: auto;
+		max-width: 40px;
+		max-height: 40px;
+		margin-left: -40px;
+		cursor: pointer;
+		border-style: solid;
+		border-color: lightgrey;
+		border-width: 2px;
+		margin-bottom: 5px;
+		position: absolute;	
+		left: 30px;
+		top: 30px;
+	}
+	
 	.image_in_book_room {
 		position: absolute;
 		top: 0px;
@@ -142,22 +158,25 @@
 
 	<div class="row">
 
-		<div class="col-md-1" style="<% if !image_is_uploaded(@item) %>display: none;<% end %>">
+		<div class="col-md-1" id="room_views" style="<% if !image_is_uploaded(@item) %>display: none;<% end %>">
 			<div class="overview_box">
 				<div>
 					<img src="/items/2d_view_thumb.jpg"  class="room_view_thumb" id="original_view_thumb" />
 				</div>
 				
-				<div>
-					<img src="/items/living_room_thumb.jpg"  class="room_view_thumb" id="living_room_view_thumb" />
+				<div style="position: relative">
+					<img src="/items/living_room_background_2.jpg"  class="room_view_thumb living_room_view_thumb" id="living_room_view_thumb" />
+					<%= image_tag get_image_url(@item, "thumb"), class: "overview_image_in_thumb living_room_view_thumb", id: "overview_image_in_living_room_thumb"%>
+				</div>
+		
+				<div style="position: relative">
+					<img src="/items/book_room_background.jpg"  class="room_view_thumb book_room_view_thumb" id="book_room_view_thumb" />
+					<%= image_tag get_image_url(@item, "thumb"), class: "overview_image_in_thumb book_room_view_thumb", id: "overview_image_in_book_room_thumb"%>
 				</div>
 				
-				<div>
-					<img src="/items/book_room_thumb.jpg"  class="room_view_thumb" id="book_room_view_thumb" />
-				</div>
-				
-				<div>
-					<img src="/items/kitchen_room_thumb.jpg"  class="room_view_thumb" id="kitchen_room_view_thumb" />
+				<div style="position: relative">
+					<img src="/items/kitchen_room_background.jpg"  class="room_view_thumb kitchen_room_view_thumb" id="kitchen_room_view_thumb" />
+					<%= image_tag get_image_url(@item, "thumb"), class: "overview_image_in_thumb kitchen_room_view_thumb", id: "overview_image_in_kitchen_room_thumb"%>
 				</div>
 			</div>
 		</div>
