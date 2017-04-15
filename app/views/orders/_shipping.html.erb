@@ -82,8 +82,14 @@
 	</div>
 
 	<div class="form-group">
-		<em>(Optional. In case we need to contact you about the order)</em>
-		<%= f.text_field :shipping_phone, class:"form-control input-lg", placeholder:"Phone", style:"width:71%" %>
+		<em>( <b>DHL / USPS</b> will contact you for redelivery in case first delivery failed. )</em>
+		<% if @order.errors[:shipping_phone].any? %>
+			<br />
+			<span class="form_error"><%= @order.errors[:shipping_phone][0] %></span>
+			<%= f.text_field :shipping_phone, class:"form-control input-lg", placeholder:"Phone", style:"width:71%; border-color: red" %>
+		<% else %>
+			<%= f.text_field :shipping_phone, class:"form-control input-lg", placeholder:"Phone", style:"width:71%; " %>
+		<% end %>
 	</div>
 
 </div>

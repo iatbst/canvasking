@@ -13,6 +13,7 @@ class Order < ActiveRecord::Base
   validates :country_id, presence: {message: "Please select a country."}
   validates :shipping_zip, presence: {message: "Please fill in your post zip code."}
   validates :guest_email, presence: {message: "Please fill in contact email."}
-  
+  validates_format_of :guest_email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, :message => "Invalid email format."
+  validates :shipping_phone, presence: {message: "Please fill in contact phone in case first delivery failed."}
 
 end
