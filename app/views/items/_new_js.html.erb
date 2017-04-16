@@ -459,7 +459,10 @@
 		$('#depth_1_5').attr('disabled', 'disabled');
 		// default depth 1.2
 		$('#depth_0_75').attr('value', '1.2'); 
+		$('#depth_0_75').prop('checked', true);
 		
+		$('#select_canvas_options_depth_arrow').hide();
+		$('#select_depth_done').show();
 		$('#select_depth_done').removeClass('glyphicon-ok');
 		$('#select_depth_done').addClass('glyphicon-ban-circle');
 		$('#attr1_choice_row').hide();
@@ -728,13 +731,10 @@
 		$('.canvas_frame_options').click(function(){
 			$('#select_canvas_frame_arrow').hide();
 			$('#select_canvas_frame_done').show();
-			if (!is_canvas_depth_checked()){
-				$('#select_canvas_options_depth_arrow').show();
-			} else {
-				//wizard process is done
-				add_to_cart_is_ready();
-				$('#canvas_options').css('border-color', 'black');
-			}
+			//wizard process is done, no matter depth options
+			add_to_cart_is_ready();
+			$('#canvas_options').css('border-color', 'black');
+			
 		});
 
 		$('.frame_options').click(function(){
