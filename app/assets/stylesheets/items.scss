@@ -81,15 +81,15 @@
     z-index: 1;
     position: absolute;
     top: 2px;
-    left: 295px;
+    left: 275px;
     display: none;
 }
 
 .product_image {
     height: auto; 
     width: auto; 
-    max-width: 150px; 
-    max-height: 150px;  
+    max-width: 130px; 
+    max-height: 130px;  
 }
 
 .frame_option_image {
@@ -112,15 +112,16 @@
     width: auto; 
     max-width: 500px; 
     max-height: 500px;
-    border-style: outset;
+    //border-style: outset;
     border-width: 10px;
+    margin-left: 20px;
 }
 
 .filter_demo_image {
     height: auto;
     width: auto;
-    max-height: 200px;
-    max-width: 200px;
+    max-height: 180px;
+    max-width: 180px;
 }
 .depth_options_image{
 
@@ -149,6 +150,16 @@
   border-image:url(/items/frame_black.png) 30 30 stretch; 
 }
 
+.image_black_frame_in_item_in_room {
+  border:3px solid transparent;
+  padding: 1px;
+  /* border image */
+  -moz-border-image:url(/items/frame_black.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_black.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_black.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_black.png) 30 30 stretch; 
+}
+
 .image_white_frame_in_item {
   border:7px solid transparent;
   padding: 3px;
@@ -158,6 +169,17 @@
   -o-border-image:url(/items/frame_white.png) 30 30 stretch; /* Opera */
   border-image:url(/items/frame_white.png) 30 30 stretch; 
 }
+
+.image_white_frame_in_item_in_room {
+  border:3px solid transparent;
+  padding: 1px;
+  /* border image */
+  -moz-border-image:url(/items/frame_white.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_white.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_white.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_white.png) 30 30 stretch; 
+}
+
 .image_brown_frame_in_item {
   border:7px solid transparent;
   padding: 3px;
@@ -169,6 +191,16 @@
   border-image:url(/items/frame_brown.png) 30 30 stretch; 
 }
 
+.image_brown_frame_in_item_in_room {
+  border:3px solid transparent;
+  padding: 1px;
+  
+  /* border image */
+  -moz-border-image:url(/items/frame_brown.png) 30 30 stretch; /* Old Firefox */
+  -webkit-border-image:url(/items/frame_brown.png) 30 30 stretch;  /* Safari and Chrome */
+  -o-border-image:url(/items/frame_brown.png) 30 30 stretch; /* Opera */
+  border-image:url(/items/frame_brown.png) 30 30 stretch; 
+}
 
 .triptych_1 {
     max-width: 166px; 

@@ -1,70 +1,133 @@
 <style>
+	.complete {
+		width: 160px;
+		height: 3px;
+		position: relative;
+		background: #EF9223;
+		margin-left: 20px;
+		margin-top: 0px;
+	}
+	.complete:after {
+		content: '';
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		position: absolute;
+		background: #EF9223;
+		bottom: -7.5px;
+		left: -8px;
+		z-index: 100;
+		margin-left: -10px;
+	}
+	.not_complete {
+		width: 160px;
+		height: 3px;
+		position: relative;
+		background: #EF9223;
+		margin-left: 19px;
+		margin-top: 0px;
+	}
+	.not_complete:after {
+		content: '';
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		position: absolute;
+		border-width: 2px;
+		border-style: solid;
+		border-color: #EF9223;
+		background: transparent;
+		bottom: -7.5px;
+		left: -8px;
+		z-index: 100;
+		margin-left: -10px;
+	}
 
-.complete {
-  width: 160px;
-  height: 3px;
-  position: relative;
-  background: #EF9223;
-  margin-left: 20px;
-  margin-top: 0px;
-}
-.complete:after {
-  content: '';
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  position: absolute;
-  background: #EF9223;
-  bottom: -7.5px;
-  left: -8px;
-  z-index: 100;
-  margin-left: -10px;
-  
-}
-.not_complete {
-  width: 160px;
-  height: 3px;
-  position: relative;
-  background: #EF9223;
-  margin-left: 19px;
-  margin-top: 0px;
-}
-.not_complete:after {
-  content: '';
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  position: absolute;
-  border-width: 2px;
-  border-style: solid;
-  border-color: #EF9223;
-  background: transparent;
-  bottom: -7.5px;
-  left: -8px;
-  z-index: 100;
-  margin-left: -10px;
-}	
+	.last_dot {
+		width: 160px;
+		height: 3px;
+		position: relative;
+		background: white;
+		margin-left: 19px;
+	}
 
-.last_dot {
-  width: 160px;
-  height: 3px;
-  position: relative;
-  background: white;
-  margin-left: 19px;
-}	
+	.progress_text {
+		margin-top: 50px;
+	}
 
-.progress_text {
-	margin-top: 50px;
-}
+	.room_view_thumb {
+		width: auto;
+		height: auto;
+		max-width: 110px;
+		max-height: 110px;
+		margin-left: -40px;
+		cursor: pointer;
+		border-style: solid;
+		border-color: lightgrey;
+		border-width: 2px;
+		margin-bottom: 5px;
+	}
 
+	.room_view_background {
+		width: auto;
+		height: auto;
+		max-width: 500px;
+		max-height: 500px;
+		margin-left: 20px;
+	}
 
+	.image_in_living_room {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		z-index: 1000;
+		width: auto;
+		height: auto;
+		max-width: 200px;
+		max-height: 200px;
+		box-shadow: 3px 3px 3px #888888;
+	}
+	
+	.overview_image_in_thumb{
+		width: auto;
+		height: auto;
+		max-width: 40px;
+		max-height: 40px;
+		margin-left: -40px;
+		cursor: pointer;
+		border-style: solid;
+		border-color: lightgrey;
+		border-width: 2px;
+		margin-bottom: 5px;
+		position: absolute;	
+		left: 30px;
+		top: 30px;
+	}
+	
+	.image_in_book_room {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		z-index: 1000;
+		width: auto;
+		height: auto;
+		max-width: 200px;
+		max-height: 200px;
+		box-shadow: 3px 3px 3px #888888;
+	}
+	
+	#original_view_thumb {
+		border-style: solid;
+		border-color: #EF9223;
+		border-width: 2px;
+	}
 </style>
 
 <!-- marketing banner -->
 <%= render "layouts/navbar_no_banner" %>
 
-<div class="container" style="margin-top:50px; margin-bottom: 100px">
-	
+<div class="container" style="margin-top:50px; margin-bottom: 100px; min-height: 100%;" >
+
 	<!-- Progress Bar -->
 	<div class="row" style="margin-left: 100px; margin-top: 0px">
 		<div class="col-md-10 col-md-offset-2" style="">
@@ -77,69 +140,101 @@
 	<div class="row" style="margin-bottom: 20px; margin-left: 100px; margin-top: 20px">
 		<div class="col-md-10 col-md-offset-2">
 			<div class="row">
-				<div class="col-md-3" style="margin-left: -30px; font-weight: 900">CUSTOMIZE</div>
-				<div class="col-md-3" style="margin-left: -15px; color: lightgrey">CART</div>
-				<div class="col-md-3" style="margin-left: -60px; color: lightgrey">CHECKOUT</div>
-				<div class="col-md-3" style="margin-left: -25px; color: lightgrey">DONE</div>
+				<div class="col-md-3" style="margin-left: -30px; font-weight: 900">
+					CUSTOMIZE
+				</div>
+				<div class="col-md-3" style="margin-left: -15px; color: lightgrey">
+					CART
+				</div>
+				<div class="col-md-3" style="margin-left: -60px; color: lightgrey">
+					CHECKOUT
+				</div>
+				<div class="col-md-3" style="margin-left: -25px; color: lightgrey">
+					DONE
+				</div>
 			</div>
 		</div>
 	</div>
-	
-	
+
 	<div class="row">
 
-		<div class="col-md-6" >
+		<div class="col-md-1" id="room_views" style="<% if !image_is_uploaded(@item) %>display: none;<% end %>">
+			<div class="overview_box">
+				<div>
+					<img src="/items/2d_view_thumb.jpg"  class="room_view_thumb" id="original_view_thumb" />
+				</div>
+				
+				<div style="position: relative">
+					<img src="/items/living_room_background_2.jpg"  class="room_view_thumb living_room_view_thumb" id="living_room_view_thumb" />
+					<%= image_tag get_image_url(@item, "thumb"), class: "overview_image_in_thumb living_room_view_thumb", id: "overview_image_in_living_room_thumb"%>
+				</div>
+		
+				<div style="position: relative">
+					<img src="/items/book_room_background.jpg"  class="room_view_thumb book_room_view_thumb" id="book_room_view_thumb" />
+					<%= image_tag get_image_url(@item, "thumb"), class: "overview_image_in_thumb book_room_view_thumb", id: "overview_image_in_book_room_thumb"%>
+				</div>
+				
+				<div style="position: relative">
+					<img src="/items/kitchen_room_background.jpg"  class="room_view_thumb kitchen_room_view_thumb" id="kitchen_room_view_thumb" />
+					<%= image_tag get_image_url(@item, "thumb"), class: "overview_image_in_thumb kitchen_room_view_thumb", id: "overview_image_in_kitchen_room_thumb"%>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-5">
 			<!-- Image overview on right side -->
 			<%= render partial: 'item_overview'%>
 		</div>
-		
+
 		<div class="col-md-6">
-			<!-- Validation -->
-			<% if @item.errors.any? %>
-			<div id="error_explanation">
-				<h4 class="no_bold" style="color: red"> Please fix these <b id="error_number" ><%= pluralize(@item.errors.count, "issue") %></b> before continue.</h2>
+
+			<div style="margin-left: 50px">
+				<!-- Validation -->
+				<% if @item.errors.any? %>
+				<div id="error_explanation">
+					<h4 class="no_bold" style="color: red"> Please fix these <b id="error_number" ><%= pluralize(@item.errors.count, "issue") %></b> before continue.</h2>
+				</div>
+				<% end %>
+
+				<!-- Select Image -->
+				<%= render 'select_image' %>
+				<%= render 'select_image_done' %>
+
+				<%= form_for :item, url: item_path(@item), method: :patch do |f| %>
+
+				<!-- Select Filter -->
+				<%= render partial: 'select_filter',  locals:{f: f} %>
+				<%= render partial: 'select_filter_done',  locals:{f: f} %>
+				<% @section_name = "filter" %>
+				<% @section_label = "Select art effect" %>
+				<%= render partial: 'section_placeholder', locals:{section_name: @section_name, section_label: @section_label, item: @item} %>
+
+				<!-- Select Product -->
+				<%= render partial: 'select_product', locals:{f: f} %>
+				<%= render partial: 'select_product_done',  locals:{f: f} %>
+				<% @section_name = "product" %>
+				<% @section_label = "Select product" %>
+				<%= render partial: 'section_placeholder', locals:{section_name: @section_name, section_label: @section_label, item: @item} %>
+
+				<!-- Select Size -->
+				<%= render partial: 'select_size', locals:{f: f} %>
+				<% @section_name = "size" %>
+				<% @section_label = "Select size" %>
+				<%= render partial: 'section_placeholder', locals:{section_name: @section_name, section_label: @section_label, item: @item} %>
+
+				<!-- Select Depth and Border -->
+				<%= render partial: 'select_depth_and_border', locals:{f: f}%>
+				<% @section_name = "options" %>
+				<% @section_label = "Select options" %>
+				<%= render partial: 'section_placeholder', locals:{section_name: @section_name, section_label: @section_label, item: @item} %>
+
+				<!-- Select Frame and Mat -->
+				<%= render partial: 'select_frame_and_mat', locals:{f: f}%>
+
+				<!-- ADD TO CART / SAVE CHANGES -->
+				<%= render partial: 'summary_and_submit', locals:{f: f} %>
+
 			</div>
-			<% end %>
-
-			<!-- Select Image -->
-			<%= render 'select_image' %>
-			<%= render 'select_image_done' %>
-			
-			<%= form_for :item, url: item_path(@item), method: :patch do |f| %>
-			
-			<!-- Select Filter -->
-			<%= render partial: 'select_filter',  locals:{f: f} %>
-			<%= render partial: 'select_filter_done',  locals:{f: f} %>
-			<% @section_name = "filter" %>
-			<% @section_label = "Select art effect" %>
-			<%= render partial: 'section_placeholder', locals:{section_name: @section_name, section_label: @section_label, item: @item} %>			
-			
-			<!-- Select Product -->
-			<%= render partial: 'select_product', locals:{f: f} %>
-			<%= render partial: 'select_product_done',  locals:{f: f} %>
-			<% @section_name = "product" %>
-			<% @section_label = "Select product" %>
-			<%= render partial: 'section_placeholder', locals:{section_name: @section_name, section_label: @section_label, item: @item} %>
-			
-			<!-- Select Size -->
-			<%= render partial: 'select_size', locals:{f: f} %>
-			<% @section_name = "size" %>
-			<% @section_label = "Select size" %>
-			<%= render partial: 'section_placeholder', locals:{section_name: @section_name, section_label: @section_label, item: @item} %>
-			
-			<!-- Select Depth and Border -->
-			<%= render partial: 'select_depth_and_border', locals:{f: f}%>
-			<% @section_name = "options" %>
-			<% @section_label = "Select options" %>
-			<%= render partial: 'section_placeholder', locals:{section_name: @section_name, section_label: @section_label, item: @item} %>
-			
-			<!-- Select Frame and Mat -->
-			<%= render partial: 'select_frame_and_mat', locals:{f: f}%>
-			
-			<!-- ADD TO CART / SAVE CHANGES -->
-			<%= render partial: 'summary_and_submit', locals:{f: f} %>	
-
-			
 		</div>
 		<% end %>
 	</div>
