@@ -8,17 +8,17 @@
 	</div>
 	
 	<div class="row" style="margin-bottom: 0px">
-		<div class="col-md-5">
+		<div class="col-md-6">
 			
-				<p class="no_bold" style="margin-left: 25px; margin-bottom: 50px; margin-top: 30px">
-					We provide 10+ art filters to make your photos look like Van Gogh's or Picasso's paintings. Give it a try, You will be supprised !
+				<p class="no_bold" style="margin-left: 25px; margin-bottom: 50px; margin-top: 30px; font-weight: 300">
+					We provide 10+ art effects filters to make your photos look like Van Gogh's or Picasso's paintings. Give it a try, You will be supprised !
 				</p>
 	
 		</div>
-		
-		<div class="col-md-7" align="center">
+	
+		<div class="col-md-6" align="center">
 			
-			<div class="twentytwenty-container" style="margin-left: 40px; margin-top: 10px">
+			<div class="twentytwenty-container" style="margin-left: -20px; margin-top: 10px">
 				<%= image_tag '/welcome/sunflower_after.jpg', id:"image_1", class:"filter_demo_image " %>
 				<%= image_tag '/welcome/sunflower_before.jpg', class:"filter_demo_image"%>
 			</div>
@@ -26,7 +26,7 @@
 	
 	</div>
 
-			<div class="row" style="margin-bottom: 20px">
+			<div class="row" style="margin-bottom: 20px; margin-top: 20px">
 				
 				<div class="col-md-6">
 					<%= button_tag raw("<i class=\"fa fa-paint-brush\" aria-hidden=\"true\" style=\"font-size: 20px; font-weight: bolder\">&nbspChoose Art Filter</i>"), :type => 'button', id: 'art_filter_apply_button', style: 'margin-left: 40px; width: 220px;', :class => "btn btn-primary", :onclick => "location.href = '#{art_filter_item_path(@item)}'" %>
