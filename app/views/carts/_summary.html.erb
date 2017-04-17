@@ -23,7 +23,7 @@
 						<% else %>
 							<% discount_desc = "#{c.discount_ptg.to_i }% off"%>
 						<% end %>
-						<option value="<%= c.id %>" <% if @cart.coupon && @cart.coupon.id == c.id %> selected <% end %>><%= "#{c.code} | #{discount_desc}" %></option>
+						<option value="<%= c.id %>" <% if @cart.coupon && @cart.coupon.id == c.id %> selected <% end %>><%= "#{c.code} - #{discount_desc}" %></option>
 					<% end %>
 				<% end %>
 				<option value="">DO NOT USE COUPON</option>
