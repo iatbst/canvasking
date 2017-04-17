@@ -847,6 +847,8 @@
 	function view_image_in_original(){
 		$('.room_view_background').hide();
 		$('#overview_image').removeClass('image_in_living_room');
+		$('#overview_image').removeClass('image_in_book_room');
+		$('#overview_image').removeClass('image_in_kitchen_room');
 		$("#overview_image").css({ 'max-width' : '', 'max-height' : '' });
 		adjust_frame_in_original();
 	}
@@ -863,6 +865,8 @@
 		$('.room_view_background').hide();
 		$('#living_room_view_background').show();
 		// class image_in_living_room shared with different rooms
+		$('#overview_image').removeClass('image_in_book_room');
+		$('#overview_image').removeClass('image_in_kitchen_room');
 		$('#overview_image').addClass('image_in_living_room');
 		// adjust size according size specified by user
 		adjust_size_image_in_living_room();
@@ -889,7 +893,9 @@
 		$('.room_view_background').hide();
 		$('#book_room_view_background').show();
 		// class image_in_living_room shared with different rooms
-		$('#overview_image').addClass('image_in_living_room');
+		$('#overview_image').removeClass('image_in_living_room');
+		$('#overview_image').removeClass('image_in_kitchen_room');
+		$('#overview_image').addClass('image_in_book_room');
 		// adjust size according size specified by user
 		adjust_size_image_in_book_room();
 		// align horizon
@@ -915,7 +921,9 @@
 		$('.room_view_background').hide();
 		$('#kitchen_room_view_background').show();
 		// class image_in_living_room shared with different rooms
-		$('#overview_image').addClass('image_in_living_room');
+		$('#overview_image').removeClass('image_in_book_room');
+		$('#overview_image').removeClass('image_in_living_room');
+		$('#overview_image').addClass('image_in_kitchen_room');
 		// adjust size according size specified by user
 		adjust_size_image_in_kitchen_room();
 		// align horizon
