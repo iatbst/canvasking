@@ -225,7 +225,19 @@ class ItemsController < ApplicationController
       # update cart price / quantity
       update_total_price_and_quantity_in_cart
       cart = get_current_cart
-      render json: {quantity: @item.quantity, price: cart.price, cart_quantity: cart.quantity, changed: changed}
+      
+      return_json =  {
+                      quantity: @item.quantity, 
+                      price: cart.price, 
+                      cart_quantity: cart.quantity, 
+                      changed: changed
+                      }
+      if cart.coupon_id
+        return_json[:saving] = cart.price - cart.discount_price
+        return_json[:discount_price] = cart.discount_price
+      end
+      
+      render json: return_json
     end
       
   end

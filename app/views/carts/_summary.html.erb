@@ -1,35 +1,214 @@
 <div class="col-md-2">
-		<div class="box" id="summary_box" align="center" style="height:400px; width:300px; margin-left:20px;">
+	<div class="box" id="summary_box" align="center" style="width:350px; margin-left:20px;">
 
-			<h3 style="margin-top: 40px">Your Cart</h3>
-			<hr style="width: 80% ; border-width: 1px; border-color:#E2E2E2;"/>
-			
-			<h4 >
-				<b id="cart_quantity" class="no_bold"><%= cart.quantity %></b>
-				<b id="item_single_or_plural" class="no_bold"> 
-				<% if cart.quantity > 1 %>
-					<%= "item".pluralize %>
-				<% else %>
-					<%= "item" %>
+		<h3 style="margin-top: 20px; font-weight: 900">Your Cart</h3>
+		<hr style="width: 80% ; border-width: 1px; border-color:#E2E2E2;"/>
+
+		<!-- Coupon -->
+		<div class="row" style="margin-left: -10px; margin-top: -20px">
+
+			<div class="col-md-7 col-md-offset-1">
+				
+				
+
+			<select class="form-control input" id="coupon_code_input" style="margin-left: 0px; width: 100%">
+				<% if @cart.coupon.nil? %>
+					<option value="" selected disabled>Available Coupons</option>
 				<% end %>
-				</b>
-				: $<b id="cart_price"><%= cart.price %></b>
-			</h4>
+				
+				<% if !@available_coupons.nil? %>
+					<%= @available_coupons.each do |c| %>
+						<% if c.discount_val %>
+							<% discount_desc = "$#{c.discount_val.to_i } off"%>
+						<% else %>
+							<% discount_desc = "#{c.discount_ptg.to_i }% off"%>
+						<% end %>
+						<option value="<%= c.id %>" <% if @cart.coupon && @cart.coupon.id == c.id %> selected <% end %>><%= "#{c.code} | #{discount_desc}" %></option>
+					<% end %>
+				<% end %>
+				<option value="">DO NOT USE COUPON</option>
+			</select>
+			<h5 style="color: orange" id="coupon_error_msg"></h5>		
 			
-	
-			<br />
-			<%= button_to 'CHECKOUT', new_order_path, method: :get, class:"btn btn-primary btn-lg", style:"width: 80%", id: 'checkout_button'%>
-				<br />
 			
-			<%= button_to 'CONTINUE SHOPPING', new_item_path, method: :get, class:"btn btn-secondary btn-lg blue_button", style:"width: 80%", id: 'continue_shopping_button'%>
-
+			</div>
 			
-				<br />
-				<div style="width: 85%; margin-left: 10px">
-					<p style="font-size: 12px; text-align: left">
-						<em> No other extra or hidden charges. Chat with us or email <a href="mailto:support@magicphotoprints.com" ><u style="color: black">support@magicphotoprints.com</u></a> with any questions about your order. </em>
-					</p>
-				</div>
-			
+			<div class="col-md-4" align="left">
+				<button class="btn btn-primary" style="width: 80%; margin-top: 13px; margin-left: -20px; background-color: green" id="apply_coupon_button">
+					Apply
+				</button>
+			</div>
 		</div>
+
+		<div class="row coupon_box" style="<% if !@cart.coupon %>display: none<% end %>" id="coupon_desc">
+			<h5 style="color: grey" id="coupon_applied">
+				<% if @cart.coupon %>
+					<span class="glyphicon glyphicon-ok" style="color: green"></span><%= " #{@cart.coupon.description}" %>
+				<% end %>
+			</h5>
+		</div>
+		
+		
+		
+		<div class="row">
+			<div class="col-md-5 col-md-offset-1" align="right">
+				<h4 style="font-weight: 300">
+					<span id="cart_quantity" >
+						<%= cart.quantity %>
+					</span>
+					<span id="item_single_or_plural" > 
+						<% if cart.quantity > 1 %>
+							<%= "item".pluralize %>
+						<% else %>
+							<%= "item" %>
+						<% end %> 
+					</span> :								
+				</h4>
+			</div>
+
+			<div class="col-md-6" align="left">
+				<h4>
+					<b id="cart_price">
+						$<%= cart.price %>
+					</b>
+				</h4>
+			</div>
+		</div>
+		
+		<!-- Coupon Applied -->
+		<div style="<% if !@cart.coupon %>display:none<% end %>" id="coupon_section">
+	
+		<div class="row">
+			<div class="col-md-5 col-md-offset-1" align="right">
+				<h4 style="font-weight: 300">
+					Saving : 
+				</h4>
+			</div>
+			
+			<div class="col-md-6" align="left">
+				<h4>
+				<span style="color: green" id="coupon_saving_value">
+		
+					<% if @cart.coupon %>
+						<%  if @cart.coupon.discount_val %>
+							-$<%= @cart.coupon.discount_val %>
+						<% else %>
+							-$<%= @cart.price - @cart.discount_price %>
+						<% end %>
+					<% end %>
+		
+				</span>			
+				</h4>
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-md-5 col-md-offset-1" align="right">
+				<h4 style="font-weight: 300">
+					Final Price : 
+				</h4>
+			</div>
+			
+			<div class="col-md-6" align="left">
+				<h4>
+					<span id="total_price">
+						<% if @cart.coupon %>
+							$<%= @cart.discount_price %>
+						<% end %>	
+					</span>			
+				</h4>
+			</div>
+		</div>
+		</div>
+				
+	
+		<%= button_to 'CHECKOUT', new_order_path, method: :get, class:"btn btn-primary btn-lg", style:"width: 80%; margin-top: 20px", id: 'checkout_button'%>
+		<br />
+
+		<%= button_to 'CONTINUE SHOPPING', new_item_path, method: :get, class:"btn btn-secondary btn-lg blue_button", style:"width: 80%; margin-bottom: 20px", id: 'continue_shopping_button'%>
+
+
 	</div>
+</div>
+
+
+<script>
+
+	// Using Jquery to apply coupon
+	$("#apply_coupon_button").click(function() {
+		// get quantity
+		var code = $('#coupon_code_input').val();
+		var url = "/carts/apply_coupon";
+		$.ajax({
+			url : url,
+			type : 'POST',
+			data: {'coupon_id': $('#coupon_code_input').val() },
+			success : function(result) {
+				// Update item quantity on page
+				if (result['error']){
+					$('#coupon_error_msg').text(result['error']);		
+				} else if (result['remove_coupon']){
+					$('#coupon_section').hide();
+					$('#coupon_desc').hide();
+					$('#coupon_applied').empty();
+				} else {
+					
+					// update price in summary	
+					$('#coupon_section').show();
+					$('#coupon_desc').show();
+					$('#coupon_saving').show();
+					$('#original_price').text('$' + result['price']);
+					if (parseInt(result['item_count']) > 1 ) {
+						$('#item_count').text(result['item_count'] + ' Items');
+					} else {
+						$('#item_count').text(result['item_count'] + ' Item');
+					}					
+					$('#coupon_saving_value').text('-$' + result['saving']);
+					$('#total_price').text('$' + result['discount_price']);
+					
+					// clear current coupon
+					$('#coupon_applied').empty();
+					
+					// append coupon 
+					$('#coupon_applied').append('<span class="glyphicon glyphicon-ok" style="color: green"></span> ' + result['desc'] );
+					
+				}
+				
+			}
+		});
+		$('#coupon_error_msg').text('');
+	});
+
+	// Using Jquery to cancel coupon
+	function remove_coupon() {
+		// get quantity
+		var url = "/carts/remove_coupon";
+		$.ajax({
+			url : url,
+			type : 'GET',
+			success : function(result) {
+				// Update item quantity on page
+				if (result['error']){
+					$('#coupon_error_msg').text(result['error']);
+				} else {
+					// update price in summary
+					$('#coupon_saving').hide();
+					$('#total_price').text('$' + result['price']);
+					$('#original_price').text('$' + result['price']);
+					if (parseInt(result['item_count']) > 1 ) {
+						$('#item_count').text(result['item_count'] + ' Items');
+					} else {
+						$('#item_count').text(result['item_count'] + ' Item');
+					}	
+										
+					// remove coupon 
+					$('#coupon_applied').html('');
+				}
+				
+			}
+		});
+		$('#coupon_error_msg').text('');
+	}
+	
+</script>

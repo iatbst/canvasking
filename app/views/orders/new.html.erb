@@ -95,7 +95,7 @@
 	<div class="row" style="margin-top: 0px">
 
 		<div class="col-md-8" style="margin-bottom: 20px" align="left">
-			<%= render partial:'coupon'%>
+			
 			<!-- Shipping Validations -->
 				<% if @order.errors.any? %>
 					<div id="error_explanation">
@@ -105,8 +105,7 @@
 
 			<%= form_for :order, url: orders_path, :html=> {:id=> "payment-form"} do |f| %>
 				
-				<%= render partial:'contact_email_for_guest', locals:{f: f} %>
-				
+				<%= render partial:'contact_email_for_guest', locals:{f: f} %>				
 				<%= render partial:'shipping', locals:{f: f} %>
 				<%= render partial:'payment', locals:{f: f} %>
 				<br />
