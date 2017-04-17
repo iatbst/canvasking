@@ -18,7 +18,6 @@ class OrdersController < ApplicationController
            
     @order = Order.new
     prepare_data_for_order_new_page
-    remove_coupon_in_cart
   end
 
   def index
@@ -116,99 +115,8 @@ class OrdersController < ApplicationController
   end
 
   
-  def apply_coupon
-    code = params[:code].strip
-    cart = get_current_cart
-    
-    if cart.coupon
-      # Coupon already applied
-      render json: {'error'=> "#{cart.coupon.code} is already applied, one coupon allowed per order. You need to remove it before applying another coupon."}
-    elsif coupon_is_valid(code) && coupon_is_applicable(code, cart)
-      # Valid Coupon code
-      
-      # update discount_price and coupon field in current cart
-      coupon = Coupon.find_by_code(code)
-      cart.coupon_id = coupon.id
-      cart.discount_price = calculate_discount_price(cart.price, coupon)
-      cart.save
-      
-      render json: {'discount_price'=> cart.discount_price, 
-                    'code'=>code, 
-                    'desc'=>coupon.description, 
-                    'saving'=> cart.price - cart.discount_price,
-                    'price'=>cart.price,
-                    'item_count'=>cart.quantity }
-      
-    else
-      # Invalid Coupon code
-      render json: {'error'=> @coupon_error}
-    end
-    
-  end
-  
-  def remove_coupon
-    cart = get_current_cart
-    cart.discount_price = nil
-    cart.coupon_id = nil
- 
-    if cart.save
-      render json: {'price'=> cart.price,
-                    'item_count'=>cart.quantity }
-    else
-      render json: {'error'=> "Can't remove this coupon."}
-    end
-  end
-  
   ############################## Private ############################## 
   private
-
-  def coupon_is_valid(code)
-    coupon = Coupon.find_by_code(code)
-    if coupon.nil?
-      @coupon_error = "Coupon not found."
-      return false
-    end
-    
-    if coupon.public
-      if coupon.exp_date > Time.now
-        return true
-      else 
-        @coupon_error = "Coupon #{code} is expired."
-        return false
-      end
-    else
-      if current_user.nil?
-        @coupon_error = "You need to login for user coupon."
-        return false        
-      elsif coupon.exp_date <= Time.now
-        @coupon_error = "Coupon #{code} is expired."
-        return false
-      elsif current_user.id != coupon.user.id
-        @coupon_error = "Coupon #{code} is invalid."
-        return false
-      elsif coupon.used
-        @coupon_error = "Coupon #{code} is used before."
-        return false       
-      else
-        return true
-      end
-    end  
-  end
-  
-  # This function is different with `coupon_is_valid`, which verify if coupon valid.
-  # This is used to inspect if coupon condition is met, eg, some coupon require spend at least amount to use
-  def coupon_is_applicable(code, cart)
-    coupon = Coupon.find_by_code(code)
-    
-    # Check if amount in cart exceed coupon least amount
-    if coupon.condition_at_least_amount && cart.price < coupon.condition_at_least_amount.to_f
-      @coupon_error = "Coupon #{code} is allowed on order which has amount $#{coupon.condition_at_least_amount} or higher."
-      return false
-    # TODO: other conditions may applied here
-    else
-      return true
-    end
-  end
   
   
   def generate_unique_order_number
@@ -226,15 +134,6 @@ class OrdersController < ApplicationController
     params.require(:order).permit(:shipping_full_name, :shipping_address_1, :shipping_address_2, :shipping_city, :country_id, :state_id, :shipping_zip, :shipping_phone, :guest_email)
   end
   
-  # Remove coupon every time user re-checkout
-  def remove_coupon_in_cart
-    cart = get_current_cart
-    if cart.coupon
-      cart.coupon = nil
-      cart.discount_price = nil
-      cart.save
-    end
-  end
   
   def prepare_data_for_order_new_page
     @cart = get_current_cart

@@ -72,6 +72,10 @@
 				} else {
 					$('#item_single_or_plural').text('item');
 				}
+				// Update conpon section
+				$('#coupon_saving_value').text('-$' + result['saving']);
+				$('#total_price').text('$' + result['discount_price']);
+				
 				show_note('increase_item_note');
 			}
 		});
@@ -98,6 +102,10 @@
 				} else {
 					$('#item_single_or_plural').text('item');
 				}
+				// Update conpon section
+				$('#coupon_saving_value').text('-$' + result['saving']);
+				$('#total_price').text('$' + result['discount_price']);
+				
 				if (result.changed){
 					show_note('decrease_item_note');
 				} else {

@@ -45,7 +45,7 @@
 
 <script>
 
-<% if user_signed_in? && coupon_is_valid(current_user.email) %>
+<% if user_signed_in? && coupon_code_is_valid?(current_user.email) %>
 
 	$(function() {
 	
