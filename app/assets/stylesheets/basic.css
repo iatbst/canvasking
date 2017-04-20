@@ -220,7 +220,6 @@ span.form_error {
     width: auto; 
     max-width: 200px; 
     max-height: 200px;	
-    border-style: outset;
     border-width: 5px;  
 }
 .crop_image {
