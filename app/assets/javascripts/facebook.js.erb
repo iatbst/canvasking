@@ -1,5 +1,6 @@
 // Global variable to save key:val => album.id : after
 var paging = {};
+var expanded = [];
 
 $(window).on('load', function() {
 
@@ -38,12 +39,12 @@ $(window).on('load', function() {
             // get photos of you
             $('#albums').append('<button class="btn btn-default btn-lg facebook_album_button" \
 		    						data-toggle="collapse"	\
+		    						id="button_me" \
 		    						data-target="#collapse_photos_of_you"	\
 		    						style="width: 100%;text-align:left"><i class="fa fa-folder-o" style="font-size: 25px" aria-hidden="true"></i> &nbsp;&nbsp;<span style="margin-left: 350px">Photos of You</span>' + '</button>');
 
             $('#albums').append('<div class="collapse" id="collapse_photos_of_you"><div id="me" class="container"></div></div>');
-            fetch_album_images('me', true);  
-            
+
             // get all albums
             FB.api('/me/albums?fields=id,name,count', function(response) {
 
@@ -52,13 +53,13 @@ $(window).on('load', function() {
 
                     $('#albums').append('<button class="btn btn-default btn-lg facebook_album_button" \
 		    						data-toggle="collapse"	\
+		    						id="button_' + album.id + '" \
 		    						data-target="#collapse_' + album.id + '"	\
 		    						style="width: 100%; text-align:left"><i class="fa fa-folder-o" style="font-size: 25px; margin-left: 0px" aria-hidden="true"></i> &nbsp;&nbsp;<span style="margin-left: 350px">' + album.name + ' ( ' + album.count + ' )</span> ' + '</button>');
 
                     $('#albums').append('<div class="collapse" id="collapse_' + album.id + '"><div id="' + album.id + '" class="container" ></div></div>');
 
 					 
-					fetch_album_images(album.id, true);
 
                 }
 
@@ -82,8 +83,17 @@ $(window).on('load', function() {
         var this_status = $(this).attr('aria-expanded');
         $('.collapse').collapse('hide');
         $('i.fa-folder-open-o').addClass('fa-folder-o').removeClass('fa-folder-open-o');
+        // action when open album
         if (this_status == "false" || this_status == null) {
             $(this).find('i.fa-folder-o').addClass('fa-folder-open-o').removeClass('fa-folder-o');
+            // fetch images when open album
+			var id = $(this).attr('id');
+			var album_id = id.split('_')[1];
+			// only fetch the first time open it
+			if (expanded.indexOf(album_id) == -1 ){
+				expanded.push(album_id);
+				fetch_album_images(album_id, true);
+			}            
         }
     });
 
@@ -91,7 +101,7 @@ $(window).on('load', function() {
 		$('.collapse').collapse('hide');
 		$('i.fa-folder-open-o').addClass('fa-folder-o').removeClass('fa-folder-open-o');
 	});
-	
+
     $('body').on('click', 'img.facebook_image_width, img.facebook_image_height', function() {
         $('.facebook_image_grid').css('border-color', '');
         $('.facebook_image_grid').css('border-weight', '');
@@ -135,6 +145,8 @@ $(window).on('load', function() {
     }
 
 });
+
+
 
 function load_more(album_id){
 	fetch_album_images(album_id, false);
