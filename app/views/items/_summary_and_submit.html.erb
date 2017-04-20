@@ -119,8 +119,8 @@
 				</div>
 			</div>			
 		
-			<!-- Row 4 Attr 2 -->
-			<div class="row">
+			<!-- Row 4 Attr 2 , No frame for canvas now -->
+			<div class="row" style="display: none">
 				<div class="col-md-5 col-md-offset-2">
 					<h4 style="font-weight: 300; margin-left: 50px" id="attr2_choice"> 
 						<% if !@item.product.nil? && @item.product.name.include?("canvas") %>
@@ -164,8 +164,18 @@
 					</h4>
 				</div>
 			</div>
-						
-			<hr style="border-color: black;width: 60%; margin-left: 110px; margin-bottom: 20px; margin-top: 0px;"/>
+			
+			<!-- Coupon Reminder -->
+			<div class="row" align="center" style="color: grey; font-size: 14px">
+				<% coupon = Coupon.find_by_code(current_user.email) if current_user %>
+				<% if current_user && coupon && !coupon.used %>
+					(<em> Don't forget to claim <b style="color: green">40% OFF</b> coupon in next step.</em>)
+				<% else %>
+					(<em> Don't forget to claim <b style="color: green">35% OFF</b> coupon in next step. </em>)
+				<% end %>
+			</div>
+		
+			<hr style="border-color: black;width: 60%; margin-left: 110px; margin-bottom: 20px; margin-top: 10px;"/>
 			
 			<!-- Row 6 Total Price -->
 			<div class="row">
