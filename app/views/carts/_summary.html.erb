@@ -13,7 +13,7 @@
 
 			<select class="form-control input" id="coupon_code_input" style="margin-left: 0px; width: 100%">
 				<% if @cart.coupon.nil? %>
-					<option value="" selected disabled>Available Coupons</option>
+					<option value="" selected disabled>Available Promotions</option>
 				<% end %>
 				
 				<% if !@available_coupons.nil? %>
@@ -26,7 +26,7 @@
 						<option value="<%= c.id %>" <% if @cart.coupon && @cart.coupon.id == c.id %> selected <% end %>><%= "#{c.code} - #{discount_desc}" %></option>
 					<% end %>
 				<% end %>
-				<option value="">DO NOT USE COUPON</option>
+				<option value="">Don't use promotions</option>
 			</select>
 			<h5 style="color: orange" id="coupon_error_msg"></h5>		
 			
@@ -67,10 +67,10 @@
 			</div>
 
 			<div class="col-md-6" align="left">
-				<h4>
-					<b id="cart_price">
+				<h4 style="font-weight: 900">
+					<span id="cart_price">
 						$<%= cart.price %>
-					</b>
+					</span>
 				</h4>
 			</div>
 		</div>
@@ -86,7 +86,7 @@
 			</div>
 			
 			<div class="col-md-6" align="left">
-				<h4>
+				<h4 style="font-weight: 900">
 				<span style="color: green" id="coupon_saving_value">
 		
 					<% if @cart.coupon %>
@@ -111,7 +111,7 @@
 			</div>
 			
 			<div class="col-md-6" align="left">
-				<h4>
+				<h4 style="font-weight: 900">
 					<span id="total_price">
 						<% if @cart.coupon %>
 							$<%= @cart.discount_price %>

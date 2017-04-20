@@ -58,7 +58,8 @@
 
 			</div>
 			
-			<div class="col-md-3" align="center">
+			<!-- No 1.5 inch depth available now -->
+			<div class="col-md-3" align="center" style="display: none">
 				<label class="depth_options" > 
 			
 					<%= f.radio_button :canvas_depth, "1.5",  style:"visibility: hidden;", id: "depth_1_5", class: "depth_options"%>
@@ -76,6 +77,10 @@
 
 		</div>
 
+		<!-- NO Frame for canvas now -->
+		<div style="display: none">
+		
+		
 		<hr class="depth_section" style="width: 550px; margin-left: 10px"/>
 
 		<div class="row">
@@ -100,7 +105,7 @@
 
 				<label class="canvas_frame_options" align="center" > 
 					
-					<%= f.radio_button :canvas_frame, "No",  style:"visibility: hidden;", id: "canvas_frame_none"%>
+					<%= f.radio_button :canvas_frame, "No",  style:"visibility: hidden;", id: "canvas_frame_none", checked: true %>
 					<%= image_tag '/items/canvas_frame_none.jpg', class: "depth_options_image canvas_options_image_border"%>
 					<h5 class="canvas_frame_none_label">No Frame</h5>
 					<h5 id="canvas_frame_0_price" class="canvas_frame_none_label">No Extra Fee</h5>
@@ -146,7 +151,11 @@
 				</label>
 			</div>
 		
-		</div>	
+		</div>
+		
+		</div>
+		
+			
 	</div>
 </div>
 
