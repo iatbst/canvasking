@@ -58,7 +58,12 @@
 						<% if @size_price_obj['canvas'][size] != 0.0 %>
 							<a href="/items/new" style="text-decoration: none; color: black">
 								<div class="item_price">
-									<h4>$<%= @size_price_obj['canvas'][size] %></h4>
+									<h4 style="<% if size.gsub('\\', '') == '16"x20"' %>margin-left: 124px<% end %>">
+										$<%= @size_price_obj['canvas'][size] %>
+										<% if size.gsub("\\", "") == '16"x20"' %>
+											<span style="color: #EF9223; font-weight: 900">Most Popular!</span>
+										<% end %>
+									</h4>
 								</div>
 							</a>					
 						<% else %>

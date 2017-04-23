@@ -113,7 +113,7 @@ namespace :price_maker do
           puts "#{h}x#{w}: #{shipment_fee}, #{profit_rate}"
           
           # Final price
-          price = price.to_f/Canvasking::MARKETING_RATE
+          # price = price.to_f/Canvasking::MARKETING_RATE
           
           pricing_obj[product][size] = price.round(2)
           w += 2
