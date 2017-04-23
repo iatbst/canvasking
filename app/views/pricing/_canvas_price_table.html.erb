@@ -17,11 +17,11 @@
 					<%= image_tag '/items/canvas_depth_0_75.png', class: "depth_options_image canvas_options_image_border"%>
 					<h5 style="color:#EF9223"> 0.75" DEEP</h5> 					
 				</td>
-				<td align="center">
+				<td align="center" style="display:none">
 					<%= image_tag '/items/canvas_depth_1_5.png', class: "depth_options_image canvas_options_image_border"%>
 					<h5 style="color:#EF9223"> 1.5" DEEP</h5>
 				</td>
-				<td align="center">
+				<td align="center" style="display:none">
 					<%= image_tag '/items/canvas_frame_black.jpg', class: "depth_options_image canvas_options_image_border"%> 
 					<h5 style="color:#EF9223"> OUTER FRAME</h5>
 				</td>
@@ -43,7 +43,7 @@
 						<% if @size_price_obj['canvas'][size] != 0.0 %>
 							<a href="/items/new" style="text-decoration: none; color: black">
 								<div class="item_price">
-									<h4>$<%= (@size_price_obj['canvas'][size].to_f*(1 - Canvasking::CANVAS_ROLL_DISCOUNT)).round(2) %></h4>
+									<h4>$<%= (((@size_price_obj['canvas'][size].to_f*0.65).round(2)).to_f*(1 - Canvasking::CANVAS_ROLL_DISCOUNT)).round(2) %></h4>
 								</div>
 							</a>					
 						<% else %>
@@ -59,7 +59,7 @@
 							<a href="/items/new" style="text-decoration: none; color: black">
 								<div class="item_price">
 									<h4 style="<% if size.gsub('\\', '') == '16"x20"' %>margin-left: 124px<% end %>">
-										$<%= @size_price_obj['canvas'][size] %>
+										$<%= (@size_price_obj['canvas'][size].to_f*0.65).round(2) %>
 										<% if size.gsub("\\", "") == '16"x20"' %>
 											<span style="color: #EF9223; font-weight: 900">Most Popular!</span>
 										<% end %>
@@ -73,8 +73,8 @@
 						<% end %>
 					</td>
 					
-					<!-- 1.5" -->
-					<td align="center" >
+					<!-- 1.5" none -->
+					<td align="center" style="display:none">
 						<% if @size_price_obj['canvas'][size] != 0.0 %>
 							<a href="/items/new" style="text-decoration: none; color: black">
 								<div class="item_price">
@@ -88,8 +88,8 @@
 						<% end %>
 					</td>
 					
-					<!-- Outer Frame -->
-					<td align="center" >
+					<!-- Outer Frame none -->
+					<td align="center" style="display:none">
 						<% if @size_price_obj['canvas'][size] != 0.0 %>
 							<a href="/items/new" style="text-decoration: none; color: black">
 								<div class="item_price">

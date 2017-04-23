@@ -46,6 +46,6 @@ class PricingController < ApplicationController
     @size_price_obj = read_size_price_table
     product = params[:product]
     size = "#{params[:height]}\\\"x#{params[:width]}\\\""
-    render json: {'price' => @size_price_obj[product][size]}
+    render json: {'price' => (@size_price_obj[product][size].to_f*0.65).round(2)}
   end
 end
