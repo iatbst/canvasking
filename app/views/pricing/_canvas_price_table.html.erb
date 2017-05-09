@@ -43,7 +43,12 @@
 						<% if @size_price_obj['canvas'][size] != 0.0 %>
 							<a href="/items/new" style="text-decoration: none; color: black">
 								<div class="item_price">
-									<h4>$<%= (((@size_price_obj['canvas'][size].to_f*0.65).round(2)).to_f*(1 - Canvasking::CANVAS_ROLL_DISCOUNT)).round(2) %></h4>
+									<h4>$<%= ((@size_price_obj['canvas'][size]).to_f*(1 - Canvasking::CANVAS_ROLL_DISCOUNT)).round(2) %>
+									&nbsp;
+									<span style="color: lightgrey; text-decoration: line-through;font-size: 15px">
+										$<%= (((@size_price_obj['canvas'][size]).to_f*(1 - Canvasking::CANVAS_ROLL_DISCOUNT)).to_f/0.15).round(2) %>
+									</span>
+									</h4>
 								</div>
 							</a>					
 						<% else %>
@@ -59,7 +64,11 @@
 							<a href="/items/new" style="text-decoration: none; color: black">
 								<div class="item_price">
 									<h4 style="<% if size.gsub('\\', '') == '16"x20"' %>margin-left: 124px<% end %>">
-										$<%= (@size_price_obj['canvas'][size].to_f*0.65).round(2) %>
+										$<%= (@size_price_obj['canvas'][size].to_f).round(2) %>
+										&nbsp;
+										<span style="color: lightgrey; text-decoration: line-through;font-size: 15px">
+											$<%= (@size_price_obj['canvas'][size].to_f/0.15).round(2) %>
+										</span>
 										<% if size.gsub("\\", "") == '16"x20"' %>
 											<span style="color: #EF9223; font-weight: 900">Most Popular!</span>
 										<% end %>

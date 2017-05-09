@@ -166,7 +166,7 @@
 			</div>
 			
 			<!-- Coupon Reminder -->
-			<div class="row" align="center" style="color: grey; font-size: 14px">
+			<div class="row" align="center" style="color: grey; font-size: 14px; display: none">
 				<% coupon = Coupon.find_by_code(current_user.email) if current_user %>
 				<% if current_user && coupon && !coupon.used %>
 					(<em> Don't forget to claim <b style="color: green">40% OFF</b> coupon in next step.</em>)

@@ -3,7 +3,7 @@ module ApplicationHelper
   def generate_title_by_page
 
     if controller_name == 'welcome'
-      return '40% Off Today! Photo Prints On Canvas & Frame With Art-Effects Filters'
+      return '85% Off Today! Photo Prints On Canvas & Frame With Art-Effects Filters'
     elsif controller_name == 'items'
       return 'Upload Photos & Edit Photos & Order Product | MagicPhotoPrints'
     elsif controller_name == 'carts'
@@ -20,7 +20,7 @@ module ApplicationHelper
       if action_name == 'edit'
         return 'Edit Your Profile | MagicPhotoPrints'
       elsif action_name == 'new'
-        return 'Join Today, Get 40% Off Discount'      
+        return 'Join Today, Get 85% Off Discount'      
       end
     elsif controller_name == 'custom_sessions'
       if action_name == 'new'
@@ -49,7 +49,7 @@ module ApplicationHelper
     if controller_name == 'welcome'
       return 'MagicPhotoPrints provide fantastic Art-Effects photo filters on your photos and 
               produce them into Canvas/Frames/Cups/T-shirts/Iphone-cases...anything you can imagine in real world
-              , with great quality and affordable prices.Join us today to get 40% off your first order.
+              , with great quality and affordable prices.Join us today to get 85% off.
               Shipping is always free !'
     elsif controller_name == 'items'
       return 'Select the photo you want to create from local computer or facebook/instagram social accounts,
@@ -69,7 +69,7 @@ module ApplicationHelper
       if action_name == 'edit'
         return 'You can edit your profile here: choose a nickname or update your password.'
       elsif action_name == 'new'
-        return 'Join Us Today to get 40% off discount for your first order.'      
+        return 'Join Us Today to get 85% off discount for your first order.'      
       end
     elsif controller_name == 'custom_sessions'
       if action_name == 'new'

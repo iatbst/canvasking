@@ -43,11 +43,13 @@ class OrdersController < ApplicationController
       
       # CHARGE MONEY: Stripe process money amount as cents
       cart = get_current_cart
-      if cart.coupon
-        charge_amount = (cart.discount_price*100).to_i
-      else
-        charge_amount = (cart.price*100).to_i
-      end
+      # NO COUPON !!!
+      # if cart.coupon
+        # charge_amount = (cart.discount_price*100).to_i
+      # else
+      charge_amount = (cart.price*100).to_i
+      # end
+      
       @order.number = generate_unique_order_number
       charge_result = charge_money_by_stripe(charge_amount, @order)
 
@@ -71,20 +73,21 @@ class OrdersController < ApplicationController
         @order.shipping_price = 0
         @order.tax_price = 0
         @order.before_price = cart.price
-        if cart.coupon
-          # If private coupon, mark as used
-          if cart.coupon.public
-            cart.coupon.used_count += 1
-          else
-            cart.coupon.used = true
-          end
-          cart.coupon.save
-          @order.coupon_id = cart.coupon.id # Mark this order is using coupon
-          @order.discount_price = cart.discount_price
-          @order.total_price = @order.discount_price + @order.shipping_price + @order.tax_price
-        else
-          @order.total_price = @order.before_price + @order.shipping_price + @order.tax_price
-        end
+        # NO COUPON !!
+        # if cart.coupon
+          # # If private coupon, mark as used
+          # if cart.coupon.public
+            # cart.coupon.used_count += 1
+          # else
+            # cart.coupon.used = true
+          # end
+          # cart.coupon.save
+          # @order.coupon_id = cart.coupon.id # Mark this order is using coupon
+          # @order.discount_price = cart.discount_price
+          # @order.total_price = @order.discount_price + @order.shipping_price + @order.tax_price
+        # else
+        @order.total_price = @order.before_price + @order.shipping_price + @order.tax_price
+        # end
         @order.save!
 
         # Empty Cart !

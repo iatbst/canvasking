@@ -40,7 +40,7 @@ module TaskHelper
   # Profit rate
   # Linear rate
   def calculate_profit_rate(h, w)
-    rate = 0.04
-    return 1.4 + (h + w - 24)*rate
+    rate = 0.01
+    return 1.1 + (h + w - 24)*rate
   end
 end

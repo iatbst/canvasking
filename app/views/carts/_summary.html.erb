@@ -5,7 +5,7 @@
 		<hr style="width: 80% ; border-width: 1px; border-color:#E2E2E2;"/>
 
 		<!-- Coupon -->
-		<div class="row" style="margin-left: -10px; margin-top: -20px">
+		<div class="row" style="margin-left: -10px; margin-top: -20px; display: none">
 
 			<div class="col-md-7 col-md-offset-1">
 				
@@ -40,11 +40,11 @@
 			</div>
 		</div>
 
-		<div class="row coupon_box" style="<% if !@cart.coupon %>display: none<% end %>" id="coupon_desc">
+		<div class="row coupon_box" style="" id="coupon_desc">
 			<h5 style="color: grey" id="coupon_applied">
-				<% if @cart.coupon %>
-					<span class="glyphicon glyphicon-ok" style="color: green"></span><%= " #{@cart.coupon.description}" %>
-				<% end %>
+
+					<i class="fa fa-tag" aria-hidden="true" style="color: green; font-size: 18px"></i><%= " Grand Opening Sale - 85% off for all" %>
+				
 			</h5>
 		</div>
 		
@@ -68,40 +68,47 @@
 
 			<div class="col-md-6" align="left">
 				<h4 style="font-weight: 900">
+					$
 					<span id="cart_price">
-						$<%= cart.price %>
+						<%= cart.price %>
 					</span>
 				</h4>
 			</div>
 		</div>
-		
-		<!-- Coupon Applied -->
-		<div style="<% if !@cart.coupon %>display:none<% end %>" id="coupon_section">
-	
+
 		<div class="row">
 			<div class="col-md-5 col-md-offset-1" align="right">
 				<h4 style="font-weight: 300">
-					Saving : 
+					Old Price : 
 				</h4>
 			</div>
 			
 			<div class="col-md-6" align="left">
-				<h4 style="font-weight: 900">
-				<span style="color: green" id="coupon_saving_value">
-		
-					<% if @cart.coupon %>
-						<%  if @cart.coupon.discount_val %>
-							-$<%= @cart.coupon.discount_val %>
-						<% else %>
-							-$<%= @cart.price - @cart.discount_price %>
-						<% end %>
-					<% end %>
-		
-				</span>			
+				<h4 style="font-weight: 900; color: lightgrey; text-decoration: line-through">
+					$
+					<span id="old_price">
+						<%= (cart.price.to_f/0.15).round(2) %>
+					</span>
+				</h4>
+			</div>
+		</div>		
+	
+	
+		<div class="row">
+			<div class="col-md-5 col-md-offset-1" align="right">
+				<h4 style="font-weight: 300">
+					Shipping : 
+				</h4>
+			</div>
+			
+			<div class="col-md-6" align="left">
+				<h4 style="font-weight: 900; color: green">
+					FREE		
 				</h4>
 			</div>
 		</div>
-
+		
+		<hr style="width: 60%; border-color: black;margin: 5px" />
 
 		<div class="row">
 			<div class="col-md-5 col-md-offset-1" align="right">
@@ -113,14 +120,12 @@
 			<div class="col-md-6" align="left">
 				<h4 style="font-weight: 900">
 					<span id="total_price">
-						<% if @cart.coupon %>
-							$<%= @cart.discount_price %>
-						<% end %>	
+							$<%= cart.price %>
 					</span>			
 				</h4>
 			</div>
 		</div>
-		</div>
+	
 				
 	
 		<%= button_to 'CHECKOUT', new_order_path, method: :get, class:"btn btn-primary btn-lg", style:"width: 80%; margin-top: 20px", id: 'checkout_button'%>
