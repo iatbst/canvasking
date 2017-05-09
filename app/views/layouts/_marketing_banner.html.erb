@@ -42,27 +42,6 @@
 
 <script>
 
-<% if user_signed_in? && coupon_code_is_valid?(current_user.email) %>
-
-	$(function() {
-	
-	  var timer = setInterval( show_marketing_banner, 10000);
-	
-	  function show_marketing_banner() {
-	  	if ($('#public_coupon').is(":visible") ){
-	  		$('#public_coupon').fadeOut(1000, function(){
-	  			$('#private_coupon').fadeIn(1000);
-	  		});
-	  	} else {
-	  		$('#private_coupon').fadeOut(1000, function(){
-	  			$('#public_coupon').fadeIn(1000); 
-	  		});		
-	  	}
-	
-	  }
-	
-	});
-<% end %>
 
 	var original_second_margin_top = null;
 	var update_second_margin_top = null;
