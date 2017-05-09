@@ -46,7 +46,7 @@
 			</div>
 		</div>
 
-		<div class="row " id="coupon_saving" style="<% if !@cart.coupon %> display: none<% end %>; margin-left: 10px">
+		<div class="row " id="coupon_saving" style="display: none; margin-left: 10px">
 			<div class="col-md-5 col-md-offset-2" align="left">
 				<h4 class="no_bold" >
 				Coupon Save
@@ -71,11 +71,8 @@
 	</div>
 	<hr style="width: 70%" />
 	<div class="row" align="center" style="height:50px;" >
-		<% if @cart.coupon %>
-			<h3 class="no_bold">Total: <b id="total_price">$<%= @cart.discount_price + @shipping_cost + @tax %></b></h3>
-		<% else %>
-			<h3 class="no_bold">Total: <b id="total_price">$<%= @cart.price + @shipping_cost + @tax %></b></h3>
-		<% end %>
+		<h3 class="no_bold">Total: <b id="total_price">$<%= @cart.price + @shipping_cost + @tax %></b></h3>
+
 
 	</div>
 </div>
