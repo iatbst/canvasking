@@ -73,7 +73,7 @@ class SiteManageController < ApplicationController
       end
     elsif params['processing_to_closed']
       @order.status = 'closed'
-      @order.save
+      @order.save(:validate => false)
       @new_orders = Order.where(status: 'new').sort_by { |obj| obj.created_at }
       @processing_orders = Order.where(status: 'processing').sort_by { |obj| obj.created_at }
       @closed_orders = Order.where(status: 'closed').sort_by { |obj| obj.created_at }.reverse
@@ -83,7 +83,7 @@ class SiteManageController < ApplicationController
     
     elsif params['closed_to_processing']
       @order.status = 'processing'
-      @order.save
+      @order.save(:validate => false)
       @new_orders = Order.where(status: 'new').sort_by { |obj| obj.created_at }
       @processing_orders = Order.where(status: 'processing').sort_by { |obj| obj.created_at }
       @closed_orders = Order.where(status: 'closed').sort_by { |obj| obj.created_at }.reverse
@@ -93,12 +93,12 @@ class SiteManageController < ApplicationController
     
     elsif params['update_notes']
       @order.notes = params[:order][:notes]   
-      @order.save
+      @order.save(:validate => false)
       redirect_to(:back)
       
     elsif params['update_shipping_url']
       @order.oem_info['oem_shipping_detail_url'] = params[:order][:oem_shipping_detail_url]   
-      @order.save
+      @order.save(:validate => false)
       redirect_to(:back)     
         
     elsif params['processing_status_update']
@@ -106,7 +106,7 @@ class SiteManageController < ApplicationController
       if @order.processing_status == 5
         @order.order_recv_date = Time.now
       end
-      @order.save
+      @order.save(:validate => false)
       
       render json: { 'processing_status'=> @order.processing_status } and return
     end
@@ -118,7 +118,7 @@ class SiteManageController < ApplicationController
     @processing_orders.each do | order|
       if ( Time.now - order.order_recv_date ) > Canvasking::ORDER_CLOSED_WAITING_TIME
         order.status = 'closed'
-        order.save
+        order.save(:validate => false)
       end
     end
     redirect_to "#{site_manage_manage_orders_path}?active_tab=processing"
