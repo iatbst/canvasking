@@ -247,8 +247,8 @@ class SiteManageController < ApplicationController
   
   def validate_oem_number(params)
     order_number = params[:order][:oem_order_number]
-    # TAOBAO order is composed of 16 numbers !
-    return order_number.length == 16 && !/\A\d+\z/.match(order_number).nil?
+    # TAOBAO order is all numbers
+    return !/\A\d+\z/.match(order_number).nil?
   end
   
   def generate_order_detail_url(order_number)
