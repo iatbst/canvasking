@@ -100,10 +100,10 @@
 			<br />
 			<%= order.oem_info['oem_order_number'] %> </td>
 			<td> <%= order.created_at.to_s.gsub!('UTC', '') %> </td>
-			<td> 
-				<%= order.user.name %> 
+			<td>
+				<%= order.user ? order.user.name : "GUEST" %>
 				<br />
-				<%= order.user.email %>
+				<%= order.user ? order.user.email : order.guest_email %>
 			</td>
 			<td>
 				<div class="row" id="progress_bar_<%= order.id %>" style="height: 100px; background-color: white; border-color: white">

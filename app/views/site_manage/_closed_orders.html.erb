@@ -31,9 +31,9 @@
 					<%= order.order_recv_date.to_s.gsub!('UTC', '') %>
 				</td>
 				<td>
-					<%= order.user.name %>
+					<%= order.user ? order.user.name : "GUEST" %>
 					<br />
-					<%= order.user.email %>
+					<%= order.user ? order.user.email : order.guest_email %>
 				</td>
 
 				<td>

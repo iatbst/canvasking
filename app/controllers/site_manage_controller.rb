@@ -61,7 +61,8 @@ class SiteManageController < ApplicationController
       @order.status = 'processing'
       @order.processing_status = 1 # order placed
       
-      if @order.save
+     
+      if @order.save(:validate => false)
         # SUCCESS
         redirect_to site_manage_manage_orders_path and return 
       else
