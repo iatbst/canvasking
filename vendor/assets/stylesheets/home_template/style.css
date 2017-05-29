@@ -9,9 +9,9 @@ http://www.tooplate.com/view/2076-zentro
 body
 	{
 		background: #ffffff;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    position: relative;
+    	font-family: 'Roboto', sans-serif;
+    	font-weight: 400;
+    	position: relative;
 	}
 
 .heading {
@@ -148,22 +148,7 @@ hr {
   padding-top: 10px;
 }
 
-#home .btn {
-  background: transparent;
-  border-radius: 0;
-  border: 3px solid #ffffff;
-  color: #ffffff;
-  font-weight: bold;
-  letter-spacing: 2px;
-  padding: 16px 42px;
-  margin-top: 40px;
-  transition: all 0.4s ease-in-out;
 
-}
-#home .btn:hover {
-  background: #ffffff;
-  color: #202020;
-}
 
 /* products section */
 #products {
