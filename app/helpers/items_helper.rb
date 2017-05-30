@@ -142,7 +142,7 @@ module ItemsHelper
     return !( 
               (params[:art_filterred] && item.product.nil?) || \
               (show && item.product.nil?)
-             )
+             ) && !( params[:image_cropped] )
   end
 
   def hide_size_section?(edit, show, save_fail, params, item)
@@ -174,7 +174,7 @@ module ItemsHelper
     if section_name == "filter"
       return !( !image_is_uploaded(item) )
     elsif section_name == "product"
-      return !( !image_is_uploaded(item) || params[:image_cropped])
+      return image_is_uploaded(item)
     elsif section_name == "size"
       return !( item.product.nil? )
     elsif section_name == "options"
