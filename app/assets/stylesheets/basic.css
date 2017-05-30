@@ -190,6 +190,15 @@
 	border-radius: 5px;
 }
 
+.three_box {
+	background-color: white;
+	max-height: 400px;
+	max-width: 300px;
+	width: 300px;
+	height: 350px;
+	border-radius: 5px;
+}
+
 .clickable {
 	cursor: pointer;
 }

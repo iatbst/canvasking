@@ -138,7 +138,7 @@ hr {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 90vh;
+  height: 85vh;
  
 }
 #home h1 {
@@ -169,7 +169,7 @@ hr {
 
 /* menu section */
 #menu {
-	height: 680px;
+	height: 600px;
 	background-color: white;
 }
 
