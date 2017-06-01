@@ -67,7 +67,7 @@ module Canvasking
   
   # EC2
   STAGING_PUB_IP = '52.37.1.190'
-  PRODUCTION_PUB_IP = '50.112.215.151'
+  PRODUCTION_PUB_IP = '35.160.117.224'
   
   # Administrators
   ADMINISTRATORS = ['iatbst@gmail.com']
