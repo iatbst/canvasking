@@ -33,6 +33,11 @@
   color: #ef9223;
 }
 
+#transform_button:hover {
+  background-color: #ef9223;
+  color: white;
+}
+
 </style>
 
 <section id="quality_banner" class="parallax-section">
@@ -40,11 +45,12 @@
 		<div class="row" style="margin-top: 100px" align="center">
 
 				<h2 style="color: white; font-weight: 900">
-					Craft Your Products With High Quality
+					Craft Your Product With High Quality
 				</h2>
 				<h4 class="no_bold" style="color: white; margin-top:20px">
-					We print out your photos with industrial high resulution printer and handcraft them into canvas, frames ...
+					We print your photo on canvas with high resolution industrial printer and handcraft it on best-quality frames. 
 				</h4>
+				<%= button_to 'Order Now', new_item_path, class:"btn btn-primary", method:"get", id:"transform_button" %>
 			</div>
 		</div>
 	</div>

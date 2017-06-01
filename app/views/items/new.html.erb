@@ -225,13 +225,8 @@
 
 				<%= form_for :item, url: item_path(@item), method: :patch do |f| %>
 
-				<!-- Select Filter -->
-				<%= render partial: 'select_filter',  locals:{f: f} %>
-				<%= render partial: 'select_filter_done',  locals:{f: f} %>
-				<% @section_name = "filter" %>
-				<% @section_label = "Select art effect" %>
-				<%= render partial: 'section_placeholder', locals:{section_name: @section_name, section_label: @section_label, item: @item} %>
-
+				
+				
 				<!-- Select Product -->
 				<%= render partial: 'select_product', locals:{f: f} %>
 				<%= render partial: 'select_product_done',  locals:{f: f} %>
