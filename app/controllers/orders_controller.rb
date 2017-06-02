@@ -95,7 +95,10 @@ class OrdersController < ApplicationController
             
         # Send out order confirm email
         OrderMailer.order_confirm(current_user, @order).deliver_later
-      
+        
+        # Send out order notice email to Site admin
+        OrderMailer.order_notify(current_user, @order).deliver_later
+        
         @new_order_complete = true
         render 'show'
       end
