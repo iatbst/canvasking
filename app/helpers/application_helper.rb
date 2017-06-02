@@ -3,7 +3,7 @@ module ApplicationHelper
   def generate_title_by_page
 
     if controller_name == 'welcome'
-      return '85% Off Today! Photo Prints On Canvas & Frame With Art-Effects Filters'
+      return '85% Off Today & FREE SHIPPING ! Photo On Canvas'
     elsif controller_name == 'items'
       return 'Upload Photos & Edit Photos & Order Product | MagicPhotoPrints'
     elsif controller_name == 'carts'
@@ -47,13 +47,10 @@ module ApplicationHelper
   
   def generate_description_by_page
     if controller_name == 'welcome'
-      return 'MagicPhotoPrints provide fantastic Art-Effects photo filters on your photos and 
-              produce them into Canvas/Frames/Cups/T-shirts/Iphone-cases...anything you can imagine in real world
-              , with great quality and affordable prices.Join us today to get 85% off.
-              Shipping is always free !'
+      return 'MagicPhotoPrints provide Photo To Canvas service more than 10 years with LOW PRICE & HIGH QUALITY & FREE SHIPPING. Order it today with special discount !'
     elsif controller_name == 'items'
       return 'Select the photo you want to create from local computer or facebook/instagram social accounts,
-             then you could apply Art-Effects filter on photos and select the size & other options for your 
+             then you could select the size & other options for your 
              product. One click to add it to cart.'
     elsif controller_name == 'carts'
       return 'Here are what you have in your cart, you can add new one by continue shopping or check out to place order'
