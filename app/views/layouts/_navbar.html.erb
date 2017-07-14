@@ -71,9 +71,9 @@
 				</li>
 				<li>
 					<% if controller_name == "pricing" %>
-						<%= link_to 'PRICING', pricing_index_path, method:"get", id:"nav_pricing_menu", style:"color: #EF9223" %>
+						<%= link_to '使用教程', pricing_index_path, method:"get", id:"nav_pricing_menu", style:"color: #EF9223" %>
 					<% else %>
-						<%= link_to 'PRICING', pricing_index_path, method:"get", id:"nav_pricing_menu"%>
+						<%= link_to '使用教程', pricing_index_path, method:"get", id:"nav_pricing_menu"%>
 					<% end %>
 				</li>
 				<li>
@@ -82,9 +82,9 @@
 						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
 						<% cart = get_current_cart %>
 						<% if cart.quantity != 0 %>
-							<%= "CART(#{cart.quantity})"%>
+							<%= "购物车(#{cart.quantity})"%>
 						<% else  %>
-							CART
+							购物车
 						<% end %>
 						</a>
 					<% else %>
@@ -92,18 +92,18 @@
 						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
 						<% cart = get_current_cart %>
 						<% if cart.quantity != 0 %>
-							<%= "CART(#{cart.quantity})"%>
+							<%= "购物车(#{cart.quantity})"%>
 						<% else  %>
-							CART
+							购物车
 						<% end %>
 						</a>					
 					<% end %>
 				</li>
 				<% unless user_signed_in? %>
-					<li><a href="/users/sign_up" id="nav_signup_menu">SIGN UP</a></li>
+					<li><a href="/users/sign_up" id="nav_signup_menu">注册</a></li>
 					<li><a href="/users/sign_in" id="nav_login_menu">
 						<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
-						&nbsp;LOGIN
+						&nbsp;登录
 						</a>
 					</li>
 				<% end %>
