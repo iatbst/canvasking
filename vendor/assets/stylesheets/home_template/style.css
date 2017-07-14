@@ -125,8 +125,8 @@ hr {
 /* home section */
 #home {
   margin-top: -20px;
-  background: url('/welcome/front_page_final_1.jpg') 100% 0 no-repeat;
-  
+  background: url('/welcome/bg2.jpg') 100% 0 no-repeat;
+  background-color:rgba(0, 0, 0, 0.5);
   
   background-position: center;
   color: black;
