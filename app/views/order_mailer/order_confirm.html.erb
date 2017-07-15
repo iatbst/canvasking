@@ -1,6 +1,6 @@
 <p>
 Hello <%= @user.name if @user %>,<br /><br />
-Thank you for your order from MagicPhotoPrints.Com. Once your package ships we will send an email with a link to track your order. 
+Thank you for your order from ++VPN. 
 <% if @user %>
 You can check the status of your order by <u><%= link_to 'logging into your account', root_url + order_path(@order) %></u>. 
 <% end %>
@@ -14,20 +14,7 @@ If you have any questions about your order please contact us at <%= ENV['support
 	</h5>
 	<div class="row box" style="font-size: 18px; font-weight: 300; margin-bottom: 50px" >
 		<div class="col-md-4">
-			<br />
-			<h4><b>Shipping Address</b></h4>
-			<%= @order.shipping_full_name %>
-			<br />
-			<%= @order.shipping_address_1 %>
-			<br />
-			<% if !@order.shipping_address_2.empty? %>
-			<%= @order.shipping_address_2 %>
-			<br />
-			<% end %>
-			<%= @order.shipping_city %>,&nbsp;<%= @order.state.name %>&nbsp;<%= @order.shipping_zip %>
-			<br />
-			<%= @order.country.name %>
-			<br />
+			
 		</div>
 		<div class="col-md-4">
 			<br />
@@ -40,19 +27,6 @@ If you have any questions about your order please contact us at <%= ENV['support
 		<div class="col-md-4" style="margin-bottom: 20px">
 			<br />
 			<h4>Order Summary</h4>
-			Item(s) Subtotal: $<%= @order.before_price %>
-			<br />
-			Shipping & Handling: $<%= @order.shipping_price %>
-			<br />
-			Total before tax: $<%= @order.before_price + @order.shipping_price %>
-			<br />
-			Tax collected: $<%= @order.tax_price %>
-			<br />
-			<% if @order.coupon %>
-			Coupon saved: -$<%= @order.before_price - @order.discount_price%>
-			<br />
-			<% end %>
-			<br />
 			<b>Grand Total: $<%= @order.total_price %></b>
 			<br />
 		</div>
@@ -65,50 +39,7 @@ If you have any questions about your order please contact us at <%= ENV['support
 	<div class="row box">
 
 		<% @order.items.each_with_index do |item, ix| %>
-		<div class="row">
-
-			<div class="container">
-				<div class="row">
-					<div class="col-md-9">
-						<br />
-						<% if get_image_url(item, "overview").include?('https://') %>
-							<%= image_tag get_image_url(item, "overview"), class:"email_image image_shadow_in_item #{add_frame_class(item, 'email')}" %>
-						<% else %>
-							<%= image_tag ENV["website_url"] + get_image_url(item, "overview"), class:"email_image image_shadow_in_item #{add_frame_class(item, 'email')}" %>
-						<% end %>
-					</div>
-
-					<div class="col-md-3" >
-						<br />
-						
-						
-						Product: <%= item.product.name %>
-						<br />
-						Size: <%= item.size %>
-						<br />
-						Depth: <%= item.canvas_depth %>
-						<br />
-						Outer Frame: <%= item.canvas_frame %>
-						
-
-					</div>
-
-				</div>
-				<div class="row">
-					<div class="col-md-9"></div>
-					<br />
-					<div class="col-md-3">
-						Quantity: <b><%= item.quantity %></b><br />
-						Subtotal: $<b><%= item.price*item.quantity %></b>					
-					</div>
-				</div>
-				<% if ix != @order.items.count - 1 %>
-					<hr style="width: 100%; border-color:#EDEDED;"/>
-				<% else %>
-					<br />
-				<% end %>
-			</div>
-		</div>
+		
 		<% end %>
 	</div>
 </div>

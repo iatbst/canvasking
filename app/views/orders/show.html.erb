@@ -63,9 +63,10 @@
 
 		<div class="col-md-12" align="center" style="margin-top: 20px;margin-bottom: 20px">
 
-			<h3 style="font-weight: bolder"><img src="/order/order_complete.png" id="order_complete_icon" style="margin-top: -5px;margin-right: 10px"/> Congratulations ! Your order is confirmed.</h3>
-			<h4 class="no_bold">We are sending you a confirmation email.
-			Thank you for shopping with us.</h4>
+			<h3 style="font-weight: bolder"><img src="/order/order_complete.png" id="order_complete_icon" style="margin-top: -5px;margin-right: 10px"/> 恭喜 ！ 您的VPN套餐订单已确认。</h3>
+			<h4 class="no_bold">
+				我们给您发送了确认邮件，请查收。谢谢 ！
+			</h4>
 		</div>
 	</div>
 	
@@ -77,115 +78,34 @@
 	</div>
 
 	
-	<h3 class="no_bold">Order # <%= @order.number %></h3>
+	<h3 class="no_bold">订单号: <%= @order.number %></h3>
 	
 	<div class="row box" style="font-size: 18px; font-weight: 300; margin-bottom: 50px" >
 		<div class="col-md-4">
 			<br />
-			<h4><b>Shipping Address</b></h4>
-			<%= @order.shipping_full_name %>
-			<br />
-			<%= @order.shipping_address_1 %>
-			<br />
-			<% if !@order.shipping_address_2.empty? %>
-			<%= @order.shipping_address_2 %>
-			<br />
-			<% end %>
-			<%= @order.shipping_city %>,&nbsp;<%= @order.state.name %>&nbsp;<%= @order.shipping_zip %>
-			<br />
-			<%= @order.country.name %>
-			<br />
-			Contact Phone: <%= @order.shipping_phone %>
+			
 		</div>
+		
 		<div class="col-md-4">
 			<br />
-			<h4>Payment Method</h4>
+			<h4>支付方式</h4>
 			<i class="fa fa-credit-card" aria-hidden="true"></i>&nbsp;
 			<%= @order.payment_info['brand'] ? @order.payment_info['brand'].upcase : nil %>
 			&nbsp;**** &nbsp;
 			<%= @order.payment_info['last4'] %>
 		</div>
+		
 		<div class="col-md-4" style="margin-bottom: 20px">
 			<br />
-			<h4>Order Summary</h4>
-			Item(s) Subtotal: $<%= @order.before_price %>
-			<br />
-			Shipping & Handling: $<%= @order.shipping_price %>
-			<br />
-			Total before tax: $<%= @order.before_price + @order.shipping_price %>
-			<br />
-			Tax collected: $<%= @order.tax_price %>
-			<br />
-			<% if @order.coupon %>
-			Coupon saved: -$<%= @order.before_price - @order.discount_price%>
-			<br />
-			<% end %>
-			<br />
-			<b>Grand Total: $<%= @order.total_price %></b>
+			<h4>支付总额</h4>
+			
+			<b>$<%= @order.total_price %></b>
 			<br />
 		</div>
 
 	</div>
 	
-	<div class="row box" style="margin-top: 20px;">
-
-		<% @order.items.each_with_index do |item, ix| %>
-		<div class="row">
-
-			<div class="container">
-				<div class="row">
-					<div class="col-md-9" align="center">
-						<br />
-
-						<%= image_tag get_image_url(item, "overview"), class: "overview_image image_shadow_in_order_show #{add_frame_class(item, 'order_show')}", id: "item_#{item.id}" %>
-						<div>
-							<div class="triptych_1_in_order_show image_shadow_in_order_show" id="item_<%= item.id%>_triple_1"></div>
-							<div class="triptych_2_in_order_show image_shadow_in_order_show"  id="item_<%= item.id%>_triple_2" style="margin-left: 8px; margin-right: 8px"></div>
-							<div class="triptych_3_in_order_show image_shadow_in_order_show" id="item_<%= item.id%>_triple_3"></div>
-						</div>
-					</div>
-
-					<div class="col-md-3" style="font-size: 18px; font-weight: 300">
-						<br />
-
-						Product: <%= item.product.name.capitalize %>
-						<br />
-						Size: <%= item.size.split('x').join(' x ') %>
-						<br />
-						<% if item.product.name.include?('canvas')%>
-						Depth: <%= item.canvas_depth.include?('.') ? "#{item.canvas_depth}\"" : "#{item.canvas_depth}" %>
-
-						<% else %>
-						Frame: <%= Frame.find(item.frame_id).name %>
-						<br />
-						Mat: <%= "#{item.mat}\"".gsub("0.0\"", "No") %>
-						<% end %>
-
-					</div>
-
-				</div>
-				
-			<div class="row" style="font-size: 18px; font-weight: 300" >
-				<div class="col-md-9"></div>
-				<div class="col-md-3">
-					Subtotal:&nbsp;&nbsp;<b>$<%= item.price %></b>
-					<br />
-					Quantity:&nbsp;&nbsp;<b id="quantity_<%= item.id %>"><%= item.quantity %></b>
-					<br />
-					<br />
-				</div>
-				<br />
-			</div>
-				
-				<% if ix != @order.items.count - 1 %>
-				<hr style="width: 100%; border-color:#EDEDED;"/>
-				<% else %>
-				<br />
-				<% end %>
-			</div>
-		</div>
-		<% end %>
-	</div>
+	
 </div>
 
 <%= render "layouts/footer" %>

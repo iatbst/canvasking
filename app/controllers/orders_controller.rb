@@ -73,19 +73,6 @@ class OrdersController < ApplicationController
         @order.shipping_price = 0
         @order.tax_price = 0
         @order.before_price = cart.price
-        # NO COUPON !!
-        # if cart.coupon
-          # # If private coupon, mark as used
-          # if cart.coupon.public
-            # cart.coupon.used_count += 1
-          # else
-            # cart.coupon.used = true
-          # end
-          # cart.coupon.save
-          # @order.coupon_id = cart.coupon.id # Mark this order is using coupon
-          # @order.discount_price = cart.discount_price
-          # @order.total_price = @order.discount_price + @order.shipping_price + @order.tax_price
-        # else
         @order.total_price = @order.before_price + @order.shipping_price + @order.tax_price
         # end
         @order.save!

@@ -277,7 +277,7 @@ class ItemsController < ApplicationController
     clear_cart
     cart = get_current_cart
     cart.items.push(item)
-    
+    update_total_price_and_quantity_in_cart
     
     redirect_to cart_path   
   end
@@ -286,11 +286,11 @@ class ItemsController < ApplicationController
   private
 
     def get_plan_price(plan_id)
-      if plan_id == 1
+      if plan_id == "1"
         return 14.99
-      elsif plan_id == 2
+      elsif plan_id == "2"
         return 29.99
-      elsif plan_id == 3
+      elsif plan_id == "3"
         return 99.99   
       else
         return nil

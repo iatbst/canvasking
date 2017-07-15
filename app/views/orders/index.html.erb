@@ -31,8 +31,8 @@
 
 		<div align="center">
 			<%= image_tag '/order/order_empty.png' %>
-				<h3>You don't have any orders yet .</h3><br />
-			<%= button_to 'ORDER  NOW : )', new_item_path, method: :get, class:"btn btn-primary btn-lg blue_button" %>
+				<h3>您还没有任何订单</h3><br />
+			<%= button_to '购买VPN套餐', new_item_path, method: :get, class:"btn btn-primary btn-lg blue_button" %>
 		</div>
 	
 	<% else %>		
@@ -43,14 +43,10 @@
 		  <ul class="nav nav-tabs" role="tablist">
 		    <li role="presentation" class="active order_tab">
 		    	<a href="#open_orders_table" aria-controls="home" role="tab" data-toggle="tab" align="center" style="color: #EF9223">
-		    		<h4>Open Orders ( <%= @open_orders.count %> )</h4>
+		    		<h4>所有订单 ( <%= @open_orders.count %> )</h4>
 		    	</a>
 		    </li>
-		    <li role="presentation" class="order_tab" style="<% if @history_orders.empty? %>display: none<% end %>">
-		    	<a href="#history_orders_table" aria-controls="profile" role="tab" data-toggle="tab" align="center" style="color: grey">
-		    		<h4>History Orders ( <%= @history_orders.count %> )</h4>
-		    	</a>
-		    </li>
+		    
 		  </ul>
 		
 		  <!-- Tab panes -->
@@ -70,9 +66,7 @@
 		    	
 		    </div>
 		    
-		    <div role="tabpanel" class="tab-pane" id="history_orders_table">
-		    	<%= render partial: "history_orders", locals: {orders: @history_orders}  %>
-		    </div>
+		    
 	
 		  </div>
 		

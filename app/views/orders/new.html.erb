@@ -70,27 +70,7 @@
 
 <div class="container" style="margin-top:50px; margin-bottom: 100px">
 	
-	<!-- Progress Bar -->
-	<div>
-		<div class="row" style="margin-left: 100px; margin-top: 0px">
-			<div class="col-md-10 col-md-offset-2" style="">
-				<div class="col-md-10 complete"></div>
-				<div class="col-md-10 complete"></div>
-				<div class="col-md-10 complete"></div>
-				<div class="col-md-10 not_complete last_dot"></div>
-			</div>
-		</div>
-		<div class="row" style="margin-left: 100px; margin-top: 20px">
-			<div class="col-md-10 col-md-offset-2">
-				<div class="row">
-					<div class="col-md-3" style="margin-left: -30px; color: lightgrey">CUSTOMIZE</div>
-					<div class="col-md-3" style="margin-left: -15px; color: lightgrey">CART</div>
-					<div class="col-md-3" style="margin-left: -60px; font-weight: 900">CHECKOUT</div>
-					<div class="col-md-3" style="margin-left: -25px; color: lightgrey">DONE</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 	
 	<div class="row" style="margin-top: 0px">
 
@@ -106,10 +86,10 @@
 			<%= form_for :order, url: orders_path, :html=> {:id=> "payment-form"} do |f| %>
 				
 				<%= render partial:'contact_email_for_guest', locals:{f: f} %>				
-				<%= render partial:'shipping', locals:{f: f} %>
+				
 				<%= render partial:'payment', locals:{f: f} %>
 				<br />
-				<%= f.submit 'Place Order', class: "btn btn-primary btn-lg", id:"place_order"%>
+				<%= f.submit '下单', class: "btn btn-primary btn-lg", id:"place_order"%>
 			<% end %>
 		</div>
 

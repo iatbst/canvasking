@@ -9,20 +9,12 @@ module CartsHelper
       # update price and quantity
       cart = get_current_cart
       price = 0
-      quantity = 0
       cart.items.each do |item|
-        price += item.price*item.quantity
-        quantity += item.quantity
+        price += item.price
       end
       cart.price = price
-      cart.quantity = quantity
-      
-      # update coupon price if necessary
-      if cart.coupon_id
-        cart.discount_price = calculate_discount_price(cart.price, cart.coupon)
-      end
-      
-      cart.save!      
+      cart.quantity = cart.items.count
+      cart.save!    
     end
     
     def update_total_price_in_cart

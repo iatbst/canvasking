@@ -76,7 +76,7 @@
 
 
 
-<div class="container" style="margin-top:50px; margin-bottom: 50px; min-height: 100%;" >
+<div class="container" style="margin-top:50px; min-height: 100%;" >
 
 	
 
@@ -85,7 +85,8 @@
 			<%= image_tag '/cart/empty_cart.png' %>
 			<h3 style="font-weight: 200">额...您还没有选购任何套餐</h3>
 			<br />
-			<%= button_to '选购套餐', new_item_path, method: :get, class:"btn btn-primary btn-lg order_button" %>
+			<%= button_to '选择套餐', '/#plans', method: :get, class:"btn btn-primary btn-lg order_button" %>
+			
 		</div>
 		<% else %>
 
@@ -99,6 +100,7 @@
 
 	
 </div>
+
 
 <%= render "layouts/footer" %>
 

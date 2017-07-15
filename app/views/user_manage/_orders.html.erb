@@ -9,23 +9,19 @@
 			
 					<div class="row">
 						<div class="col-md-3">
-							<h5 style="font-weight: 900"> Order Placed </h5> <%= order.created_at.strftime("%b.%d %Y") %>
+							<h5 style="font-weight: 900"> 下单日期 </h5> <%= order.created_at.strftime("%b.%d %Y") %>
 						</div>
 						<div class="col-md-4">
-							<h5 style="font-weight: 900">TOTAL</h5>
+							<h5 style="font-weight: 900">金额</h5>
 							$<%= order.total_price %>
-							<% if !order.coupon_id.nil? %>
 							
-								<span style="color: green">( Coupon Saving: $<%= (order.before_price.to_f - order.discount_price.to_f).round(2) %> )</span>
-							<% end %>
 						</div>
 						<div class="col-md-2">
-							<h5 style="font-weight: 900">SHIP TO</h5>
-							<%= order.shipping_full_name %>
+							
 						</div>
 						<div class="col-md-3" align="right">
-							<h5 style="font-weight: 900">Order # <%= order.number %></h5>
-							<%= link_to 'Order Detail', order_path(order) %>
+							<h5 style="font-weight: 900">订单号: <%= order.number %></h5>
+							<%= link_to '订单详情', order_path(order) %>
 						</div>
 					</div>
 				
@@ -40,47 +36,12 @@
 						<div class="row">
 							<div class="col-md-3 col-md-offset-1">
 								<br />
-								<%= image_tag get_image_url(item, "thumb"), class: "thumb_image image_shadow_in_order_index #{add_frame_class(item, 'order_index')}", id: "item_#{item.id}" %>
-								<div>
-									<div class="triptych_1_in_order_index image_shadow_in_order_index" id="item_<%= item.id%>_triple_1"></div>
-									<div class="triptych_2_in_order_index image_shadow_in_order_index"  id="item_<%= item.id%>_triple_2" style="margin-left: 5px; margin-right: 5px"></div>
-									<div class="triptych_3_in_order_index image_shadow_in_order_index" id="item_<%= item.id%>_triple_3"></div>
-								</div>
+								
 							</div>
 
 							<div class="col-md-6" style="font-weight: 300">
 								<br />
-								<ul class="fa-ul">
-									<li>
-										Product: <%= item.product.name %>
-									</li>
-									<li>
-										Size: <%= item.size %>
-									</li>
-									<% if item.product.name.include?('canvas')%>
-									<li>
-										Depth: <%= item.canvas_depth %>
-									</li>
-			
-
-									<% else %>
-									<li>
-										Frame: <%= Frame.find(item.frame_id).name %>
-									</li>
-									<li>
-										Mat: <%= "#{item.mat}\"".gsub("0.0\"", "No") %>
-									</li>
-									<% end %>
-
-									<br />
-									Quantity:<b> <%= item.quantity %></b>
-									<br />
-									Subtotal:<b> $<%= item.price %></b>
-									<br />
-									<br />
-									
-									
-								</ul>
+								
 
 							</div>
 

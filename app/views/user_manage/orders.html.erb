@@ -52,14 +52,10 @@
 		  <ul class="nav nav-tabs" role="tablist">
 		    <li role="presentation" class="active order_tab">
 		    	<a href="#open_orders_table" aria-controls="home" role="tab" data-toggle="tab" align="center" style="color: #EF9223">
-		    		<h4>Open Orders ( <%= @open_orders.count %> )</h4>
+		    		<h4>所有订单 ( <%= @open_orders.count %> )</h4>
 		    	</a>
 		    </li>
-		    <li role="presentation" class="order_tab" style="<% if @history_orders.empty? %>display: none<% end %>">
-		    	<a href="#history_orders_table" aria-controls="profile" role="tab" data-toggle="tab" align="center" style="color: grey">
-		    		<h4>History Orders ( <%= @history_orders.count %> )</h4>
-		    	</a>
-		    </li>
+		    
 		  </ul>
 		
 		  <!-- Tab panes -->

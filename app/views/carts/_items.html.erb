@@ -11,31 +11,6 @@
 				<%= render partial: 'plans', locals: {item: item} %>
 				
 			</div>
-
-
-
-			<div class="row">
-				<div class="col-md-6" align="left">
-
-				</div>
-				<div class="col-md-3" >
-
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a class="trash_icon" data-method="delete" style="color: black" href="/items/<%= item.id %>" ><span class="glyphicon glyphicon-trash item_operation_icon"></span></a>
-
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-8">
-					<% if ix != @cart.items.count - 1 %>
-					<hr style="width: 100% ; border-width: 1px; border-color:#E2E2E2;"/>
-					<% else %>
-					<br />
-					<% end %>
-				</div>
-			</div>
-
 		</div>
 
 		<% end %>
@@ -43,8 +18,9 @@
 </div>
 
 
+
 <script type="text/javascript">
-    $('.trash_icon').on('click', function () {
+    $('.delete_button').on('click', function () {
         if (confirm('Are you sure to remove this item from cart ?')){
         	$.LoadingOverlay("show");
         } else {

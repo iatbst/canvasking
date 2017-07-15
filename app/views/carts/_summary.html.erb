@@ -32,7 +32,7 @@
 				<h4 style="font-weight: 900; color: lightgrey; text-decoration: line-through">
 					$
 					<span id="old_price">
-						<%= (cart.price.to_f/0.15).round(2) %>
+						<%= (cart.price.to_f/0.5).round(2) %>
 					</span>
 				</h4>
 			</div>
@@ -52,7 +52,7 @@
 			<div class="col-md-6" align="left">
 				<h4 style="font-weight: 900">
 					<span id="total_price">
-							$<%= cart.price %>
+							$<%= cart.price.to_f %>
 					</span>			
 				</h4>
 			</div>
@@ -60,12 +60,13 @@
 	
 				
 	
-		<%= button_to '下单', new_order_path, method: :get, class:"btn btn-primary btn-lg", style:"width: 80%; margin-top: 20px", id: 'checkout_button'%>
+		<%= button_to '结算', new_order_path, method: :get, class:"btn btn-primary btn-lg", style:"width: 80%; margin-top: 20px", id: 'checkout_button'%>
 		<br />
 
-		<%= button_to '改变套餐', new_item_path, method: :get, class:"btn btn-secondary btn-lg blue_button", style:"width: 80%; margin-bottom: 20px", id: 'continue_shopping_button'%>
-
-
+		<%= button_to '改变套餐', '/#plans', method: :get, class:"btn btn-secondary btn-lg blue_button", style:"width: 80%; margin-bottom: 20px", id: 'continue_shopping_button' %>
+		<br />
+		<%= button_to '删除套餐', get_current_cart.items[0], method: :delete, class:"btn btn-secondary btn-lg blue_button delete_button", style:"width: 80%; margin-bottom: 20px" %>
+		
 	</div>
 </div>
 
@@ -147,5 +148,13 @@
 		});
 		$('#coupon_error_msg').text('');
 	}
+
+    $('.delete_button').on('click', function () {
+        if (confirm('Are you sure to remove this item from cart ?')){
+        	$.LoadingOverlay("show");
+        } else {
+        	return false;
+        }
+    });
 	
 </script>
