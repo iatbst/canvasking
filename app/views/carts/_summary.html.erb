@@ -1,85 +1,30 @@
 <div class="col-md-2">
 	<div class="box" id="summary_box" align="center" style="width:350px; margin-left:20px;">
 
-		<h3 style="margin-top: 20px; font-weight: 900">Your Cart</h3>
+		<h3 style="margin-top: 20px; font-weight: 900">订单</h3>
 		<hr style="width: 80% ; border-width: 1px; border-color:#E2E2E2;"/>
 
-		<!-- Coupon -->
-		<div class="row" style="margin-left: -10px; margin-top: -20px; display: none">
-
-			<div class="col-md-7 col-md-offset-1">
-				
-				
-
-			<select class="form-control input" id="coupon_code_input" style="margin-left: 0px; width: 100%">
-				<% if @cart.coupon.nil? %>
-					<option value="" selected disabled>Available Promotions</option>
-				<% end %>
-				
-				<% if !@available_coupons.nil? %>
-					<%= @available_coupons.each do |c| %>
-						<% if c.discount_val %>
-							<% discount_desc = "$#{c.discount_val.to_i } off"%>
-						<% else %>
-							<% discount_desc = "#{c.discount_ptg.to_i }% off"%>
-						<% end %>
-						<option value="<%= c.id %>" <% if @cart.coupon && @cart.coupon.id == c.id %> selected <% end %>><%= "#{c.code} - #{discount_desc}" %></option>
-					<% end %>
-				<% end %>
-				<option value="">Don't use promotions</option>
-			</select>
-			<h5 style="color: orange" id="coupon_error_msg"></h5>		
-			
-			
-			</div>
-			
-			<div class="col-md-4" align="left">
-				<button class="btn btn-primary" style="width: 80%; margin-top: 13px; margin-left: -20px; background-color: green" id="apply_coupon_button">
-					Apply
-				</button>
-			</div>
-		</div>
+		
 
 		<div class="row coupon_box" style="" id="coupon_desc">
-			<h5 style="color: grey" id="coupon_applied">
-
-					<i class="fa fa-tag" aria-hidden="true" style="color: green; font-size: 18px"></i><%= " Grand Opening Sale - 85% off for all" %>
+			<h4 id="coupon_applied">
 				
-			</h5>
+				<% if cart.items[0].plan == 1 %>
+					<%= "VPN 套餐: 1个月" %>
+				<% elsif cart.items[0].plan == 2 %>
+					<%= "VPN 套餐: 3个月" %>
+				<% else %>
+					<%= "VPN 套餐: 12个月" %>
+				<% end %>
+				
+			</h4>
 		</div>
 		
-		
-		
-		<div class="row">
-			<div class="col-md-5 col-md-offset-1" align="right">
-				<h4 style="font-weight: 300">
-					<span id="cart_quantity" >
-						<%= cart.quantity %>
-					</span>
-					<span id="item_single_or_plural" > 
-						<% if cart.quantity > 1 %>
-							<%= "item".pluralize %>
-						<% else %>
-							<%= "item" %>
-						<% end %> 
-					</span> :								
-				</h4>
-			</div>
-
-			<div class="col-md-6" align="left">
-				<h4 style="font-weight: 900">
-					$
-					<span id="cart_price">
-						<%= cart.price %>
-					</span>
-				</h4>
-			</div>
-		</div>
 
 		<div class="row">
 			<div class="col-md-5 col-md-offset-1" align="right">
 				<h4 style="font-weight: 300">
-					Reg Price : 
+					原价 : 
 				</h4>
 			</div>
 			
@@ -94,26 +39,13 @@
 		</div>		
 	
 	
-		<div class="row">
-			<div class="col-md-5 col-md-offset-1" align="right">
-				<h4 style="font-weight: 300">
-					Shipping : 
-				</h4>
-			</div>
-			
-			<div class="col-md-6" align="left">
-				<h4 style="font-weight: 900; color: green">
-					FREE		
-				</h4>
-			</div>
-		</div>
 		
 		<hr style="width: 60%; border-color: black;margin: 5px" />
 
 		<div class="row">
 			<div class="col-md-5 col-md-offset-1" align="right">
 				<h4 style="font-weight: 300">
-					Final Price : 
+					折扣价 : 
 				</h4>
 			</div>
 			
@@ -128,10 +60,10 @@
 	
 				
 	
-		<%= button_to 'CHECKOUT', new_order_path, method: :get, class:"btn btn-primary btn-lg", style:"width: 80%; margin-top: 20px", id: 'checkout_button'%>
+		<%= button_to '下单', new_order_path, method: :get, class:"btn btn-primary btn-lg", style:"width: 80%; margin-top: 20px", id: 'checkout_button'%>
 		<br />
 
-		<%= button_to 'CONTINUE SHOPPING', new_item_path, method: :get, class:"btn btn-secondary btn-lg blue_button", style:"width: 80%; margin-bottom: 20px", id: 'continue_shopping_button'%>
+		<%= button_to '改变套餐', new_item_path, method: :get, class:"btn btn-secondary btn-lg blue_button", style:"width: 80%; margin-bottom: 20px", id: 'continue_shopping_button'%>
 
 
 	</div>

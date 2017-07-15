@@ -7,52 +7,12 @@
 
 		<div class="container">
 			<div class="row">
-				<div class="col-md-6" align="center">
-					<br />
-					
-					<a data-method="get" style="color: black" href="/items/<%= item.id %>/edit"> 		
-						<%= image_tag get_image_url(item, "cart"), class: "cart_image cart_image_canvas image_shadow_in_cart #{add_frame_class(item, 'cart')}", id: "item_#{item.id}" %>	
-					<div>
-						<div class="triptych_1_in_cart image_shadow" id="item_<%= item.id%>_triple_1"></div>
-						<div class="triptych_2_in_cart image_shadow"  id="item_<%= item.id%>_triple_2" style="margin-left: 12px; margin-right: 12px"></div>
-						<div class="triptych_3_in_cart image_shadow" id="item_<%= item.id%>_triple_3"></div>
-					</div>
-					</a>
-				
-				</div>
-
-				<div class="col-md-3" style="font-size: 18px; font-weight: 300">
-					<br />
-
-
-					Product: <%= item.product.name.capitalize %>
-					<br />
-					Size: <%= item.size.split('x').join(' x ') %>
-					<br />
-					<% if item.product.name.include?('canvas')%>
-						Depth: <%= item.canvas_depth.include?('.') ? "#{item.canvas_depth}\"" : "#{item.canvas_depth}" %>
-					<% else %>
-						Frame: <%= Frame.find(item.frame_id).name %>
-						<br />
-						Mat: <%= "#{item.mat}\"".gsub("0.0\"", "No") %>
-					<% end %>
-					
-	
-				</div>
+			
+				<%= render partial: 'plans', locals: {item: item} %>
 				
 			</div>
 
-			<div class="row" style="font-size: 18px; font-weight: 300" >
-				<div class="col-md-6"></div>
-				<div class="col-md-3">
-					<b> $<%= item.price %></b>
-					<br />
-					Quantity:&nbsp;&nbsp;<b id="quantity_<%= item.id %>"><%= item.quantity %></b>
-					<br />
-					<br />
-				</div>
-				<br />
-			</div>
+
 
 			<div class="row">
 				<div class="col-md-6" align="left">
@@ -60,11 +20,6 @@
 				</div>
 				<div class="col-md-3" >
 
-					<span style="cursor:pointer;" class="glyphicon glyphicon-plus item_operation_icon" aria-hidden="true" name="<%= item.id %>" ></span>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<span style="cursor:pointer;"  class="glyphicon glyphicon-minus item_operation_icon" aria-hidden="true" name="<%= item.id %>"></span>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a data-method="get" style="color: black" href="/items/<%= item.id %>/edit"><span class="glyphicon glyphicon-cog item_operation_icon"></span></a>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<a class="trash_icon" data-method="delete" style="color: black" href="/items/<%= item.id %>" ><span class="glyphicon glyphicon-trash item_operation_icon"></span></a>
 

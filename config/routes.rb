@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   post '/carts/apply_coupon'
   get '/carts/remove_coupon'
   post '/welcome/image_upload'
+  get '/items/add_plan_to_cart'
   
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

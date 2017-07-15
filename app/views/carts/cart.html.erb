@@ -83,39 +83,13 @@
 		<% if @cart.items.count == 0 %>
 		<div align="center" style="margin-top: 20px">
 			<%= image_tag '/cart/empty_cart.png' %>
-			<h3 style="font-weight: 200">Oops...Your Cart is still empty. Let's fill it ^_^</h3>
+			<h3 style="font-weight: 200">额...您还没有选购任何套餐</h3>
 			<br />
-			<%= button_to 'Get Started', new_item_path, method: :get, class:"btn btn-primary btn-lg order_button" %>
+			<%= button_to '选购套餐', new_item_path, method: :get, class:"btn btn-primary btn-lg order_button" %>
 		</div>
 		<% else %>
 
-		<!-- Progress Bar -->
-		<div class="row" style="margin-left: 100px;">
-			<div class="col-md-10 col-md-offset-2" style="">
-				<div class="col-md-10 complete"></div>
-				<div class="col-md-10 complete"></div>
-				<div class="col-md-10 not_complete"></div>
-				<div class="col-md-10 not_complete last_dot"></div>
-			</div>
-		</div>
-		<div class="row" style="margin-left: 100px; margin-top: 20px">
-			<div class="col-md-10 col-md-offset-2">
-				<div class="row">
-					<div class="col-md-3" style="margin-left: -30px; color: lightgrey">
-						CUSTOMIZE
-					</div>
-					<div class="col-md-3" style="margin-left: -15px; font-weight: 900;">
-						CART
-					</div>
-					<div class="col-md-3" style="margin-left: -60px; color: lightgrey">
-						CHECKOUT
-					</div>
-					<div class="col-md-3" style="margin-left: -25px; color: lightgrey">
-						DONE
-					</div>
-				</div>
-			</div>
-		</div>
+		
 
 		<div class="row" style="margin-top: 20px">
 			<%= render partial:'items', locals:{cart: @cart } %>

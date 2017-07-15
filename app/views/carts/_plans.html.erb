@@ -60,56 +60,6 @@
   border: none;
   outline: none;
 }
-
-.add_button_1 {
-	width: auto;
-	margin: auto;
-	font-size: 15px;
-	font-weight: bold;
-	border-radius: 50px;
-	color: #fff;
-	padding: 9px 24px;
-	background: #aaa;
-	opacity: 1;
-	transition: opacity .2s ease;
-  border: none;
-  outline: none;
-  background-color: #4c7737;
-}
-
-.add_button_2 {
-	width: auto;
-	margin: auto;
-	font-size: 15px;
-	font-weight: bold;
-	border-radius: 50px;
-	color: #fff;
-	padding: 9px 24px;
-	background: #aaa;
-	opacity: 1;
-	transition: opacity .2s ease;
-  border: none;
-  outline: none;
-  background-color: #ffbb42;
-}
-
-.add_button_3 {
-	width: auto;
-	margin: auto;
-	font-size: 15px;
-	font-weight: bold;
-	border-radius: 50px;
-	color: #fff;
-	padding: 9px 24px;
-	background: #aaa;
-	opacity: 1;
-	transition: opacity .2s ease;
-  border: none;
-  outline: none;
-  background-color: #e13c4c;
-}
-
-
 .pricing button:hover {
 	opacity: .9;
 }
@@ -152,7 +102,7 @@
   <div class="row white" style="margin-top: 100px;margin-bottom: 100px">
 				<div class="block">
 
-					<div class="col-xs-12 col-sm-6 col-md-4">
+					<div class="col-xs-12 col-sm-6 col-md-4" style="<% if item.plan != 1 %>display:none<% end %>">
 							<ul class="pricing p-green" style="border-color: #4c7737">
 								<li>
 									
@@ -168,13 +118,11 @@
 									<h3>$14.99</h3>
 									
 								</li>
-								<li>
-									<%= button_to '加入购物车', items_add_plan_to_cart_path, class:"add_button_1", method:"get", params: { plan_id: 1 } %>
-								</li>
+								
 							</ul>
 					</div>
 
-					<div class="col-xs-12 col-sm-6 col-md-4">
+					<div class="col-xs-12 col-sm-6 col-md-4" style="<% if item.plan != 2 %>display:none<% end %>">
 							<ul class="pricing p-yel" style="border-color: #ffbb42">
 								<li>
 									
@@ -190,13 +138,11 @@
 									<h3>$29.99</h3>
 								
 								</li>
-								<li>
-									<%= button_to '加入购物车', items_add_plan_to_cart_path, class:"add_button_2", method:"get", params: { plan_id: 2 } %>
-								</li>
+								
 							</ul>
 					</div>
 
-					<div class="col-xs-12 col-sm-6 col-md-4">
+					<div class="col-xs-12 col-sm-6 col-md-4" style="<% if item.plan != 3 %>display:none<% end %>">
 							<ul class="pricing p-red" style="border-color: #e13c4c">
 								<li>
 									
@@ -212,11 +158,7 @@
 									<h3>$99.99</h3>
 								
 								</li>
-								<li>
-									
-									<%= button_to '加入购物车', items_add_plan_to_cart_path, class:"add_button_3", method:"get", params: { plan_id: 3 } %>
-									
-								</li>
+								
 							</ul>
 					</div>
 

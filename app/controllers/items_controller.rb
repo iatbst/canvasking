@@ -267,9 +267,36 @@ class ItemsController < ApplicationController
   
   
   
+  ############# VPN ##################
+  def add_plan_to_cart
+    item = Item.new
+    item.plan = params[:plan_id]
+    item.price = get_plan_price(params[:plan_id])
+    item.save
+    
+    clear_cart
+    cart = get_current_cart
+    cart.items.push(item)
+    
+    
+    redirect_to cart_path   
+  end
+  
   # Helpers
   private
 
+    def get_plan_price(plan_id)
+      if plan_id == 1
+        return 14.99
+      elsif plan_id == 2
+        return 29.99
+      elsif plan_id == 3
+        return 99.99   
+      else
+        return nil
+      end
+      
+    end
     
     def calculate_price(item)
       product = item.product.name
