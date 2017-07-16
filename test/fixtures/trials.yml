@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: MyString
+  user_id: 
+  vpn_server: MyString
+
+two:
+  status: MyString
+  user_id: 
+  vpn_server: MyString

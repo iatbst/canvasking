@@ -86,6 +86,9 @@ class OrdersController < ApplicationController
         # Send out order notice email to Site admin
         OrderMailer.order_notify(current_user, @order).deliver_later
         
+        # populate vpn info
+        populate_vpn_info(@order)
+        
         @new_order_complete = true
         render 'show'
       end
@@ -111,6 +114,23 @@ class OrdersController < ApplicationController
   ############################## Private ############################## 
   private
   
+  def populate_vpn_info(order)
+    item = order.items[0]
+    if item.plan == 1
+      item.vpn_desc = "1个月"
+      item.vpn_exp_date = Time.now + 1.months
+    elsif item.plan == 2
+      item.vpn_desc = "3个月"
+      item.vpn_exp_date = Time.now + 3.months
+    elsif item.plan == 3
+      item.vpn_desc = "12个月"
+      item.vpn_exp_date = Time.now + 12.months
+    end
+    item.vpn_username = ENV['vpn_username']
+    item.vpn_password = ENV['vpn_password']
+    item.vpn_phrase = ENV['vpn_phrase']
+    item.save!
+  end
   
   def generate_unique_order_number
     # Find a unique one

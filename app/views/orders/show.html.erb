@@ -72,7 +72,7 @@
 	
 	<div style="<% if @new_order_complete %><%= "display: none" %><% end %>">
 		<a href="/user_manage/orders" style="font-size: 25px; color: grey; font-weight: 300">
-			<i class="fa fa-arrow-left" aria-hidden="true"></i> All My Orders
+			<i class="fa fa-arrow-left" aria-hidden="true"></i> 我的订单
 		</a>
 		<br />
 	</div>
@@ -104,6 +104,8 @@
 		</div>
 
 	</div>
+	
+	<%= render partial: 'plans', locals: {item: @order.items[0] } %>
 	
 	
 </div>

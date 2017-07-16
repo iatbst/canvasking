@@ -21,7 +21,7 @@
 						</div>
 						<div class="col-md-3" align="right">
 							<h5 style="font-weight: 900">订单号: <%= order.number %></h5>
-							<%= link_to '订单详情', order_path(order) %>
+							<%= link_to '套餐详情', order_path(order) %>
 						</div>
 					</div>
 				
@@ -33,32 +33,27 @@
 					<% order.items.each do |item| %>
 					<tr>
 						<td>
-						<div class="row">
-							<div class="col-md-3 col-md-offset-1">
-								<br />
-								
+							<div class="row" style="margin-left: 20px">
+								<h5>
+									套餐类型：<%= item.vpn_desc %>
+								</h5>
+								<h5>
+									套餐过期日期: <%= item.vpn_exp_date %>
+								</h5>
+								<h5>
+									VPN IP地址: <%= item.vpn_server %>
+								</h5>
+								<h5>
+									VPN 用户名: <%= item.vpn_username %>
+								</h5>
+								<h5>
+									VPN 密码: <%= item.vpn_password %>
+								</h5>
+								<h5>
+									VPN 密钥: <%= item.vpn_phrase %>
+								</h5>
 							</div>
-
-							<div class="col-md-6" style="font-weight: 300">
-								<br />
-								
-
-							</div>
-
-							<div class="col-md-2">
-								<br />
-								
-								<br />
-								
-								<button type="button" class="btn btn-default btn-sm orange_style" data-toggle="modal" data-target="#leave_us_messages_<%= item.id %>" style="width: 100%">
-									Leave Messages
-								</button>
-								<%= render partial: 'leave_us_message', locals: {item: item}%>
-								<br />
-								
-							</div>
-
-						</div></td>
+						</td>
 					</tr>
 					<% end %>
 				</tbody>
