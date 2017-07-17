@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170716081055) do
+ActiveRecord::Schema.define(version: 20170717090855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -259,6 +259,18 @@ ActiveRecord::Schema.define(version: 20170716081055) do
   add_index "visits", ["user_id"], name: "index_visits_on_user_id", using: :btree
   add_index "visits", ["visit_token"], name: "index_visits_on_visit_token", unique: true, using: :btree
 
+  create_table "vpn_servers", force: :cascade do |t|
+    t.string   "ip"
+    t.integer  "user_id"
+    t.datetime "expire_date"
+    t.boolean  "trial"
+    t.boolean  "active"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "vpn_servers", ["user_id"], name: "index_vpn_servers_on_user_id", using: :btree
+
   add_foreign_key "carts", "coupons"
   add_foreign_key "carts", "users"
   add_foreign_key "coupons", "users"
@@ -276,4 +288,5 @@ ActiveRecord::Schema.define(version: 20170716081055) do
   add_foreign_key "shipping_addresses", "states"
   add_foreign_key "shipping_addresses", "users"
   add_foreign_key "trials", "users"
+  add_foreign_key "vpn_servers", "users"
 end

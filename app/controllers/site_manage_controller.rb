@@ -37,6 +37,12 @@ class SiteManageController < ApplicationController
     
   end
   
+  def manage_servers
+    @active_servers = VpnServer.where(['expire_date > ?', DateTime.now]).sort_by { |obj| obj.created_at }
+    @expire_servers = VpnServer.where(['expire_date < ? AND active = ?', DateTime.now, true]).sort_by { |obj| obj.created_at }
+    @dead_servers = VpnServer.where(active: false).sort_by { |obj| obj.created_at }
+  end
+  
   def new_order_detail
     @order = Order.find(params[:id])  
   end
@@ -49,12 +55,36 @@ class SiteManageController < ApplicationController
     @trial = Trial.find(params[:id])
   end
   
+  def expire_server_detail
+    @server = VpnServer.find(params[:id])
+  end
+  
   def processing_order_detail
     @order = Order.find(params[:id])  
   end
   
   def closed_order_detail
     @order = Order.find(params[:id])  
+  end
+  
+  def update_server
+    @server = VpnServer.find(params[:id])
+    
+    if params['expire_to_dead']
+
+      # Process Invalid Input
+      if !validate_vpn_ip(params[:server][:vpn_server])
+        flash[:error] = params[:order].to_s
+        flash[:notice] = "Invalid VPN Server IP !"
+        redirect_to expire_server_detail_path(@server) and return      
+      end
+      
+      @server.active = false
+
+    end
+    
+    @server.save!
+    redirect_to site_manage_manage_servers_path and return 
   end
   
   def update_trial
@@ -68,6 +98,15 @@ class SiteManageController < ApplicationController
         flash[:notice] = "Invalid VPN Server IP !"
         redirect_to initial_trial_detail_path(@trial) and return      
       end
+      
+      # create vpn_server in DB
+      vpn_server = VpnServer.new
+      vpn_server.ip = params[:trial][:vpn_server]
+      vpn_server.trial = true
+      vpn_server.user_id = @trial.user_id
+      vpn_server.expire_date = Time.now + 2.days
+      vpn_server.active = true
+      vpn_server.save!
       
       @trial.vpn_server = params[:trial][:vpn_server]
       @trial.status = 'active'
@@ -96,6 +135,25 @@ class SiteManageController < ApplicationController
       @order.items[0].vpn_server = params[:order][:vpn_server]
       @order.items[0].save!
       @order.status = 'processed'
+
+      ip = Vpn_server.find_by_ip(params[:order][:vpn_server])
+      if ip
+        # old server: trial server or used server
+        ip.trial = false
+        ip.expire_date += get_plan_months(@order).months
+        ip.active = true
+        ip.save! 
+      else
+        # new server
+        vpn_server = VpnServer.new
+        vpn_server.ip = params[:order][:vpn_server]
+        vpn_server.trial = false
+        vpn_server.user_id = @trial.user_id
+        vpn_server.expire_date = Time.now + get_plan_months(@order).months
+        vpn_server.active = true
+        vpn_server.save!        
+      end
+     
      
       if @order.save(:validate => false)
         # SUCCESS

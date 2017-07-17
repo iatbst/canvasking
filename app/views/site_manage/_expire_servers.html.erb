@@ -1,0 +1,37 @@
+
+
+<table class="table">
+	<thead>
+			<th style="width: 200px"> IP </th>
+			<th style="width: 200px"> 用户 </th>
+			<th style="width: 200px"> 开始时间 </th>
+			<th style="width: 200px"> 过期时间 </th>
+			
+
+	
+	</thead>
+	<tbody>
+		<% @expire_servers.each do | server | %>
+			<tr>
+				<td>
+					<%= server.ip %>
+				</td>
+				<td>
+					<%= server.user.email %>
+				</td>
+				<td>
+					<%= server.created_at.to_s.gsub!('UTC', '') %>
+				</td>				
+				<td>
+					<%= server.expire_date.to_s.gsub!('UTC', '') %>
+				</td>		
+
+
+				
+				<td align="center">
+					<%= link_to 'Process', expire_server_detail_path(server), class: "process_button btn btn-secondary"  %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

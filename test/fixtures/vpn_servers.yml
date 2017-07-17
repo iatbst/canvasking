@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ip: MyString
+  user_id: 
+  expire_date: 2017-07-17
+  trial: false
+
+two:
+  ip: MyString
+  user_id: 
+  expire_date: 2017-07-17
+  trial: false
