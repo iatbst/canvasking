@@ -1,0 +1,23 @@
+<%= render "layouts/navbar" %>
+
+<div class="row" align="center" style="min-height: 100%; margin-top: 100px" >
+
+	<h2>
+		<img src="/order/order_complete.png" id="order_complete_icon" style="margin-top: -5px;margin-right: 10px"/>
+		恭喜，您的VPN专线试用申请成功 ！
+	</h2>
+	<br />
+	<h3>
+		我们的后台工作人员将尽快给您开通试用服务器和专线，并将VPN设置使用说明发到您的如下电子邮箱:
+	</3>
+	<h2>
+		<u>
+			<%= @trial.user.email %>
+		</u>
+	</h2>
+	<h3>
+		试用期: 2天
+	</h3>
+</div>
+
+<%= render "layouts/footer" %>

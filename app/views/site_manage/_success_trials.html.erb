@@ -1,0 +1,36 @@
+
+
+<table class="table">
+	<thead>
+
+	
+			<th style="width: 100px"> 订单号 </th>
+			<th style="width: 200px"> 用户 </th>
+			<th>
+				Server IP
+			</th>
+
+			<th>
+			
+			</th>
+	
+	</thead>
+	<tbody>
+		<% @success_trials.each do | trial | %>
+			<tr>
+		
+				<td>
+					xxxxxxxxxxx
+				</td>
+				<td>
+					<%= trial.user.email %>
+				</td>
+				<td>
+					<%= trial.vpn_server %>
+				</td>				
+				
+				
+			</tr>
+		<% end %>
+	</tbody>
+</table>

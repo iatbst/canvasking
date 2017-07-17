@@ -1,0 +1,41 @@
+
+<% if flash[:notice] && flash[:error] %>
+	<h3 style="color: red">
+		Woopse, Trial failed to mark from initial to active as:
+	</h3>	
+	<h5><%= flash[:notice] %></h5>
+	<h5><%= flash[:error] %></h5>
+<% end %>
+
+<div class="" style="margin-top: 50px; margin-bottom: 20px" >
+
+	
+	<div class="row box">
+		
+	
+		
+	
+	</div>
+	
+	
+	
+	<br />
+	<br />
+	<div>
+		<%= form_for :trial, url: update_trial_path(@trial) do |f| %>
+		
+			<div class="form-group">
+				<input class="form-control input-lg" placeholder="VPN Server IP" type="text" name="trial[vpn_server]" style="width:80%" />
+			</div>
+
+			
+			
+			<%= hidden_field_tag :initial_to_active, true %>
+			<br />
+			<%= f.submit 'Mark Trial As Active', class: 'process_button btn btn-default btn-lg' %>
+		<% end %>
+		
+	</div>
+</div>
+
+

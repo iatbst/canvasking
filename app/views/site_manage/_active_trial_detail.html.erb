@@ -1,0 +1,58 @@
+
+<% if flash[:notice] && flash[:error] %>
+	<h3 style="color: red">
+		Woopse, Trial failed to mark from active to success/fail:
+	</h3>	
+	<h5><%= flash[:notice] %></h5>
+	<h5><%= flash[:error] %></h5>
+<% end %>
+
+<div class="" style="margin-top: 50px; margin-bottom: 20px" >
+
+	
+	<div class="row box">
+		
+	
+		
+	
+	</div>
+	
+	
+	
+	<br />
+	<br />
+	<div>
+		<%= form_for :trial, url: update_trial_path(@trial) do |f| %>
+		
+			<div class="form-group">
+				<input class="form-control input-lg" placeholder="Shutdown/Transfer VPN Server IP" type="text" name="trial[vpn_server]" style="width:80%" />
+			</div>
+
+			
+			
+			<%= hidden_field_tag :active_to_success, true %>
+			<br />
+			<%= f.submit 'Mark Trial As Success', class: 'process_button btn btn-default btn-lg' %>
+		<% end %>
+		
+	</div>
+	<br />
+	<br />
+	<div>
+		<%= form_for :trial, url: update_trial_path(@trial) do |f| %>
+		
+			<div class="form-group">
+				<input class="form-control input-lg" placeholder="Shutdown/Transfer VPN Server IP" type="text" name="trial[vpn_server]" style="width:80%" />
+			</div>
+
+			
+			
+			<%= hidden_field_tag :active_to_fail, true %>
+			<br />
+			<%= f.submit 'Mark Trial As Fail', class: 'process_button btn btn-default btn-lg' %>
+		<% end %>
+		
+	</div>
+</div>
+
+

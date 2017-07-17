@@ -1,0 +1,43 @@
+<div style="margin-top: 30px">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="<% if @active_tab.nil? %>active<% end %> trial_tab">
+    	<a href="#initial_trials_table" aria-controls="home" role="tab" data-toggle="tab" align="center" style="color: #EF9223">
+    		<h4>Initial Trials ( <%= @initial_trials.count %> )</h4>
+    	</a>
+    </li>
+    <li role="presentation" class="<% if @active_tab == "processing" %>active<% end %> order_tab">
+    	<a href="#active_trials_table" aria-controls="profile" role="tab" data-toggle="tab" align="center" style="color: grey">
+    		<h4>Active Trials ( <%= @active_trials.count %> )</h4>
+    	</a>
+    </li>
+    <li role="presentation" class="<% if @active_tab == "closed" %>active<% end %> order_tab">
+    	<a href="#success_trials_table" aria-controls="profile" role="tab" data-toggle="tab" align="center" style="color: grey">
+    		<h4>Success Trials ( <%= @success_trials.count %> )</h4>
+    	</a>
+    </li>
+    <li role="presentation" class="<% if @active_tab == "closed" %>active<% end %> order_tab">
+    	<a href="#fail_trials_table" aria-controls="profile" role="tab" data-toggle="tab" align="center" style="color: grey">
+    		<h4>Fail Trials ( <%= @fail_trials.count %> )</h4>
+    	</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane <% if @active_tab.nil? %>active<% end %>" id="initial_trials_table">
+    	<%= render "initial_trials" %>
+    </div>
+    <div role="tabpanel" class="tab-pane <% if @active_tab == "processing" %>active<% end %>" id="active_trials_table">
+    	<%= render "active_trials" %>
+    </div>
+    <div role="tabpanel" class="tab-pane <% if @active_tab == "closed" %>active<% end %>" id="success_trials_table">
+    	<%= render "success_trials" %>
+    </div>
+    <div role="tabpanel" class="tab-pane <% if @active_tab == "closed" %>active<% end %>" id="fail_trials_table">
+    	<%= render "fail_trials" %>
+    </div>
+  </div>
+
+</div>

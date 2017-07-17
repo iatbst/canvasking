@@ -1,0 +1,17 @@
+<%= render "layouts/navbar" %>
+
+<div class="row" align="center" style="min-height: 100%; margin-top: 200px" >
+
+	<h2>
+		<i class="fa fa-exclamation-circle" aria-hidden="true" style="color: red"></i>
+		对不起，您的账户已经申请过VPN专线2天免费试用。如果觉得效果满意，请购买VPN专线套餐服务。
+		
+	</h2>
+	
+	<br />
+	<br />
+	<%= button_to '购买套餐', '/#plans', method: :get, class:"btn btn-primary btn-lg order_button" %>
+	
+</div>
+
+<%= render "layouts/footer" %>

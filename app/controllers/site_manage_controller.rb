@@ -23,6 +23,14 @@ class SiteManageController < ApplicationController
     @payment_count = calculate_total_payments
   end
   
+  def manage_trials
+    @initial_trials = Trial.where(status: 'initial').sort_by { |obj| obj.created_at }
+    @active_trials = Trial.where(status: 'active').sort_by { |obj| obj.created_at }
+    @success_trials = Trial.where(status: 'success').sort_by { |obj| obj.created_at }
+    @fail_trials = Trial.where(status: 'fail').sort_by { |obj| obj.created_at }
+  
+  end
+  
   def manage_orders
     @new_orders = Order.where(status: 'new').sort_by { |obj| obj.created_at }
     @processing_orders = Order.where(status: 'processing').sort_by { |obj| obj.created_at }
@@ -34,12 +42,44 @@ class SiteManageController < ApplicationController
     @order = Order.find(params[:id])  
   end
 
+  def initial_trial_detail
+    @trial = Trial.find(params[:id])
+  end
+  
+  def active_trial_detail
+    @trial = Trial.find(params[:id])
+  end
+  
   def processing_order_detail
     @order = Order.find(params[:id])  
   end
   
   def closed_order_detail
     @order = Order.find(params[:id])  
+  end
+  
+  def update_trial
+    @trial = Trial.find(params[:id])
+      
+    if params['initial_to_active']
+
+      # Process Invalid Input
+      if !valida_vpn_ip(params)
+        flash[:error] = params[:order].to_s
+        flash[:notice] = "Invalid VPN Server IP !"
+        redirect_to initial_trial_detail_path(@trial) and return      
+      end
+      
+      @trial.vpn_server = params[:trial][:vpn_server]
+      @trial.status = 'active'
+    elsif params['active_to_success']
+      @trial.status = 'success'
+    elsif params['active_to_fail']
+      @trial.status = 'fail'
+    end
+    
+    @trial.save!
+    redirect_to site_manage_manage_trials_path and return 
   end
   
   def update_order
@@ -250,7 +290,15 @@ class SiteManageController < ApplicationController
     # TAOBAO order is all numbers
     return !/\A\d+\z/.match(order_number).nil?
   end
-  
+
+  def valida_vpn_ip(params)
+    vpn_ip = params[:trial][:vpn_server]
+    block = /\d{,2}|1\d{2}|2[0-4]\d|25[0-5]/
+    re = /\A#{block}\.#{block}\.#{block}\.#{block}\z/
+    
+    return !re.match(vpn_ip).nil?
+  end
+   
   def generate_order_detail_url(order_number)
     return "#{Canvasking::TAOBAO_ORDER_DETAIL_URL}?biz_order_id=#{order_number}"
   end

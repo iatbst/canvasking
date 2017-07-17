@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'site_manage/manage_users'
+  get 'site_manage/manage_trials'
   get 'site_manage/manage_prices'
   get 'site_manage/manage_orders'
   get 'site_manage/manage_coupons'
@@ -7,15 +8,19 @@ Rails.application.routes.draw do
   get 'site_mange/edit_coupon/:id(.:format)' => 'site_manage#edit_coupon', as: 'site_manage_edit_coupon'
   get 'site_manage/update_order_status'
   get 'site_manage/new_order_detail/:id(.:format)' => 'site_manage#new_order_detail', as: 'new_order_detail'
+  get 'site_manage/initial_trial_detail/:id(.:format)' => 'site_manage#initial_trial_detail', as: 'initial_trial_detail'
+  get 'site_manage/active_trial_detail/:id(.:format)' => 'site_manage#active_trial_detail', as: 'active_trial_detail'
   get 'site_manage/processing_order_detail/:id(.:format)' => 'site_manage#processing_order_detail', as: 'processing_order_detail'
   get 'site_manage/closed_order_detail/:id(.:format)' => 'site_manage#closed_order_detail', as: 'closed_order_detail'
   post 'site_manage/update_order/:id(.:format)' => 'site_manage#update_order', as: 'update_order'
+  post 'site_manage/update_trial/:id(.:format)' => 'site_manage#update_trial', as: 'update_trial'
   get 'site_manage/dashboard'
   post 'site_manage/update_prices'
   post 'site_manage/create_coupon'
   patch 'site_manage/update_coupon/:id(.:format)'=> 'site_manage#update_coupon', as: 'site_manage_update_coupon'
   get 'pricing/index'
   get 'pricing/query_price'
+  get 'trials/create'
 
   devise_for :users, :controllers => { :sessions => "custom_sessions", :registrations => "custom_registrations"}
   
