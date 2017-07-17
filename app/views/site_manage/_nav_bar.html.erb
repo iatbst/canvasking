@@ -127,15 +127,8 @@
 		<li>
 			<a  class="mainmenu_link" href="<%= site_manage_manage_orders_path %>" style="color: white; font-weight: bolder" name="order_sub">订单</a>
 		</li>
-		<li class="submenu order_sub">
-			<a href="<%= site_manage_manage_orders_path %>">New Order</a>
-		</li>
-		<li class="submenu order_sub">
-			<a  href="<%= site_manage_manage_orders_path %>?active_tab=processing">Processing Order</a>
-		</li>
-		<li class="submenu order_sub">
-			<a  href="<%= site_manage_manage_orders_path %>?active_tab=closed">Closed Order</a>
-		</li>
+	
+
 		<li>
 			<a href="<%= sidekiq_web_path %>" style="color: white; font-weight: bolder" >Jobs</a>
 		</li>

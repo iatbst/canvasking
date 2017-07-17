@@ -33,9 +33,8 @@ class SiteManageController < ApplicationController
   
   def manage_orders
     @new_orders = Order.where(status: 'new').sort_by { |obj| obj.created_at }
-    @processing_orders = Order.where(status: 'processing').sort_by { |obj| obj.created_at }
-    @closed_orders = Order.where(status: 'closed').sort_by { |obj| obj.created_at }.reverse
-    @active_tab = params['active_tab']
+    @processed_orders = Order.where(status: 'processed').sort_by { |obj| obj.created_at }
+    
   end
   
   def new_order_detail
@@ -64,7 +63,7 @@ class SiteManageController < ApplicationController
     if params['initial_to_active']
 
       # Process Invalid Input
-      if !valida_vpn_ip(params)
+      if !validate_vpn_ip(params[:trial][:vpn_server])
         flash[:error] = params[:order].to_s
         flash[:notice] = "Invalid VPN Server IP !"
         redirect_to initial_trial_detail_path(@trial) and return      
@@ -85,22 +84,18 @@ class SiteManageController < ApplicationController
   def update_order
     @order = Order.find(params[:id])
     
-    if params['new_to_processing']
+    if params['new_to_processed']
       
       # Process Invalid Input
-      if !validate_oem_number(params)
+      if !validate_vpn_ip(params[:order][:vpn_server])
         flash[:error] = params[:order].to_s
-        flash[:notice] = "Order failed to mark from new to processing as invalid input"
+        flash[:notice] = "Invalid VPN Server IP !"
         redirect_to new_order_detail_path(@order) and return      
       end
       
-      @order.oem_info['oem_order_number'] = params[:order][:oem_order_number]
-      @order.oem_info['oem_order_detail_url'] = generate_order_detail_url(params[:order][:oem_order_number])
-      @order.oem_info['oem_shipping_detail_url'] = generate_shipping_detail_url(params[:order][:oem_order_number], @order)
-      @order.notes = params[:order][:notes]
-      @order.status = 'processing'
-      @order.processing_status = 1 # order placed
-      
+      @order.items[0].vpn_server = params[:order][:vpn_server]
+      @order.items[0].save!
+      @order.status = 'processed'
      
       if @order.save(:validate => false)
         # SUCCESS
@@ -291,8 +286,8 @@ class SiteManageController < ApplicationController
     return !/\A\d+\z/.match(order_number).nil?
   end
 
-  def valida_vpn_ip(params)
-    vpn_ip = params[:trial][:vpn_server]
+  def validate_vpn_ip(vpn_ip)
+   
     block = /\d{,2}|1\d{2}|2[0-4]\d|25[0-5]/
     re = /\A#{block}\.#{block}\.#{block}\.#{block}\z/
     

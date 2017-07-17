@@ -16,7 +16,7 @@
 	
 	</thead>
 	<tbody>
-		<% @new_orders.each do | order | %>
+		<% @processed_orders.each do | order | %>
 			<tr>
 				<td>
 					<%= order.number %>
@@ -44,9 +44,6 @@
 					<%= order.items[0].vpn_server %>
 				</td>
 				
-				<td align="center">
-					<%= link_to 'Process', new_order_detail_path(order), class: "process_button btn btn-secondary"  %>
-				</td>
 			</tr>
 		<% end %>
 	</tbody>

@@ -1,7 +1,7 @@
 
 <% if flash[:notice] && flash[:error] %>
 	<h3 style="color: red">
-		Woopse, Order failed to mark from new to processing as:
+		Woopse, Trial failed to mark from new to processed as:
 	</h3>	
 	<h5><%= flash[:notice] %></h5>
 	<h5><%= flash[:error] %></h5>
@@ -9,124 +9,30 @@
 
 <div class="" style="margin-top: 50px; margin-bottom: 20px" >
 
-	<h3 class="no_bold">Order # <%= @order.number %></h3>
+	
 	<div class="row box">
-		<div class="col-md-4">
-			<br />
-			<h5><b>Shipping Address</b></h5>
-			<%= @order.shipping_full_name %>
-			<br />
-			<%= @order.shipping_address_1 %>
-			<br />
-			<% if !@order.shipping_address_2.empty? %>
-			<%= @order.shipping_address_2 %>
-			<br />
-			<% end %>
-			<%= @order.shipping_city %>,&nbsp;<%= @order.state.name %>&nbsp;<%= @order.shipping_zip %>
-			<br />
-			<%= @order.country.name %>
-			<br />
-			<%= @order.shipping_phone %>
-		</div>
-		<div class="col-md-4">
-			<br />
-			<h4>Payment Method</h4>
-			<i class="fa fa-credit-card" aria-hidden="true"></i>&nbsp;
-			<%= @order.payment_info['brand'] ? @order.payment_info['brand'].upcase : nil %>
-			&nbsp;**** &nbsp;
-			<%= @order.payment_info['last4'] %>
-		</div>
-		<div class="col-md-4">
-			<br />
-			<h5>Order Summary</h5>
-			Item(s) Subtotal: $<%= @order.before_price %>
-			<br />
-			Shipping & Handling: $<%= @order.shipping_price %>
-			<br />
-			Total before tax: $<%= @order.before_price + @order.shipping_price %>
-			<br />
-			Tax collected: $<%= @order.tax_price %>
-			<br />
-			<br />
-			<b>Grand Total: $<%= @order.total_price %></b>
-			<br />
-		</div>
+		
+	
+		
+	
 	</div>
 	
 	
-	<div class="row box" style="margin-top: 50px;">
-
-		<% @order.items.each_with_index do |item, ix| %>
-		<div class="row">
-
 	
-				
-					<div class="col-md-4" align="center">
-						<br />	
-						<%= image_tag get_image_url(item, "thumb"), id: "item_#{item.id}" %>
-					</div>
-
-					<div class="col-md-4" >
-						<br />
-						
-						
-						Type: <%= item.product.name %>
-						<br />
-						Size: <%= item.size %>
-						<br />
-						<% if item.product.name.include?('canvas')%>
-							Depth: <%= item.canvas_depth %>
-							<br />
-							Outer Frame: <%= item.canvas_frame %>								
-						<% else %>
-							Frame: <%= Frame.find(item.frame_id).name %>
-							<br />
-							Mat: <%= "#{item.mat}\"".gsub("0.0\"", "No") %>								
-						<% end %>
-						<br />
-						Quantity: <b><%= item.quantity %></b><br />
-						Subtotal: $<b><%= item.price*item.quantity %></b>						
-
-					</div>
-					
-					<br />
-					<div class="col-md-4">
-					<% if item.art_filter %>
-							<br />
-							<%= link_to 'Download Art Image', get_image_url(item, 'origin'), type: 'button', target: '_blank', class: 'btn btn-warning', style: "width: 200px"%>
-					<% end %>
-						<br />
-						<br />
-						<%= link_to 'Download Image', get_normal_image_url(item, 'origin'), type: 'button', target: '_blank', class: 'btn btn-primary', style: "width: 200px"%>
-
-					</div>
-	
-		</div>
-	
-				<% if ix != @order.items.count - 1 %>
-					<hr style="width: 100%; border-color:#EDEDED;"/>
-				<% else %>
-					<br />
-				<% end %>
-				
-		<% end %>
-	</div>
 	<br />
 	<br />
 	<div>
 		<%= form_for :order, url: update_order_path(@order) do |f| %>
 		
 			<div class="form-group">
-				<input class="form-control input-lg" placeholder="OEM Order Number" type="text" name="order[oem_order_number]" style="width:80%" />
+				<input class="form-control input-lg" placeholder="VPN Server IP" type="text" name="order[vpn_server]" style="width:80%" />
 			</div>
 
-			<div class="form-group">
-				<textarea class="form-control input-lg" placeholder="Order Notes" type="text" name="order[notes]" style="width:80%; height: 300px" ></textarea>
-			</div>
 			
-			<%= hidden_field_tag :new_to_processing, true %>
+			
+			<%= hidden_field_tag :new_to_processed, true %>
 			<br />
-			<%= f.submit 'Mark Order As Processing', class: 'process_button btn btn-default btn-lg' %>
+			<%= f.submit 'Mark New As Processed', class: 'process_button btn btn-default btn-lg' %>
 		<% end %>
 		
 	</div>

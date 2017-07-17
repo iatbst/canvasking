@@ -1,3 +1,3 @@
 eclipse.preferences.version=1
 encoding//app/views/devise/sessions/new.html.erb=UTF-8
-encoding//app/views/site_manage/_processing_orders.html.erb=UTF-8
+encoding//app/views/site_manage/_processed_orders.html.erb=UTF-8

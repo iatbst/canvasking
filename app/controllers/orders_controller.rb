@@ -75,7 +75,7 @@ class OrdersController < ApplicationController
         @order.before_price = cart.price
         @order.total_price = @order.before_price + @order.shipping_price + @order.tax_price
         # end
-        @order.save!
+        
 
         # Empty Cart !
         clear_cart
@@ -88,6 +88,15 @@ class OrdersController < ApplicationController
         
         # populate vpn info
         populate_vpn_info(@order)
+        
+        # bring active trial to success trial
+        if @order.user.trials[0] && @order.user.trials[0].status == 'active'
+          @order.items[0].vpn_server = @order.user.trials[0].vpn_server
+          @order.items[0].save!
+          @order.user.trials[0].status = 'success'
+          @order.user.trials[0].save!
+        end
+        @order.save!
         
         @new_order_complete = true
         render 'show'
