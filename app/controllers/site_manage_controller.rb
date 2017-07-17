@@ -136,7 +136,7 @@ class SiteManageController < ApplicationController
       @order.items[0].save!
       @order.status = 'processed'
 
-      ip = Vpn_server.find_by_ip(params[:order][:vpn_server])
+      ip = VpnServer.find_by_ip(params[:order][:vpn_server])
       if ip
         # old server: trial server or used server
         ip.trial = false
@@ -217,7 +217,15 @@ class SiteManageController < ApplicationController
     redirect_to "#{site_manage_manage_orders_path}?active_tab=processing"
   end
   
-  
+  def get_plan_months(order)
+    if order.items[0].plan == 1
+      return 1
+    elsif order.items[0].plan == 2
+      return 3
+    else
+      return 12
+    end
+  end
   
   ################  Users ######################
   
